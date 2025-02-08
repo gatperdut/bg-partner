@@ -1,15 +1,16 @@
 import { BrowserWindow } from 'electron';
-import * as path from 'path';
 import { EntitiesHandler } from '../entities.handler';
 import { SetForegroundWindow } from '../koffi/defs/methods/windows';
 import { RECT_TYPE } from '../koffi/defs/structs/rect';
 import { Sprite } from '../sprite';
 import { WindowHandler } from '../window.handler';
 
+declare const TRACKER_WINDOW_WEBPACK_ENTRY: string;
+
+declare const TRACKER_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
 export class Tracker {
   private window: BrowserWindow;
-
-  private isOpen: boolean = false;
 
   constructor(
     private entitiesHandler: EntitiesHandler,
@@ -26,17 +27,20 @@ export class Tracker {
 
   public windowCreate(): void {
     this.window = new BrowserWindow({
-      height: 50,
-      width: 50,
-      // webPreferences: {
-      //   preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      // },
+      height: 30,
+      width: 30,
+      webPreferences: {
+        preload: TRACKER_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      },
       frame: false,
+      show: false,
       skipTaskbar: true,
-      alwaysOnTop: true,
+      hasShadow: false,
     });
 
-    this.window.loadFile(path.join(__dirname, './tracker.html'));
+    this.window.setAlwaysOnTop(true, 'screen-saver');
+
+    this.window.loadURL(TRACKER_WINDOW_WEBPACK_ENTRY);
   }
 
   public track(): void {
@@ -46,9 +50,9 @@ export class Tracker {
       this.sprite.relativeY < 0 ||
       this.sprite.relativeY > this.sprite.viewportY
     ) {
-      // if (!this.window.isHidden()) {
-      //   this.window.hide();
-      // }
+      if (this.window.isVisible()) {
+        this.window.hide();
+      }
 
       return;
     }
@@ -66,9 +70,9 @@ export class Tracker {
 
     this.window.setPosition(left, top);
 
-    // if (this.window.() && this.entitiesHandler.trackersShown) {
-    //   this.window.show();
-    // }
+    if (!this.window.isVisible() && this.entitiesHandler.trackersShown) {
+      this.window.show();
+    }
   }
 
   public teardown(): void {
@@ -76,31 +80,26 @@ export class Tracker {
   }
 
   public hide(): void {
+    console.log('hide');
     this.window.hide();
   }
 
   public show(): void {
+    console.log('show');
     this.window.show();
+    this.window.focus();
   }
 
   private open(): void {
     console.log('open');
-    this.isOpen = true;
   }
 
   private close(): void {
     console.log('close');
-    this.isOpen = false;
   }
 
   public closedClick(): void {
     SetForegroundWindow(this.windowHandler.windowHandle);
-
-    if (this.isOpen) {
-      this.close();
-    } else {
-      this.open();
-    }
 
     console.log(JSON.stringify(this.sprite));
   }
