@@ -36,7 +36,7 @@ const config: ForgeConfig = {
             js: './src/bg-partner/tracker/renderer.ts',
             name: 'tracker_window',
             preload: {
-              js: './src/preload.ts',
+              js: './src/bg-partner/tracker/preload.ts',
             },
           },
         ],

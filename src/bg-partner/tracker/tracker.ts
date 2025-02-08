@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, ipcMain } from 'electron';
 import { EntitiesHandler } from '../entities.handler';
 import { SetForegroundWindow } from '../koffi/defs/methods/windows';
 import { RECT_TYPE } from '../koffi/defs/structs/rect';
@@ -27,8 +27,6 @@ export class Tracker {
 
   public windowCreate(): void {
     this.window = new BrowserWindow({
-      height: 30,
-      width: 30,
       webPreferences: {
         preload: TRACKER_WINDOW_PRELOAD_WEBPACK_ENTRY,
       },
@@ -36,11 +34,31 @@ export class Tracker {
       show: false,
       skipTaskbar: true,
       hasShadow: false,
+      transparent: true,
+      resizable: false,
     });
+
+    this.window.setContentSize(23, 20);
+
+    this.window.setSize(23, 20);
+
+    this.window.setMinimumSize(23, 20);
+
+    this.window.setShape([{ x: 0, y: 0, width: 20, height: 20 }]);
 
     this.window.setAlwaysOnTop(true, 'screen-saver');
 
     this.window.loadURL(TRACKER_WINDOW_WEBPACK_ENTRY);
+
+    if (this.sprite.name.includes('moe')) {
+      this.window.webContents.openDevTools({ mode: 'detach' });
+    }
+
+    ipcMain.on('eyeClick', (): void => {
+      SetForegroundWindow(this.windowHandler.windowHandle);
+
+      console.log(JSON.stringify(this.sprite));
+    });
   }
 
   public track(): void {
@@ -96,11 +114,5 @@ export class Tracker {
 
   private close(): void {
     console.log('close');
-  }
-
-  public closedClick(): void {
-    SetForegroundWindow(this.windowHandler.windowHandle);
-
-    console.log(JSON.stringify(this.sprite));
   }
 }

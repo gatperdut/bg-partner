@@ -1,4 +1,12 @@
 body {
-  background-color: red;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
+
+  #eye {
+    cursor: pointer;
+    position: relative;
+    left: -1px;
+    bottom: 2px;
+  }
 }
