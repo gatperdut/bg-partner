@@ -1,16 +1,11 @@
-import { BrowserWindow, ipcMain } from 'electron';
 import { EntitiesHandler } from '../entities.handler';
-import { SetForegroundWindow } from '../koffi/defs/methods/windows';
 import { RECT_TYPE } from '../koffi/defs/structs/rect';
 import { Sprite } from '../sprite';
 import { WindowHandler } from '../window.handler';
-
-declare const TRACKER_WINDOW_WEBPACK_ENTRY: string;
-
-declare const TRACKER_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+import { Eye } from './eye/eye';
 
 export class Tracker {
-  private window: BrowserWindow;
+  private eye: Eye;
 
   constructor(
     private entitiesHandler: EntitiesHandler,
@@ -22,54 +17,22 @@ export class Tracker {
   }
 
   public init(): void {
-    this.windowCreate();
-  }
-
-  public windowCreate(): void {
-    this.window = new BrowserWindow({
-      webPreferences: {
-        preload: TRACKER_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      },
-      frame: false,
-      show: false,
-      skipTaskbar: true,
-      hasShadow: false,
-      transparent: true,
-      resizable: false,
-    });
-
-    this.window.setContentSize(23, 20);
-
-    this.window.setSize(23, 20);
-
-    this.window.setMinimumSize(23, 20);
-
-    this.window.setShape([{ x: 0, y: 0, width: 20, height: 20 }]);
-
-    this.window.setAlwaysOnTop(true, 'screen-saver');
-
-    this.window.loadURL(TRACKER_WINDOW_WEBPACK_ENTRY);
-
-    if (this.sprite.name.includes('moe')) {
-      this.window.webContents.openDevTools({ mode: 'detach' });
-    }
-
-    ipcMain.on('eyeClick', (): void => {
-      SetForegroundWindow(this.windowHandler.windowHandle);
-
-      console.log(JSON.stringify(this.sprite));
-    });
+    this.eye = new Eye(this.windowHandler, this.sprite);
   }
 
   public track(): void {
+    if (!this.eye) {
+      return;
+    }
+
     if (
       this.sprite.relativeX < 0 ||
       this.sprite.relativeX > this.sprite.viewportX ||
       this.sprite.relativeY < 0 ||
       this.sprite.relativeY > this.sprite.viewportY
     ) {
-      if (this.window.isVisible()) {
-        this.window.hide();
+      if (this.eye.window.isVisible()) {
+        this.eye.window.hide();
       }
 
       return;
@@ -86,33 +49,25 @@ export class Tracker {
       this.rect.top + (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
     );
 
-    this.window.setPosition(left, top);
+    this.eye.window.setPosition(left, top);
 
-    if (!this.window.isVisible() && this.entitiesHandler.trackersShown) {
-      this.window.show();
+    if (!this.eye.window.isVisible() && this.entitiesHandler.trackersShown) {
+      this.eye.window.show();
     }
   }
 
   public teardown(): void {
-    this.window.close();
+    this.eye.window.close();
   }
 
   public hide(): void {
     console.log('hide');
-    this.window.hide();
+    this.eye.window.hide();
   }
 
   public show(): void {
     console.log('show');
-    this.window.show();
-    this.window.focus();
-  }
-
-  private open(): void {
-    console.log('open');
-  }
-
-  private close(): void {
-    console.log('close');
+    this.eye.window.show();
+    this.eye.window.focus();
   }
 }
