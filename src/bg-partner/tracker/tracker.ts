@@ -3,9 +3,12 @@ import { RECT_TYPE } from '../koffi/defs/structs/rect';
 import { Sprite } from '../sprite';
 import { WindowHandler } from '../window.handler';
 import { Eye } from './eye/eye';
+import { Sheet } from './sheet/sheet';
 
 export class Tracker {
   private eye: Eye;
+
+  private sheet: Sheet;
 
   constructor(
     private entitiesHandler: EntitiesHandler,
@@ -17,14 +20,12 @@ export class Tracker {
   }
 
   public init(): void {
-    this.eye = new Eye(this.windowHandler, this.sprite);
+    this.eye = new Eye(this.windowHandler, this.sprite, null);
+
+    this.sheet = new Sheet(this.windowHandler, this.sprite, this.rect, 'moe');
   }
 
   public track(): void {
-    if (!this.eye) {
-      return;
-    }
-
     if (
       this.sprite.relativeX < 0 ||
       this.sprite.relativeX > this.sprite.viewportX ||
@@ -42,32 +43,38 @@ export class Tracker {
 
     const rectHeight: number = this.rect.bottom - this.rect.top;
 
-    const left = Math.round(
+    const leftEye: number = Math.round(
       this.rect.left + (this.sprite.relativeX / this.sprite.viewportX) * rectWidth
     );
-    const top = Math.round(
+    const topEye: number = Math.round(
       this.rect.top + (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
     );
 
-    this.eye.window.setPosition(left, top);
+    this.eye.window.setPosition(leftEye, topEye);
 
-    if (!this.eye.window.isVisible() && this.entitiesHandler.trackersShown) {
+    if (
+      !this.eye.window.isVisible() &&
+      !this.eye.sheetShown &&
+      this.entitiesHandler.trackersShown
+    ) {
       this.eye.window.show();
     }
   }
 
   public teardown(): void {
     this.eye.window.close();
+
+    this.sheet.window.close();
   }
 
   public hide(): void {
     console.log('hide');
     this.eye.window.hide();
+    this.sheet.window.hide();
   }
 
   public show(): void {
     console.log('show');
     this.eye.window.show();
-    this.eye.window.focus();
   }
 }

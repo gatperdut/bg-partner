@@ -2,60 +2,54 @@ import { BrowserWindow, ipcMain } from 'electron';
 import { SetForegroundWindow } from '../../koffi/defs/methods/windows';
 import { Sprite } from '../../sprite';
 import { WindowHandler } from '../../window.handler';
-
-declare const EYE_WINDOW_WEBPACK_ENTRY: string;
+import { windowInstantiate } from '../instantiate';
 
 declare const EYE_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
+declare const EYE_WINDOW_WEBPACK_ENTRY: string;
 
 export class Eye {
   public window: BrowserWindow;
 
-  constructor(private windowHandler: WindowHandler, private sprite: Sprite) {
-    this.instantiate();
+  public sheetShown: boolean = false;
+
+  constructor(private windowHandler: WindowHandler, private sprite: Sprite, name: string) {
+    this.window = windowInstantiate(
+      EYE_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      EYE_WINDOW_WEBPACK_ENTRY,
+      23,
+      20,
+      true,
+      sprite,
+      name
+    );
 
     this.window.webContents.once('dom-ready', (): void => {
       this.window.webContents.send('initialize', { id: this.sprite.id, name: this.sprite.name });
     });
 
-    ipcMain.on('eye-click', (_event: Electron.IpcMainEvent, id: number): void => {
+    ipcMain.on('sheet.open', (_event: Electron.IpcMainEvent, id: number): void => {
       if (this.sprite.id !== id) {
         return;
       }
 
-      SetForegroundWindow(this.windowHandler.windowHandle);
+      this.sheetShown = true;
 
-      console.log(JSON.stringify(this.sprite));
-    });
-  }
-
-  private instantiate() {
-    this.window = new BrowserWindow({
-      webPreferences: {
-        preload: EYE_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      },
-      frame: false,
-      show: false,
-      skipTaskbar: true,
-      hasShadow: false,
-      transparent: true,
-      resizable: false,
+      this.window.hide();
     });
 
-    this.window.setContentSize(23, 20);
+    ipcMain.on('sheet.close', (_event: Electron.IpcMainEvent, id: number): void => {
+      if (this.sprite.id !== id) {
+        return;
+      }
 
-    this.window.setSize(23, 20);
+      this.sheetShown = false;
 
-    this.window.setMinimumSize(23, 20);
+      setTimeout((): void => {
+        SetForegroundWindow(this.windowHandler.windowHandle);
+      }, 500);
 
-    this.window.setShape([{ x: 0, y: 0, width: 20, height: 20 }]);
-
-    this.window.setAlwaysOnTop(true, 'screen-saver');
-
-    this.window.loadURL(EYE_WINDOW_WEBPACK_ENTRY);
-
-    if (this.sprite.name.includes('moe')) {
-      // Openin devtools causes harmless (?) error: "Request Autofill.enable failed".
-      this.window.webContents.openDevTools({ mode: 'detach' });
-    }
+      this.window.show();
+    });
   }
 }
