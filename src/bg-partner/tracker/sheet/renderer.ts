@@ -31,6 +31,8 @@ class SheetRenderer {
       document.getElementById('name').textContent = params.sprite.name;
 
       document.getElementById('enemyAlly').title = params.eaTable[params.sprite.enemyAlly];
+
+      document.getElementById('hp').textContent = params.sprite.hp.toString();
     });
 
     document.body.addEventListener(

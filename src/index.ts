@@ -18,6 +18,6 @@ const run = (): void => {
 
 app.on('ready', run);
 
-// app.on('window-all-closed', (): void => {
-//   app.quit();
-// });
+app.on('window-all-closed', (): void => {
+  // app.quit();
+});

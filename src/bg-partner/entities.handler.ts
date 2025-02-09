@@ -93,26 +93,4 @@ export class EntitiesHandler {
 
     this.entities = {};
   }
-
-  public print(): void {
-    console.log('**********');
-    _.each(_.values(this.entities), (entity: Entity): void => {
-      console.log(
-        'name',
-        entity.sprite.name,
-        'id',
-        entity.sprite.id,
-        'gap',
-        entity.sprite.gameAreaPtr,
-        'xy',
-        entity.sprite.x,
-        entity.sprite.y,
-        'scroll',
-        entity.sprite.scrollX,
-        entity.sprite.scrollY,
-        'valid',
-        !entity.sprite.invalid
-      );
-    });
-  }
 }

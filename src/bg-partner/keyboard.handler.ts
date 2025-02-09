@@ -13,10 +13,7 @@ import { SetWindowLongA, SetWindowPos, ShowWindow } from './koffi/defs/methods/w
 import { WindowHandler } from './window.handler';
 
 export class KeyboardHandler {
-  constructor(
-    private windowHandler: WindowHandler,
-    private entitiesHandler: EntitiesHandler
-  ) {
+  constructor(private windowHandler: WindowHandler, private entitiesHandler: EntitiesHandler) {
     // Empty
   }
 
@@ -31,14 +28,9 @@ export class KeyboardHandler {
       this.entitiesHandler.toggleTrackers();
     }
 
-    const ctrl = GetAsyncKeyState(0xa2);
-    if (ctrl) {
-      this.entitiesHandler.print();
-    }
+    const rAlt = GetAsyncKeyState(VK_RMENU);
 
-    const lalt = GetAsyncKeyState(VK_RMENU);
-
-    if (lalt) {
+    if (rAlt) {
       SetWindowLongA(this.windowHandler.windowHandle, GWL_STYLE, WS_MAXIMIZE);
 
       ShowWindow(this.windowHandler.windowHandle, SW_SHOW);

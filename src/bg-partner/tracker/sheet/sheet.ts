@@ -32,12 +32,7 @@ export class Sheet {
     );
 
     this.window.webContents.once('dom-ready', (): void => {
-      const params: SheetAPIOnInitializeParams = {
-        sprite: spriteSanitize(this.sprite),
-        eaTable: eaTable,
-      };
-
-      this.window.webContents.send('sheet.initialize', params);
+      this.update();
     });
 
     ipcMain.on('sheet.open', (_event: Electron.IpcMainEvent, id: number): void => {
@@ -47,7 +42,7 @@ export class Sheet {
 
       this.position();
 
-      this.window.show();
+      this.windowActive && this.window.show();
 
       SetForegroundWindow(this.windowHandler.windowHandle);
     });
@@ -57,8 +52,17 @@ export class Sheet {
         return;
       }
 
-      this.window.hide();
+      this.windowActive && this.window.hide();
     });
+  }
+
+  public update(): void {
+    const params: SheetAPIOnInitializeParams = {
+      sprite: spriteSanitize(this.sprite),
+      eaTable: eaTable,
+    };
+
+    this.windowActive && this.window.webContents.send('sheet.initialize', params);
   }
 
   private position(): void {
@@ -78,7 +82,7 @@ export class Sheet {
 
     let sheetScreenY: number;
 
-    const sheetSize: number[] = this.window.getSize();
+    const sheetSize: number[] = this.windowActive ? this.window.getSize() : [0, 0];
 
     // X
     const sheetPercentWidth: number = sheetSize[0] / rectWidth;
@@ -118,6 +122,24 @@ export class Sheet {
       sheetScreenY = spriteScreenY - Math.round(sheetSize[1] / 2);
     }
 
-    this.window.setPosition(sheetScreenX, sheetScreenY);
+    this.windowActive && this.window.setPosition(sheetScreenX, sheetScreenY);
+  }
+
+  public get windowActive(): boolean {
+    return !this.window.isDestroyed();
+  }
+
+  public teardown(): void {
+    ipcMain.removeAllListeners();
+
+    this.windowActive && this.window.destroy();
+  }
+
+  public show(): void {
+    this.windowActive && this.window.show();
+  }
+
+  public hide(): void {
+    this.windowActive && this.window.hide();
   }
 }

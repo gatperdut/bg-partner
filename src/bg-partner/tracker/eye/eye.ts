@@ -38,7 +38,7 @@ export class Eye {
 
       this.sheetShown = true;
 
-      this.window.hide();
+      this.windowActive && this.window.hide();
     });
 
     ipcMain.on('sheet.close', (_event: Electron.IpcMainEvent, id: number): void => {
@@ -50,7 +50,25 @@ export class Eye {
 
       SetForegroundWindow(this.windowHandler.windowHandle);
 
-      this.window.show();
+      this.windowActive && this.window.show();
     });
+  }
+
+  public get windowActive(): boolean {
+    return !this.window.isDestroyed();
+  }
+
+  public teardown(): void {
+    ipcMain.removeAllListeners();
+
+    this.windowActive && this.window.destroy();
+  }
+
+  public show(): void {
+    this.windowActive && this.window.show();
+  }
+
+  public hide(): void {
+    this.windowActive && this.window.hide();
   }
 }

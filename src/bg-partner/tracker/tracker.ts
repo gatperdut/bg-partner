@@ -32,8 +32,8 @@ export class Tracker {
       this.sprite.relativeY < 0 ||
       this.sprite.relativeY > this.sprite.viewportY
     ) {
-      if (this.eye.window.isVisible()) {
-        this.eye.window.hide();
+      if (this.eye.windowActive && this.eye.window.isVisible()) {
+        this.eye.hide();
       }
 
       return;
@@ -50,29 +50,32 @@ export class Tracker {
       this.rect.top + (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
     );
 
-    this.eye.window.setPosition(leftEye, topEye);
+    this.eye.windowActive && this.eye.window.setPosition(leftEye, topEye);
 
     if (
-      !this.eye.window.isVisible() &&
+      !(this.eye.windowActive && this.eye.window.isVisible()) &&
       !this.eye.sheetShown &&
       this.entitiesHandler.trackersShown
     ) {
-      this.eye.window.show();
+      this.eye.show();
     }
+
+    this.sheet.update();
   }
 
   public teardown(): void {
-    this.eye.window.close();
+    this.eye.teardown();
 
-    this.sheet.window.close();
+    this.sheet.teardown();
   }
 
   public hide(): void {
-    this.eye.window.hide();
-    this.sheet.window.hide();
+    this.eye.hide();
+
+    this.sheet.hide();
   }
 
   public show(): void {
-    this.eye.window.show();
+    this.eye.show();
   }
 }
