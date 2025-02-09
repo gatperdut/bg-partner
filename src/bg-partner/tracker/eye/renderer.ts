@@ -1,5 +1,5 @@
 import { Sprite } from '../../sprite';
-import './eye.css';
+import './eye.scss';
 
 declare global {
   interface Window {

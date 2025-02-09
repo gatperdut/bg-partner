@@ -35,6 +35,8 @@
     "eslint-plugin-import": "^2.31.0",
     "fork-ts-checker-webpack-plugin": "^7.3.0",
     "node-loader": "^2.1.0",
+    "sass": "^1.84.0",
+    "sass-loader": "^16.0.4",
     "style-loader": "^3.3.4",
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
@@ -42,6 +44,7 @@
     "typescript": "~4.5.4"
   },
   "dependencies": {
+    "css-fx-layout": "^3.0.5",
     "electron-squirrel-startup": "^1.0.1",
     "koffi": "^2.10.1",
     "lodash-es": "4.17.21"

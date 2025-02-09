@@ -1,0 +1,24 @@
+@use 'css-fx-layout' as fx;
+
+@include fx.class-selectors(false);
+@include fx.gap-class-selectors(1, 16, 1, px em, false);
+
+html {
+  height: 100%;
+  padding: 5px;
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 5px;
+  height: calc(100% - 25px);
+  background-color: red;
+  cursor: pointer;
+  border: 3px solid #39373a;
+  border-radius: 5px;
+}
+
+#title {
+  -webkit-app-region: drag;
+}

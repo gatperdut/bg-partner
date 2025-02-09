@@ -1,5 +1,5 @@
 import { Sprite } from '../../sprite';
-import './sheet.css';
+import './sheet.scss';
 
 declare global {
   interface Window {
