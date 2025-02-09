@@ -3,9 +3,23 @@
 @include fx.class-selectors(false);
 @include fx.gap-class-selectors(1, 16, 1, px em, false);
 
+@font-face {
+  font-family: 'Modesto';
+  src: url('fonts/modesto-regular.ttf');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Modesto';
+  src: url('fonts/modesto-italic.ttf');
+  font-style: italic;
+}
+
 html {
   height: 100%;
   padding: 5px;
+  font-family: 'Modesto';
+  font-size: larger;
 }
 
 body {
