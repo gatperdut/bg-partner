@@ -45,9 +45,7 @@ export class Eye {
 
       this.sheetShown = false;
 
-      setTimeout((): void => {
-        SetForegroundWindow(this.windowHandler.windowHandle);
-      }, 500);
+      SetForegroundWindow(this.windowHandler.windowHandle);
 
       this.window.show();
     });

@@ -10,3 +10,8 @@ body {
   background-color: red;
   cursor: pointer;
 }
+
+#name {
+  -webkit-app-region: drag;
+  cursor: grab;
+}

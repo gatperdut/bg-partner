@@ -20,7 +20,6 @@ class SheetRenderer {
     document.body.addEventListener(
       'click',
       (): void => {
-        console.log('sheet close');
         window.sheetAPI.sheetClose(this.sprite.id);
       },
       true

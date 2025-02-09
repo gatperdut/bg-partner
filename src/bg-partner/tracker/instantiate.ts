@@ -16,6 +16,8 @@ export const windowInstantiate = (
     },
     frame: false,
     show: false,
+    maximizable: false,
+    focusable: false,
     skipTaskbar: true,
     hasShadow: false,
     transparent: transparent,
