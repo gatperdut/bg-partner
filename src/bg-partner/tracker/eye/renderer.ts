@@ -12,10 +12,10 @@ class EyeRenderer {
 
   constructor() {
     document.getElementById('eye').addEventListener('click', (): void => {
-      window.eyeAPI.sheetOpen(this.sprite.id);
+      window.eyeAPI.open(this.sprite.id);
     });
 
-    window.eyeAPI.onInitialize((sprite: Sprite): void => {
+    window.eyeAPI.initialize((sprite: Sprite): void => {
       this.sprite = sprite;
     });
   }

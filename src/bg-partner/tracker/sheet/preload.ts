@@ -1,13 +1,21 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { Sprite } from '../../sprite';
+import { SheetAPIOnInitialize, SheetAPIOnInitializeMethod, SheetAPISheetClose } from './renderer';
 
-contextBridge.exposeInMainWorld('sheetAPI', {
+export type SheetAPIBridge = {
+  sheetClose: SheetAPISheetClose;
+  initialize: (callback: SheetAPIOnInitialize) => Electron.IpcRenderer;
+};
+
+const sheetAPIBridge: SheetAPIBridge = {
   sheetClose: (id: number): void => {
     ipcRenderer.send('sheet.close', id);
   },
-  onInitialize: (callback: Function): Electron.IpcRenderer => {
-    return ipcRenderer.on('initialize', (_event: Electron.IpcRendererEvent, value: Sprite): any =>
-      callback(value)
+  initialize: (callback: SheetAPIOnInitialize): Electron.IpcRenderer => {
+    return ipcRenderer.on(
+      'sheet.initialize',
+      (_event: Electron.IpcRendererEvent, value: SheetAPIOnInitializeMethod): any => callback(value)
     );
   },
-});
+};
+
+contextBridge.exposeInMainWorld('sheetAPI', sheetAPIBridge);

@@ -2,8 +2,11 @@ import { BrowserWindow, ipcMain } from 'electron';
 import { SetForegroundWindow } from '../../koffi/defs/methods/windows';
 import { RECT_TYPE } from '../../koffi/defs/structs/rect';
 import { Sprite } from '../../sprite';
+import { eaTable } from '../../tables/ea';
 import { WindowHandler } from '../../window.handler';
 import { windowInstantiate } from '../instantiate';
+import { SheetAPIOnInitializeParams } from './renderer';
+import { spriteSanitize } from './sprite-filter';
 
 declare const SHEET_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -21,15 +24,20 @@ export class Sheet {
     this.window = windowInstantiate(
       SHEET_WINDOW_PRELOAD_WEBPACK_ENTRY,
       SHEET_WINDOW_WEBPACK_ENTRY,
-      200,
-      300,
+      400,
+      700,
       false,
       sprite,
       name
     );
 
     this.window.webContents.once('dom-ready', (): void => {
-      this.window.webContents.send('initialize', { id: this.sprite.id, name: this.sprite.name });
+      const params: SheetAPIOnInitializeParams = {
+        sprite: spriteSanitize(this.sprite),
+        eaTable: eaTable,
+      };
+
+      this.window.webContents.send('sheet.initialize', params);
     });
 
     ipcMain.on('sheet.open', (_event: Electron.IpcMainEvent, id: number): void => {

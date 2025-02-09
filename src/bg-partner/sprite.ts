@@ -2,6 +2,7 @@ import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
 import { memReadNumber, memReadString } from './koffi/memread';
 
 export class Sprite {
+  // Basic
   public type: number;
 
   public canBeSeen: number;
@@ -32,7 +33,11 @@ export class Sprite {
 
   public resref: string;
 
-  constructor(private procHandle: HANDLE_PTR_TYPE, public basePtr: number) {
+  // Advanced
+
+  public enemyAlly: number;
+
+  constructor(public procHandle: HANDLE_PTR_TYPE, public basePtr: number) {
     this.basic();
   }
 
@@ -94,6 +99,6 @@ export class Sprite {
   }
 
   public advanced(): void {
-    // TODO
+    this.enemyAlly = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x38), 'BYTE');
   }
 }

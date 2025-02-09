@@ -68,13 +68,11 @@ export class Tracker {
   }
 
   public hide(): void {
-    console.log('hide');
     this.eye.window.hide();
     this.sheet.window.hide();
   }
 
   public show(): void {
-    console.log('show');
     this.eye.window.show();
   }
 }

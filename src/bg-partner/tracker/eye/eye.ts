@@ -25,7 +25,10 @@ export class Eye {
     );
 
     this.window.webContents.once('dom-ready', (): void => {
-      this.window.webContents.send('initialize', { id: this.sprite.id, name: this.sprite.name });
+      this.window.webContents.send('eye.initialize', {
+        id: this.sprite.id,
+        name: this.sprite.name,
+      });
     });
 
     ipcMain.on('sheet.open', (_event: Electron.IpcMainEvent, id: number): void => {
