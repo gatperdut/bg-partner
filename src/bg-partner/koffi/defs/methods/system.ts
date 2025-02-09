@@ -1,10 +1,8 @@
 import koffi from 'koffi';
 import { STDCALL } from '../constants';
 import { HANDLE_PTR } from '../handles';
-import { kernel32, user32 } from '../libs';
-import { BOOL, INT32, LONG_PTR } from '../primitives';
-
-export const GetSystemMetrics = user32.func(STDCALL, 'GetSystemMetrics', INT32, [INT32]);
+import { kernel32 } from '../libs';
+import { BOOL, LONG_PTR } from '../primitives';
 
 export const GetCurrentProcess = kernel32.func(STDCALL, 'GetCurrentProcess', HANDLE_PTR, []);
 

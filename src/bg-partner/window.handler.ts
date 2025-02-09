@@ -1,8 +1,8 @@
+import { screen } from 'electron';
 import koffi from 'koffi';
-import { DWMWA_EXTENDED_FRAME_BOUNDS, SM_CXSCREEN, SM_CYSCREEN } from './koffi/defs/constants';
+import { DWMWA_EXTENDED_FRAME_BOUNDS } from './koffi/defs/constants';
 import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
 import { CloseHandle } from './koffi/defs/methods/process';
-import { GetSystemMetrics } from './koffi/defs/methods/system';
 import {
   DwmGetWindowAttribute,
   EnumWindows,
@@ -68,9 +68,11 @@ export class WindowHandler {
       koffi.sizeof(RECT)
     );
 
-    this.screen.width = GetSystemMetrics(SM_CXSCREEN);
+    const size: Electron.Size = screen.getPrimaryDisplay().size;
 
-    this.screen.height = GetSystemMetrics(SM_CYSCREEN);
+    this.screen.width = size.width;
+
+    this.screen.height = size.height;
   }
 
   public get focused(): boolean {

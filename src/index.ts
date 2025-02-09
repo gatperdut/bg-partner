@@ -1,4 +1,4 @@
-import { app } from 'electron';
+import { app, globalShortcut } from 'electron';
 import { Main } from './bg-partner/main';
 
 declare global {
@@ -14,6 +14,10 @@ if (require('electron-squirrel-startup')) {
 
 const run = (): void => {
   new Main().run();
+
+  globalShortcut.register('CommandOrControl+A', () => {
+    // Empty
+  });
 };
 
 app.on('ready', run);

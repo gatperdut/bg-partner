@@ -6,10 +6,6 @@ export const PROCESS_VM_READ: number = 0x0010;
 
 export const PROCESS_QUERY_LIMITED_INFORMATION: number = 0x1000;
 
-export const SM_CXSCREEN: number = 0;
-
-export const SM_CYSCREEN: number = 1;
-
 export const DWMWA_EXTENDED_FRAME_BOUNDS: number = 9;
 
 export const VK_LSHIFT = 0xa0;
