@@ -30,24 +30,7 @@ const config: ForgeConfig = {
       mainConfig,
       renderer: {
         config: rendererConfig,
-        entryPoints: [
-          {
-            html: './src/bg-partner/tracker/eye/eye.html',
-            js: './src/bg-partner/tracker/eye/renderer.ts',
-            name: 'eye_window',
-            preload: {
-              js: './src/bg-partner/tracker/eye/preload.ts',
-            },
-          },
-          {
-            html: './src/bg-partner/tracker/sheet/sheet.html',
-            js: './src/bg-partner/tracker/sheet/renderer.ts',
-            name: 'sheet_window',
-            preload: {
-              js: './src/bg-partner/tracker/sheet/preload.ts',
-            },
-          },
-        ],
+        entryPoints: [],
       },
     }),
     // Fuses are used to enable/disable various Electron functionality
