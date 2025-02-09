@@ -1,6 +1,6 @@
 import { EntitiesHandler } from '../entities.handler';
 import { RECT_TYPE } from '../koffi/defs/structs/rect';
-import { Sprite } from '../sprite';
+import { Sprite } from '../sprite/sprite';
 import { WindowHandler } from '../window.handler';
 import { Eye } from './eye/eye';
 import { Sheet } from './sheet/sheet';

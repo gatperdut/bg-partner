@@ -1,4 +1,4 @@
-import { Sprite } from '../../sprite';
+import { Sprite } from '../../sprite/sprite';
 import { EaTable } from '../../tables/ea';
 import './sheet.scss';
 
@@ -33,6 +33,12 @@ class SheetRenderer {
       document.getElementById('enemyAlly').title = params.eaTable[params.sprite.enemyAlly];
 
       document.getElementById('hp').textContent = params.sprite.hp.toString();
+      document.getElementById('hpMax').textContent =
+        params.sprite.derived.hpMax.toString() +
+        ' ' +
+        params.sprite.derivedBonus.hpMax.toString() +
+        ' ' +
+        params.sprite.derivedTemp.hpMax.toString();
     });
 
     document.body.addEventListener(

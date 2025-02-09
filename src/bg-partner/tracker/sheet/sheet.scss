@@ -1,7 +1,9 @@
-@use 'css-fx-layout' as fx;
+@use 'css-fx-layout' as fxl;
+@use 'spacing';
 
-@include fx.class-selectors(false);
-@include fx.gap-class-selectors(1, 16, 1, px em, false);
+@include fxl.class-selectors(false);
+@include fxl.gap-class-selectors(1, 16, 1, px, false);
+@include spacing.get-styles(30, 1);
 
 @font-face {
   font-family: 'Modesto';

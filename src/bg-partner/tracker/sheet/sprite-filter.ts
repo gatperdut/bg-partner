@@ -1,4 +1,5 @@
-import { Sprite } from '../../sprite';
+import { Derived } from '../../sprite/derived';
+import { Sprite } from '../../sprite/sprite';
 
 export const spriteSanitize = (sprite: Sprite): Sprite => {
   const result: Sprite = {
@@ -26,7 +27,17 @@ export const spriteSanitize = (sprite: Sprite): Sprite => {
     resref: sprite.resref,
     // Advanced
     enemyAlly: sprite.enemyAlly,
+    // Derived
+    derived: derivedFilter(sprite.derived),
+    derivedBonus: derivedFilter(sprite.derivedBonus),
+    derivedTemp: derivedFilter(sprite.derivedTemp),
   };
 
   return result;
+};
+
+const derivedFilter = (derived: Derived): Derived => {
+  return {
+    hpMax: derived.hpMax,
+  };
 };

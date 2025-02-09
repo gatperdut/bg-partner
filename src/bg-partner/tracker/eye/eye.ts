@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import { SetForegroundWindow } from '../../koffi/defs/methods/windows';
-import { Sprite } from '../../sprite';
+import { Sprite } from '../../sprite/sprite';
 import { WindowHandler } from '../../window.handler';
 import { windowInstantiate } from '../instantiate';
 

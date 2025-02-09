@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { Sprite } from '../../sprite';
+import { Sprite } from '../../sprite/sprite';
 
 contextBridge.exposeInMainWorld('eyeAPI', {
   open: (id: number): void => {

@@ -1,5 +1,5 @@
 import { BrowserWindow } from 'electron';
-import { Sprite } from '../sprite';
+import { Sprite } from '../sprite/sprite';
 
 export const windowInstantiate = (
   preloadEntry: string,

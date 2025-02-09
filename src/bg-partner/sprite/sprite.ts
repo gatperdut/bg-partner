@@ -1,5 +1,6 @@
-import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
-import { memReadNumber, memReadString } from './koffi/memread';
+import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
+import { memReadNumber, memReadString } from '../koffi/memread';
+import { Derived, derivedEmpty, derivedFill } from './derived';
 
 export class Sprite {
   // Basic
@@ -34,8 +35,12 @@ export class Sprite {
   public resref: string;
 
   // Advanced
-
   public enemyAlly: number;
+
+  // Derived
+  public derived: Derived = derivedEmpty();
+  public derivedBonus: Derived = derivedEmpty();
+  public derivedTemp: Derived = derivedEmpty();
 
   constructor(public procHandle: HANDLE_PTR_TYPE, public basePtr: number) {
     this.basic();
@@ -100,5 +105,11 @@ export class Sprite {
 
   public advanced(): void {
     this.enemyAlly = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x38), 'BYTE');
+
+    derivedFill(this.procHandle, this.basePtr + 0x1120, this.derived);
+
+    derivedFill(this.procHandle, this.basePtr + 0x2a70, this.derivedBonus);
+
+    derivedFill(this.procHandle, this.basePtr + 0x1dc8, this.derivedTemp);
   }
 }

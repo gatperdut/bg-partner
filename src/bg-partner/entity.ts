@@ -1,7 +1,7 @@
 import { EntitiesHandler } from './entities.handler';
 import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
 import { RECT_TYPE } from './koffi/defs/structs/rect';
-import { Sprite } from './sprite';
+import { Sprite } from './sprite/sprite';
 import { Tracker } from './tracker/tracker';
 import { WindowHandler } from './window.handler';
 

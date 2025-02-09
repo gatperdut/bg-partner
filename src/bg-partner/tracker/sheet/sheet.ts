@@ -1,7 +1,7 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import { SetForegroundWindow } from '../../koffi/defs/methods/windows';
 import { RECT_TYPE } from '../../koffi/defs/structs/rect';
-import { Sprite } from '../../sprite';
+import { Sprite } from '../../sprite/sprite';
 import { eaTable } from '../../tables/ea';
 import { WindowHandler } from '../../window.handler';
 import { windowInstantiate } from '../instantiate';

@@ -1,0 +1,57 @@
+@use 'sass:string';
+@use 'sass:map';
+
+$sides: (
+  top: t,
+  right: r,
+  bottom: b,
+  left: l,
+);
+
+@mixin get-styles($steps, $increment) {
+  @for $step from 0 through $steps {
+    $distance: $step * $increment;
+
+    .m-#{$step} {
+      margin: #{$distance}px !important;
+    }
+
+    .mv-#{$step} {
+      margin-top: #{$distance}px !important;
+      margin-bottom: #{$distance}px !important;
+    }
+
+    .mh-#{$step} {
+      margin-left: #{$distance}px !important;
+      margin-right: #{$distance}px !important;
+    }
+
+    .p-#{$step} {
+      padding: #{$distance}px !important;
+    }
+
+    .pv-#{$step} {
+      padding-top: #{$distance}px !important;
+      padding-bottom: #{$distance}px !important;
+    }
+
+    .ph-#{$step} {
+      padding-left: #{$distance}px !important;
+      padding-right: #{$distance}px !important;
+    }
+
+    .h-#{$step} {
+      height: #{$distance}px !important;
+    }
+
+    @each $side in map.keys($sides) {
+      .m#{map.get($sides, $side)}-#{$step} {
+        margin-#{$side}: #{$distance}px !important;
+      }
+
+      .p#{map.get($sides, $side)}-#{$step} {
+        padding-#{$side}: #{$distance}px !important;
+      }
+    }
+  }
+}
