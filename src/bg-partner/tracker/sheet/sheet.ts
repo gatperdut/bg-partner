@@ -3,6 +3,7 @@ import { SetForegroundWindow } from '../../koffi/defs/methods/windows';
 import { RECT_TYPE } from '../../koffi/defs/structs/rect';
 import { Sprite } from '../../sprite/sprite';
 import { eaTable } from '../../tables/ea';
+import { raceTable } from '../../tables/race';
 import { WindowHandler } from '../../window.handler';
 import { windowInstantiate } from '../instantiate';
 import { SheetAPIOnInitializeParams } from './renderer';
@@ -60,6 +61,7 @@ export class Sheet {
     const params: SheetAPIOnInitializeParams = {
       sprite: spriteSanitize(this.sprite),
       eaTable: eaTable,
+      raceTable: raceTable,
     };
 
     this.windowActive && this.window.webContents.send('sheet.initialize', params);

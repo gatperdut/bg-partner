@@ -37,6 +37,8 @@ export class Sprite {
   // Advanced
   public enemyAlly: number;
 
+  public race: number;
+
   // Derived
   public derived: Derived = derivedEmpty();
   public derivedBonus: Derived = derivedEmpty();
@@ -105,6 +107,8 @@ export class Sprite {
 
   public advanced(): void {
     this.enemyAlly = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x38), 'BYTE');
+
+    this.race = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x30 + 0xa), 'BYTE');
 
     derivedFill(this.procHandle, this.basePtr + 0x1120, this.derived);
 

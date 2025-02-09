@@ -1,8 +1,9 @@
 import { Sprite } from '../../sprite/sprite';
 import { EaTable } from '../../tables/ea';
+import { RaceTable } from '../../tables/race';
 import './sheet.scss';
 
-export type SheetAPIOnInitializeParams = { sprite: Sprite; eaTable: EaTable };
+export type SheetAPIOnInitializeParams = { sprite: Sprite; eaTable: EaTable; raceTable: RaceTable };
 
 export type SheetAPIOnInitializeMethod = (params: SheetAPIOnInitializeParams) => void;
 
@@ -33,12 +34,10 @@ class SheetRenderer {
       document.getElementById('enemyAlly').title = params.eaTable[params.sprite.enemyAlly];
 
       document.getElementById('hp').textContent = params.sprite.hp.toString();
-      document.getElementById('hpMax').textContent =
-        params.sprite.derived.hpMax.toString() +
-        ' ' +
-        params.sprite.derivedBonus.hpMax.toString() +
-        ' ' +
-        params.sprite.derivedTemp.hpMax.toString();
+
+      document.getElementById('hpMax').textContent = params.sprite.derivedTemp.hpMax.toString();
+
+      document.getElementById('race').textContent = params.raceTable[params.sprite.race];
     });
 
     document.body.addEventListener(

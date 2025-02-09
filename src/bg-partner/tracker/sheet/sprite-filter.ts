@@ -27,6 +27,7 @@ export const spriteSanitize = (sprite: Sprite): Sprite => {
     resref: sprite.resref,
     // Advanced
     enemyAlly: sprite.enemyAlly,
+    race: sprite.race,
     // Derived
     derived: derivedFilter(sprite.derived),
     derivedBonus: derivedFilter(sprite.derivedBonus),
