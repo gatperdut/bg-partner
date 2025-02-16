@@ -1,6 +1,6 @@
-import { Sprite } from '../../sprite/sprite';
-import { EaTable } from '../../tables/ea';
-import { RaceTable } from '../../tables/race';
+import { Sprite } from '../sprite/sprite';
+import { EaTable } from '../tables/ea';
+import { RaceTable } from '../tables/race';
 import './sheet.scss';
 
 export type SheetAPIOnInitializeParams = { sprite: Sprite; eaTable: EaTable; raceTable: RaceTable };
@@ -42,7 +42,7 @@ class SheetRenderer {
 
     document.body.addEventListener(
       'click',
-      () => {
+      (): void => {
         window.sheetAPI.sheetClose(this.sprite.id);
       },
       true

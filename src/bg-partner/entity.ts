@@ -1,56 +1,54 @@
-import { EntitiesHandler } from './entities.handler';
 import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
-import { RECT_TYPE } from './koffi/defs/structs/rect';
+import { Sheet } from './sheet/sheet';
 import { Sprite } from './sprite/sprite';
-import { Tracker } from './tracker/tracker';
 import { WindowHandler } from './window.handler';
 
 export class Entity {
   public loaded: boolean = false;
 
+  private sheet: Sheet;
+
   public sprite: Sprite;
 
-  public tracker: Tracker;
-
   constructor(
-    private entitiesHandler: EntitiesHandler,
     private windowHandler: WindowHandler,
     private processHandle: HANDLE_PTR_TYPE,
-    private gameObjectPtr: number,
-    private rect: RECT_TYPE
+    private gameObjectPtr: number
   ) {
     this.sprite = new Sprite(this.processHandle, this.gameObjectPtr);
 
     this.loaded = !this.sprite.invalid;
   }
 
-  public createTracker(show: boolean): void {
-    this.tracker = new Tracker(this.entitiesHandler, this.windowHandler, this.sprite, this.rect);
-
-    this.tracker.init();
-
-    if (show) {
-      this.tracker.show();
-    }
-  }
-
   public update(): void {
     this.sprite.basic();
 
     this.sprite.advanced();
-
-    this.tracker.track();
   }
 
-  public teardown(): void {
-    this.tracker.teardown();
+  public pointMatch(pointScreen: Electron.Point): boolean {
+    const rectWidth: number = this.windowHandler.rect.right - this.windowHandler.rect.left;
+
+    const rectHeight: number = this.windowHandler.rect.bottom - this.windowHandler.rect.top;
+
+    const spriteScreenX: number = Math.round(
+      this.windowHandler.rect.left + (this.sprite.relativeX / this.sprite.viewportX) * rectWidth
+    );
+
+    const spriteScreenY: number = Math.round(
+      this.windowHandler.rect.top + (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
+    );
+
+    return (
+      Math.abs(spriteScreenX - pointScreen.x) < 20 && Math.abs(spriteScreenY - pointScreen.y) < 20
+    );
   }
 
-  public hideTracker(): void {
-    this.tracker.hide();
-  }
-
-  public showTracker(): void {
-    this.tracker.show();
+  public sheetToggle(): void {
+    if (this.sheet?.window) {
+      this.sheet.teardown();
+    } else {
+      this.sheet = new Sheet(this.windowHandler, this.sprite, this.windowHandler.rect, 'moe');
+    }
   }
 }

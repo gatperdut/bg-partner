@@ -1,10 +1,10 @@
+import { globalShortcut, screen } from 'electron';
 import { EntitiesHandler } from './entities.handler';
 import {
   GWL_STYLE,
   HWND_TOP,
   SW_SHOW,
   SWP_ASYNCWINDOWPOS,
-  VK_LSHIFT,
   VK_RMENU,
   WS_MAXIMIZE,
 } from './koffi/defs/constants';
@@ -14,18 +14,20 @@ import { WindowHandler } from './window.handler';
 
 export class KeyboardHandler {
   constructor(private windowHandler: WindowHandler, private entitiesHandler: EntitiesHandler) {
-    // Empty
+    globalShortcut.register('CommandOrControl+A', () => {
+      this.windowHandler.focused && this.sheetToggle();
+    });
+  }
+
+  private sheetToggle(): void {
+    const point: Electron.Point = screen.dipToScreenPoint(screen.getCursorScreenPoint());
+
+    this.entitiesHandler.sheetToggle(point);
   }
 
   public run(): void {
     if (!this.windowHandler.focused) {
       return;
-    }
-
-    const state: number = GetAsyncKeyState(VK_LSHIFT);
-
-    if (state) {
-      this.entitiesHandler.toggleTrackers();
     }
 
     const rAlt = GetAsyncKeyState(VK_RMENU);

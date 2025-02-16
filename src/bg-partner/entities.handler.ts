@@ -1,24 +1,21 @@
 import _ from 'lodash';
 import { Entity } from './entity';
 import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
-import { RECT_TYPE } from './koffi/defs/structs/rect';
 import { WindowHandler } from './window.handler';
 
 export class EntitiesHandler {
   private entities: Record<number, Entity> = {};
 
-  public trackersShown: boolean = false;
-
   constructor(private windowHandler: WindowHandler) {
     // Empty
   }
 
-  public run(processHandle: HANDLE_PTR_TYPE, gameObjectPtrs: number[], rect: RECT_TYPE): void {
+  public run(processHandle: HANDLE_PTR_TYPE, gameObjectPtrs: number[]): void {
     const entities: Entity[] = _.filter(
       _.map(
         gameObjectPtrs,
         (gameObjectPtr: number): Entity =>
-          new Entity(this, this.windowHandler, processHandle, gameObjectPtr, rect)
+          new Entity(this.windowHandler, processHandle, gameObjectPtr)
       ),
       (entity: Entity): boolean => entity.loaded
     );
@@ -45,8 +42,6 @@ export class EntitiesHandler {
 
     _.each(remove, (id: number): void => {
       if (this.entities[id]) {
-        this.entities[id].teardown();
-
         delete this.entities[id];
       }
     });
@@ -56,41 +51,21 @@ export class EntitiesHandler {
     _.each(entities, (entity: Entity): void => {
       if (!this.entities[entity.sprite.id]) {
         this.entities[entity.sprite.id] = entity;
-
-        entity.createTracker(this.trackersShown);
       } else {
         this.entities[entity.sprite.id].sprite.basePtr = entity.sprite.basePtr;
       }
     });
   }
 
-  public hideTrackers(): void {
-    if (this.trackersShown) {
-      _.each(_.values(this.entities), (entity: Entity): void => {
-        entity.hideTracker();
-      });
+  public sheetToggle(point: Electron.Point): void {
+    const entity: Entity = _.find(_.values(this.entities), (someEntity: Entity): boolean =>
+      someEntity.pointMatch(point)
+    );
 
-      this.trackersShown = false;
-    }
-  }
-
-  public toggleTrackers(): void {
-    _.each(_.values(this.entities), (entity: Entity): void => {
-      if (this.trackersShown) {
-        entity.hideTracker();
-      } else {
-        entity.showTracker();
-      }
-    });
-
-    this.trackersShown = !this.trackersShown;
+    entity?.sheetToggle();
   }
 
   public teardown(): void {
-    _.each(_.values(this.entities), (entity: Entity): void => {
-      entity.teardown();
-    });
-
     this.entities = {};
   }
 }

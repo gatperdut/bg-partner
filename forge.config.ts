@@ -32,19 +32,11 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
-            html: './src/bg-partner/tracker/eye/eye.html',
-            js: './src/bg-partner/tracker/eye/renderer.ts',
-            name: 'eye_window',
-            preload: {
-              js: './src/bg-partner/tracker/eye/preload.ts',
-            },
-          },
-          {
-            html: './src/bg-partner/tracker/sheet/sheet.html',
-            js: './src/bg-partner/tracker/sheet/renderer.ts',
+            html: './src/bg-partner/sheet/sheet.html',
+            js: './src/bg-partner/sheet/renderer.ts',
             name: 'sheet_window',
             preload: {
-              js: './src/bg-partner/tracker/sheet/preload.ts',
+              js: './src/bg-partner/sheet/preload.ts',
             },
           },
         ],

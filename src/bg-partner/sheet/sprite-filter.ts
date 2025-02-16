@@ -1,5 +1,5 @@
-import { Derived } from '../../sprite/derived';
-import { Sprite } from '../../sprite/sprite';
+import { Derived } from '../sprite/derived';
+import { Sprite } from '../sprite/sprite';
 
 export const spriteSanitize = (sprite: Sprite): Sprite => {
   const result: Sprite = {

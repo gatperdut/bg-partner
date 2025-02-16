@@ -8,7 +8,7 @@ export type SheetAPIBridge = {
 
 const sheetAPIBridge: SheetAPIBridge = {
   sheetClose: (id: number): void => {
-    ipcRenderer.send('sheet.close', id);
+    ipcRenderer.send(`sheet.close.${id}`);
   },
   initialize: (callback: SheetAPIOnInitialize): Electron.IpcRenderer => {
     return ipcRenderer.on(

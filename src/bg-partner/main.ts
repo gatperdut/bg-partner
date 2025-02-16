@@ -46,11 +46,7 @@ export class Main {
 
     this.windowHandler.run();
 
-    this.entitiesHandler.run(
-      this.memHandler.processHandle,
-      this.memHandler.gameObjectPtrs,
-      this.windowHandler.rect
-    );
+    this.entitiesHandler.run(this.memHandler.processHandle, this.memHandler.gameObjectPtrs);
 
     this.keyboardHandler.run();
   }
