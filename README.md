@@ -2,3 +2,4 @@
 - dependency injection?
 - coordsGame2Screen and coordsScreen2Game
 - css-fx-layout: move to devdependencies?
+- xdotool, wmctrl

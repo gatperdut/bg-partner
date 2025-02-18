@@ -53,7 +53,7 @@ export class Main {
 
     this.windowHandler.init(this.memHandler.pid);
 
-    this.windowHandler.run();
+    this.windowHandler.run(this.memHandler.pid);
 
     this.entitiesHandler.run(this.memHandler.processHandle, this.memHandler.gameObjectPtrs);
 

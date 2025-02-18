@@ -24,15 +24,15 @@ export abstract class WindowCommon {
     };
   }
 
-  protected init(pid: number): void {
-    // Empty
-  }
-
-  protected run(pid: number): void {
+  public run(pid: number): void {
     const screenSize: Electron.Size = Electron.screen.getPrimaryDisplay().size;
 
     this.screenSize.width = screenSize.width;
 
     this.screenSize.height = screenSize.height;
+  }
+
+  public teardown(): void {
+    // Empty
   }
 }

@@ -9,11 +9,11 @@ export class WindowLinux extends WindowCommon {
     super();
   }
 
-  protected init(): void {
+  public init(): void {
     // Empty
   }
 
-  protected run(pid: number): void {
+  public run(pid: number): void {
     super.run(pid);
 
     const values: number[] = _.map(
@@ -33,5 +33,13 @@ export class WindowLinux extends WindowCommon {
     this.windowRect.right = this.screenSize.width - this.windowRect.left - values[3];
 
     this.windowRect.bottom = this.screenSize.height - this.windowRect.top - values[4];
+  }
+
+  public get focused(): boolean {
+    return Number.parseInt(execSync('xdotool getwindowfocus').toString(), 10) === this.windowId;
+  }
+
+  public teardown(): void {
+    // Empty
   }
 }

@@ -13,7 +13,7 @@ export abstract class KeyboardCommon {
     this.entitiesHandler.sheetToggle(point);
   }
 
-  protected run(): void {
+  public run(): void {
     // Empty
   }
 }

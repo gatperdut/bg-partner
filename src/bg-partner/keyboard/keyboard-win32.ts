@@ -23,7 +23,7 @@ export class KeyboardWin32 extends KeyboardCommon {
     });
   }
 
-  protected run(): void {
+  public run(): void {
     if (!this.windowHandler.focused) {
       return;
     }

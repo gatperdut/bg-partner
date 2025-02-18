@@ -8,7 +8,6 @@ export class KeyboardLinux extends KeyboardCommon {
   constructor(private windowHandler: WindowLinux, protected entitiesHandler: EntitiesHandler) {
     super(entitiesHandler);
 
-    // MIG
     globalShortcut.register('CommandOrControl+A', () => {
       this.windowHandler.focused && this.sheetToggle();
     });
@@ -18,5 +17,9 @@ export class KeyboardLinux extends KeyboardCommon {
         `wmctrl -i -r ${windowHandler.windowId} -e 0,0,0,${windowHandler.screenSize.width},${windowHandler.screenSize.height}`
       );
     });
+  }
+
+  public run(): void {
+    // Empty
   }
 }

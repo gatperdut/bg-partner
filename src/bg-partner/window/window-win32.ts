@@ -27,7 +27,7 @@ export class WindowWin32 extends WindowCommon {
     super();
   }
 
-  protected init(pid: number): void {
+  public init(pid: number): void {
     if (this.windowHandle) {
       return;
     }
@@ -49,7 +49,7 @@ export class WindowWin32 extends WindowCommon {
     return true;
   };
 
-  protected run(pid: number): void {
+  public run(pid: number): void {
     super.run(pid);
 
     DwmGetWindowAttribute(
@@ -60,7 +60,6 @@ export class WindowWin32 extends WindowCommon {
     );
   }
 
-  // MIG
   public get focused(): boolean {
     const foreground: HANDLE_PTR_TYPE = GetForegroundWindow();
 
