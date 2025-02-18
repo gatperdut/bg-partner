@@ -39,6 +39,10 @@ export class WindowLinux extends WindowCommon {
     return Number.parseInt(execSync('xdotool getwindowfocus').toString(), 10) === this.windowId;
   }
 
+  public setForeground(): void {
+    execSync('xdotool windowactivate ${this.windowId}');
+  }
+
   public teardown(): void {
     // Empty
   }

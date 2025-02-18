@@ -1,7 +1,7 @@
 import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
 import { Sheet } from './sheet/sheet';
 import { Sprite } from './sprite/sprite';
-import { WindowWin32 } from './window/window-win32';
+import { WindowCommon } from './window/window-common';
 
 export class Entity {
   public loaded: boolean = false;
@@ -11,7 +11,7 @@ export class Entity {
   public sprite: Sprite;
 
   constructor(
-    private windowHandler: WindowWin32,
+    private windowHandler: WindowCommon,
     private processHandle: HANDLE_PTR_TYPE,
     private gameObjectPtr: number
   ) {
@@ -27,16 +27,20 @@ export class Entity {
   }
 
   public pointMatch(pointScreen: Electron.Point): boolean {
-    const rectWidth: number = this.windowHandler.rect.right - this.windowHandler.rect.left;
+    const rectWidth: number =
+      this.windowHandler.windowRect.right - this.windowHandler.windowRect.left;
 
-    const rectHeight: number = this.windowHandler.rect.bottom - this.windowHandler.rect.top;
+    const rectHeight: number =
+      this.windowHandler.windowRect.bottom - this.windowHandler.windowRect.top;
 
     const spriteScreenX: number = Math.round(
-      this.windowHandler.rect.left + (this.sprite.relativeX / this.sprite.viewportX) * rectWidth
+      this.windowHandler.windowRect.left +
+        (this.sprite.relativeX / this.sprite.viewportX) * rectWidth
     );
 
     const spriteScreenY: number = Math.round(
-      this.windowHandler.rect.top + (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
+      this.windowHandler.windowRect.top +
+        (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
     );
 
     return (
@@ -48,7 +52,7 @@ export class Entity {
     if (this.sheet?.window) {
       this.sheet.teardown();
     } else {
-      this.sheet = new Sheet(this.windowHandler, this.sprite, this.windowHandler.rect, 'moe');
+      this.sheet = new Sheet(this.windowHandler, this.sprite, 'moe');
     }
   }
 }

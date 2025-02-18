@@ -1,6 +1,6 @@
 import os from 'os';
 import 'source-map-support/register';
-import { EntitiesHandler } from './entities.handler';
+import { Entities } from './entities';
 import { KeyboardLinux } from './keyboard/keyboard-linux';
 import { KeyboardWin32 } from './keyboard/keyboard-win32';
 import { MemHandler } from './mem.handler';
@@ -16,7 +16,7 @@ export class Main {
 
   private windowHandler: WindowLinux | WindowWin32;
 
-  private entitiesHandler: EntitiesHandler;
+  private entitiesHandler: Entities;
 
   private keyboardHandler: KeyboardLinux | KeyboardWin32;
 
@@ -25,7 +25,7 @@ export class Main {
 
     this.windowHandler = linux() ? new WindowLinux() : new WindowWin32();
 
-    this.entitiesHandler = new EntitiesHandler(this.windowHandler);
+    this.entitiesHandler = new Entities(this.windowHandler);
 
     this.keyboardHandler = linux()
       ? new KeyboardLinux(this.windowHandler as WindowLinux, this.entitiesHandler)

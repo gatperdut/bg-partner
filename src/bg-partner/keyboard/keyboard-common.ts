@@ -1,7 +1,7 @@
-import { EntitiesHandler } from '../entities.handler';
+import { Entities } from '../entities';
 
 export abstract class KeyboardCommon {
-  constructor(protected entitiesHandler: EntitiesHandler) {
+  constructor(protected entitiesHandler: Entities) {
     // Empty
   }
 

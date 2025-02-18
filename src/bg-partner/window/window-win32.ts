@@ -6,6 +6,7 @@ import {
   DwmGetWindowAttribute,
   EnumWindows,
   GetForegroundWindow,
+  SetForegroundWindow,
 } from '../koffi/defs/methods/windows';
 import { RECT } from '../koffi/defs/structs/rect';
 import { EnumWindowsCallbackRegister, getWindowThreadProcessId } from '../koffi/windows';
@@ -66,6 +67,10 @@ export class WindowWin32 extends WindowCommon {
     const foregroundPid = getWindowThreadProcessId(foreground);
 
     return this.windowPid === foregroundPid;
+  }
+
+  public setForeground(): void {
+    SetForegroundWindow(this.windowHandle);
   }
 
   public teardown(): void {

@@ -1,5 +1,5 @@
 import { globalShortcut } from 'electron';
-import { EntitiesHandler } from '../entities.handler';
+import { Entities } from '../entities';
 import {
   GWL_STYLE,
   HWND_TOP,
@@ -14,7 +14,7 @@ import { WindowWin32 } from '../window/window-win32';
 import { KeyboardCommon } from './keyboard-common';
 
 export class KeyboardWin32 extends KeyboardCommon {
-  constructor(private windowHandler: WindowWin32, protected entitiesHandler: EntitiesHandler) {
+  constructor(private windowHandler: WindowWin32, protected entitiesHandler: Entities) {
     super(entitiesHandler);
 
     // MIG

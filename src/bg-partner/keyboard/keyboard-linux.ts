@@ -1,11 +1,11 @@
 import { execSync } from 'child_process';
 import { globalShortcut } from 'electron';
-import { EntitiesHandler } from '../entities.handler';
+import { Entities } from '../entities';
 import { WindowLinux } from '../window/window-linux';
 import { KeyboardCommon } from './keyboard-common';
 
 export class KeyboardLinux extends KeyboardCommon {
-  constructor(private windowHandler: WindowLinux, protected entitiesHandler: EntitiesHandler) {
+  constructor(private windowHandler: WindowLinux, protected entitiesHandler: Entities) {
     super(entitiesHandler);
 
     globalShortcut.register('CommandOrControl+A', () => {

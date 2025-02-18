@@ -32,6 +32,10 @@ export abstract class WindowCommon {
     this.screenSize.height = screenSize.height;
   }
 
+  public setForeground(): void {
+    // Empty
+  }
+
   public teardown(): void {
     // Empty
   }

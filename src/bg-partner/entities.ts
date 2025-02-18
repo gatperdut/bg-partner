@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import { Entity } from './entity';
 import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
-import { WindowWin32 } from './window/window-win32';
+import { WindowCommon } from './window/window-common';
 
-export class EntitiesHandler {
+export class Entities {
   private entities: Record<number, Entity> = {};
 
-  constructor(private windowHandler: WindowWin32) {
+  constructor(private windowHandler: WindowCommon) {
     // Empty
   }
 

@@ -1,10 +1,8 @@
 import { BrowserWindow, ipcMain } from 'electron';
-import { SetForegroundWindow } from '../koffi/defs/methods/windows';
-import { RECT_TYPE } from '../koffi/defs/structs/rect';
 import { Sprite } from '../sprite/sprite';
 import { eaTable } from '../tables/ea';
 import { raceTable } from '../tables/race';
-import { WindowWin32 } from '../window/window-win32';
+import { WindowCommon } from '../window/window-common';
 import { SheetAPIOnInitializeParams } from './renderer';
 import { spriteSanitize } from './sprite-filter';
 
@@ -19,12 +17,7 @@ export class Sheet {
 
   public window: BrowserWindow;
 
-  constructor(
-    private windowHandler: WindowWin32,
-    private sprite: Sprite,
-    private rect: RECT_TYPE,
-    name: string
-  ) {
+  constructor(private windowHandler: WindowCommon, private sprite: Sprite, name: string) {
     this.window = new BrowserWindow({
       webPreferences: {
         preload: SHEET_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -62,7 +55,7 @@ export class Sheet {
 
     this.position();
 
-    SetForegroundWindow(this.windowHandler.windowHandle);
+    this.windowHandler.setForeground();
 
     ipcMain.on(`sheet.close.${sprite.id}`, (_event: Electron.IpcMainEvent): void => {
       this.teardown();
@@ -80,16 +73,20 @@ export class Sheet {
   }
 
   private position(): void {
-    const rectWidth: number = this.rect.right - this.rect.left;
+    const rectWidth: number =
+      this.windowHandler.windowRect.right - this.windowHandler.windowRect.left;
 
-    const rectHeight: number = this.rect.bottom - this.rect.top;
+    const rectHeight: number =
+      this.windowHandler.windowRect.bottom - this.windowHandler.windowRect.top;
 
     const spriteScreenX: number = Math.round(
-      this.rect.left + (this.sprite.relativeX / this.sprite.viewportX) * rectWidth
+      this.windowHandler.windowRect.left +
+        (this.sprite.relativeX / this.sprite.viewportX) * rectWidth
     );
 
     const spriteScreenY: number = Math.round(
-      this.rect.top + (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
+      this.windowHandler.windowRect.top +
+        (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
     );
 
     let sheetScreenX: number;
@@ -101,7 +98,7 @@ export class Sheet {
     // X
     const sheetPercentWidth: number = sheetSize[0] / rectWidth;
 
-    const spritePercentX: number = (spriteScreenX - this.rect.left) / rectWidth;
+    const spritePercentX: number = (spriteScreenX - this.windowHandler.windowRect.left) / rectWidth;
 
     const marginPercentX = 50 / rectWidth;
 
@@ -114,7 +111,7 @@ export class Sheet {
     // Y
     const sheetPercentHeight: number = sheetSize[1] / rectHeight;
 
-    const spritePercentY: number = (spriteScreenY - this.rect.top) / rectHeight;
+    const spritePercentY: number = (spriteScreenY - this.windowHandler.windowRect.top) / rectHeight;
 
     const sheetPercentHalfHeight: number = sheetPercentHeight / 2;
 
