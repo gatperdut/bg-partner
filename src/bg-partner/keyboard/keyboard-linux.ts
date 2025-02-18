@@ -15,7 +15,7 @@ export class KeyboardLinux extends KeyboardCommon {
 
     globalShortcut.register('CommandOrControl+Q', () => {
       execSync(
-        `wmctrl -i -r ${id} -e 0,0,0,${windowHandler.screenSize.width},${windowHandler.screenSize.height}`
+        `wmctrl -i -r ${windowHandler.windowId} -e 0,0,0,${windowHandler.screenSize.width},${windowHandler.screenSize.height}`
       );
     });
   }
