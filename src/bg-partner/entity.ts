@@ -1,7 +1,7 @@
 import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
 import { Sheet } from './sheet/sheet';
 import { Sprite } from './sprite/sprite';
-import { WindowHandler } from './window.handler';
+import { WindowWin32 } from './window/window-win32';
 
 export class Entity {
   public loaded: boolean = false;
@@ -11,7 +11,7 @@ export class Entity {
   public sprite: Sprite;
 
   constructor(
-    private windowHandler: WindowHandler,
+    private windowHandler: WindowWin32,
     private processHandle: HANDLE_PTR_TYPE,
     private gameObjectPtr: number
   ) {

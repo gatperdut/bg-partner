@@ -1,26 +1,35 @@
+import os from 'os';
 import 'source-map-support/register';
 import { EntitiesHandler } from './entities.handler';
-import { KeyboardHandler } from './keyboard.handler';
+import { KeyboardLinux } from './keyboard/keyboard-linux';
+import { KeyboardWin32 } from './keyboard/keyboard-win32';
 import { MemHandler } from './mem.handler';
-import { WindowHandler } from './window.handler';
+import { WindowLinux } from './window/window-linux';
+import { WindowWin32 } from './window/window-win32';
+
+const linux = (): boolean => {
+  return os.platform() === 'linux';
+};
 
 export class Main {
   private memHandler: MemHandler;
 
-  private windowHandler: WindowHandler;
+  private windowHandler: WindowLinux | WindowWin32;
 
   private entitiesHandler: EntitiesHandler;
 
-  private keyboardHandler: KeyboardHandler;
+  private keyboardHandler: KeyboardLinux | KeyboardWin32;
 
   constructor() {
     this.memHandler = new MemHandler();
 
-    this.windowHandler = new WindowHandler();
+    this.windowHandler = linux() ? new WindowLinux() : new WindowWin32();
 
     this.entitiesHandler = new EntitiesHandler(this.windowHandler);
 
-    this.keyboardHandler = new KeyboardHandler(this.windowHandler, this.entitiesHandler);
+    this.keyboardHandler = linux()
+      ? new KeyboardLinux(this.windowHandler as WindowLinux, this.entitiesHandler)
+      : new KeyboardWin32(this.windowHandler as WindowWin32, this.entitiesHandler);
   }
 
   public run(): void {

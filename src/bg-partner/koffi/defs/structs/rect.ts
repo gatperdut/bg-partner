@@ -9,19 +9,3 @@ export const RECT = koffi.struct('RECT', {
 });
 
 export const RECT_PTR = koffi.pointer(RECT);
-
-export type RECT_TYPE = {
-  left: number;
-  top: number;
-  right: number;
-  bottom: number;
-};
-
-export const RECT_empty = (): RECT_TYPE => {
-  return {
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-  };
-};

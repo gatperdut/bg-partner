@@ -4,7 +4,7 @@ import { RECT_TYPE } from '../koffi/defs/structs/rect';
 import { Sprite } from '../sprite/sprite';
 import { eaTable } from '../tables/ea';
 import { raceTable } from '../tables/race';
-import { WindowHandler } from '../window.handler';
+import { WindowWin32 } from '../window/window-win32';
 import { SheetAPIOnInitializeParams } from './renderer';
 import { spriteSanitize } from './sprite-filter';
 
@@ -20,7 +20,7 @@ export class Sheet {
   public window: BrowserWindow;
 
   constructor(
-    private windowHandler: WindowHandler,
+    private windowHandler: WindowWin32,
     private sprite: Sprite,
     private rect: RECT_TYPE,
     name: string

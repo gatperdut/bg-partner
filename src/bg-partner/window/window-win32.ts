@@ -1,37 +1,33 @@
-import { screen } from 'electron';
 import koffi from 'koffi';
-import { DWMWA_EXTENDED_FRAME_BOUNDS } from './koffi/defs/constants';
-import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
-import { CloseHandle } from './koffi/defs/methods/process';
+import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../koffi/defs/constants';
+import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
+import { CloseHandle } from '../koffi/defs/methods/process';
 import {
   DwmGetWindowAttribute,
   EnumWindows,
   GetForegroundWindow,
-} from './koffi/defs/methods/windows';
-import { RECT, RECT_empty, RECT_TYPE } from './koffi/defs/structs/rect';
-import { EnumWindowsCallbackRegister, getWindowThreadProcessId } from './koffi/windows';
+} from '../koffi/defs/methods/windows';
+import { RECT } from '../koffi/defs/structs/rect';
+import { EnumWindowsCallbackRegister, getWindowThreadProcessId } from '../koffi/windows';
+import { WindowCommon } from './window-common';
 
 export type Screen = {
   width: number;
   height: number;
 };
 
-export class WindowHandler {
+export class WindowWin32 extends WindowCommon {
   public windowHandle: HANDLE_PTR_TYPE;
 
   private windowPid: number;
 
   private callback: unknown;
 
-  public rect: RECT_TYPE;
-
-  public screen: Screen;
-
   constructor() {
-    // Empty
+    super();
   }
 
-  public init(pid: number): void {
+  protected init(pid: number): void {
     if (this.windowHandle) {
       return;
     }
@@ -39,13 +35,6 @@ export class WindowHandler {
     this.callback = EnumWindowsCallbackRegister(this.enumWindowsCallback);
 
     EnumWindows(this.callback, pid);
-
-    this.rect = RECT_empty();
-
-    this.screen = {
-      width: null,
-      height: null,
-    };
   }
 
   private enumWindowsCallback = (windowHandle: HANDLE_PTR_TYPE, someWindowPid: number) => {
@@ -60,21 +49,18 @@ export class WindowHandler {
     return true;
   };
 
-  public run(): void {
+  protected run(pid: number): void {
+    super.run(pid);
+
     DwmGetWindowAttribute(
       this.windowHandle,
       DWMWA_EXTENDED_FRAME_BOUNDS,
-      this.rect,
+      this.windowRect,
       koffi.sizeof(RECT)
     );
-
-    const size: Electron.Size = screen.getPrimaryDisplay().size;
-
-    this.screen.width = size.width;
-
-    this.screen.height = size.height;
   }
 
+  // MIG
   public get focused(): boolean {
     const foreground: HANDLE_PTR_TYPE = GetForegroundWindow();
 
