@@ -3,7 +3,7 @@ import 'source-map-support/register';
 import { Entities } from './entities';
 import { KeyboardLinux } from './keyboard/keyboard-linux';
 import { KeyboardWin32 } from './keyboard/keyboard-win32';
-import { MemHandler } from './mem.handler';
+import { MemHandler } from './mem/mem.handler';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 

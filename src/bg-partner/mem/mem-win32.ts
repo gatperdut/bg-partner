@@ -2,10 +2,11 @@ import koffi from 'koffi';
 import {
   PROCESS_QUERY_LIMITED_INFORMATION,
   PROCESS_VM_READ,
+  STILL_ACTIVE,
   TH32CS_SNAPMODULE,
   TH32CS_SNAPPROCESS,
-} from './koffi/defs/constants';
-import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
+} from '../koffi/defs/constants';
+import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
 import {
   CloseHandle,
   CreateToolhelp32Snapshot,
@@ -14,30 +15,23 @@ import {
   OpenProcess,
   Process32First,
   Process32Next,
-} from './koffi/defs/methods/process';
-import { MODULEENTRY32_TYPE, MODULEENTRY32_empty } from './koffi/defs/structs/moduleentry32';
-import { PROCESSENTRY32_TYPE, PROCESSENTRY32_empty } from './koffi/defs/structs/processentry32';
-import { memReadNumber } from './koffi/memread';
-import { isProcessAlive } from './koffi/system';
-import { joinName } from './utils';
+} from '../koffi/defs/methods/process';
+import { GetExitCodeProcess } from '../koffi/defs/methods/system';
+import { MODULEENTRY32_TYPE, MODULEENTRY32_empty } from '../koffi/defs/structs/moduleentry32';
+import { PROCESSENTRY32_TYPE, PROCESSENTRY32_empty } from '../koffi/defs/structs/processentry32';
+import { memReadNumber } from '../koffi/memread';
+import { joinName } from '../utils';
+import { MemCommon } from './mem-common';
 
-export class MemHandler {
+export class MemHandler extends MemCommon {
   private processSnapshot: HANDLE_PTR_TYPE;
 
   public processHandle: HANDLE_PTR_TYPE;
 
-  public pid: number;
-
   public modBaseAddr: bigint;
 
-  public gameObjectPtrs: number[];
-
-  public alive: boolean = false;
-
-  private waitingPrinted: boolean = false;
-
   constructor() {
-    // Empty
+    super();
   }
 
   public init(): void {
@@ -98,10 +92,18 @@ export class MemHandler {
     CloseHandle(moduleSnapshot);
   }
 
+  protected isProcessAlive(): boolean {
+    const result: number[] = [0];
+
+    GetExitCodeProcess(this.processHandle, result);
+
+    return result[0] === STILL_ACTIVE;
+  }
+
   public run(): void {
     this.gameObjectPtrs = [];
 
-    this.alive = isProcessAlive(this.processHandle);
+    this.alive = this.isProcessAlive();
 
     if (!this.alive) {
       this.pid = null;
