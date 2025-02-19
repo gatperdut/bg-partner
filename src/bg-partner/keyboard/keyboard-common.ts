@@ -1,3 +1,4 @@
+import Electron from 'electron';
 import { Entities } from '../entities';
 
 export abstract class KeyboardCommon {

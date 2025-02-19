@@ -1,8 +1,8 @@
 import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
 import { NUMBER } from '../koffi/defs/primitives';
 import { TargetProcess } from '../mem/mem-common';
-import { joinName } from '../utils';
-import { ReadProcessMemoryNumberSize, Wincalls } from '../wincalls';
+import { joinName, NumberSizesWin32 } from '../utils';
+import { Wincalls } from '../wincalls';
 
 export class MemreadWin32 {
   constructor(private wincalls: Wincalls) {
@@ -20,7 +20,7 @@ export class MemreadWin32 {
       // @ts-ignore
       ptr,
       value,
-      ReadProcessMemoryNumberSize[type],
+      NumberSizesWin32[type],
       bytesRead
     );
 

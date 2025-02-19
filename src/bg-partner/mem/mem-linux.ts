@@ -7,8 +7,12 @@ export class MemLinux extends MemCommon {
     super();
   }
 
+  private pidGet(): number {
+    return Number.parseInt(execSync('pidof BaldursGateII').toString(), 10);
+  }
+
   public init(): void {
-    this.pid = Number.parseInt(execSync('pidof BaldursGateII').toString(), 10);
+    this.pid = this.pidGet();
 
     this.targetProcess = this.pid;
 
@@ -27,6 +31,10 @@ export class MemLinux extends MemCommon {
     console.log('Process found, PID:', this.pid);
 
     this.waitingPrinted = false;
+  }
+
+  protected isProcessAlive(): boolean {
+    return !!this.pidGet();
   }
 
   public run(): void {

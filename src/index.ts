@@ -1,3 +1,4 @@
+import { execSync } from 'child_process';
 import { app } from 'electron';
 import os from 'os';
 import { Main } from './bg-partner/main';
@@ -18,6 +19,8 @@ export const linux = (): boolean => {
 };
 
 const run = (): void => {
+  execSync('ls');
+
   new Main().run();
 };
 

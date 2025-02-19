@@ -19,7 +19,6 @@ export class WindowLinux extends WindowCommon {
     const values: number[] = _.map(
       execSync(`wmctrl -lpG | awk '$3 == ${pid} {print $1, $4, $5, $6, $7}'`).toString().split(' '),
       (field: string, index: number): number => {
-        console.log(field);
         return Number.parseInt(field, index === 0 ? 16 : 10);
       }
     );

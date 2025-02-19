@@ -1,3 +1,5 @@
+import Electron from 'electron';
+
 export type WindowRect = {
   left: number;
   top: number;

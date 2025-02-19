@@ -53,20 +53,6 @@ type ReadProcessMemoryFn = (
   bytesRead: number[]
 ) => number;
 
-export const ReadProcessMemoryNumberSize: Record<NUMBER, number> = {
-  BOOL: 1,
-  BYTE: 1,
-  UINT8: 1,
-  INT16: 2,
-  UINT16: 2,
-  UINT32: 4,
-  INT32: 4,
-  DWORD: 4,
-  LONG: 4,
-  ULONG: 4,
-  PTR: 4,
-};
-
 export class Wincalls {
   public user32 = koffi.load('user32.dll');
 

@@ -104,7 +104,7 @@ export class Sprite {
     );
 
     this.name = this.memread.memReadString(this.targetProcess, BigInt(namePtr));
-
+    console.log(this.name);
     this.viewportX = this.memread.memReadNumber(
       this.targetProcess,
       BigInt(this.gameAreaPtr + 0x5c8 + 0x78 + 0x8),
