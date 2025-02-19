@@ -1,4 +1,4 @@
-import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
+import { TargetProcess } from './mem/mem-common';
 import { Sheet } from './sheet/sheet';
 import { Sprite } from './sprite/sprite';
 import { WindowCommon } from './window/window-common';
@@ -12,7 +12,7 @@ export class Entity {
 
   constructor(
     private windowHandler: WindowCommon,
-    private processHandle: HANDLE_PTR_TYPE,
+    private processHandle: TargetProcess,
     private gameObjectPtr: number
   ) {
     this.sprite = new Sprite(this.processHandle, this.gameObjectPtr);

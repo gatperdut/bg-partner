@@ -3,16 +3,17 @@ import 'source-map-support/register';
 import { Entities } from './entities';
 import { KeyboardLinux } from './keyboard/keyboard-linux';
 import { KeyboardWin32 } from './keyboard/keyboard-win32';
-import { MemHandler } from './mem/mem.handler';
+import { MemLinux } from './mem/mem-linux';
+import { MemWin32 } from './mem/mem-win32';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 
-const linux = (): boolean => {
+export const linux = (): boolean => {
   return os.platform() === 'linux';
 };
 
 export class Main {
-  private memHandler: MemHandler;
+  private memHandler: MemLinux | MemWin32;
 
   private windowHandler: WindowLinux | WindowWin32;
 
@@ -21,7 +22,7 @@ export class Main {
   private keyboardHandler: KeyboardLinux | KeyboardWin32;
 
   constructor() {
-    this.memHandler = new MemHandler();
+    this.memHandler = linux() ? new MemLinux() : new MemWin32();
 
     this.windowHandler = linux() ? new WindowLinux() : new WindowWin32();
 
@@ -55,7 +56,7 @@ export class Main {
 
     this.windowHandler.run(this.memHandler.pid);
 
-    this.entitiesHandler.run(this.memHandler.processHandle, this.memHandler.gameObjectPtrs);
+    this.entitiesHandler.run(this.memHandler.targetProcess, this.memHandler.gameObjectPtrs);
 
     this.keyboardHandler.run();
   }

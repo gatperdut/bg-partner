@@ -1,5 +1,5 @@
-import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
-import { memReadNumber, memReadString } from '../koffi/memread';
+import { TargetProcess } from '../mem/mem-common';
+import { memReadNumber, memReadString } from '../memread';
 import { Derived, derivedEmpty, derivedFill } from './derived';
 
 export class Sprite {
@@ -44,7 +44,7 @@ export class Sprite {
   public derivedBonus: Derived = derivedEmpty();
   public derivedTemp: Derived = derivedEmpty();
 
-  constructor(public procHandle: HANDLE_PTR_TYPE, public basePtr: number) {
+  constructor(public procHandle: TargetProcess, public basePtr: number) {
     this.basic();
   }
 

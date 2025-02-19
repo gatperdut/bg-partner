@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Entity } from './entity';
-import { HANDLE_PTR_TYPE } from './koffi/defs/handles';
+import { TargetProcess } from './mem/mem-common';
 import { WindowCommon } from './window/window-common';
 
 export class Entities {
@@ -10,7 +10,7 @@ export class Entities {
     // Empty
   }
 
-  public run(processHandle: HANDLE_PTR_TYPE, gameObjectPtrs: number[]): void {
+  public run(processHandle: TargetProcess, gameObjectPtrs: number[]): void {
     const entities: Entity[] = _.filter(
       _.map(
         gameObjectPtrs,

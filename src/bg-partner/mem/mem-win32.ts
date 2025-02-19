@@ -19,14 +19,12 @@ import {
 import { GetExitCodeProcess } from '../koffi/defs/methods/system';
 import { MODULEENTRY32_TYPE, MODULEENTRY32_empty } from '../koffi/defs/structs/moduleentry32';
 import { PROCESSENTRY32_TYPE, PROCESSENTRY32_empty } from '../koffi/defs/structs/processentry32';
-import { memReadNumber } from '../koffi/memread';
+import { memReadNumber } from '../memread';
 import { joinName } from '../utils';
 import { MemCommon } from './mem-common';
 
-export class MemHandler extends MemCommon {
+export class MemWin32 extends MemCommon {
   private processSnapshot: HANDLE_PTR_TYPE;
-
-  public processHandle: HANDLE_PTR_TYPE;
 
   public modBaseAddr: bigint;
 
@@ -60,7 +58,7 @@ export class MemHandler extends MemCommon {
 
       CloseHandle(this.processSnapshot);
 
-      CloseHandle(this.processHandle);
+      CloseHandle(this.targetProcess);
 
       return;
     }
@@ -83,7 +81,7 @@ export class MemHandler extends MemCommon {
 
     this.modBaseAddr = koffi.address(moduleEntry32.modBaseAddr);
 
-    this.processHandle = OpenProcess(
+    this.targetProcess = OpenProcess(
       PROCESS_VM_READ | PROCESS_QUERY_LIMITED_INFORMATION,
       true,
       this.pid
@@ -95,7 +93,7 @@ export class MemHandler extends MemCommon {
   protected isProcessAlive(): boolean {
     const result: number[] = [0];
 
-    GetExitCodeProcess(this.processHandle, result);
+    GetExitCodeProcess(this.targetProcess, result);
 
     return result[0] === STILL_ACTIVE;
   }
@@ -112,9 +110,9 @@ export class MemHandler extends MemCommon {
 
       this.processSnapshot = null;
 
-      CloseHandle(this.processHandle);
+      CloseHandle(this.targetProcess);
 
-      this.processHandle = null;
+      this.targetProcess = null;
 
       return;
     }
@@ -122,7 +120,7 @@ export class MemHandler extends MemCommon {
     const offset: number = 0x68d434;
 
     const numEntities: number = memReadNumber(
-      this.processHandle,
+      this.targetProcess,
       this.modBaseAddr + BigInt(offset),
       'INT32'
     );
@@ -131,7 +129,7 @@ export class MemHandler extends MemCommon {
 
     for (let i = 2000 * 16; i <= numEntities * 16 + 96; i += 16) {
       this.gameObjectPtrs.push(
-        memReadNumber(this.processHandle, listPointer + BigInt(i + 8), 'PTR')
+        memReadNumber(this.targetProcess, listPointer + BigInt(i + 8), 'PTR')
       );
     }
   }
