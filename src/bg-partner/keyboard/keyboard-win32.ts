@@ -8,13 +8,17 @@ import {
   VK_RMENU,
   WS_MAXIMIZE,
 } from '../koffi/defs/constants';
-import { GetAsyncKeyState } from '../koffi/defs/methods/keyboard';
-import { SetWindowLongA, SetWindowPos, ShowWindow } from '../koffi/defs/methods/windows';
+
+import { Wincalls } from '../wincalls';
 import { WindowWin32 } from '../window/window-win32';
 import { KeyboardCommon } from './keyboard-common';
 
 export class KeyboardWin32 extends KeyboardCommon {
-  constructor(private windowHandler: WindowWin32, protected entitiesHandler: Entities) {
+  constructor(
+    private windowHandler: WindowWin32,
+    protected entitiesHandler: Entities,
+    private wincalls: Wincalls
+  ) {
     super(entitiesHandler);
 
     // MIG
@@ -28,14 +32,14 @@ export class KeyboardWin32 extends KeyboardCommon {
       return;
     }
 
-    const rAlt = GetAsyncKeyState(VK_RMENU);
+    const rAlt = this.wincalls.GetAsyncKeyState(VK_RMENU);
 
     if (rAlt) {
-      SetWindowLongA(this.windowHandler.windowHandle, GWL_STYLE, WS_MAXIMIZE);
+      this.wincalls.SetWindowLongA(this.windowHandler.windowHandle, GWL_STYLE, WS_MAXIMIZE);
 
-      ShowWindow(this.windowHandler.windowHandle, SW_SHOW);
+      this.wincalls.ShowWindow(this.windowHandler.windowHandle, SW_SHOW);
 
-      SetWindowPos(
+      this.wincalls.SetWindowPos(
         this.windowHandler.windowHandle,
         HWND_TOP,
         0,

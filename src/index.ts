@@ -1,4 +1,5 @@
 import { app } from 'electron';
+import os from 'os';
 import { Main } from './bg-partner/main';
 
 declare global {
@@ -11,6 +12,10 @@ declare global {
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
+
+export const linux = (): boolean => {
+  return os.platform() === 'linux';
+};
 
 const run = (): void => {
   new Main().run();

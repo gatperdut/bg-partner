@@ -1,5 +1,5 @@
 import { TargetProcess } from '../mem/mem-common';
-import { memReadNumber, memReadString } from '../memread';
+import { Memread } from '../memread/memread';
 import { Derived, derivedEmpty, derivedFill } from './derived';
 
 export class Sprite {
@@ -44,7 +44,11 @@ export class Sprite {
   public derivedBonus: Derived = derivedEmpty();
   public derivedTemp: Derived = derivedEmpty();
 
-  constructor(public procHandle: TargetProcess, public basePtr: number) {
+  constructor(
+    public targetProcess: TargetProcess,
+    public basePtr: number,
+    public memread: Memread
+  ) {
     this.basic();
   }
 
@@ -63,40 +67,62 @@ export class Sprite {
   }
 
   public basic(): void {
-    this.type = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x8), 'UINT8');
+    this.type = this.memread.memReadNumber(this.targetProcess, BigInt(this.basePtr + 0x8), 'UINT8');
 
-    this.gameAreaPtr = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x18), 'PTR');
+    this.gameAreaPtr = this.memread.memReadNumber(
+      this.targetProcess,
+      BigInt(this.basePtr + 0x18),
+      'PTR'
+    );
 
-    this.hp = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x560 + 0x1c), 'INT16');
+    this.hp = this.memread.memReadNumber(
+      this.targetProcess,
+      BigInt(this.basePtr + 0x560 + 0x1c),
+      'INT16'
+    );
 
-    this.canBeSeen = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x4c), 'INT16');
+    this.canBeSeen = this.memread.memReadNumber(
+      this.targetProcess,
+      BigInt(this.basePtr + 0x4c),
+      'INT16'
+    );
 
-    this.resref = memReadString(this.procHandle, BigInt(this.basePtr + 0x540)).replace(/\*/g, '');
+    this.resref = this.memread
+      .memReadString(this.targetProcess, BigInt(this.basePtr + 0x540))
+      .replace(/\*/g, '');
 
-    this.id = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x48), 'UINT32');
+    this.id = this.memread.memReadNumber(this.targetProcess, BigInt(this.basePtr + 0x48), 'UINT32');
 
-    this.x = memReadNumber(this.procHandle, BigInt(this.basePtr + 0xc), 'UINT32');
+    this.x = this.memread.memReadNumber(this.targetProcess, BigInt(this.basePtr + 0xc), 'UINT32');
 
-    this.y = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x10), 'UINT32');
+    this.y = this.memread.memReadNumber(this.targetProcess, BigInt(this.basePtr + 0x10), 'UINT32');
 
-    const namePtr = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x3928), 'PTR');
+    const namePtr = this.memread.memReadNumber(
+      this.targetProcess,
+      BigInt(this.basePtr + 0x3928),
+      'PTR'
+    );
 
-    this.name = memReadString(this.procHandle, BigInt(namePtr));
+    this.name = this.memread.memReadString(this.targetProcess, BigInt(namePtr));
 
-    this.viewportX = memReadNumber(
-      this.procHandle,
+    this.viewportX = this.memread.memReadNumber(
+      this.targetProcess,
       BigInt(this.gameAreaPtr + 0x5c8 + 0x78 + 0x8),
       'INT32'
     );
-    this.viewportY = memReadNumber(
-      this.procHandle,
+    this.viewportY = this.memread.memReadNumber(
+      this.targetProcess,
       BigInt(this.gameAreaPtr + 0x5c8 + 0x78 + 0x8 + 0x4),
       'INT32'
     );
 
-    this.scrollX = memReadNumber(this.procHandle, BigInt(this.gameAreaPtr + 0x5c8 + 0xc0), 'INT32');
-    this.scrollY = memReadNumber(
-      this.procHandle,
+    this.scrollX = this.memread.memReadNumber(
+      this.targetProcess,
+      BigInt(this.gameAreaPtr + 0x5c8 + 0xc0),
+      'INT32'
+    );
+    this.scrollY = this.memread.memReadNumber(
+      this.targetProcess,
       BigInt(this.gameAreaPtr + 0x5c8 + 0xc0 + 0x4),
       'INT32'
     );
@@ -106,14 +132,22 @@ export class Sprite {
   }
 
   public advanced(): void {
-    this.enemyAlly = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x38), 'BYTE');
+    this.enemyAlly = this.memread.memReadNumber(
+      this.targetProcess,
+      BigInt(this.basePtr + 0x38),
+      'BYTE'
+    );
 
-    this.race = memReadNumber(this.procHandle, BigInt(this.basePtr + 0x30 + 0xa), 'BYTE');
+    this.race = this.memread.memReadNumber(
+      this.targetProcess,
+      BigInt(this.basePtr + 0x30 + 0xa),
+      'BYTE'
+    );
 
-    derivedFill(this.procHandle, this.basePtr + 0x1120, this.derived);
+    derivedFill(this.memread, this.targetProcess, this.basePtr + 0x1120, this.derived);
 
-    derivedFill(this.procHandle, this.basePtr + 0x2a70, this.derivedBonus);
+    derivedFill(this.memread, this.targetProcess, this.basePtr + 0x2a70, this.derivedBonus);
 
-    derivedFill(this.procHandle, this.basePtr + 0x1dc8, this.derivedTemp);
+    derivedFill(this.memread, this.targetProcess, this.basePtr + 0x1dc8, this.derivedTemp);
   }
 }

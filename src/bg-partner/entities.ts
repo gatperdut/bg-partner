@@ -1,12 +1,13 @@
 import _ from 'lodash';
 import { Entity } from './entity';
 import { TargetProcess } from './mem/mem-common';
+import { Memread } from './memread/memread';
 import { WindowCommon } from './window/window-common';
 
 export class Entities {
   private entities: Record<number, Entity> = {};
 
-  constructor(private windowHandler: WindowCommon) {
+  constructor(private windowHandler: WindowCommon, private memread: Memread) {
     // Empty
   }
 
@@ -15,7 +16,7 @@ export class Entities {
       _.map(
         gameObjectPtrs,
         (gameObjectPtr: number): Entity =>
-          new Entity(this.windowHandler, processHandle, gameObjectPtr)
+          new Entity(this.windowHandler, processHandle, gameObjectPtr, this.memread)
       ),
       (entity: Entity): boolean => entity.loaded
     );

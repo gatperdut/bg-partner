@@ -1,4 +1,5 @@
 import { TargetProcess } from './mem/mem-common';
+import { Memread } from './memread/memread';
 import { Sheet } from './sheet/sheet';
 import { Sprite } from './sprite/sprite';
 import { WindowCommon } from './window/window-common';
@@ -13,9 +14,10 @@ export class Entity {
   constructor(
     private windowHandler: WindowCommon,
     private processHandle: TargetProcess,
-    private gameObjectPtr: number
+    private gameObjectPtr: number,
+    private memread: Memread
   ) {
-    this.sprite = new Sprite(this.processHandle, this.gameObjectPtr);
+    this.sprite = new Sprite(this.processHandle, this.gameObjectPtr, this.memread);
 
     this.loaded = !this.sprite.invalid;
   }
