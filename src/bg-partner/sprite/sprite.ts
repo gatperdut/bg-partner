@@ -46,7 +46,7 @@ export class Sprite {
 
   constructor(
     public targetProcess: TargetProcess,
-    public basePtr: number,
+    public basePtr: bigint,
     public memread: Memread
   ) {
     this.basic();
@@ -67,44 +67,44 @@ export class Sprite {
   }
 
   public basic(): void {
-    this.type = this.memread.memReadNumber(this.targetProcess, BigInt(this.basePtr + 0x8), 'UINT8');
+    this.type = this.memread.memReadNumber(this.targetProcess, this.basePtr + BigInt(0x8), 'UINT8');
 
     this.gameAreaPtr = this.memread.memReadNumber(
       this.targetProcess,
-      BigInt(this.basePtr + 0x18),
+      this.basePtr + BigInt(0x18),
       'PTR'
     );
 
     this.hp = this.memread.memReadNumber(
       this.targetProcess,
-      BigInt(this.basePtr + 0x560 + 0x1c),
+      this.basePtr + BigInt(0x560 + 0x1c),
       'INT16'
     );
 
     this.canBeSeen = this.memread.memReadNumber(
       this.targetProcess,
-      BigInt(this.basePtr + 0x4c),
+      this.basePtr + BigInt(0x4c),
       'INT16'
     );
 
     this.resref = this.memread
-      .memReadString(this.targetProcess, BigInt(this.basePtr + 0x540))
+      .memReadString(this.targetProcess, this.basePtr + BigInt(0x540))
       .replace(/\*/g, '');
 
-    this.id = this.memread.memReadNumber(this.targetProcess, BigInt(this.basePtr + 0x48), 'UINT32');
+    this.id = this.memread.memReadNumber(this.targetProcess, this.basePtr + BigInt(0x48), 'UINT32');
 
-    this.x = this.memread.memReadNumber(this.targetProcess, BigInt(this.basePtr + 0xc), 'UINT32');
+    this.x = this.memread.memReadNumber(this.targetProcess, this.basePtr + BigInt(0xc), 'UINT32');
 
-    this.y = this.memread.memReadNumber(this.targetProcess, BigInt(this.basePtr + 0x10), 'UINT32');
+    this.y = this.memread.memReadNumber(this.targetProcess, this.basePtr + BigInt(0x10), 'UINT32');
 
     const namePtr = this.memread.memReadNumber(
       this.targetProcess,
-      BigInt(this.basePtr + 0x3928),
+      this.basePtr + BigInt(0x3928),
       'PTR'
     );
 
     this.name = this.memread.memReadString(this.targetProcess, BigInt(namePtr));
-    console.log(this.name);
+
     this.viewportX = this.memread.memReadNumber(
       this.targetProcess,
       BigInt(this.gameAreaPtr + 0x5c8 + 0x78 + 0x8),
@@ -134,20 +134,20 @@ export class Sprite {
   public advanced(): void {
     this.enemyAlly = this.memread.memReadNumber(
       this.targetProcess,
-      BigInt(this.basePtr + 0x38),
+      this.basePtr + BigInt(0x38),
       'BYTE'
     );
 
     this.race = this.memread.memReadNumber(
       this.targetProcess,
-      BigInt(this.basePtr + 0x30 + 0xa),
+      this.basePtr + BigInt(0x30 + 0xa),
       'BYTE'
     );
 
-    derivedFill(this.memread, this.targetProcess, this.basePtr + 0x1120, this.derived);
+    derivedFill(this.memread, this.targetProcess, this.basePtr + BigInt(0x1120), this.derived);
 
-    derivedFill(this.memread, this.targetProcess, this.basePtr + 0x2a70, this.derivedBonus);
+    derivedFill(this.memread, this.targetProcess, this.basePtr + BigInt(0x2a70), this.derivedBonus);
 
-    derivedFill(this.memread, this.targetProcess, this.basePtr + 0x1dc8, this.derivedTemp);
+    derivedFill(this.memread, this.targetProcess, this.basePtr + BigInt(0x1dc8), this.derivedTemp);
   }
 }

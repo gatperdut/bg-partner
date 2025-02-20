@@ -11,13 +11,12 @@ export class Entities {
     // Empty
   }
 
-  public run(processHandle: TargetProcess, gameObjectPtrs: number[]): void {
+  public run(processHandle: TargetProcess, gameObjectPtrs: bigint[]): void {
     const entities: Entity[] = _.filter(
-      _.map(
-        gameObjectPtrs,
-        (gameObjectPtr: number): Entity =>
-          new Entity(this.windowHandler, processHandle, gameObjectPtr, this.memread)
-      ),
+      _.map(gameObjectPtrs, (gameObjectPtr: bigint, index: number): Entity => {
+        console.log(index);
+        return new Entity(this.windowHandler, processHandle, gameObjectPtr, this.memread);
+      }),
       (entity: Entity): boolean => entity.loaded
     );
 

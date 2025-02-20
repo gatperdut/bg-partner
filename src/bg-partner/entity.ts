@@ -14,7 +14,7 @@ export class Entity {
   constructor(
     private windowHandler: WindowCommon,
     private processHandle: TargetProcess,
-    private gameObjectPtr: number,
+    private gameObjectPtr: bigint,
     private memread: Memread
   ) {
     this.sprite = new Sprite(this.processHandle, this.gameObjectPtr, this.memread);

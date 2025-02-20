@@ -119,9 +119,9 @@ export class MemWin32 extends MemCommon {
 
     const listPointer: bigint = this.modBaseAddr + BigInt(offset + 0x4 + 0x18);
 
-    for (let i = 2000 * 16; i <= numEntities * 16 + 96; i += 16) {
+    for (let i: number = 2000 * 16; i <= numEntities * 16 + 96; i += 16) {
       this.gameObjectPtrs.push(
-        this.memread.memReadNumber(this.targetProcess, listPointer + BigInt(i + 8), 'PTR')
+        BigInt(this.memread.memReadNumber(this.targetProcess, listPointer + BigInt(i + 8), 'PTR'))
       );
     }
   }

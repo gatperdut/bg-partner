@@ -11,14 +11,10 @@ export class MemCommon {
 
   protected waitingPrinted: boolean = false;
 
-  public gameObjectPtrs: number[];
+  public gameObjectPtrs: bigint[];
 
   public init(): void {
     // Empty
-  }
-
-  protected isProcessAlive(): boolean {
-    return false;
   }
 
   public run(): void {

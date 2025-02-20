@@ -60,7 +60,7 @@ export class MemLinux extends MemCommon {
 
     for (let i = 2001 * 16; i <= numEntities * 16 + 96; i += 16) {
       this.gameObjectPtrs.push(
-        this.memread.memReadNumber(this.pid, listPointer + BigInt(i + 8), 'PTR')
+        BigInt(this.memread.memReadNumber(this.pid, listPointer + BigInt(i + 8), 'PTR'))
       );
     }
   }
