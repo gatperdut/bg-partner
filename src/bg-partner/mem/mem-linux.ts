@@ -54,7 +54,7 @@ export class MemLinux extends MemCommon {
       this.pid,
       BigInt(0x55555613f776),
       'INT16'
-    );
+    ) as number;
 
     const listPointer: bigint = BigInt(0x5555560bf780);
 

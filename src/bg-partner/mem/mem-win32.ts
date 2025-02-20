@@ -115,7 +115,7 @@ export class MemWin32 extends MemCommon {
       this.targetProcess,
       this.modBaseAddr + BigInt(offset),
       'INT32'
-    );
+    ) as number;
 
     const listPointer: bigint = this.modBaseAddr + BigInt(offset + 0x4 + 0x18);
 

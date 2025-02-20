@@ -29,9 +29,9 @@ export class WindowLinux extends WindowCommon {
 
     this.windowRect.top = values[2];
 
-    this.windowRect.right = this.screenSize.width - this.windowRect.left - values[3];
+    this.windowRect.right = this.windowRect.left + values[3];
 
-    this.windowRect.bottom = this.screenSize.height - this.windowRect.top - values[4];
+    this.windowRect.bottom = this.windowRect.top + values[4];
   }
 
   public get focused(): boolean {
@@ -39,7 +39,7 @@ export class WindowLinux extends WindowCommon {
   }
 
   public setForeground(): void {
-    execSync('xdotool windowactivate ${this.windowId}');
+    execSync(`xdotool windowactivate ${this.windowId}`);
   }
 
   public teardown(): void {

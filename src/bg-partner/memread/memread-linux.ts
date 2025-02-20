@@ -1,16 +1,22 @@
 import { NUMBER } from '../koffi/defs/primitives';
 
-import { execSync } from 'child_process';
+import { Linuxcalls } from '../linuxcalls';
 import { TargetProcess } from '../mem/mem-common';
-import { joinName, NumberFlagsLinux, NumberSizesLinux } from '../utils';
+import { joinName } from '../utils';
 
 export class MemreadLinux {
-  public memReadNumber(pid: TargetProcess, ptr: bigint, type: NUMBER): number {
-    return Number.parseInt(
-      execSync(
-        `sudo bash -c 'dd if=/proc/${pid}/mem bs=1 count=${NumberSizesLinux[type]} skip=${ptr} 2>/dev/null | od -An ${NumberFlagsLinux[type]}'`
-      ).toString()
-    );
+  constructor(private linuxcalls: Linuxcalls) {
+    // Empty
+  }
+
+  public memReadNumber(pid: TargetProcess, ptr: bigint, type: NUMBER): number | bigint {
+    return this.linuxcalls.readNumber(pid as number, ptr, type);
+
+    // return Number.parseInt(
+    //   execSync(
+    //     `sudo bash -c 'dd if=/proc/${pid}/mem bs=1 count=${NumberSizesLinux[type]} skip=${ptr} 2>/dev/null | od -An ${NumberFlagsLinux[type]}'`
+    //   ).toString()
+    // );
   }
 
   public memReadString(pid: TargetProcess, ptr: bigint): string {
@@ -20,7 +26,7 @@ export class MemreadLinux {
 
     let i: number = 0;
 
-    while ((character = this.memReadNumber(pid, ptr + BigInt(i), 'UINT8'))) {
+    while ((character = this.memReadNumber(pid, ptr + BigInt(i), 'UINT8') as number)) {
       result.push(character);
 
       i++;

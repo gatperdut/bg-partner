@@ -3,6 +3,7 @@ import { linux } from '../index';
 import { Entities } from './entities';
 import { KeyboardLinux } from './keyboard/keyboard-linux';
 import { KeyboardWin32 } from './keyboard/keyboard-win32';
+import { Linuxcalls } from './linuxcalls';
 import { MemLinux } from './mem/mem-linux';
 import { MemWin32 } from './mem/mem-win32';
 import { Memread } from './memread/memread';
@@ -13,6 +14,8 @@ import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 
 export class Main {
+  private linuxcalls: Linuxcalls;
+
   private wincalls: Wincalls;
 
   public memread: Memread;
@@ -28,7 +31,9 @@ export class Main {
   constructor() {
     this.wincalls = linux() ? null : new Wincalls();
 
-    this.memread = linux() ? new MemreadLinux() : new MemreadWin32(this.wincalls);
+    this.linuxcalls = linux() ? new Linuxcalls() : null;
+
+    this.memread = linux() ? new MemreadLinux(this.linuxcalls) : new MemreadWin32(this.wincalls);
 
     this.memHandler = linux()
       ? new MemLinux(this.memread)

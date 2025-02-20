@@ -21,10 +21,13 @@ export class KeyboardWin32 extends KeyboardCommon {
   ) {
     super(entitiesHandler);
 
-    // MIG
     globalShortcut.register('CommandOrControl+A', () => {
       this.windowHandler.focused && this.sheetToggle();
     });
+  }
+
+  protected sheetToggle(): void {
+    // TODO
   }
 
   public run(): void {

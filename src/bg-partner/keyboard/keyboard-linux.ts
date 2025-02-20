@@ -19,6 +19,21 @@ export class KeyboardLinux extends KeyboardCommon {
     });
   }
 
+  protected sheetToggle(): void {
+    const parts: string[] = execSync('xdotool getmouselocation').toString().split(' ');
+
+    const partsX = parts[0].split(':');
+
+    const partsY = parts[1].split(':');
+
+    const point: Electron.Point = {
+      x: Number.parseInt(partsX[1], 10),
+      y: Number.parseInt(partsY[1], 10),
+    };
+
+    this.entitiesHandler.sheetToggle(point);
+  }
+
   public run(): void {
     // Empty
   }

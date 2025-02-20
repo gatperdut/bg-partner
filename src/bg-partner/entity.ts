@@ -45,6 +45,12 @@ export class Entity {
         (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
     );
 
+    if (this.sprite.name === 'Imoen') {
+      console.log(pointScreen);
+
+      console.log(Math.abs(spriteScreenX - pointScreen.x), Math.abs(spriteScreenY - pointScreen.y));
+    }
+
     return (
       Math.abs(spriteScreenX - pointScreen.x) < 20 && Math.abs(spriteScreenY - pointScreen.y) < 20
     );
