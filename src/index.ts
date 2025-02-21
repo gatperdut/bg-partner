@@ -19,7 +19,9 @@ export const linux = (): boolean => {
 };
 
 const run = (): void => {
-  execSync('sudo ls');
+  if (linux()) {
+    execSync('sudo ls');
+  }
 
   new Main().run();
 };

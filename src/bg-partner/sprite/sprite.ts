@@ -139,6 +139,7 @@ export class Sprite {
       this.gameAreaPtr + BigInt(0x5c8 + 0xc0),
       'INT32'
     ) as number;
+
     this.scrollY = this.memread.memReadNumber(
       this.targetProcess,
       this.gameAreaPtr + BigInt(0x5c8 + 0xc0 + 0x4),
@@ -146,6 +147,7 @@ export class Sprite {
     ) as number;
 
     this.relativeX = this.x - this.scrollX;
+
     this.relativeY = this.y - this.scrollY;
   }
 

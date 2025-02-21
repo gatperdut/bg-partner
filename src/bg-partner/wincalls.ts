@@ -189,7 +189,7 @@ export class Wincalls {
   public EnumWindowsCallbackRegister = (callback: unknown) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    return koffi.register(callback, koffi.pointer(EnumWindowsCallbackProto));
+    return koffi.register(callback, koffi.pointer(this.EnumWindowsCallbackProto));
   };
 
   public getWindowThreadProcessId = (windowHandle: HANDLE_PTR_TYPE): number => {

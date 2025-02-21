@@ -9,7 +9,7 @@ export class MemreadWin32 {
     // Empty
   }
 
-  public memReadNumber(procHandle: TargetProcess, ptr: bigint, type: NUMBER): number {
+  public memReadNumber(procHandle: TargetProcess, ptr: bigint, type: NUMBER): number | bigint {
     const bytesRead: number[] = [null];
 
     const value: number[] = [null];
@@ -24,7 +24,7 @@ export class MemreadWin32 {
       bytesRead
     );
 
-    return value[0];
+    return type === 'PTR' ? BigInt(value[0]) : value[0];
   }
 
   public memReadString(procHandle: TargetProcess, ptr: bigint): string {
@@ -34,7 +34,7 @@ export class MemreadWin32 {
 
     let i: number = 0;
 
-    while ((character = this.memReadNumber(procHandle, ptr + BigInt(i), 'UINT8'))) {
+    while ((character = this.memReadNumber(procHandle, ptr + BigInt(i), 'UINT8') as number)) {
       result.push(character);
 
       i++;
