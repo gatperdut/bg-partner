@@ -16,9 +16,7 @@ export class MemreadWin32 {
 
     this.syscalls.syscallsKernel32.ReadProcessMemoryNumber[primitive](
       (handlers.memscan as MemscanWin32).targetProcess as VOIDPTR,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      ptr,
+      ptr as unknown as VOIDPTR,
       value,
       PrimitiveSizesWin32[primitive],
       bytesRead
