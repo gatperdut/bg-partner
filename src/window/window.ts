@@ -1,5 +1,5 @@
 import Electron from 'electron';
-import { VOIDPtr } from '../syscalls/primitives';
+import { VOIDPTR } from '../syscalls/primitives';
 import { WindowLinux } from './window-linux';
 import { WindowWin32 } from './window-win32';
 
@@ -15,7 +15,7 @@ export type Window = WindowLinux | WindowWin32;
 export abstract class WindowOs {
   public id: number;
 
-  public handle: VOIDPtr;
+  public handle: VOIDPTR;
 
   public screen: Electron.Size = {
     width: 0,

@@ -1,6 +1,6 @@
-import { VOIDPtr } from '../primitives';
+import { VOIDPTR } from '../primitives';
 
-export type EnumWindowsCallbackFn = (windowHandle: VOIDPtr, somewindowId: number) => boolean;
+export type EnumWindowsCallbackFn = (handle: VOIDPTR, somewindowId: number) => boolean;
 
 export type PROCESSENTRY32_TYPE = {
   dwSize: number;
@@ -29,8 +29,8 @@ export type MODULEENTRY32_TYPE = {
 };
 
 export type ReadProcessMemoryFn = (
-  handlePtr: VOIDPtr,
-  address: VOIDPtr,
+  handlePtr: VOIDPTR,
+  address: VOIDPTR,
   value: number[],
   size: number,
   bytesRead: number[]

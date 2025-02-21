@@ -7,11 +7,11 @@ import {
   TH32CS_SNAPPROCESS,
 } from '../const/const-win32';
 import { handlers } from '../main';
-import { VOIDPtr } from '../syscalls/primitives';
+import { VOIDPTR } from '../syscalls/primitives';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from '../syscalls/win32/types-win32';
 import { joinASCII } from '../utils';
-import { MemscanOs } from './memscan';
+import { MemscanOs, TargetProcess } from './memscan';
 
 export class MemscanWin32 extends MemscanOs {
   constructor() {
@@ -22,7 +22,9 @@ export class MemscanWin32 extends MemscanOs {
     this.offsetEntities = this.offsetEntitiesNum + BigInt(0x4 + 0x18);
   }
 
-  private processSnapshot: VOIDPtr;
+  public targetProcess: TargetProcess;
+
+  private processSnapshot: VOIDPTR;
 
   private modBaseAddr: bigint;
 
@@ -70,7 +72,7 @@ export class MemscanWin32 extends MemscanOs {
 
     const moduleEntry32: MODULEENTRY32_TYPE = this.syscalls.helpersWin32.MODULEENTRY32Empty();
 
-    const moduleSnapshot: VOIDPtr = this.syscalls.syscallsKernel32.CreateToolhelp32Snapshot(
+    const moduleSnapshot: VOIDPTR = this.syscalls.syscallsKernel32.CreateToolhelp32Snapshot(
       TH32CS_SNAPMODULE,
       this.pid
     );

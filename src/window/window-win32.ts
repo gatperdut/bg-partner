@@ -1,7 +1,7 @@
 import koffi from 'koffi';
 import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../const/const-win32';
 import { handlers } from '../main';
-import { VOIDPtr } from '../syscalls/primitives';
+import { VOIDPTR } from '../syscalls/primitives';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { EnumWindowsCallbackFn } from '../syscalls/win32/types-win32';
 import { WindowOs } from './window';
@@ -31,13 +31,13 @@ export class WindowWin32 extends WindowOs {
   }
 
   private enumWindowsCallback: EnumWindowsCallbackFn = (
-    windowHandle: VOIDPtr,
+    handle: VOIDPTR,
     somewindowId: number
   ): boolean => {
-    this.id = this.syscalls.helpersWin32.getWindowThreadProcessId(windowHandle);
+    this.id = this.syscalls.helpersWin32.getWindowThreadProcessId(handle);
 
     if (this.id === somewindowId) {
-      this.handle = windowHandle;
+      this.handle = handle;
 
       return false;
     }
@@ -57,7 +57,7 @@ export class WindowWin32 extends WindowOs {
   }
 
   public get focused(): boolean {
-    const foreground: VOIDPtr = this.syscalls.syscallsUser32.GetForegroundWindow();
+    const foreground: VOIDPTR = this.syscalls.syscallsUser32.GetForegroundWindow();
 
     const foregroundPid = this.syscalls.helpersWin32.getWindowThreadProcessId(foreground);
 

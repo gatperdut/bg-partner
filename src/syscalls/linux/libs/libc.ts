@@ -14,9 +14,9 @@ export class SyscallsLibc {
     KoffiPrimitives.INT32,
     [
       KoffiPrimitives.INT32,
-      this.structsLinux.IOVEC_PTR,
+      this.structsLinux.IOVECPTR,
       KoffiPrimitives.ULONG,
-      this.structsLinux.IOVEC_PTR,
+      this.structsLinux.IOVECPTR,
       KoffiPrimitives.ULONG,
       KoffiPrimitives.ULONG,
     ]

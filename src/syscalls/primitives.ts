@@ -80,4 +80,4 @@ export const PrimitiveSizesLinux: Record<Primitive, number> = {
   ADDR: 8,
 };
 
-export type VOIDPtr = typeof KoffiPrimitivePtrs.VOID;
+export type VOIDPTR = typeof KoffiPrimitivePtrs.VOID;

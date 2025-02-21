@@ -1,6 +1,6 @@
 import _ from 'lodash';
+import { handlers } from '../main';
 import { Entity } from './entity';
-import { handlers } from './main';
 
 export class Entities {
   private entities: Record<number, Entity> = {};

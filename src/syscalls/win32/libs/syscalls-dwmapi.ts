@@ -17,7 +17,7 @@ export class SyscallsDwmapi {
     [
       KoffiPrimitivePtrs.VOID,
       KoffiPrimitives.LONG,
-      koffi.out(this.structsWin32.RECT_PTR),
+      koffi.out(this.structsWin32.RECTPTR),
       KoffiPrimitives.LONG,
     ]
   );

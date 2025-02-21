@@ -1,5 +1,5 @@
 import koffi from 'koffi';
-import { VOIDPtr } from '../primitives';
+import { VOIDPTR } from '../primitives';
 import { SyscallsUser32 } from './libs/syscalls-user32';
 import { StructsWin32 } from './structs-win32';
 import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from './types-win32';
@@ -9,10 +9,10 @@ export class HelpersWin32 {
     // Empty
   }
 
-  public getWindowThreadProcessId(windowHandle: VOIDPtr): number {
+  public getWindowThreadProcessId(handle: VOIDPTR): number {
     const windowId: number[] = [0];
 
-    this.syscallsUser32.GetWindowThreadProcessId(windowHandle, windowId);
+    this.syscallsUser32.GetWindowThreadProcessId(handle, windowId);
 
     return windowId[0];
   }

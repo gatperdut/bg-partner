@@ -72,7 +72,7 @@ export class SyscallsUser32 {
     STDCALL,
     'GetCursorPos',
     KoffiPrimitives.BOOL,
-    [koffi.out(this.structsWin32.POINT_PTR)]
+    [koffi.out(this.structsWin32.POINTPTR)]
   );
 
   public GetWindowThreadProcessId: KoffiFunction = this.user32.func(

@@ -7,5 +7,5 @@ export class StructsLinux {
     iov_len: KoffiPrimitives.INT32,
   });
 
-  public IOVEC_PTR: IKoffiCType = koffi.pointer(this.IOVEC);
+  public IOVECPTR: IKoffiCType = koffi.pointer(this.IOVEC);
 }

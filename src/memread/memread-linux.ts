@@ -10,7 +10,7 @@ export class MemreadLinux {
   }
 
   public memReadNumber(ptr: bigint, primitive: Primitive): number | bigint {
-    return this.syscalls.readNumber(handlers.memscan.targetProcess as number, ptr, primitive);
+    return this.syscalls.readNumber(handlers.memscan.pid, ptr, primitive);
   }
 
   public memReadString(ptr: bigint): string {

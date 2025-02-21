@@ -1,5 +1,6 @@
 import { handlers } from '../main';
-import { Primitive, PrimitiveSizesWin32, VOIDPtr } from '../syscalls/primitives';
+import { MemscanWin32 } from '../memscan/memscan-win32';
+import { Primitive, PrimitiveSizesWin32, VOIDPTR } from '../syscalls/primitives';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { joinASCII } from '../utils';
 
@@ -14,7 +15,7 @@ export class MemreadWin32 {
     const value: number[] = [null];
 
     this.syscalls.syscallsKernel32.ReadProcessMemoryNumber[primitive](
-      handlers.memscan.targetProcess as VOIDPtr,
+      (handlers.memscan as MemscanWin32).targetProcess as VOIDPTR,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       ptr,

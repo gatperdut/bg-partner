@@ -1,7 +1,7 @@
-import { handlers } from './main';
-import { Memread } from './memread/memread';
-import { Sheet } from './sheet/sheet';
-import { Sprite } from './sprite/sprite';
+import { handlers } from '../main';
+import { Memread } from '../memread/memread';
+import { Sheet } from '../sheet/sheet';
+import { Sprite } from '../sprite/sprite';
 
 export class Entity {
   public loaded: boolean = false;

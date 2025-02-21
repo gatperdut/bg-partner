@@ -18,8 +18,6 @@ export class MemscanLinux extends MemscanOs {
   public init(): void {
     this.pid = this.pidGet();
 
-    this.targetProcess = this.pid;
-
     if (!this.pid) {
       if (!this.printed) {
         console.log('Waiting for process...');
@@ -48,8 +46,6 @@ export class MemscanLinux extends MemscanOs {
 
     if (!this.alive) {
       this.pid = null;
-
-      this.targetProcess = null;
 
       return;
     }

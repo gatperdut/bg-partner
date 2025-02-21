@@ -33,28 +33,28 @@ export class SyscallsKernel32 {
     STDCALL,
     'Process32First',
     KoffiPrimitives.BOOL,
-    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.PROCESSENTRY32_PTR)]
+    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.PROCESSENTRY32PTR)]
   );
 
   public Process32Next: KoffiFunction = this.kernel32.func(
     STDCALL,
     'Process32Next',
     KoffiPrimitives.BOOL,
-    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.PROCESSENTRY32_PTR)]
+    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.PROCESSENTRY32PTR)]
   );
 
   public Module32First: KoffiFunction = this.kernel32.func(
     STDCALL,
     'Module32First',
     KoffiPrimitives.BOOL,
-    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.MODULEENTRY32_PTR)]
+    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.MODULEENTRY32PTR)]
   );
 
   public Module32Next: KoffiFunction = this.kernel32.func(
     STDCALL,
     'Module32Next',
     KoffiPrimitives.BOOL,
-    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.MODULEENTRY32_PTR)]
+    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.MODULEENTRY32PTR)]
   );
 
   public OpenProcess: KoffiFunction = this.kernel32.func(

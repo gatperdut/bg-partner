@@ -9,7 +9,7 @@ export class StructsWin32 {
     bottom: KoffiPrimitives.UINT32,
   });
 
-  public RECT_PTR: IKoffiCType = koffi.pointer(this.RECT);
+  public RECTPTR: IKoffiCType = koffi.pointer(this.RECT);
 
   public MODULEENTRY32: IKoffiCType = koffi.struct('MODULEENTRY32', {
     dwSize: KoffiPrimitives.UINT32,
@@ -24,7 +24,7 @@ export class StructsWin32 {
     szExePath: koffi.array(KoffiPrimitives.CHAR, 260, 'Array'),
   });
 
-  public MODULEENTRY32_PTR: IKoffiCType = koffi.pointer(this.MODULEENTRY32);
+  public MODULEENTRY32PTR: IKoffiCType = koffi.pointer(this.MODULEENTRY32);
 
   public PROCESSENTRY32: IKoffiCType = koffi.struct('PROCESSENTRY32', {
     dwSize: KoffiPrimitives.UINT32,
@@ -39,12 +39,12 @@ export class StructsWin32 {
     szExeFile: koffi.array(KoffiPrimitives.CHAR, 260, 'Array'),
   });
 
-  public PROCESSENTRY32_PTR: IKoffiCType = koffi.pointer(this.PROCESSENTRY32);
+  public PROCESSENTRY32PTR: IKoffiCType = koffi.pointer(this.PROCESSENTRY32);
 
   public POINT: IKoffiCType = koffi.struct('POINT', {
     x: KoffiPrimitives.LONG,
     y: KoffiPrimitives.LONG,
   });
 
-  public POINT_PTR: IKoffiCType = koffi.pointer(this.POINT);
+  public POINTPTR: IKoffiCType = koffi.pointer(this.POINT);
 }
