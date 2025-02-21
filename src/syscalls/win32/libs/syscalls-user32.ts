@@ -12,7 +12,10 @@ export class SyscallsUser32 {
   private user32: IKoffiLib = koffi.load('user32.dll');
 
   private EnumWindowsCallbackProto: IKoffiCType = koffi.proto(
-    'bool __stdcall enumWindowsCallback(_In_ void* hwnd, _In_ long lParam)'
+    STDCALL,
+    'enumWindowsCallback',
+    KoffiPrimitives.BOOL,
+    [KoffiPrimitivePtrs.VOID, KoffiPrimitives.LONG]
   );
 
   public EnumWindowsCallbackRegister(callback: EnumWindowsCallbackFn): IKoffiRegisteredCallback {
