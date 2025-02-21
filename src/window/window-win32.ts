@@ -34,7 +34,7 @@ export class WindowWin32 extends WindowOs {
     windowHandle: VOIDPtr,
     somewindowId: number
   ): boolean => {
-    this.id = this.syscalls.syscallsUser32.getWindowThreadProcessId(windowHandle);
+    this.id = this.syscalls.helpersWin32.getWindowThreadProcessId(windowHandle);
 
     if (this.id === somewindowId) {
       this.handle = windowHandle;
@@ -59,7 +59,7 @@ export class WindowWin32 extends WindowOs {
   public get focused(): boolean {
     const foreground: VOIDPtr = this.syscalls.syscallsUser32.GetForegroundWindow();
 
-    const foregroundPid = this.syscalls.syscallsUser32.getWindowThreadProcessId(foreground);
+    const foregroundPid = this.syscalls.helpersWin32.getWindowThreadProcessId(foreground);
 
     return this.id === foregroundPid;
   }

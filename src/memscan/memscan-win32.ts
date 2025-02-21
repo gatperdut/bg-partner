@@ -36,8 +36,7 @@ export class MemscanWin32 extends MemscanOs {
       0
     );
 
-    const processEntry32: PROCESSENTRY32_TYPE =
-      this.syscalls.syscallsKernel32.PROCESSENTRY32_empty();
+    const processEntry32: PROCESSENTRY32_TYPE = this.syscalls.helpersWin32.PROCESSENTRY32Empty();
 
     this.syscalls.syscallsKernel32.Process32First(this.processSnapshot, processEntry32);
 
@@ -69,7 +68,7 @@ export class MemscanWin32 extends MemscanOs {
 
     this.printed = false;
 
-    const moduleEntry32: MODULEENTRY32_TYPE = this.syscalls.syscallsKernel32.MODULEENTRY32_empty();
+    const moduleEntry32: MODULEENTRY32_TYPE = this.syscalls.helpersWin32.MODULEENTRY32Empty();
 
     const moduleSnapshot: VOIDPtr = this.syscalls.syscallsKernel32.CreateToolhelp32Snapshot(
       TH32CS_SNAPMODULE,

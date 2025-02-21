@@ -1,6 +1,6 @@
 import koffi, { IKoffiCType, IKoffiLib, IKoffiRegisteredCallback, KoffiFunction } from 'koffi';
 import { STDCALL } from '../../../const/const-win32';
-import { KoffiPrimitivePtrs, KoffiPrimitives, VOIDPtr } from '../../../koffi/primitives';
+import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../../koffi/primitives';
 import { StructsWin32 } from '../structs-win32';
 import { EnumWindowsCallbackFn } from '../types-win32';
 
@@ -75,18 +75,10 @@ export class SyscallsUser32 {
     [koffi.out(this.structsWin32.POINT_PTR)]
   );
 
-  private GetWindowThreadProcessId: KoffiFunction = this.user32.func(
+  public GetWindowThreadProcessId: KoffiFunction = this.user32.func(
     STDCALL,
     'GetWindowThreadProcessId',
     KoffiPrimitives.LONG,
     [KoffiPrimitivePtrs.VOID, koffi.out(KoffiPrimitivePtrs.LONG)]
   );
-
-  public getWindowThreadProcessId(windowHandle: VOIDPtr): number {
-    const windowId: number[] = [0];
-
-    this.GetWindowThreadProcessId(windowHandle, windowId);
-
-    return windowId[0];
-  }
 }

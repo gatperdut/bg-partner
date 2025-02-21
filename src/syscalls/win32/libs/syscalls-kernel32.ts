@@ -8,7 +8,7 @@ import {
   Primitives,
 } from '../../../koffi/primitives';
 import { StructsWin32 } from '../structs-win32';
-import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE, ReadProcessMemoryFn } from '../types-win32';
+import { ReadProcessMemoryFn } from '../types-win32';
 
 export class SyscallsKernel32 {
   constructor(private structsWin32: StructsWin32) {
@@ -62,21 +62,6 @@ export class SyscallsKernel32 {
     [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.MODULEENTRY32_PTR)]
   );
 
-  public MODULEENTRY32_empty(): MODULEENTRY32_TYPE {
-    return {
-      dwSize: koffi.sizeof(this.structsWin32.MODULEENTRY32),
-      th32ModuleID: 0,
-      th32ProcessID: 0,
-      GlblcntUsage: 0,
-      ProccntUsage: 0,
-      modBaseAddr: 0,
-      modBaseSize: 0,
-      hModule: 0,
-      szModule: new Array(255 + 1).fill(0),
-      szExePath: new Array(260).fill(0),
-    };
-  }
-
   public OpenProcess: KoffiFunction = this.kernel32.func(
     STDCALL,
     'OpenProcess',
@@ -111,19 +96,4 @@ export class SyscallsKernel32 {
     KoffiPrimitives.BOOL,
     [KoffiPrimitivePtrs.VOID]
   );
-
-  public PROCESSENTRY32_empty = (): PROCESSENTRY32_TYPE => {
-    return {
-      dwSize: koffi.sizeof(this.structsWin32.PROCESSENTRY32),
-      cntUsage: 0,
-      th32ProcessID: 0,
-      th32DefaultHeapID: 0,
-      th32ModuleID: 0,
-      cntThreads: 0,
-      th32ParentProcessID: 0,
-      pcPriClassBase: 0,
-      dwFlags: 0,
-      szExeFile: new Array(260).fill(0),
-    };
-  };
 }
