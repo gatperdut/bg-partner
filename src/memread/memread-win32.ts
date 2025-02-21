@@ -1,8 +1,8 @@
-import { HANDLE_PTR_TYPE } from '../koffi/handles';
+import { VOID_PTR_TYPE } from '../koffi/handles';
 import { NUMBER } from '../koffi/primitives';
 import { handlers } from '../main';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
-import { joinName, NumberSizesWin32 } from '../utils';
+import { joinASCII, NumberSizesWin32 } from '../utils';
 
 export class MemreadWin32 {
   private get syscalls(): SyscallsWin32 {
@@ -15,7 +15,7 @@ export class MemreadWin32 {
     const value: number[] = [null];
 
     this.syscalls.syscallsKernel32.ReadProcessMemoryNumber[type](
-      handlers.memscan.targetProcess as HANDLE_PTR_TYPE,
+      handlers.memscan.targetProcess as VOID_PTR_TYPE,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       ptr,
@@ -40,6 +40,6 @@ export class MemreadWin32 {
       i++;
     }
 
-    return joinName(result);
+    return joinASCII(result);
   }
 }

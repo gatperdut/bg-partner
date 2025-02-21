@@ -1,6 +1,6 @@
 import { NUMBER } from './koffi/primitives';
 
-export const joinName = (nums: number[]): string => {
+export const joinASCII = (nums: number[]): string => {
   const result: string[] = [];
 
   let i = 0;
@@ -12,10 +12,6 @@ export const joinName = (nums: number[]): string => {
   }
 
   return result.join('');
-};
-
-export const blankArray = (length: number): number[] => {
-  return new Array(length).fill(0);
 };
 
 export const NumberSizesWin32: Record<NUMBER, number> = {
@@ -44,18 +40,4 @@ export const NumberSizesLinux: Record<NUMBER, number> = {
   LONG: 4,
   ULONG: 4,
   PTR: 8,
-};
-
-export const NumberFlagsLinux: Record<NUMBER, string> = {
-  BOOL: '-td1',
-  BYTE: '-td1',
-  UINT8: '-tu1',
-  INT16: '-td2',
-  UINT16: '-tu2',
-  UINT32: '-tu4',
-  INT32: '-td4',
-  DWORD: '-td4',
-  LONG: '-td4',
-  ULONG: '-tu4',
-  PTR: '-td8',
 };

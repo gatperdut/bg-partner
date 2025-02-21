@@ -1,5 +1,5 @@
 import Electron from 'electron';
-import { HANDLE_PTR_TYPE } from '../koffi/handles';
+import { VOID_PTR_TYPE } from '../koffi/handles';
 import { WindowLinux } from './window-linux';
 import { WindowWin32 } from './window-win32';
 
@@ -15,7 +15,7 @@ export type Window = WindowLinux | WindowWin32;
 export abstract class WindowOs {
   public id: number;
 
-  public handle: HANDLE_PTR_TYPE;
+  public handle: VOID_PTR_TYPE;
 
   public screen: Electron.Size = {
     width: 0,

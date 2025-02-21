@@ -1,6 +1,6 @@
 import koffi from 'koffi';
 import { STDCALL } from '../../../const/const-win32';
-import { ADDRESS_PTR, ADDRESS_PTR_TYPE, HANDLE_PTR, HANDLE_PTR_TYPE } from '../../../koffi/handles';
+import { VOID_PTR, VOID_PTR_TYPE } from '../../../koffi/handles';
 import {
   BOOL,
   BYTE,
@@ -15,7 +15,6 @@ import {
   UINT8,
   ULONG,
 } from '../../../koffi/primitives';
-import { blankArray } from '../../../utils';
 import { StructsWin32 } from '../structs-win32';
 
 export type PROCESSENTRY32_TYPE = {
@@ -45,8 +44,8 @@ export type MODULEENTRY32_TYPE = {
 };
 
 type ReadProcessMemoryFn = (
-  handlePtr: HANDLE_PTR_TYPE,
-  address: ADDRESS_PTR_TYPE,
+  handlePtr: VOID_PTR_TYPE,
+  address: VOID_PTR_TYPE,
   value: number[],
   size: number,
   bytesRead: number[]
@@ -59,8 +58,6 @@ export class SyscallsKernel32 {
 
   private kernel32 = koffi.load('kernel32.dll');
 
-  public MODULEENTRY32_PTR = koffi.pointer(this.structsWin32.MODULEENTRY32);
-
   public MODULEENTRY32_empty(): MODULEENTRY32_TYPE {
     return {
       dwSize: koffi.sizeof(this.structsWin32.MODULEENTRY32),
@@ -71,17 +68,15 @@ export class SyscallsKernel32 {
       modBaseAddr: 0,
       modBaseSize: 0,
       hModule: 0,
-      szModule: blankArray(255 + 1),
-      szExePath: blankArray(260),
+      szModule: new Array(255 + 1).fill(0),
+      szExePath: new Array(260).fill(0),
     };
   }
 
-  public PROCESSENTRY32_PTR = koffi.pointer(this.structsWin32.PROCESSENTRY32);
-
   private ReadProcessMemoryNumberDefine(type: koffi.IKoffiCType): ReadProcessMemoryFn {
     return this.kernel32.func(STDCALL, 'ReadProcessMemory', BOOL, [
-      HANDLE_PTR,
-      ADDRESS_PTR,
+      VOID_PTR,
+      VOID_PTR,
       koffi.out(koffi.pointer(type)),
       ULONG,
       koffi.out(koffi.pointer(UINT32)),
@@ -103,48 +98,44 @@ export class SyscallsKernel32 {
   };
 
   public Process32First = this.kernel32.func(STDCALL, 'Process32First', BOOL, [
-    HANDLE_PTR,
-    koffi.inout(this.PROCESSENTRY32_PTR),
+    VOID_PTR,
+    koffi.inout(this.structsWin32.PROCESSENTRY32_PTR),
   ]);
 
   public Process32Next = this.kernel32.func(STDCALL, 'Process32Next', BOOL, [
-    HANDLE_PTR,
-    koffi.inout(this.PROCESSENTRY32_PTR),
+    VOID_PTR,
+    koffi.inout(this.structsWin32.PROCESSENTRY32_PTR),
   ]);
 
   public Module32First = this.kernel32.func(STDCALL, 'Module32First', BOOL, [
-    HANDLE_PTR,
-    koffi.inout(this.MODULEENTRY32_PTR),
+    VOID_PTR,
+    koffi.inout(this.structsWin32.MODULEENTRY32_PTR),
   ]);
 
   public Module32Next = this.kernel32.func(STDCALL, 'Module32Next', BOOL, [
-    HANDLE_PTR,
-    koffi.inout(this.MODULEENTRY32_PTR),
+    VOID_PTR,
+    koffi.inout(this.structsWin32.MODULEENTRY32_PTR),
   ]);
 
-  public OpenProcess = this.kernel32.func(STDCALL, 'OpenProcess', HANDLE_PTR, [
-    UINT32,
-    BOOL,
-    UINT32,
-  ]);
+  public OpenProcess = this.kernel32.func(STDCALL, 'OpenProcess', VOID_PTR, [UINT32, BOOL, UINT32]);
 
   public GetLastError = this.kernel32.func(STDCALL, 'GetLastError', UINT32, []);
 
-  public GetCurrentProcess = this.kernel32.func(STDCALL, 'GetCurrentProcess', HANDLE_PTR, []);
+  public GetCurrentProcess = this.kernel32.func(STDCALL, 'GetCurrentProcess', VOID_PTR, []);
 
   public GetExitCodeProcess = this.kernel32.func(STDCALL, 'GetExitCodeProcess', BOOL, [
-    HANDLE_PTR,
+    VOID_PTR,
     koffi.out(LONG_PTR),
   ]);
 
   public CreateToolhelp32Snapshot = this.kernel32.func(
     STDCALL,
     'CreateToolhelp32Snapshot',
-    HANDLE_PTR,
+    VOID_PTR,
     [UINT32, DWORD]
   );
 
-  public CloseHandle = this.kernel32.func(STDCALL, 'CloseHandle', BOOL, [HANDLE_PTR]);
+  public CloseHandle = this.kernel32.func(STDCALL, 'CloseHandle', BOOL, [VOID_PTR]);
 
   public PROCESSENTRY32_empty = (): PROCESSENTRY32_TYPE => {
     return {
@@ -157,7 +148,7 @@ export class SyscallsKernel32 {
       th32ParentProcessID: 0,
       pcPriClassBase: 0,
       dwFlags: 0,
-      szExeFile: blankArray(260),
+      szExeFile: new Array(260).fill(0),
     };
   };
 }

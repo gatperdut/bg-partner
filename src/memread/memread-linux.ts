@@ -2,7 +2,7 @@ import { NUMBER } from '../koffi/primitives';
 import { handlers } from '../main';
 
 import { SyscallsLinux } from '../syscalls/syscalls-linux';
-import { joinName } from '../utils';
+import { joinASCII } from '../utils';
 
 export class MemreadLinux {
   private get syscalls(): SyscallsLinux {
@@ -26,6 +26,6 @@ export class MemreadLinux {
       i++;
     }
 
-    return joinName(result);
+    return joinASCII(result);
   }
 }

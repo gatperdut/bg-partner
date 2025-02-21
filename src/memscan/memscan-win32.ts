@@ -6,11 +6,11 @@ import {
   TH32CS_SNAPMODULE,
   TH32CS_SNAPPROCESS,
 } from '../const/const-win32';
-import { HANDLE_PTR_TYPE } from '../koffi/handles';
+import { VOID_PTR_TYPE } from '../koffi/handles';
 import { handlers } from '../main';
 import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from '../syscalls/win32/libs/syscalls-kernel32';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
-import { joinName } from '../utils';
+import { joinASCII } from '../utils';
 import { MemscanOs } from './memscan';
 
 export class MemscanWin32 extends MemscanOs {
@@ -22,7 +22,7 @@ export class MemscanWin32 extends MemscanOs {
     this.offsetEntities = this.offsetEntitiesNum + BigInt(0x4 + 0x18);
   }
 
-  private processSnapshot: HANDLE_PTR_TYPE;
+  private processSnapshot: VOID_PTR_TYPE;
 
   private modBaseAddr: bigint;
 
@@ -42,7 +42,7 @@ export class MemscanWin32 extends MemscanOs {
     this.syscalls.syscallsKernel32.Process32First(this.processSnapshot, processEntry32);
 
     do {
-      if (joinName(processEntry32.szExeFile) === 'Baldur.exe') {
+      if (joinASCII(processEntry32.szExeFile) === 'Baldur.exe') {
         this.pid = processEntry32.th32ProcessID;
 
         break;
@@ -71,7 +71,7 @@ export class MemscanWin32 extends MemscanOs {
 
     const moduleEntry32: MODULEENTRY32_TYPE = this.syscalls.syscallsKernel32.MODULEENTRY32_empty();
 
-    const moduleSnapshot: HANDLE_PTR_TYPE = this.syscalls.syscallsKernel32.CreateToolhelp32Snapshot(
+    const moduleSnapshot: VOID_PTR_TYPE = this.syscalls.syscallsKernel32.CreateToolhelp32Snapshot(
       TH32CS_SNAPMODULE,
       this.pid
     );
@@ -79,7 +79,7 @@ export class MemscanWin32 extends MemscanOs {
     this.syscalls.syscallsKernel32.Module32First(moduleSnapshot, moduleEntry32);
 
     do {
-      if (joinName(moduleEntry32.szModule) === 'Baldur.exe') {
+      if (joinASCII(moduleEntry32.szModule) === 'Baldur.exe') {
         break;
       }
     } while (this.syscalls.syscallsKernel32.Module32Next(this.processSnapshot, moduleEntry32));
