@@ -1,8 +1,16 @@
 import { execSync } from 'child_process';
 import { handlers } from '../main';
-import { MemscanCommon } from './memscan-common';
+import { MemscanOs } from './memscan';
 
-export class MemscanLinux extends MemscanCommon {
+export class MemscanLinux extends MemscanOs {
+  constructor() {
+    super();
+
+    this.offsetEntitiesNum = BigInt(0x55555613f776);
+
+    this.offsetEntities = BigInt(0x5555560bf780);
+  }
+
   private pidGet(): number {
     return Number.parseInt(execSync('pidof BaldursGateII').toString(), 10);
   }
@@ -13,10 +21,10 @@ export class MemscanLinux extends MemscanCommon {
     this.targetProcess = this.pid;
 
     if (!this.pid) {
-      if (!this.waitingPrinted) {
+      if (!this.printed) {
         console.log('Waiting for process...');
 
-        this.waitingPrinted = true;
+        this.printed = true;
       }
 
       this.gameObjectPtrs = [];
@@ -26,17 +34,17 @@ export class MemscanLinux extends MemscanCommon {
 
     console.log('Process found, PID:', this.pid);
 
-    this.waitingPrinted = false;
+    this.printed = false;
   }
 
-  protected isProcessAlive(): boolean {
+  private get aliveGet(): boolean {
     return !!this.pidGet();
   }
 
   public run(): void {
     this.gameObjectPtrs = [];
 
-    this.alive = this.isProcessAlive();
+    this.alive = this.aliveGet;
 
     if (!this.alive) {
       this.pid = null;
@@ -46,16 +54,14 @@ export class MemscanLinux extends MemscanCommon {
       return;
     }
 
-    const numEntities: number = handlers.memread.memReadNumber(
-      BigInt(0x55555613f776),
+    const entitiesNum: number = handlers.memread.memReadNumber(
+      this.offsetEntitiesNum,
       'INT16'
     ) as number;
 
-    const listPointer: bigint = BigInt(0x5555560bf780);
-
-    for (let i = 2001 * 16; i <= numEntities * 16 + 96; i += 16) {
+    for (let i = 2001 * 16; i <= entitiesNum * 16 + 96; i += 16) {
       this.gameObjectPtrs.push(
-        BigInt(handlers.memread.memReadNumber(listPointer + BigInt(i + 8), 'PTR'))
+        BigInt(handlers.memread.memReadNumber(this.offsetEntities + BigInt(i + 8), 'PTR'))
       );
     }
   }

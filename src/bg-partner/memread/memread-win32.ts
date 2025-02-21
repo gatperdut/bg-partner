@@ -1,5 +1,5 @@
-import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
-import { NUMBER } from '../koffi/defs/primitives';
+import { HANDLE_PTR_TYPE } from '../koffi/handles';
+import { NUMBER } from '../koffi/primitives';
 import { handlers } from '../main';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { joinName, NumberSizesWin32 } from '../utils';

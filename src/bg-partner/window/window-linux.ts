@@ -1,9 +1,9 @@
 import { execSync } from 'child_process';
 import _ from 'lodash-es';
 import { handlers } from '../main';
-import { WindowCommon } from './window-common';
+import { WindowOs } from './window';
 
-export class WindowLinux extends WindowCommon {
+export class WindowLinux extends WindowOs {
   public init(): void {
     // Empty
   }

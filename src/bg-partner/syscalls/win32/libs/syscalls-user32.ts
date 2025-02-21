@@ -1,7 +1,7 @@
 import koffi from 'koffi';
-import { STDCALL } from '../../../koffi/defs/constants';
-import { HANDLE_PTR, HANDLE_PTR_TYPE } from '../../../koffi/defs/handles';
-import { BOOL, INT32, LONG, UINT32 } from '../../../koffi/defs/primitives';
+import { STDCALL } from '../../../koffi/constants';
+import { HANDLE_PTR, HANDLE_PTR_TYPE } from '../../../koffi/handles';
+import { BOOL, INT32, LONG, UINT32 } from '../../../koffi/primitives';
 
 export type EnumWindowsCallbackFn = (
   windowHandle: HANDLE_PTR_TYPE,

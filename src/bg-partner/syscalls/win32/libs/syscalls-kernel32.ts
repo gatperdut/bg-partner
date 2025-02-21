@@ -1,11 +1,6 @@
 import koffi from 'koffi';
-import { STDCALL } from '../../../koffi/defs/constants';
-import {
-  ADDRESS_PTR,
-  ADDRESS_PTR_TYPE,
-  HANDLE_PTR,
-  HANDLE_PTR_TYPE,
-} from '../../../koffi/defs/handles';
+import { STDCALL } from '../../../koffi/constants';
+import { ADDRESS_PTR, ADDRESS_PTR_TYPE, HANDLE_PTR, HANDLE_PTR_TYPE } from '../../../koffi/handles';
 import {
   BOOL,
   BYTE,
@@ -20,7 +15,7 @@ import {
   UINT32,
   UINT8,
   ULONG,
-} from '../../../koffi/defs/primitives';
+} from '../../../koffi/primitives';
 import { blankArray } from '../../../utils';
 
 export type PROCESSENTRY32_TYPE = {

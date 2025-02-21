@@ -4,22 +4,26 @@ import { Entities } from './entities';
 import { Memread } from './memread/memread';
 import { MemreadLinux } from './memread/memread-linux';
 import { MemreadWin32 } from './memread/memread-win32';
+import { Memscan } from './memscan/memscan';
 import { MemscanLinux } from './memscan/memscan-linux';
 import { MemscanWin32 } from './memscan/memscan-win32';
+import { Shortcuts } from './shortcuts/shortcuts';
 import { ShortcutsLinux } from './shortcuts/shortcuts-linux';
 import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
+import { Syscalls } from './syscalls/syscalls';
 import { SyscallsLinux } from './syscalls/syscalls-linux';
 import { SyscallsWin32 } from './syscalls/win32/syscalls-win32';
+import { Window } from './window/window';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 
 export type Handlers = {
-  syscalls: SyscallsLinux | SyscallsWin32;
+  syscalls: Syscalls;
   memread: Memread;
-  memscan: MemscanLinux | MemscanWin32;
-  window: WindowLinux | WindowWin32;
+  memscan: Memscan;
+  window: Window;
   entities: Entities;
-  shortcuts: ShortcutsLinux | ShortcutsWin32;
+  shortcuts: Shortcuts;
 };
 
 export const handlers: Handlers = {

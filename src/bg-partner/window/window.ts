@@ -1,5 +1,7 @@
 import Electron from 'electron';
-import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
+import { HANDLE_PTR_TYPE } from '../koffi/handles';
+import { WindowLinux } from './window-linux';
+import { WindowWin32 } from './window-win32';
 
 export type WindowRect = {
   left: number;
@@ -8,7 +10,9 @@ export type WindowRect = {
   bottom: number;
 };
 
-export abstract class WindowCommon {
+export type Window = WindowLinux | WindowWin32;
+
+export abstract class WindowOs {
   public id: number;
 
   public handle: HANDLE_PTR_TYPE;

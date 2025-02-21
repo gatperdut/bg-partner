@@ -1,4 +1,4 @@
-import { NUMBER } from './koffi/defs/primitives';
+import { NUMBER } from './koffi/primitives';
 
 export const joinName = (nums: number[]): string => {
   const result: string[] = [];

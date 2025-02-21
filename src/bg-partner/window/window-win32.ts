@@ -1,17 +1,17 @@
 import koffi from 'koffi';
-import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../koffi/defs/constants';
-import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
+import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../koffi/constants';
+import { HANDLE_PTR_TYPE } from '../koffi/handles';
 import { handlers } from '../main';
 import { EnumWindowsCallbackFn } from '../syscalls/win32/libs/syscalls-user32';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
-import { WindowCommon } from './window-common';
+import { WindowOs } from './window';
 
 export type Screen = {
   width: number;
   height: number;
 };
 
-export class WindowWin32 extends WindowCommon {
+export class WindowWin32 extends WindowOs {
   private callback: unknown;
 
   private get syscalls(): SyscallsWin32 {

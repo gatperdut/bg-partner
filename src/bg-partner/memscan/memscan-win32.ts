@@ -5,15 +5,23 @@ import {
   STILL_ACTIVE,
   TH32CS_SNAPMODULE,
   TH32CS_SNAPPROCESS,
-} from '../koffi/defs/constants';
-import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
+} from '../koffi/constants';
+import { HANDLE_PTR_TYPE } from '../koffi/handles';
 import { handlers } from '../main';
 import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from '../syscalls/win32/libs/syscalls-kernel32';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { joinName } from '../utils';
-import { MemscanCommon } from './memscan-common';
+import { MemscanOs } from './memscan';
 
-export class MemscanWin32 extends MemscanCommon {
+export class MemscanWin32 extends MemscanOs {
+  constructor() {
+    super();
+
+    this.offsetEntitiesNum = BigInt(0x68d434);
+
+    this.offsetEntities = this.offsetEntitiesNum + BigInt(0x4 + 0x18);
+  }
+
   private processSnapshot: HANDLE_PTR_TYPE;
 
   private modBaseAddr: bigint;
@@ -42,10 +50,10 @@ export class MemscanWin32 extends MemscanCommon {
     } while (this.syscalls.syscallsKernel32.Process32Next(this.processSnapshot, processEntry32));
 
     if (!this.pid) {
-      if (!this.waitingPrinted) {
+      if (!this.printed) {
         console.log('Waiting for process...');
 
-        this.waitingPrinted = true;
+        this.printed = true;
       }
 
       this.gameObjectPtrs = [];
@@ -59,7 +67,7 @@ export class MemscanWin32 extends MemscanCommon {
 
     console.log('Process found, PID:', this.pid);
 
-    this.waitingPrinted = false;
+    this.printed = false;
 
     const moduleEntry32: MODULEENTRY32_TYPE = this.syscalls.syscallsKernel32.MODULEENTRY32_empty();
 
@@ -87,7 +95,7 @@ export class MemscanWin32 extends MemscanCommon {
     this.syscalls.syscallsKernel32.CloseHandle(moduleSnapshot);
   }
 
-  protected isProcessAlive(): boolean {
+  private get aliveGet(): boolean {
     const result: number[] = [0];
 
     this.syscalls.syscallsKernel32.GetExitCodeProcess(this.targetProcess, result);
@@ -98,7 +106,7 @@ export class MemscanWin32 extends MemscanCommon {
   public run(): void {
     this.gameObjectPtrs = [];
 
-    this.alive = this.isProcessAlive();
+    this.alive = this.aliveGet;
 
     if (!this.alive) {
       this.pid = null;
@@ -114,18 +122,19 @@ export class MemscanWin32 extends MemscanCommon {
       return;
     }
 
-    const offset: number = 0x68d434;
-
-    const numEntities: number = handlers.memread.memReadNumber(
-      this.modBaseAddr + BigInt(offset),
+    const entitiesNum: number = handlers.memread.memReadNumber(
+      this.modBaseAddr + BigInt(this.offsetEntitiesNum),
       'INT32'
     ) as number;
 
-    const listPointer: bigint = this.modBaseAddr + BigInt(offset + 0x4 + 0x18);
-
-    for (let i: number = 2000 * 16; i <= numEntities * 16 + 96; i += 16) {
+    for (let i: number = 2001 * 16; i <= entitiesNum * 16 + 96; i += 16) {
       this.gameObjectPtrs.push(
-        BigInt(handlers.memread.memReadNumber(listPointer + BigInt(i + 8), 'PTR'))
+        BigInt(
+          handlers.memread.memReadNumber(
+            this.modBaseAddr + this.offsetEntities + BigInt(i + 8),
+            'PTR'
+          )
+        )
       );
     }
   }

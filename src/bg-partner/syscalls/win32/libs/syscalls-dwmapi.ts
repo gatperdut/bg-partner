@@ -1,7 +1,7 @@
 import koffi from 'koffi';
-import { STDCALL } from '../../../koffi/defs/constants';
-import { HANDLE_PTR } from '../../../koffi/defs/handles';
-import { LONG, UINT32 } from '../../../koffi/defs/primitives';
+import { STDCALL } from '../../../koffi/constants';
+import { HANDLE_PTR } from '../../../koffi/handles';
+import { LONG, UINT32 } from '../../../koffi/primitives';
 
 export class SyscallsDwmapi {
   public dwmapi = koffi.load('dwmapi.dll');

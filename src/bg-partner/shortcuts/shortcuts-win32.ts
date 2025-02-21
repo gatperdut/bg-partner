@@ -1,11 +1,5 @@
 import { globalShortcut } from 'electron';
-import {
-  GWL_STYLE,
-  HWND_TOP,
-  SW_SHOW,
-  SWP_ASYNCWINDOWPOS,
-  WS_MAXIMIZE,
-} from '../koffi/defs/constants';
+import { GWL_STYLE, HWND_TOP, SW_SHOW, SWP_ASYNCWINDOWPOS, WS_MAXIMIZE } from '../koffi/constants';
 
 import { handlers } from '../main';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';

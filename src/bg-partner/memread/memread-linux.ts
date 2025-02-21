@@ -1,4 +1,4 @@
-import { NUMBER } from '../koffi/defs/primitives';
+import { NUMBER } from '../koffi/primitives';
 
 import { handlers } from '../main';
 import { SyscallsLinux } from '../syscalls/syscalls-linux';

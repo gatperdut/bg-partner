@@ -1,5 +1,5 @@
 import koffi from 'koffi';
-import { NUMBER } from '../koffi/defs/primitives';
+import { NUMBER } from '../koffi/primitives';
 import { NumberSizesLinux } from '../utils';
 
 export class SyscallsLinux {
