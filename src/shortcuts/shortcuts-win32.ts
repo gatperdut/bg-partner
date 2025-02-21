@@ -9,6 +9,7 @@ import {
 
 import { handlers } from '../main';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
+import { WindowWin32 } from '../window/window-win32';
 
 export class ShortcutsWin32 {
   constructor() {
@@ -37,12 +38,16 @@ export class ShortcutsWin32 {
   }
 
   private borderless(): void {
-    this.syscalls.syscallsUser32.SetWindowLongA(handlers.window.handle, GWL_STYLE, WS_MAXIMIZE);
+    this.syscalls.syscallsUser32.SetWindowLongA(
+      (handlers.window as WindowWin32).handle,
+      GWL_STYLE,
+      WS_MAXIMIZE
+    );
 
-    this.syscalls.syscallsUser32.ShowWindow(handlers.window.handle, SW_SHOW);
+    this.syscalls.syscallsUser32.ShowWindow((handlers.window as WindowWin32).handle, SW_SHOW);
 
     this.syscalls.syscallsUser32.SetWindowPos(
-      handlers.window.handle,
+      (handlers.window as WindowWin32).handle,
       HWND_TOP,
       0,
       0,

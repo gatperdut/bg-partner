@@ -1,4 +1,4 @@
-import koffi from 'koffi';
+import koffi, { IKoffiRegisteredCallback } from 'koffi';
 import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../const/const-win32';
 import { handlers } from '../main';
 import { VOIDPTR } from '../syscalls/primitives';
@@ -12,7 +12,9 @@ export type Screen = {
 };
 
 export class WindowWin32 extends WindowOs {
-  private callback: unknown;
+  public handle: VOIDPTR;
+
+  private callback: IKoffiRegisteredCallback;
 
   private get syscalls(): SyscallsWin32 {
     return handlers.syscalls as SyscallsWin32;
