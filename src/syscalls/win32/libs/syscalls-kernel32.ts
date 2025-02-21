@@ -1,5 +1,5 @@
 import koffi from 'koffi';
-import { STDCALL } from '../../../koffi/constants';
+import { STDCALL } from '../../../const/const-win32';
 import { ADDRESS_PTR, ADDRESS_PTR_TYPE, HANDLE_PTR, HANDLE_PTR_TYPE } from '../../../koffi/handles';
 import {
   BOOL,

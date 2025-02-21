@@ -1,5 +1,5 @@
 import koffi from 'koffi';
-import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../koffi/constants';
+import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../const/const-win32';
 import { HANDLE_PTR_TYPE } from '../koffi/handles';
 import { handlers } from '../main';
 import { EnumWindowsCallbackFn } from '../syscalls/win32/libs/syscalls-user32';

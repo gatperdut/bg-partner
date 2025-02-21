@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 import { app } from 'electron';
 import os from 'os';
-import { Main } from './bg-partner/main';
+import { Main } from './main';
 
 declare global {
   interface Window {
@@ -9,7 +9,6 @@ declare global {
   }
 }
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
@@ -27,5 +26,5 @@ const run = (): void => {
 app.on('ready', run);
 
 app.on('window-all-closed', (): void => {
-  // app.quit();
+  // Prevent default.
 });

@@ -7,13 +7,13 @@
 
 @font-face {
   font-family: 'Modesto';
-  src: url('../../assets/fonts/modesto-regular.ttf');
+  src: url('../assets/fonts/modesto-regular.ttf');
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Modesto';
-  src: url('../../assets/fonts/modesto-italic.ttf');
+  src: url('../assets/fonts/modesto-italic.ttf');
   font-style: italic;
 }
 
@@ -21,7 +21,7 @@ html {
   height: 100%;
   padding: 5px;
   font-family: 'Modesto';
-  background: url('../../assets/images/background.jpg');
+  background: url('../assets/images/background.jpg');
   background-size: cover;
   background-position: center center;
 }

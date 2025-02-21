@@ -32,11 +32,11 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
-            html: './src/bg-partner/sheet/sheet.html',
-            js: './src/bg-partner/sheet/renderer.ts',
+            html: './src/sheet/sheet.html',
+            js: './src/sheet/renderer.ts',
             name: 'sheet_window',
             preload: {
-              js: './src/bg-partner/sheet/preload.ts',
+              js: './src/sheet/preload.ts',
             },
           },
         ],

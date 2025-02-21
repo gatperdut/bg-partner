@@ -5,7 +5,7 @@ import {
   STILL_ACTIVE,
   TH32CS_SNAPMODULE,
   TH32CS_SNAPPROCESS,
-} from '../koffi/constants';
+} from '../const/const-win32';
 import { HANDLE_PTR_TYPE } from '../koffi/handles';
 import { handlers } from '../main';
 import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from '../syscalls/win32/libs/syscalls-kernel32';

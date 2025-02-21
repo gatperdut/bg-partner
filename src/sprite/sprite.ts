@@ -1,4 +1,4 @@
-import { linux } from '../../index';
+import { linux } from '../index';
 import { Memread } from '../memread/memread';
 import { Derived, derivedEmpty, derivedFill } from './derived';
 

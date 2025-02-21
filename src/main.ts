@@ -1,6 +1,6 @@
 import 'source-map-support/register';
-import { linux } from '../index';
 import { Entities } from './entities';
+import { linux } from './index';
 import { Memread } from './memread/memread';
 import { MemreadLinux } from './memread/memread-linux';
 import { MemreadWin32 } from './memread/memread-win32';
