@@ -1,8 +1,8 @@
+import { handlers } from './main';
 import { Memread } from './memread/memread';
 import { TargetProcess } from './memscan/memscan-common';
 import { Sheet } from './sheet/sheet';
 import { Sprite } from './sprite/sprite';
-import { WindowCommon } from './window/window-common';
 
 export class Entity {
   public loaded: boolean = false;
@@ -12,7 +12,6 @@ export class Entity {
   public sprite: Sprite;
 
   constructor(
-    private windowHandler: WindowCommon,
     private processHandle: TargetProcess,
     private gameObjectPtr: bigint,
     private memread: Memread
@@ -29,20 +28,16 @@ export class Entity {
   }
 
   public pointMatch(pointScreen: Electron.Point): boolean {
-    const rectWidth: number =
-      this.windowHandler.windowRect.right - this.windowHandler.windowRect.left;
+    const rectWidth: number = handlers.window.windowRect.right - handlers.window.windowRect.left;
 
-    const rectHeight: number =
-      this.windowHandler.windowRect.bottom - this.windowHandler.windowRect.top;
+    const rectHeight: number = handlers.window.windowRect.bottom - handlers.window.windowRect.top;
 
     const spriteScreenX: number = Math.round(
-      this.windowHandler.windowRect.left +
-        (this.sprite.relativeX / this.sprite.viewportX) * rectWidth
+      handlers.window.windowRect.left + (this.sprite.relativeX / this.sprite.viewportX) * rectWidth
     );
 
     const spriteScreenY: number = Math.round(
-      this.windowHandler.windowRect.top +
-        (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
+      handlers.window.windowRect.top + (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
     );
 
     return (
@@ -54,7 +49,7 @@ export class Entity {
     if (this.sheet?.window) {
       this.sheet.teardown();
     } else {
-      this.sheet = new Sheet(this.windowHandler, this.sprite, 'moe');
+      this.sheet = new Sheet(this.sprite, 'moe');
     }
   }
 }

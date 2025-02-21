@@ -11,7 +11,7 @@ export class Entities {
       _.map(
         gameObjectPtrs,
         (gameObjectPtr: bigint): Entity =>
-          new Entity(handlers.window, processHandle, gameObjectPtr, handlers.memread)
+          new Entity(processHandle, gameObjectPtr, handlers.memread)
       ),
       (entity: Entity): boolean => entity.loaded
     );
