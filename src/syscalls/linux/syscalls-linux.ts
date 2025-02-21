@@ -1,21 +1,14 @@
-import koffi from 'koffi';
-import { Primitive } from '../koffi/primitives';
-import { NumberSizesLinux } from '../utils';
+import { Primitive, PrimitiveSizesLinux } from '../../koffi/primitives';
+import { SyscallsLibc } from './libs/libc';
+import { StructsLinux } from './structs-linux';
 
 export class SyscallsLinux {
-  public libc = koffi.load('libc.so.6');
+  public structsLinux: StructsLinux = new StructsLinux();
 
-  public iovec = koffi.struct('iovec', {
-    iov_base: 'void *', // Pointer to the memory address
-    iov_len: 'int', // Length of the memory region
-  });
-
-  public process_vm_readv = this.libc.func(
-    'int process_vm_readv(int pid, iovec *local_iov, unsigned long liovcnt, iovec *remote_iov, unsigned long riovcnt, unsigned long flags)'
-  );
+  public syscallsLibc: SyscallsLibc = new SyscallsLibc(this.structsLinux);
 
   public readNumber(pid: number, ptr: bigint, primitive: Primitive): number | bigint {
-    const length: number = NumberSizesLinux[primitive];
+    const length: number = PrimitiveSizesLinux[primitive];
 
     const buf = new Uint8Array(length);
 
@@ -23,7 +16,7 @@ export class SyscallsLinux {
 
     const remote_iov = [{ iov_base: ptr, iov_len: length }];
 
-    this.process_vm_readv(pid, local_iov, 1, remote_iov, 1, 0);
+    this.syscallsLibc.process_vm_readv(pid, local_iov, 1, remote_iov, 1, 0);
 
     const dataView = new DataView(local_iov[0].iov_base.buffer);
 
@@ -58,7 +51,7 @@ export class SyscallsLinux {
       case 'ULONG':
         return dataView.getInt32(0, true);
 
-      case 'PTR':
+      case 'ADDR':
         return dataView.getBigInt64(0, true);
     }
   }

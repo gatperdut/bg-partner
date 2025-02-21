@@ -6,7 +6,7 @@ import {
   TH32CS_SNAPMODULE,
   TH32CS_SNAPPROCESS,
 } from '../const/const-win32';
-import { VOID_PTR_TYPE } from '../koffi/primitives';
+import { VOIDPtr } from '../koffi/primitives';
 import { handlers } from '../main';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from '../syscalls/win32/types-win32';
@@ -22,7 +22,7 @@ export class MemscanWin32 extends MemscanOs {
     this.offsetEntities = this.offsetEntitiesNum + BigInt(0x4 + 0x18);
   }
 
-  private processSnapshot: VOID_PTR_TYPE;
+  private processSnapshot: VOIDPtr;
 
   private modBaseAddr: bigint;
 
@@ -71,7 +71,7 @@ export class MemscanWin32 extends MemscanOs {
 
     const moduleEntry32: MODULEENTRY32_TYPE = this.syscalls.syscallsKernel32.MODULEENTRY32_empty();
 
-    const moduleSnapshot: VOID_PTR_TYPE = this.syscalls.syscallsKernel32.CreateToolhelp32Snapshot(
+    const moduleSnapshot: VOIDPtr = this.syscalls.syscallsKernel32.CreateToolhelp32Snapshot(
       TH32CS_SNAPMODULE,
       this.pid
     );
@@ -132,7 +132,7 @@ export class MemscanWin32 extends MemscanOs {
         BigInt(
           handlers.memread.memReadNumber(
             this.modBaseAddr + this.offsetEntities + BigInt(i + 8),
-            'PTR'
+            'ADDR'
           )
         )
       );

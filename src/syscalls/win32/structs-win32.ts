@@ -2,7 +2,7 @@ import koffi, { IKoffiCType } from 'koffi';
 import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../koffi/primitives';
 
 export class StructsWin32 {
-  public RECT = koffi.struct('RECT', {
+  public RECT: IKoffiCType = koffi.struct('RECT', {
     left: KoffiPrimitives.UINT32,
     top: KoffiPrimitives.UINT32,
     right: KoffiPrimitives.UINT32,
@@ -11,7 +11,7 @@ export class StructsWin32 {
 
   public RECT_PTR: IKoffiCType = koffi.pointer(this.RECT);
 
-  public MODULEENTRY32 = koffi.struct('MODULEENTRY32', {
+  public MODULEENTRY32: IKoffiCType = koffi.struct('MODULEENTRY32', {
     dwSize: KoffiPrimitives.UINT32,
     th32ModuleID: KoffiPrimitives.UINT32,
     th32ProcessID: KoffiPrimitives.UINT32,
@@ -24,9 +24,9 @@ export class StructsWin32 {
     szExePath: koffi.array(KoffiPrimitives.CHAR, 260, 'Array'),
   });
 
-  public MODULEENTRY32_PTR = koffi.pointer(this.MODULEENTRY32);
+  public MODULEENTRY32_PTR: IKoffiCType = koffi.pointer(this.MODULEENTRY32);
 
-  public PROCESSENTRY32 = koffi.struct('PROCESSENTRY32', {
+  public PROCESSENTRY32: IKoffiCType = koffi.struct('PROCESSENTRY32', {
     dwSize: KoffiPrimitives.UINT32,
     cntUsage: KoffiPrimitives.UINT32,
     th32ProcessID: KoffiPrimitives.UINT32,
@@ -39,12 +39,12 @@ export class StructsWin32 {
     szExeFile: koffi.array(KoffiPrimitives.CHAR, 260, 'Array'),
   });
 
-  public PROCESSENTRY32_PTR = koffi.pointer(this.PROCESSENTRY32);
+  public PROCESSENTRY32_PTR: IKoffiCType = koffi.pointer(this.PROCESSENTRY32);
 
-  public POINT = koffi.struct('POINT', {
+  public POINT: IKoffiCType = koffi.struct('POINT', {
     x: KoffiPrimitives.LONG,
     y: KoffiPrimitives.LONG,
   });
 
-  public POINT_PTR = koffi.pointer(this.POINT);
+  public POINT_PTR: IKoffiCType = koffi.pointer(this.POINT);
 }

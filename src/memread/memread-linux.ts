@@ -1,7 +1,7 @@
 import { Primitive } from '../koffi/primitives';
 import { handlers } from '../main';
 
-import { SyscallsLinux } from '../syscalls/syscalls-linux';
+import { SyscallsLinux } from '../syscalls/linux/syscalls-linux';
 import { joinASCII } from '../utils';
 
 export class MemreadLinux {

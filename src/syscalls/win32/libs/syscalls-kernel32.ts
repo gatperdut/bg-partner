@@ -1,4 +1,4 @@
-import koffi from 'koffi';
+import koffi, { IKoffiLib, KoffiFunction } from 'koffi';
 import _ from 'lodash-es';
 import { STDCALL } from '../../../const/const-win32';
 import {
@@ -17,7 +17,7 @@ export class SyscallsKernel32 {
     });
   }
 
-  private kernel32 = koffi.load('kernel32.dll');
+  private kernel32: IKoffiLib = koffi.load('kernel32.dll');
 
   private ReadProcessMemoryNumberDefine(type: Primitive): ReadProcessMemoryFn {
     return this.kernel32.func(STDCALL, 'ReadProcessMemory', KoffiPrimitives.BOOL, [
@@ -34,25 +34,33 @@ export class SyscallsKernel32 {
     ReadProcessMemoryFn
   >;
 
-  public Process32First = this.kernel32.func(STDCALL, 'Process32First', KoffiPrimitives.BOOL, [
-    KoffiPrimitivePtrs.VOID,
-    koffi.inout(this.structsWin32.PROCESSENTRY32_PTR),
-  ]);
+  public Process32First: KoffiFunction = this.kernel32.func(
+    STDCALL,
+    'Process32First',
+    KoffiPrimitives.BOOL,
+    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.PROCESSENTRY32_PTR)]
+  );
 
-  public Process32Next = this.kernel32.func(STDCALL, 'Process32Next', KoffiPrimitives.BOOL, [
-    KoffiPrimitivePtrs.VOID,
-    koffi.inout(this.structsWin32.PROCESSENTRY32_PTR),
-  ]);
+  public Process32Next: KoffiFunction = this.kernel32.func(
+    STDCALL,
+    'Process32Next',
+    KoffiPrimitives.BOOL,
+    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.PROCESSENTRY32_PTR)]
+  );
 
-  public Module32First = this.kernel32.func(STDCALL, 'Module32First', KoffiPrimitives.BOOL, [
-    KoffiPrimitivePtrs.VOID,
-    koffi.inout(this.structsWin32.MODULEENTRY32_PTR),
-  ]);
+  public Module32First: KoffiFunction = this.kernel32.func(
+    STDCALL,
+    'Module32First',
+    KoffiPrimitives.BOOL,
+    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.MODULEENTRY32_PTR)]
+  );
 
-  public Module32Next = this.kernel32.func(STDCALL, 'Module32Next', KoffiPrimitives.BOOL, [
-    KoffiPrimitivePtrs.VOID,
-    koffi.inout(this.structsWin32.MODULEENTRY32_PTR),
-  ]);
+  public Module32Next: KoffiFunction = this.kernel32.func(
+    STDCALL,
+    'Module32Next',
+    KoffiPrimitives.BOOL,
+    [KoffiPrimitivePtrs.VOID, koffi.inout(this.structsWin32.MODULEENTRY32_PTR)]
+  );
 
   public MODULEENTRY32_empty(): MODULEENTRY32_TYPE {
     return {
@@ -69,38 +77,40 @@ export class SyscallsKernel32 {
     };
   }
 
-  public OpenProcess = this.kernel32.func(STDCALL, 'OpenProcess', KoffiPrimitivePtrs.VOID, [
-    KoffiPrimitives.UINT32,
-    KoffiPrimitives.BOOL,
-    KoffiPrimitives.UINT32,
-  ]);
-
-  public GetLastError = this.kernel32.func(STDCALL, 'GetLastError', KoffiPrimitives.UINT32, []);
-
-  public GetCurrentProcess = this.kernel32.func(
+  public OpenProcess: KoffiFunction = this.kernel32.func(
     STDCALL,
-    'GetCurrentProcess',
+    'OpenProcess',
     KoffiPrimitivePtrs.VOID,
+    [KoffiPrimitives.UINT32, KoffiPrimitives.BOOL, KoffiPrimitives.UINT32]
+  );
+
+  public GetLastError: KoffiFunction = this.kernel32.func(
+    STDCALL,
+    'GetLastError',
+    KoffiPrimitives.UINT32,
     []
   );
 
-  public GetExitCodeProcess = this.kernel32.func(
+  public GetExitCodeProcess: KoffiFunction = this.kernel32.func(
     STDCALL,
     'GetExitCodeProcess',
     KoffiPrimitives.BOOL,
     [KoffiPrimitivePtrs.VOID, koffi.out(KoffiPrimitivePtrs.LONG)]
   );
 
-  public CreateToolhelp32Snapshot = this.kernel32.func(
+  public CreateToolhelp32Snapshot: KoffiFunction = this.kernel32.func(
     STDCALL,
     'CreateToolhelp32Snapshot',
     KoffiPrimitivePtrs.VOID,
     [KoffiPrimitives.UINT32, KoffiPrimitives.DWORD]
   );
 
-  public CloseHandle = this.kernel32.func(STDCALL, 'CloseHandle', KoffiPrimitives.BOOL, [
-    KoffiPrimitivePtrs.VOID,
-  ]);
+  public CloseHandle: KoffiFunction = this.kernel32.func(
+    STDCALL,
+    'CloseHandle',
+    KoffiPrimitives.BOOL,
+    [KoffiPrimitivePtrs.VOID]
+  );
 
   public PROCESSENTRY32_empty = (): PROCESSENTRY32_TYPE => {
     return {

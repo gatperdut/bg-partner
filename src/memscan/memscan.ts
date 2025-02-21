@@ -1,8 +1,8 @@
-import { VOID_PTR_TYPE } from '../koffi/primitives';
+import { VOIDPtr } from '../koffi/primitives';
 import { MemscanLinux } from './memscan-linux';
 import { MemscanWin32 } from './memscan-win32';
 
-export type TargetProcess = VOID_PTR_TYPE | number;
+export type TargetProcess = VOIDPtr | number;
 
 export type Memscan = MemscanLinux | MemscanWin32;
 

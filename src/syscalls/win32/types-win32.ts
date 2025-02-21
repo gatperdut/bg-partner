@@ -1,6 +1,6 @@
-import { VOID_PTR_TYPE } from '../../koffi/primitives';
+import { VOIDPtr } from '../../koffi/primitives';
 
-export type EnumWindowsCallbackFn = (windowHandle: VOID_PTR_TYPE, somewindowId: number) => boolean;
+export type EnumWindowsCallbackFn = (windowHandle: VOIDPtr, somewindowId: number) => boolean;
 
 export type PROCESSENTRY32_TYPE = {
   dwSize: number;
@@ -29,8 +29,8 @@ export type MODULEENTRY32_TYPE = {
 };
 
 export type ReadProcessMemoryFn = (
-  handlePtr: VOID_PTR_TYPE,
-  address: VOID_PTR_TYPE,
+  handlePtr: VOIDPtr,
+  address: VOIDPtr,
   value: number[],
   size: number,
   bytesRead: number[]

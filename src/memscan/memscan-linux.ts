@@ -61,7 +61,7 @@ export class MemscanLinux extends MemscanOs {
 
     for (let i = 2001 * 16; i <= entitiesNum * 16 + 96; i += 16) {
       this.gameObjectPtrs.push(
-        BigInt(handlers.memread.memReadNumber(this.offsetEntities + BigInt(i + 8), 'PTR'))
+        BigInt(handlers.memread.memReadNumber(this.offsetEntities + BigInt(i + 8), 'ADDR'))
       );
     }
   }

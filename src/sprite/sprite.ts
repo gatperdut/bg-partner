@@ -65,7 +65,7 @@ export class Sprite {
   public basic(): void {
     this.type = this.memread.memReadNumber(this.basePtr + BigInt(0x8), 'UINT8') as number;
 
-    this.gameAreaPtr = this.memread.memReadNumber(this.basePtr + BigInt(0x18), 'PTR') as bigint;
+    this.gameAreaPtr = this.memread.memReadNumber(this.basePtr + BigInt(0x18), 'ADDR') as bigint;
 
     this.hp = this.memread.memReadNumber(this.basePtr + BigInt(0x560 + 0x1c), 'INT16') as number;
 
@@ -87,7 +87,7 @@ export class Sprite {
 
     const namePtr = this.memread.memReadNumber(
       this.basePtr + BigInt(linux ? 0x3910 : 0x3928),
-      'PTR'
+      'ADDR'
     );
 
     this.name = this.memread.memReadString(BigInt(namePtr));

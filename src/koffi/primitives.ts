@@ -14,7 +14,7 @@ export const Primitives = [
   'DWORD',
   'LONG',
   'ULONG',
-  'PTR',
+  'ADDR',
 ] as const;
 
 export type Primitive = (typeof Primitives)[number];
@@ -32,7 +32,7 @@ const Primitive2CType: Record<Primitive, string> = {
   DWORD: 'uint32',
   LONG: 'long',
   ULONG: 'ulong',
-  PTR: 'uint32',
+  ADDR: 'uint32',
 };
 
 export const KoffiPrimitives: Record<Primitive, IKoffiCType> = {} as Record<Primitive, IKoffiCType>;
@@ -48,4 +48,36 @@ _.each(Primitives, (primitive: Primitive): void => {
   KoffiPrimitivePtrs[primitive] = koffi.pointer(KoffiPrimitives[primitive]);
 });
 
-export type VOID_PTR_TYPE = typeof KoffiPrimitivePtrs.VOID;
+export const PrimitiveSizesWin32: Record<Primitive, number> = {
+  VOID: null,
+  BOOL: 1,
+  CHAR: 1,
+  BYTE: 1,
+  UINT8: 1,
+  INT16: 2,
+  UINT16: 2,
+  UINT32: 4,
+  INT32: 4,
+  DWORD: 4,
+  LONG: 4,
+  ULONG: 4,
+  ADDR: 4,
+};
+
+export const PrimitiveSizesLinux: Record<Primitive, number> = {
+  VOID: null,
+  BOOL: 1,
+  CHAR: 1,
+  BYTE: 1,
+  UINT8: 1,
+  INT16: 2,
+  UINT16: 2,
+  UINT32: 4,
+  INT32: 4,
+  DWORD: 4,
+  LONG: 4,
+  ULONG: 4,
+  ADDR: 8,
+};
+
+export type VOIDPtr = typeof KoffiPrimitivePtrs.VOID;
