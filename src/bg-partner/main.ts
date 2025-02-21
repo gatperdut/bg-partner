@@ -9,7 +9,7 @@ import { MemscanWin32 } from './memscan/memscan-win32';
 import { ShortcutsLinux } from './shortcuts/shortcuts-linux';
 import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
 import { SyscallsLinux } from './syscalls/syscalls-linux';
-import { SyscallsWin32 } from './syscalls/syscalls-win32';
+import { SyscallsWin32 } from './syscalls/win32/syscalls-win32';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 

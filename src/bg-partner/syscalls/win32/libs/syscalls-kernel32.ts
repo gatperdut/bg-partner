@@ -1,7 +1,11 @@
 import koffi from 'koffi';
-
-import { STDCALL } from '../koffi/defs/constants';
-import { ADDRESS_PTR, ADDRESS_PTR_TYPE, HANDLE_PTR, HANDLE_PTR_TYPE } from '../koffi/defs/handles';
+import { STDCALL } from '../../../koffi/defs/constants';
+import {
+  ADDRESS_PTR,
+  ADDRESS_PTR_TYPE,
+  HANDLE_PTR,
+  HANDLE_PTR_TYPE,
+} from '../../../koffi/defs/handles';
 import {
   BOOL,
   BYTE,
@@ -16,8 +20,8 @@ import {
   UINT32,
   UINT8,
   ULONG,
-} from '../koffi/defs/primitives';
-import { blankArray } from '../utils';
+} from '../../../koffi/defs/primitives';
+import { blankArray } from '../../../utils';
 
 export type PROCESSENTRY32_TYPE = {
   dwSize: number;
@@ -53,41 +57,12 @@ type ReadProcessMemoryFn = (
   bytesRead: number[]
 ) => number;
 
-export type EnumWindowsCallbackFn = (
-  windowHandle: HANDLE_PTR_TYPE,
-  somewindowId: number
-) => boolean;
-
-export class SyscallsWin32 {
-  public user32 = koffi.load('user32.dll');
-
-  public kernel32 = koffi.load('kernel32.dll');
-
-  public psapi = koffi.load('psapi.dll');
-
-  public dwmapi = koffi.load('dwmapi.dll');
-
-  public kernelbase = koffi.load('kernelbase.dll');
+export class SyscallsKernel32 {
+  private kernel32 = koffi.load('kernel32.dll');
 
   public CHAR_ARRAY = (length: number) => {
     return koffi.array(CHAR, length, 'Array');
   };
-
-  public RECT = koffi.struct('RECT', {
-    left: UINT32,
-    top: UINT32,
-    right: UINT32,
-    bottom: UINT32,
-  });
-
-  public RECT_PTR = koffi.pointer(this.RECT);
-
-  public POINT = koffi.struct('POINT', {
-    x: LONG,
-    y: LONG,
-  });
-
-  public POINT_PTR = koffi.pointer(this.POINT);
 
   public MODULEENTRY32 = koffi.struct('MODULEENTRY32', {
     dwSize: UINT32,
@@ -119,6 +94,21 @@ export class SyscallsWin32 {
     };
   }
 
+  public PROCESSENTRY32 = koffi.struct('PROCESSENTRY32', {
+    dwSize: UINT32,
+    cntUsage: UINT32,
+    th32ProcessID: UINT32,
+    th32DefaultHeapID: koffi.pointer(ULONG),
+    th32ModuleID: UINT32,
+    cntThreads: UINT32,
+    th32ParentProcessID: UINT32,
+    pcPriClassBase: LONG,
+    dwFlags: UINT32,
+    szExeFile: this.CHAR_ARRAY(260),
+  });
+
+  public PROCESSENTRY32_PTR = koffi.pointer(this.PROCESSENTRY32);
+
   private ReadProcessMemoryNumberDefine(type: koffi.IKoffiCType): ReadProcessMemoryFn {
     return this.kernel32.func(STDCALL, 'ReadProcessMemory', BOOL, [
       HANDLE_PTR,
@@ -142,28 +132,6 @@ export class SyscallsWin32 {
     ULONG: this.ReadProcessMemoryNumberDefine(ULONG),
     PTR: this.ReadProcessMemoryNumberDefine(UINT32),
   };
-
-  public PROCESSENTRY32 = koffi.struct('PROCESSENTRY32', {
-    dwSize: UINT32,
-    cntUsage: UINT32,
-    th32ProcessID: UINT32,
-    th32DefaultHeapID: koffi.pointer(ULONG),
-    th32ModuleID: UINT32,
-    cntThreads: UINT32,
-    th32ParentProcessID: UINT32,
-    pcPriClassBase: LONG,
-    dwFlags: UINT32,
-    szExeFile: this.CHAR_ARRAY(260),
-  });
-
-  public CreateToolhelp32Snapshot = this.kernel32.func(
-    STDCALL,
-    'CreateToolhelp32Snapshot',
-    HANDLE_PTR,
-    [UINT32, DWORD]
-  );
-
-  public PROCESSENTRY32_PTR = koffi.pointer(this.PROCESSENTRY32);
 
   public Process32First = this.kernel32.func(STDCALL, 'Process32First', BOOL, [
     HANDLE_PTR,
@@ -191,64 +159,7 @@ export class SyscallsWin32 {
     UINT32,
   ]);
 
-  public CloseHandle = this.kernel32.func(STDCALL, 'CloseHandle', BOOL, [HANDLE_PTR]);
-
-  public GetWindowThreadProcessId = this.user32.func(STDCALL, 'GetWindowThreadProcessId', LONG, [
-    HANDLE_PTR,
-    koffi.out(koffi.pointer(LONG)),
-  ]);
-
-  public EnumWindowsCallbackProto = koffi.proto(
-    'bool __stdcall enumWindowsCallback(_In_ void* hwnd, _In_ long lParam)'
-  );
-
-  public EnumWindowsCallbackRegister = (callback: EnumWindowsCallbackFn) => {
-    return koffi.register(callback, koffi.pointer(this.EnumWindowsCallbackProto));
-  };
-
-  public getWindowThreadProcessId = (windowHandle: HANDLE_PTR_TYPE): number => {
-    const windowId: number[] = [0];
-
-    this.GetWindowThreadProcessId(windowHandle, windowId);
-
-    return windowId[0];
-  };
-
-  public EnumWindows = this.user32.func(STDCALL, 'EnumWindows', 'bool', [
-    koffi.pointer(this.EnumWindowsCallbackProto),
-    LONG,
-  ]);
-
-  public DwmGetWindowAttribute = this.dwmapi.func(STDCALL, 'DwmGetWindowAttribute', LONG, [
-    HANDLE_PTR,
-    LONG,
-    koffi.out(this.RECT_PTR),
-    LONG,
-  ]);
-
-  public GetForegroundWindow = this.user32.func(STDCALL, 'GetForegroundWindow', HANDLE_PTR, []);
-
-  public SetForegroundWindow = this.user32.func(STDCALL, 'SetForegroundWindow', HANDLE_PTR, [
-    HANDLE_PTR,
-  ]);
-
-  public SetWindowLongA = this.user32.func(STDCALL, 'SetWindowLongA', LONG, [
-    HANDLE_PTR,
-    INT32,
-    LONG,
-  ]);
-
-  public ShowWindow = this.user32.func(STDCALL, 'ShowWindow', BOOL, [HANDLE_PTR, INT32]);
-
-  public SetWindowPos = this.user32.func(STDCALL, 'SetWindowPos', BOOL, [
-    HANDLE_PTR,
-    HANDLE_PTR,
-    INT32,
-    INT32,
-    INT32,
-    INT32,
-    UINT32,
-  ]);
+  public GetLastError = this.kernel32.func(STDCALL, 'GetLastError', UINT32, []);
 
   public GetCurrentProcess = this.kernel32.func(STDCALL, 'GetCurrentProcess', HANDLE_PTR, []);
 
@@ -256,6 +167,15 @@ export class SyscallsWin32 {
     HANDLE_PTR,
     koffi.out(LONG_PTR),
   ]);
+
+  public CreateToolhelp32Snapshot = this.kernel32.func(
+    STDCALL,
+    'CreateToolhelp32Snapshot',
+    HANDLE_PTR,
+    [UINT32, DWORD]
+  );
+
+  public CloseHandle = this.kernel32.func(STDCALL, 'CloseHandle', BOOL, [HANDLE_PTR]);
 
   public PROCESSENTRY32_empty = (): PROCESSENTRY32_TYPE => {
     return {
@@ -271,10 +191,4 @@ export class SyscallsWin32 {
       szExeFile: blankArray(260),
     };
   };
-
-  public GetCursorPos = this.user32.func(STDCALL, 'GetCursorPos', BOOL, [
-    koffi.out(this.POINT_PTR),
-  ]);
-
-  public GetLastError = this.kernel32.func(STDCALL, 'GetLastError', UINT32, []);
 }

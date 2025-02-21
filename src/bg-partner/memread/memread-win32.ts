@@ -1,7 +1,7 @@
 import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
 import { NUMBER } from '../koffi/defs/primitives';
 import { handlers } from '../main';
-import { SyscallsWin32 } from '../syscalls/syscalls-win32';
+import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { joinName, NumberSizesWin32 } from '../utils';
 
 export class MemreadWin32 {
@@ -14,7 +14,7 @@ export class MemreadWin32 {
 
     const value: number[] = [null];
 
-    this.syscalls.ReadProcessMemoryNumber[type](
+    this.syscalls.syscallsKernel32.ReadProcessMemoryNumber[type](
       handlers.memscan.targetProcess as HANDLE_PTR_TYPE,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

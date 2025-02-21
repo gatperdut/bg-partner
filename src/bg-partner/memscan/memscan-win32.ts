@@ -8,7 +8,8 @@ import {
 } from '../koffi/defs/constants';
 import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
 import { handlers } from '../main';
-import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE, SyscallsWin32 } from '../syscalls/syscalls-win32';
+import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from '../syscalls/win32/libs/syscalls-kernel32';
+import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { joinName } from '../utils';
 import { MemscanCommon } from './memscan-common';
 
@@ -22,11 +23,15 @@ export class MemscanWin32 extends MemscanCommon {
   }
 
   public init(): void {
-    this.processSnapshot = this.syscalls.CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    this.processSnapshot = this.syscalls.syscallsKernel32.CreateToolhelp32Snapshot(
+      TH32CS_SNAPPROCESS,
+      0
+    );
 
-    const processEntry32: PROCESSENTRY32_TYPE = this.syscalls.PROCESSENTRY32_empty();
+    const processEntry32: PROCESSENTRY32_TYPE =
+      this.syscalls.syscallsKernel32.PROCESSENTRY32_empty();
 
-    this.syscalls.Process32First(this.processSnapshot, processEntry32);
+    this.syscalls.syscallsKernel32.Process32First(this.processSnapshot, processEntry32);
 
     do {
       if (joinName(processEntry32.szExeFile) === 'Baldur.exe') {
@@ -34,7 +39,7 @@ export class MemscanWin32 extends MemscanCommon {
 
         break;
       }
-    } while (this.syscalls.Process32Next(this.processSnapshot, processEntry32));
+    } while (this.syscalls.syscallsKernel32.Process32Next(this.processSnapshot, processEntry32));
 
     if (!this.pid) {
       if (!this.waitingPrinted) {
@@ -45,9 +50,9 @@ export class MemscanWin32 extends MemscanCommon {
 
       this.gameObjectPtrs = [];
 
-      this.syscalls.CloseHandle(this.processSnapshot);
+      this.syscalls.syscallsKernel32.CloseHandle(this.processSnapshot);
 
-      this.syscalls.CloseHandle(this.targetProcess);
+      this.syscalls.syscallsKernel32.CloseHandle(this.targetProcess);
 
       return;
     }
@@ -56,36 +61,36 @@ export class MemscanWin32 extends MemscanCommon {
 
     this.waitingPrinted = false;
 
-    const moduleEntry32: MODULEENTRY32_TYPE = this.syscalls.MODULEENTRY32_empty();
+    const moduleEntry32: MODULEENTRY32_TYPE = this.syscalls.syscallsKernel32.MODULEENTRY32_empty();
 
-    const moduleSnapshot: HANDLE_PTR_TYPE = this.syscalls.CreateToolhelp32Snapshot(
+    const moduleSnapshot: HANDLE_PTR_TYPE = this.syscalls.syscallsKernel32.CreateToolhelp32Snapshot(
       TH32CS_SNAPMODULE,
       this.pid
     );
 
-    this.syscalls.Module32First(moduleSnapshot, moduleEntry32);
+    this.syscalls.syscallsKernel32.Module32First(moduleSnapshot, moduleEntry32);
 
     do {
       if (joinName(moduleEntry32.szModule) === 'Baldur.exe') {
         break;
       }
-    } while (this.syscalls.Module32Next(this.processSnapshot, moduleEntry32));
+    } while (this.syscalls.syscallsKernel32.Module32Next(this.processSnapshot, moduleEntry32));
 
     this.modBaseAddr = koffi.address(moduleEntry32.modBaseAddr);
 
-    this.targetProcess = this.syscalls.OpenProcess(
+    this.targetProcess = this.syscalls.syscallsKernel32.OpenProcess(
       PROCESS_VM_READ | PROCESS_QUERY_LIMITED_INFORMATION,
       true,
       this.pid
     );
 
-    this.syscalls.CloseHandle(moduleSnapshot);
+    this.syscalls.syscallsKernel32.CloseHandle(moduleSnapshot);
   }
 
   protected isProcessAlive(): boolean {
     const result: number[] = [0];
 
-    this.syscalls.GetExitCodeProcess(this.targetProcess, result);
+    this.syscalls.syscallsKernel32.GetExitCodeProcess(this.targetProcess, result);
 
     return result[0] === STILL_ACTIVE;
   }
@@ -98,11 +103,11 @@ export class MemscanWin32 extends MemscanCommon {
     if (!this.alive) {
       this.pid = null;
 
-      this.syscalls.CloseHandle(this.processSnapshot);
+      this.syscalls.syscallsKernel32.CloseHandle(this.processSnapshot);
 
       this.processSnapshot = null;
 
-      this.syscalls.CloseHandle(this.targetProcess);
+      this.syscalls.syscallsKernel32.CloseHandle(this.targetProcess);
 
       this.targetProcess = null;
 

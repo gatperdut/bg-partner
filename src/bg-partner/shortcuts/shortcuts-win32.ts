@@ -8,7 +8,7 @@ import {
 } from '../koffi/defs/constants';
 
 import { handlers } from '../main';
-import { SyscallsWin32 } from '../syscalls/syscalls-win32';
+import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 
 export class ShortcutsWin32 {
   constructor() {
@@ -31,17 +31,17 @@ export class ShortcutsWin32 {
       y: 0,
     };
 
-    this.syscalls.GetCursorPos(point);
+    this.syscalls.syscallsUser32.GetCursorPos(point);
 
     handlers.entities.sheetToggle(point);
   }
 
   private borderless(): void {
-    this.syscalls.SetWindowLongA(handlers.window.handle, GWL_STYLE, WS_MAXIMIZE);
+    this.syscalls.syscallsUser32.SetWindowLongA(handlers.window.handle, GWL_STYLE, WS_MAXIMIZE);
 
-    this.syscalls.ShowWindow(handlers.window.handle, SW_SHOW);
+    this.syscalls.syscallsUser32.ShowWindow(handlers.window.handle, SW_SHOW);
 
-    this.syscalls.SetWindowPos(
+    this.syscalls.syscallsUser32.SetWindowPos(
       handlers.window.handle,
       HWND_TOP,
       0,
