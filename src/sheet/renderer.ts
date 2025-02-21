@@ -35,7 +35,7 @@ class SheetRenderer {
 
       document.getElementById('hp').textContent = params.sprite.hp.toString();
 
-      document.getElementById('hpMax').textContent = params.sprite.derivedTemp.hpMax.toString();
+      document.getElementById('hpMax').textContent = params.sprite.derived.hpMax.toString();
 
       document.getElementById('race').textContent = params.raceTable[params.sprite.race];
     });
