@@ -1,7 +1,7 @@
 import koffi, { IKoffiCType } from 'koffi';
 import _ from 'lodash-es';
 
-const Primitives = [
+export const Primitives = [
   'BOOL',
   'CHAR',
   'BYTE',

@@ -8,8 +8,8 @@ import {
 } from '../const/const-win32';
 import { VOID_PTR_TYPE } from '../koffi/handles';
 import { handlers } from '../main';
-import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from '../syscalls/win32/libs/syscalls-kernel32';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
+import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from '../syscalls/win32/types-win32';
 import { joinASCII } from '../utils';
 import { MemscanOs } from './memscan';
 

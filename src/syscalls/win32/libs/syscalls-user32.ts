@@ -3,8 +3,7 @@ import { STDCALL } from '../../../const/const-win32';
 import { VOID_PTR, VOID_PTR_TYPE } from '../../../koffi/handles';
 import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../../koffi/primitives';
 import { StructsWin32 } from '../structs-win32';
-
-export type EnumWindowsCallbackFn = (windowHandle: VOID_PTR_TYPE, somewindowId: number) => boolean;
+import { EnumWindowsCallbackFn } from '../types-win32';
 
 export class SyscallsUser32 {
   constructor(private structsWin32: StructsWin32) {

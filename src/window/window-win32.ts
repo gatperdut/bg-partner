@@ -2,8 +2,8 @@ import koffi from 'koffi';
 import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../const/const-win32';
 import { VOID_PTR_TYPE } from '../koffi/handles';
 import { handlers } from '../main';
-import { EnumWindowsCallbackFn } from '../syscalls/win32/libs/syscalls-user32';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
+import { EnumWindowsCallbackFn } from '../syscalls/win32/types-win32';
 import { WindowOs } from './window';
 
 export type Screen = {
