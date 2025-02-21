@@ -1,4 +1,4 @@
-import { VOID_PTR_TYPE } from '../koffi/handles';
+import { VOID_PTR_TYPE } from '../koffi/primitives';
 import { MemscanLinux } from './memscan-linux';
 import { MemscanWin32 } from './memscan-win32';
 

@@ -1,4 +1,4 @@
-import { VOID_PTR_TYPE } from '../../koffi/handles';
+import { VOID_PTR_TYPE } from '../../koffi/primitives';
 
 export type EnumWindowsCallbackFn = (windowHandle: VOID_PTR_TYPE, somewindowId: number) => boolean;
 

@@ -1,5 +1,4 @@
-import { VOID_PTR_TYPE } from '../koffi/handles';
-import { Primitive } from '../koffi/primitives';
+import { Primitive, VOID_PTR_TYPE } from '../koffi/primitives';
 import { handlers } from '../main';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { joinASCII, NumberSizesWin32 } from '../utils';

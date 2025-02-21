@@ -6,7 +6,7 @@ import {
   TH32CS_SNAPMODULE,
   TH32CS_SNAPPROCESS,
 } from '../const/const-win32';
-import { VOID_PTR_TYPE } from '../koffi/handles';
+import { VOID_PTR_TYPE } from '../koffi/primitives';
 import { handlers } from '../main';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from '../syscalls/win32/types-win32';

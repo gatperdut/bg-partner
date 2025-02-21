@@ -1,5 +1,5 @@
 import Electron from 'electron';
-import { VOID_PTR_TYPE } from '../koffi/handles';
+import { VOID_PTR_TYPE } from '../koffi/primitives';
 import { WindowLinux } from './window-linux';
 import { WindowWin32 } from './window-win32';
 

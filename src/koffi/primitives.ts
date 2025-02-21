@@ -2,6 +2,7 @@ import koffi, { IKoffiCType } from 'koffi';
 import _ from 'lodash-es';
 
 export const Primitives = [
+  'VOID',
   'BOOL',
   'CHAR',
   'BYTE',
@@ -19,6 +20,7 @@ export const Primitives = [
 export type Primitive = (typeof Primitives)[number];
 
 const Primitive2CType: Record<Primitive, string> = {
+  VOID: 'void',
   BOOL: 'bool',
   CHAR: 'char',
   BYTE: 'unsigned char',
@@ -45,3 +47,5 @@ _.each(Primitives, (primitive: Primitive): void => {
 
   KoffiPrimitivePtrs[primitive] = koffi.pointer(KoffiPrimitives[primitive]);
 });
+
+export type VOID_PTR_TYPE = typeof KoffiPrimitivePtrs.VOID;

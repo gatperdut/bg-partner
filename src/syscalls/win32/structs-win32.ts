@@ -1,6 +1,5 @@
 import koffi, { IKoffiCType } from 'koffi';
-import { VOID_PTR } from '../../koffi/handles';
-import { KoffiPrimitives } from '../../koffi/primitives';
+import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../koffi/primitives';
 
 export class StructsWin32 {
   public RECT = koffi.struct('RECT', {
@@ -20,7 +19,7 @@ export class StructsWin32 {
     ProccntUsage: KoffiPrimitives.UINT32,
     modBaseAddr: koffi.pointer(KoffiPrimitives.BYTE),
     modBaseSize: KoffiPrimitives.UINT32,
-    hModule: VOID_PTR,
+    hModule: KoffiPrimitivePtrs.VOID,
     szModule: koffi.array(KoffiPrimitives.CHAR, 255 + 1, 'Array'),
     szExePath: koffi.array(KoffiPrimitives.CHAR, 260, 'Array'),
   });

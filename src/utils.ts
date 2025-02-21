@@ -15,6 +15,7 @@ export const joinASCII = (nums: number[]): string => {
 };
 
 export const NumberSizesWin32: Record<Primitive, number> = {
+  VOID: 4,
   BOOL: 1,
   CHAR: 1,
   BYTE: 1,
@@ -30,6 +31,7 @@ export const NumberSizesWin32: Record<Primitive, number> = {
 };
 
 export const NumberSizesLinux: Record<Primitive, number> = {
+  VOID: 8,
   BOOL: 1,
   CHAR: 1,
   BYTE: 1,
