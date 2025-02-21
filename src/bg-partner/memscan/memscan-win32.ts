@@ -8,21 +8,25 @@ import {
 } from '../koffi/defs/constants';
 import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
 import { handlers } from '../main';
+import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE, SyscallsWin32 } from '../syscalls/syscalls-win32';
 import { joinName } from '../utils';
-import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from '../wincalls';
 import { MemscanCommon } from './memscan-common';
 
 export class MemscanWin32 extends MemscanCommon {
   private processSnapshot: HANDLE_PTR_TYPE;
 
-  public modBaseAddr: bigint;
+  private modBaseAddr: bigint;
+
+  private get syscalls(): SyscallsWin32 {
+    return handlers.syscalls as SyscallsWin32;
+  }
 
   public init(): void {
-    this.processSnapshot = handlers.wincalls.CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    this.processSnapshot = this.syscalls.CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
-    const processEntry32: PROCESSENTRY32_TYPE = handlers.wincalls.PROCESSENTRY32_empty();
+    const processEntry32: PROCESSENTRY32_TYPE = this.syscalls.PROCESSENTRY32_empty();
 
-    handlers.wincalls.Process32First(this.processSnapshot, processEntry32);
+    this.syscalls.Process32First(this.processSnapshot, processEntry32);
 
     do {
       if (joinName(processEntry32.szExeFile) === 'Baldur.exe') {
@@ -30,7 +34,7 @@ export class MemscanWin32 extends MemscanCommon {
 
         break;
       }
-    } while (handlers.wincalls.Process32Next(this.processSnapshot, processEntry32));
+    } while (this.syscalls.Process32Next(this.processSnapshot, processEntry32));
 
     if (!this.pid) {
       if (!this.waitingPrinted) {
@@ -41,9 +45,9 @@ export class MemscanWin32 extends MemscanCommon {
 
       this.gameObjectPtrs = [];
 
-      handlers.wincalls.CloseHandle(this.processSnapshot);
+      this.syscalls.CloseHandle(this.processSnapshot);
 
-      handlers.wincalls.CloseHandle(this.targetProcess);
+      this.syscalls.CloseHandle(this.targetProcess);
 
       return;
     }
@@ -52,36 +56,36 @@ export class MemscanWin32 extends MemscanCommon {
 
     this.waitingPrinted = false;
 
-    const moduleEntry32: MODULEENTRY32_TYPE = handlers.wincalls.MODULEENTRY32_empty();
+    const moduleEntry32: MODULEENTRY32_TYPE = this.syscalls.MODULEENTRY32_empty();
 
-    const moduleSnapshot: HANDLE_PTR_TYPE = handlers.wincalls.CreateToolhelp32Snapshot(
+    const moduleSnapshot: HANDLE_PTR_TYPE = this.syscalls.CreateToolhelp32Snapshot(
       TH32CS_SNAPMODULE,
       this.pid
     );
 
-    handlers.wincalls.Module32First(moduleSnapshot, moduleEntry32);
+    this.syscalls.Module32First(moduleSnapshot, moduleEntry32);
 
     do {
       if (joinName(moduleEntry32.szModule) === 'Baldur.exe') {
         break;
       }
-    } while (handlers.wincalls.Module32Next(this.processSnapshot, moduleEntry32));
+    } while (this.syscalls.Module32Next(this.processSnapshot, moduleEntry32));
 
     this.modBaseAddr = koffi.address(moduleEntry32.modBaseAddr);
 
-    this.targetProcess = handlers.wincalls.OpenProcess(
+    this.targetProcess = this.syscalls.OpenProcess(
       PROCESS_VM_READ | PROCESS_QUERY_LIMITED_INFORMATION,
       true,
       this.pid
     );
 
-    handlers.wincalls.CloseHandle(moduleSnapshot);
+    this.syscalls.CloseHandle(moduleSnapshot);
   }
 
   protected isProcessAlive(): boolean {
     const result: number[] = [0];
 
-    handlers.wincalls.GetExitCodeProcess(this.targetProcess, result);
+    this.syscalls.GetExitCodeProcess(this.targetProcess, result);
 
     return result[0] === STILL_ACTIVE;
   }
@@ -94,11 +98,11 @@ export class MemscanWin32 extends MemscanCommon {
     if (!this.alive) {
       this.pid = null;
 
-      handlers.wincalls.CloseHandle(this.processSnapshot);
+      this.syscalls.CloseHandle(this.processSnapshot);
 
       this.processSnapshot = null;
 
-      handlers.wincalls.CloseHandle(this.targetProcess);
+      this.syscalls.CloseHandle(this.targetProcess);
 
       this.targetProcess = null;
 
@@ -108,7 +112,6 @@ export class MemscanWin32 extends MemscanCommon {
     const offset: number = 0x68d434;
 
     const numEntities: number = handlers.memread.memReadNumber(
-      this.targetProcess,
       this.modBaseAddr + BigInt(offset),
       'INT32'
     ) as number;
@@ -117,9 +120,7 @@ export class MemscanWin32 extends MemscanCommon {
 
     for (let i: number = 2000 * 16; i <= numEntities * 16 + 96; i += 16) {
       this.gameObjectPtrs.push(
-        BigInt(
-          handlers.memread.memReadNumber(this.targetProcess, listPointer + BigInt(i + 8), 'PTR')
-        )
+        BigInt(handlers.memread.memReadNumber(listPointer + BigInt(i + 8), 'PTR'))
       );
     }
   }

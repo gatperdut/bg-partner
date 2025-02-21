@@ -1,17 +1,15 @@
 import _ from 'lodash';
 import { Entity } from './entity';
 import { handlers } from './main';
-import { TargetProcess } from './memscan/memscan-common';
 
 export class Entities {
   private entities: Record<number, Entity> = {};
 
-  public run(processHandle: TargetProcess, gameObjectPtrs: bigint[]): void {
+  public run(): void {
     const entities: Entity[] = _.filter(
       _.map(
-        gameObjectPtrs,
-        (gameObjectPtr: bigint): Entity =>
-          new Entity(processHandle, gameObjectPtr, handlers.memread)
+        handlers.memscan.gameObjectPtrs,
+        (gameObjectPtr: bigint): Entity => new Entity(gameObjectPtr, handlers.memread)
       ),
       (entity: Entity): boolean => entity.loaded
     );

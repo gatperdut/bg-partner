@@ -2,6 +2,7 @@ import koffi from 'koffi';
 import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../koffi/defs/constants';
 import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
 import { handlers } from '../main';
+import { EnumWindowsCallbackFn, SyscallsWin32 } from '../syscalls/syscalls-win32';
 import { WindowCommon } from './window-common';
 
 export type Screen = {
@@ -12,21 +13,28 @@ export type Screen = {
 export class WindowWin32 extends WindowCommon {
   private callback: unknown;
 
-  public init(pid: number): void {
-    if (this.windowHandle) {
+  private get syscalls(): SyscallsWin32 {
+    return handlers.syscalls as SyscallsWin32;
+  }
+
+  public init(): void {
+    if (this.handle) {
       return;
     }
 
-    this.callback = handlers.wincalls.EnumWindowsCallbackRegister(this.enumWindowsCallback);
+    this.callback = this.syscalls.EnumWindowsCallbackRegister(this.enumWindowsCallback);
 
-    handlers.wincalls.EnumWindows(this.callback, pid);
+    this.syscalls.EnumWindows(this.callback, handlers.memscan.pid);
   }
 
-  private enumWindowsCallback = (windowHandle: HANDLE_PTR_TYPE, somewindowId: number) => {
-    this.windowId = handlers.wincalls.getWindowThreadProcessId(windowHandle);
+  private enumWindowsCallback: EnumWindowsCallbackFn = (
+    windowHandle: HANDLE_PTR_TYPE,
+    somewindowId: number
+  ): boolean => {
+    this.id = this.syscalls.getWindowThreadProcessId(windowHandle);
 
-    if (this.windowId === somewindowId) {
-      this.windowHandle = windowHandle;
+    if (this.id === somewindowId) {
+      this.handle = windowHandle;
 
       return false;
     }
@@ -34,34 +42,34 @@ export class WindowWin32 extends WindowCommon {
     return true;
   };
 
-  public run(pid: number): void {
-    super.run(pid);
+  public run(): void {
+    super.run();
 
-    handlers.wincalls.DwmGetWindowAttribute(
-      this.windowHandle,
+    this.syscalls.DwmGetWindowAttribute(
+      this.handle,
       DWMWA_EXTENDED_FRAME_BOUNDS,
       this.windowRect,
-      koffi.sizeof(handlers.wincalls.RECT)
+      koffi.sizeof(this.syscalls.RECT)
     );
   }
 
   public get focused(): boolean {
-    const foreground: HANDLE_PTR_TYPE = handlers.wincalls.GetForegroundWindow();
+    const foreground: HANDLE_PTR_TYPE = this.syscalls.GetForegroundWindow();
 
-    const foregroundPid = handlers.wincalls.getWindowThreadProcessId(foreground);
+    const foregroundPid = this.syscalls.getWindowThreadProcessId(foreground);
 
-    return this.windowId === foregroundPid;
+    return this.id === foregroundPid;
   }
 
   public setForeground(): void {
-    handlers.wincalls.SetForegroundWindow(this.windowHandle);
+    this.syscalls.SetForegroundWindow(this.handle);
   }
 
   public teardown(): void {
-    if (this.windowHandle) {
-      handlers.wincalls.CloseHandle(this.windowHandle);
+    if (this.handle) {
+      this.syscalls.CloseHandle(this.handle);
 
-      this.windowHandle = null;
+      this.handle = null;
     }
   }
 }

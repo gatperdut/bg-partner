@@ -1,8 +1,8 @@
 import koffi from 'koffi';
-import { NUMBER } from './koffi/defs/primitives';
-import { NumberSizesLinux } from './utils';
+import { NUMBER } from '../koffi/defs/primitives';
+import { NumberSizesLinux } from '../utils';
 
-export class Linuxcalls {
+export class SyscallsLinux {
   public libc = koffi.load('libc.so.6');
 
   public iovec = koffi.struct('iovec', {

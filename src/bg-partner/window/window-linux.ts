@@ -1,5 +1,6 @@
 import { execSync } from 'child_process';
 import _ from 'lodash-es';
+import { handlers } from '../main';
 import { WindowCommon } from './window-common';
 
 export class WindowLinux extends WindowCommon {
@@ -7,26 +8,28 @@ export class WindowLinux extends WindowCommon {
     // Empty
   }
 
-  public run(pid: number): void {
-    super.run(pid);
+  public run(): void {
+    super.run();
 
     const wmctrlValues: number[] = _.map(
-      execSync(`wmctrl -lpG | awk '$3 == ${pid} {print $1, $4, $5, $6, $7}'`).toString().split(' '),
+      execSync(`wmctrl -lpG | awk '$3 == ${handlers.memscan.pid} {print $1, $4, $5, $6, $7}'`)
+        .toString()
+        .split(' '),
       (field: string, index: number): number => {
         return Number.parseInt(field, index === 0 ? 16 : 10);
       }
     );
 
-    const windowTitleHeight: number = this.windowId
+    const windowTitleHeight: number = this.id
       ? wmctrlValues[2] -
         Number.parseInt(
           execSync(
-            `xwininfo -id ${this.windowId} | grep "Absolute upper-left Y" | awk '{print $4}'`
+            `xwininfo -id ${this.id} | grep "Absolute upper-left Y" | awk '{print $4}'`
           ).toString()
         )
       : 0;
 
-    this.windowId = wmctrlValues[0];
+    this.id = wmctrlValues[0];
 
     this.windowRect.left = wmctrlValues[1];
 
@@ -38,11 +41,11 @@ export class WindowLinux extends WindowCommon {
   }
 
   public get focused(): boolean {
-    return Number.parseInt(execSync('xdotool getwindowfocus').toString(), 10) === this.windowId;
+    return Number.parseInt(execSync('xdotool getwindowfocus').toString(), 10) === this.id;
   }
 
   public setForeground(): void {
-    execSync(`xdotool windowactivate ${this.windowId}`);
+    execSync(`xdotool windowactivate ${this.id}`);
   }
 
   public teardown(): void {

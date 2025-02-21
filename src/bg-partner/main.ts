@@ -1,7 +1,6 @@
 import 'source-map-support/register';
 import { linux } from '../index';
 import { Entities } from './entities';
-import { Linuxcalls } from './linuxcalls';
 import { Memread } from './memread/memread';
 import { MemreadLinux } from './memread/memread-linux';
 import { MemreadWin32 } from './memread/memread-win32';
@@ -9,13 +8,13 @@ import { MemscanLinux } from './memscan/memscan-linux';
 import { MemscanWin32 } from './memscan/memscan-win32';
 import { ShortcutsLinux } from './shortcuts/shortcuts-linux';
 import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
-import { Wincalls } from './wincalls';
+import { SyscallsLinux } from './syscalls/syscalls-linux';
+import { SyscallsWin32 } from './syscalls/syscalls-win32';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 
 export type Handlers = {
-  linuxcalls: Linuxcalls;
-  wincalls: Wincalls;
+  syscalls: SyscallsLinux | SyscallsWin32;
   memread: Memread;
   memscan: MemscanLinux | MemscanWin32;
   window: WindowLinux | WindowWin32;
@@ -24,8 +23,7 @@ export type Handlers = {
 };
 
 export const handlers: Handlers = {
-  linuxcalls: null,
-  wincalls: null,
+  syscalls: null,
   memread: null,
   memscan: null,
   window: null,
@@ -35,9 +33,7 @@ export const handlers: Handlers = {
 
 export class Main {
   constructor() {
-    handlers.wincalls = linux ? null : new Wincalls();
-
-    handlers.linuxcalls = linux ? new Linuxcalls() : null;
+    handlers.syscalls = linux ? new SyscallsLinux() : new SyscallsWin32();
 
     handlers.memread = linux ? new MemreadLinux() : new MemreadWin32();
 
@@ -69,10 +65,10 @@ export class Main {
       return;
     }
 
-    handlers.window.init(handlers.memscan.pid);
+    handlers.window.init();
 
-    handlers.window.run(handlers.memscan.pid);
+    handlers.window.run();
 
-    handlers.entities.run(handlers.memscan.targetProcess, handlers.memscan.gameObjectPtrs);
+    handlers.entities.run();
   }
 }

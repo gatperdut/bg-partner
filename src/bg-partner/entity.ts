@@ -1,6 +1,5 @@
 import { handlers } from './main';
 import { Memread } from './memread/memread';
-import { TargetProcess } from './memscan/memscan-common';
 import { Sheet } from './sheet/sheet';
 import { Sprite } from './sprite/sprite';
 
@@ -11,12 +10,8 @@ export class Entity {
 
   public sprite: Sprite;
 
-  constructor(
-    private processHandle: TargetProcess,
-    private gameObjectPtr: bigint,
-    private memread: Memread
-  ) {
-    this.sprite = new Sprite(this.processHandle, this.gameObjectPtr, this.memread);
+  constructor(private gameObjectPtr: bigint, private memread: Memread) {
+    this.sprite = new Sprite(this.gameObjectPtr, this.memread);
 
     this.loaded = !this.sprite.invalid;
   }

@@ -1,10 +1,11 @@
 import koffi from 'koffi';
-import { CHAR_ARRAY } from './koffi/defs/arrays';
-import { STDCALL } from './koffi/defs/constants';
-import { ADDRESS_PTR, ADDRESS_PTR_TYPE, HANDLE_PTR, HANDLE_PTR_TYPE } from './koffi/defs/handles';
+
+import { STDCALL } from '../koffi/defs/constants';
+import { ADDRESS_PTR, ADDRESS_PTR_TYPE, HANDLE_PTR, HANDLE_PTR_TYPE } from '../koffi/defs/handles';
 import {
   BOOL,
   BYTE,
+  CHAR,
   DWORD,
   INT16,
   INT32,
@@ -15,9 +16,8 @@ import {
   UINT32,
   UINT8,
   ULONG,
-} from './koffi/defs/primitives';
-
-import { blankArray } from './utils';
+} from '../koffi/defs/primitives';
+import { blankArray } from '../utils';
 
 export type PROCESSENTRY32_TYPE = {
   dwSize: number;
@@ -53,7 +53,12 @@ type ReadProcessMemoryFn = (
   bytesRead: number[]
 ) => number;
 
-export class Wincalls {
+export type EnumWindowsCallbackFn = (
+  windowHandle: HANDLE_PTR_TYPE,
+  somewindowId: number
+) => boolean;
+
+export class SyscallsWin32 {
   public user32 = koffi.load('user32.dll');
 
   public kernel32 = koffi.load('kernel32.dll');
@@ -63,6 +68,10 @@ export class Wincalls {
   public dwmapi = koffi.load('dwmapi.dll');
 
   public kernelbase = koffi.load('kernelbase.dll');
+
+  public CHAR_ARRAY = (length: number) => {
+    return koffi.array(CHAR, length, 'Array');
+  };
 
   public RECT = koffi.struct('RECT', {
     left: UINT32,
@@ -89,8 +98,8 @@ export class Wincalls {
     modBaseAddr: koffi.pointer(BYTE),
     modBaseSize: UINT32,
     hModule: HANDLE_PTR,
-    szModule: CHAR_ARRAY(255 + 1),
-    szExePath: CHAR_ARRAY(260),
+    szModule: this.CHAR_ARRAY(255 + 1),
+    szExePath: this.CHAR_ARRAY(260),
   });
 
   public MODULEENTRY32_PTR = koffi.pointer(this.MODULEENTRY32);
@@ -144,7 +153,7 @@ export class Wincalls {
     th32ParentProcessID: UINT32,
     pcPriClassBase: LONG,
     dwFlags: UINT32,
-    szExeFile: CHAR_ARRAY(260),
+    szExeFile: this.CHAR_ARRAY(260),
   });
 
   public CreateToolhelp32Snapshot = this.kernel32.func(
@@ -193,9 +202,7 @@ export class Wincalls {
     'bool __stdcall enumWindowsCallback(_In_ void* hwnd, _In_ long lParam)'
   );
 
-  public EnumWindowsCallbackRegister = (callback: unknown) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+  public EnumWindowsCallbackRegister = (callback: EnumWindowsCallbackFn) => {
     return koffi.register(callback, koffi.pointer(this.EnumWindowsCallbackProto));
   };
 

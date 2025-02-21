@@ -30,7 +30,7 @@ export class ShortcutsLinux {
 
   private borderless(): void {
     execSync(
-      `wmctrl -i -r ${handlers.window.windowId} -e 0,0,0,${handlers.window.screenSize.width},${handlers.window.screenSize.height}`
+      `wmctrl -i -r ${handlers.window.id} -e 0,0,0,${handlers.window.screen.width},${handlers.window.screen.height}`
     );
   }
 }

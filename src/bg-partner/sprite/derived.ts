@@ -1,5 +1,4 @@
 import { Memread } from '../memread/memread';
-import { TargetProcess } from '../memscan/memscan-common';
 
 export type Derived = {
   hpMax: number;
@@ -11,11 +10,6 @@ export const derivedEmpty = (): Derived => {
   };
 };
 
-export const derivedFill = (
-  memread: Memread,
-  targetProcess: TargetProcess,
-  basePtr: bigint,
-  derived: Derived
-): void => {
-  derived.hpMax = memread.memReadNumber(targetProcess, basePtr + BigInt(0x4), 'INT16') as number;
+export const derivedFill = (memread: Memread, basePtr: bigint, derived: Derived): void => {
+  derived.hpMax = memread.memReadNumber(basePtr + BigInt(0x4), 'INT16') as number;
 };

@@ -9,11 +9,11 @@ export type WindowRect = {
 };
 
 export abstract class WindowCommon {
-  public windowId: number;
+  public id: number;
 
-  public windowHandle: HANDLE_PTR_TYPE;
+  public handle: HANDLE_PTR_TYPE;
 
-  public screenSize: Electron.Size = {
+  public screen: Electron.Size = {
     width: 0,
     height: 0,
   };
@@ -25,12 +25,12 @@ export abstract class WindowCommon {
     bottom: 0,
   };
 
-  public run(pid: number): void {
+  public run(): void {
     const screenSize: Electron.Size = Electron.screen.getPrimaryDisplay().size;
 
-    this.screenSize.width = screenSize.width;
+    this.screen.width = screenSize.width;
 
-    this.screenSize.height = screenSize.height;
+    this.screen.height = screenSize.height;
   }
 
   public setForeground(): void {

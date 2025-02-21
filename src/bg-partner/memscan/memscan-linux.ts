@@ -47,7 +47,6 @@ export class MemscanLinux extends MemscanCommon {
     }
 
     const numEntities: number = handlers.memread.memReadNumber(
-      this.pid,
       BigInt(0x55555613f776),
       'INT16'
     ) as number;
@@ -56,7 +55,7 @@ export class MemscanLinux extends MemscanCommon {
 
     for (let i = 2001 * 16; i <= numEntities * 16 + 96; i += 16) {
       this.gameObjectPtrs.push(
-        BigInt(handlers.memread.memReadNumber(this.pid, listPointer + BigInt(i + 8), 'PTR'))
+        BigInt(handlers.memread.memReadNumber(listPointer + BigInt(i + 8), 'PTR'))
       );
     }
   }

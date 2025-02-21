@@ -5,7 +5,6 @@ export const spriteSanitize = (sprite: Sprite): Sprite => {
   const result: Sprite = {
     // Problematic
     basePtr: null,
-    targetProcess: null,
     memread: null,
     invalid: false,
     basic: null,
