@@ -1,4 +1,4 @@
-import { NUMBER } from './koffi/primitives';
+import { Primitive } from './koffi/primitives';
 
 export const joinASCII = (nums: number[]): string => {
   const result: string[] = [];
@@ -14,8 +14,9 @@ export const joinASCII = (nums: number[]): string => {
   return result.join('');
 };
 
-export const NumberSizesWin32: Record<NUMBER, number> = {
+export const NumberSizesWin32: Record<Primitive, number> = {
   BOOL: 1,
+  CHAR: 1,
   BYTE: 1,
   UINT8: 1,
   INT16: 2,
@@ -28,8 +29,9 @@ export const NumberSizesWin32: Record<NUMBER, number> = {
   PTR: 4,
 };
 
-export const NumberSizesLinux: Record<NUMBER, number> = {
+export const NumberSizesLinux: Record<Primitive, number> = {
   BOOL: 1,
+  CHAR: 1,
   BYTE: 1,
   UINT8: 1,
   INT16: 2,

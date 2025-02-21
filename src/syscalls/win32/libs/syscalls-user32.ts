@@ -1,7 +1,7 @@
 import koffi from 'koffi';
 import { STDCALL } from '../../../const/const-win32';
 import { VOID_PTR, VOID_PTR_TYPE } from '../../../koffi/handles';
-import { BOOL, INT32, LONG, UINT32 } from '../../../koffi/primitives';
+import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../../koffi/primitives';
 import { StructsWin32 } from '../structs-win32';
 
 export type EnumWindowsCallbackFn = (windowHandle: VOID_PTR_TYPE, somewindowId: number) => boolean;
@@ -23,7 +23,7 @@ export class SyscallsUser32 {
 
   public EnumWindows = this.user32.func(STDCALL, 'EnumWindows', 'bool', [
     koffi.pointer(this.EnumWindowsCallbackProto),
-    LONG,
+    KoffiPrimitives.LONG,
   ]);
 
   public GetForegroundWindow = this.user32.func(STDCALL, 'GetForegroundWindow', VOID_PTR, []);
@@ -32,32 +32,37 @@ export class SyscallsUser32 {
     VOID_PTR,
   ]);
 
-  public SetWindowLongA = this.user32.func(STDCALL, 'SetWindowLongA', LONG, [
+  public SetWindowLongA = this.user32.func(STDCALL, 'SetWindowLongA', KoffiPrimitives.LONG, [
     VOID_PTR,
-    INT32,
-    LONG,
+    KoffiPrimitives.INT32,
+    KoffiPrimitives.LONG,
   ]);
 
-  public ShowWindow = this.user32.func(STDCALL, 'ShowWindow', BOOL, [VOID_PTR, INT32]);
-
-  public SetWindowPos = this.user32.func(STDCALL, 'SetWindowPos', BOOL, [
+  public ShowWindow = this.user32.func(STDCALL, 'ShowWindow', KoffiPrimitives.BOOL, [
     VOID_PTR,
-    VOID_PTR,
-    INT32,
-    INT32,
-    INT32,
-    INT32,
-    UINT32,
+    KoffiPrimitives.INT32,
   ]);
 
-  public GetCursorPos = this.user32.func(STDCALL, 'GetCursorPos', BOOL, [
+  public SetWindowPos = this.user32.func(STDCALL, 'SetWindowPos', KoffiPrimitives.BOOL, [
+    VOID_PTR,
+    VOID_PTR,
+    KoffiPrimitives.INT32,
+    KoffiPrimitives.INT32,
+    KoffiPrimitives.INT32,
+    KoffiPrimitives.INT32,
+    KoffiPrimitives.UINT32,
+  ]);
+
+  public GetCursorPos = this.user32.func(STDCALL, 'GetCursorPos', KoffiPrimitives.BOOL, [
     koffi.out(this.structsWin32.POINT_PTR),
   ]);
 
-  private GetWindowThreadProcessId = this.user32.func(STDCALL, 'GetWindowThreadProcessId', LONG, [
-    VOID_PTR,
-    koffi.out(koffi.pointer(LONG)),
-  ]);
+  private GetWindowThreadProcessId = this.user32.func(
+    STDCALL,
+    'GetWindowThreadProcessId',
+    KoffiPrimitives.LONG,
+    [VOID_PTR, koffi.out(KoffiPrimitivePtrs.LONG)]
+  );
 
   public getWindowThreadProcessId = (windowHandle: VOID_PTR_TYPE): number => {
     const windowId: number[] = [0];

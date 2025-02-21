@@ -1,7 +1,7 @@
 import koffi, { IKoffiLib } from 'koffi';
 import { STDCALL } from '../../../const/const-win32';
 import { VOID_PTR } from '../../../koffi/handles';
-import { LONG } from '../../../koffi/primitives';
+import { KoffiPrimitives } from '../../../koffi/primitives';
 import { StructsWin32 } from '../structs-win32';
 
 export class SyscallsDwmapi {
@@ -14,7 +14,7 @@ export class SyscallsDwmapi {
   public DwmGetWindowAttribute: koffi.KoffiFunction = this.dwmapi.func(
     STDCALL,
     'DwmGetWindowAttribute',
-    LONG,
-    [VOID_PTR, LONG, koffi.out(this.structsWin32.RECT_PTR), LONG]
+    KoffiPrimitives.LONG,
+    [VOID_PTR, KoffiPrimitives.LONG, koffi.out(this.structsWin32.RECT_PTR), KoffiPrimitives.LONG]
   );
 }

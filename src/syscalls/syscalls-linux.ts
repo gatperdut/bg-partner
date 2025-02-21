@@ -1,5 +1,5 @@
 import koffi from 'koffi';
-import { NUMBER } from '../koffi/primitives';
+import { Primitive } from '../koffi/primitives';
 import { NumberSizesLinux } from '../utils';
 
 export class SyscallsLinux {
@@ -14,8 +14,8 @@ export class SyscallsLinux {
     'int process_vm_readv(int pid, iovec *local_iov, unsigned long liovcnt, iovec *remote_iov, unsigned long riovcnt, unsigned long flags)'
   );
 
-  public readNumber(pid: number, ptr: bigint, type: NUMBER): number | bigint {
-    const length: number = NumberSizesLinux[type];
+  public readNumber(pid: number, ptr: bigint, primitive: Primitive): number | bigint {
+    const length: number = NumberSizesLinux[primitive];
 
     const buf = new Uint8Array(length);
 
@@ -27,7 +27,7 @@ export class SyscallsLinux {
 
     const dataView = new DataView(local_iov[0].iov_base.buffer);
 
-    switch (type) {
+    switch (primitive) {
       case 'BOOL':
         return dataView.getInt8(0);
 

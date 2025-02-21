@@ -1,6 +1,6 @@
 import koffi from 'koffi';
 
-export const VOID = koffi.alias('VOID', 'void');
+const VOID = koffi.alias('VOID', 'void');
 
 export const VOID_PTR = koffi.pointer(VOID);
 

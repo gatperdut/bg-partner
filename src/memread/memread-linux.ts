@@ -1,4 +1,4 @@
-import { NUMBER } from '../koffi/primitives';
+import { Primitive } from '../koffi/primitives';
 import { handlers } from '../main';
 
 import { SyscallsLinux } from '../syscalls/syscalls-linux';
@@ -9,8 +9,8 @@ export class MemreadLinux {
     return handlers.syscalls as SyscallsLinux;
   }
 
-  public memReadNumber(ptr: bigint, type: NUMBER): number | bigint {
-    return this.syscalls.readNumber(handlers.memscan.targetProcess as number, ptr, type);
+  public memReadNumber(ptr: bigint, primitive: Primitive): number | bigint {
+    return this.syscalls.readNumber(handlers.memscan.targetProcess as number, ptr, primitive);
   }
 
   public memReadString(ptr: bigint): string {
