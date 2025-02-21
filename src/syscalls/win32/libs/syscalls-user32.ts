@@ -2,6 +2,7 @@ import koffi from 'koffi';
 import { STDCALL } from '../../../const/const-win32';
 import { HANDLE_PTR, HANDLE_PTR_TYPE } from '../../../koffi/handles';
 import { BOOL, INT32, LONG, UINT32 } from '../../../koffi/primitives';
+import { StructsWin32 } from '../structs-win32';
 
 export type EnumWindowsCallbackFn = (
   windowHandle: HANDLE_PTR_TYPE,
@@ -9,21 +10,15 @@ export type EnumWindowsCallbackFn = (
 ) => boolean;
 
 export class SyscallsUser32 {
+  constructor(private structsWin32: StructsWin32) {
+    // Empty
+  }
+
   private user32 = koffi.load('user32.dll');
 
-  public POINT = koffi.struct('POINT', {
-    x: LONG,
-    y: LONG,
-  });
+  public POINT_PTR = koffi.pointer(this.structsWin32.POINT);
 
-  public POINT_PTR = koffi.pointer(this.POINT);
-
-  public GetWindowThreadProcessId = this.user32.func(STDCALL, 'GetWindowThreadProcessId', LONG, [
-    HANDLE_PTR,
-    koffi.out(koffi.pointer(LONG)),
-  ]);
-
-  public EnumWindowsCallbackProto = koffi.proto(
+  private EnumWindowsCallbackProto = koffi.proto(
     'bool __stdcall enumWindowsCallback(_In_ void* hwnd, _In_ long lParam)'
   );
 
@@ -62,6 +57,11 @@ export class SyscallsUser32 {
 
   public GetCursorPos = this.user32.func(STDCALL, 'GetCursorPos', BOOL, [
     koffi.out(this.POINT_PTR),
+  ]);
+
+  private GetWindowThreadProcessId = this.user32.func(STDCALL, 'GetWindowThreadProcessId', LONG, [
+    HANDLE_PTR,
+    koffi.out(koffi.pointer(LONG)),
   ]);
 
   public getWindowThreadProcessId = (windowHandle: HANDLE_PTR_TYPE): number => {

@@ -4,7 +4,6 @@ import { ADDRESS_PTR, ADDRESS_PTR_TYPE, HANDLE_PTR, HANDLE_PTR_TYPE } from '../.
 import {
   BOOL,
   BYTE,
-  CHAR,
   DWORD,
   INT16,
   INT32,
@@ -17,6 +16,7 @@ import {
   ULONG,
 } from '../../../koffi/primitives';
 import { blankArray } from '../../../utils';
+import { StructsWin32 } from '../structs-win32';
 
 export type PROCESSENTRY32_TYPE = {
   dwSize: number;
@@ -53,30 +53,17 @@ type ReadProcessMemoryFn = (
 ) => number;
 
 export class SyscallsKernel32 {
+  constructor(private structsWin32: StructsWin32) {
+    // Empty
+  }
+
   private kernel32 = koffi.load('kernel32.dll');
 
-  public CHAR_ARRAY = (length: number) => {
-    return koffi.array(CHAR, length, 'Array');
-  };
-
-  public MODULEENTRY32 = koffi.struct('MODULEENTRY32', {
-    dwSize: UINT32,
-    th32ModuleID: UINT32,
-    th32ProcessID: UINT32,
-    GlblcntUsage: UINT32,
-    ProccntUsage: UINT32,
-    modBaseAddr: koffi.pointer(BYTE),
-    modBaseSize: UINT32,
-    hModule: HANDLE_PTR,
-    szModule: this.CHAR_ARRAY(255 + 1),
-    szExePath: this.CHAR_ARRAY(260),
-  });
-
-  public MODULEENTRY32_PTR = koffi.pointer(this.MODULEENTRY32);
+  public MODULEENTRY32_PTR = koffi.pointer(this.structsWin32.MODULEENTRY32);
 
   public MODULEENTRY32_empty(): MODULEENTRY32_TYPE {
     return {
-      dwSize: koffi.sizeof(this.MODULEENTRY32),
+      dwSize: koffi.sizeof(this.structsWin32.MODULEENTRY32),
       th32ModuleID: 0,
       th32ProcessID: 0,
       GlblcntUsage: 0,
@@ -89,20 +76,7 @@ export class SyscallsKernel32 {
     };
   }
 
-  public PROCESSENTRY32 = koffi.struct('PROCESSENTRY32', {
-    dwSize: UINT32,
-    cntUsage: UINT32,
-    th32ProcessID: UINT32,
-    th32DefaultHeapID: koffi.pointer(ULONG),
-    th32ModuleID: UINT32,
-    cntThreads: UINT32,
-    th32ParentProcessID: UINT32,
-    pcPriClassBase: LONG,
-    dwFlags: UINT32,
-    szExeFile: this.CHAR_ARRAY(260),
-  });
-
-  public PROCESSENTRY32_PTR = koffi.pointer(this.PROCESSENTRY32);
+  public PROCESSENTRY32_PTR = koffi.pointer(this.structsWin32.PROCESSENTRY32);
 
   private ReadProcessMemoryNumberDefine(type: koffi.IKoffiCType): ReadProcessMemoryFn {
     return this.kernel32.func(STDCALL, 'ReadProcessMemory', BOOL, [
@@ -174,7 +148,7 @@ export class SyscallsKernel32 {
 
   public PROCESSENTRY32_empty = (): PROCESSENTRY32_TYPE => {
     return {
-      dwSize: koffi.sizeof(this.PROCESSENTRY32),
+      dwSize: koffi.sizeof(this.structsWin32.PROCESSENTRY32),
       cntUsage: 0,
       th32ProcessID: 0,
       th32DefaultHeapID: 0,

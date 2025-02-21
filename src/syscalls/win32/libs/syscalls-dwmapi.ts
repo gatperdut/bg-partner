@@ -1,19 +1,17 @@
 import koffi from 'koffi';
 import { STDCALL } from '../../../const/const-win32';
 import { HANDLE_PTR } from '../../../koffi/handles';
-import { LONG, UINT32 } from '../../../koffi/primitives';
+import { LONG } from '../../../koffi/primitives';
+import { StructsWin32 } from '../structs-win32';
 
 export class SyscallsDwmapi {
+  constructor(private structsWin32: StructsWin32) {
+    // Empty
+  }
+
   public dwmapi = koffi.load('dwmapi.dll');
 
-  public RECT = koffi.struct('RECT', {
-    left: UINT32,
-    top: UINT32,
-    right: UINT32,
-    bottom: UINT32,
-  });
-
-  public RECT_PTR = koffi.pointer(this.RECT);
+  public RECT_PTR = koffi.pointer(this.structsWin32.RECT);
 
   public DwmGetWindowAttribute = this.dwmapi.func(STDCALL, 'DwmGetWindowAttribute', LONG, [
     HANDLE_PTR,
