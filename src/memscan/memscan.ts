@@ -1,4 +1,4 @@
-import { VOIDPtr } from '../koffi/primitives';
+import { VOIDPtr } from '../syscalls/primitives';
 import { MemscanLinux } from './memscan-linux';
 import { MemscanWin32 } from './memscan-win32';
 

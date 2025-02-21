@@ -1,5 +1,5 @@
 import Electron from 'electron';
-import { VOIDPtr } from '../koffi/primitives';
+import { VOIDPtr } from '../syscalls/primitives';
 import { WindowLinux } from './window-linux';
 import { WindowWin32 } from './window-win32';
 

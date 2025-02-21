@@ -1,4 +1,4 @@
-import { Primitive, PrimitiveSizesLinux } from '../../koffi/primitives';
+import { Primitive, PrimitiveSizesLinux } from '../primitives';
 import { IOVEC_TYPE } from './types-linux';
 
 export class HelpersLinux {

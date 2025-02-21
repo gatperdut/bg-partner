@@ -1,5 +1,5 @@
 import koffi, { IKoffiCType } from 'koffi';
-import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../koffi/primitives';
+import { KoffiPrimitivePtrs, KoffiPrimitives } from '../primitives';
 
 export class StructsWin32 {
   public RECT: IKoffiCType = koffi.struct('RECT', {

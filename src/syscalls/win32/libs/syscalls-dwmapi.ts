@@ -1,6 +1,6 @@
 import koffi, { IKoffiLib } from 'koffi';
 import { STDCALL } from '../../../const/const-win32';
-import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../../koffi/primitives';
+import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../primitives';
 import { StructsWin32 } from '../structs-win32';
 
 export class SyscallsDwmapi {

@@ -1,4 +1,4 @@
-import { VOIDPtr } from '../../koffi/primitives';
+import { VOIDPtr } from '../primitives';
 
 export type EnumWindowsCallbackFn = (windowHandle: VOIDPtr, somewindowId: number) => boolean;
 

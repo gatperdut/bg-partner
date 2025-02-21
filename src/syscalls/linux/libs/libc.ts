@@ -1,5 +1,5 @@
 import koffi, { IKoffiLib, KoffiFunction } from 'koffi';
-import { KoffiPrimitives } from '../../../koffi/primitives';
+import { KoffiPrimitives } from '../../primitives';
 import { StructsLinux } from '../structs-linux';
 
 export class SyscallsLibc {

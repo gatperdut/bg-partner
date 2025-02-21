@@ -1,12 +1,7 @@
 import koffi, { IKoffiLib, KoffiFunction } from 'koffi';
 import _ from 'lodash-es';
 import { STDCALL } from '../../../const/const-win32';
-import {
-  KoffiPrimitivePtrs,
-  KoffiPrimitives,
-  Primitive,
-  Primitives,
-} from '../../../koffi/primitives';
+import { KoffiPrimitivePtrs, KoffiPrimitives, Primitive, Primitives } from '../../primitives';
 import { StructsWin32 } from '../structs-win32';
 import { ReadProcessMemoryFn } from '../types-win32';
 

@@ -1,5 +1,5 @@
 import koffi from 'koffi';
-import { VOIDPtr } from '../../koffi/primitives';
+import { VOIDPtr } from '../primitives';
 import { SyscallsUser32 } from './libs/syscalls-user32';
 import { StructsWin32 } from './structs-win32';
 import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from './types-win32';

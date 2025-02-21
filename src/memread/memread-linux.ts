@@ -1,5 +1,5 @@
-import { Primitive } from '../koffi/primitives';
 import { handlers } from '../main';
+import { Primitive } from '../syscalls/primitives';
 
 import { SyscallsLinux } from '../syscalls/linux/syscalls-linux';
 import { joinASCII } from '../utils';

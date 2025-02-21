@@ -1,4 +1,4 @@
-import { Primitive } from '../../koffi/primitives';
+import { Primitive } from '../primitives';
 import { HelpersLinux } from './helpers-linux';
 import { SyscallsLibc } from './libs/libc';
 import { StructsLinux } from './structs-linux';

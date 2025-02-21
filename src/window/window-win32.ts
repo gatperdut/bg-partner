@@ -1,7 +1,7 @@
 import koffi from 'koffi';
 import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../const/const-win32';
-import { VOIDPtr } from '../koffi/primitives';
 import { handlers } from '../main';
+import { VOIDPtr } from '../syscalls/primitives';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { EnumWindowsCallbackFn } from '../syscalls/win32/types-win32';
 import { WindowOs } from './window';
