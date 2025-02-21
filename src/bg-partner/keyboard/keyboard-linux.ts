@@ -2,12 +2,9 @@ import { execSync } from 'child_process';
 import { globalShortcut } from 'electron';
 import { Entities } from '../entities';
 import { WindowLinux } from '../window/window-linux';
-import { KeyboardCommon } from './keyboard-common';
 
-export class KeyboardLinux extends KeyboardCommon {
-  constructor(private windowHandler: WindowLinux, protected entitiesHandler: Entities) {
-    super(entitiesHandler);
-
+export class KeyboardLinux {
+  constructor(private windowHandler: WindowLinux, private entitiesHandler: Entities) {
     globalShortcut.register('CommandOrControl+A', () => {
       this.windowHandler.focused && this.sheetToggle();
     });
@@ -19,7 +16,7 @@ export class KeyboardLinux extends KeyboardCommon {
     });
   }
 
-  protected sheetToggle(): void {
+  private sheetToggle(): void {
     const parts: string[] = execSync('xdotool getmouselocation').toString().split(' ');
 
     const partsX = parts[0].split(':');

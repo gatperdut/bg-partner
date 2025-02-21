@@ -73,6 +73,13 @@ export class Wincalls {
 
   public RECT_PTR = koffi.pointer(this.RECT);
 
+  public POINT = koffi.struct('POINT', {
+    x: LONG,
+    y: LONG,
+  });
+
+  public POINT_PTR = koffi.pointer(this.POINT);
+
   public MODULEENTRY32 = koffi.struct('MODULEENTRY32', {
     dwSize: UINT32,
     th32ModuleID: UINT32,
@@ -259,6 +266,10 @@ export class Wincalls {
   };
 
   public GetAsyncKeyState = this.user32.func(STDCALL, 'GetAsyncKeyState', UINT16, [INT32]);
+
+  public GetCursorPos = this.user32.func(STDCALL, 'GetCursorPos', BOOL, [
+    koffi.out(this.POINT_PTR),
+  ]);
 
   public GetLastError = this.kernel32.func(STDCALL, 'GetLastError', UINT32, []);
 }

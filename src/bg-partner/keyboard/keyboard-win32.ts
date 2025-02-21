@@ -11,23 +11,27 @@ import {
 
 import { Wincalls } from '../wincalls';
 import { WindowWin32 } from '../window/window-win32';
-import { KeyboardCommon } from './keyboard-common';
 
-export class KeyboardWin32 extends KeyboardCommon {
+export class KeyboardWin32 {
   constructor(
     private windowHandler: WindowWin32,
-    protected entitiesHandler: Entities,
+    private entitiesHandler: Entities,
     private wincalls: Wincalls
   ) {
-    super(entitiesHandler);
-
     globalShortcut.register('CommandOrControl+A', () => {
       this.windowHandler.focused && this.sheetToggle();
     });
   }
 
-  protected sheetToggle(): void {
-    // TODO
+  private sheetToggle(): void {
+    const point: Electron.Point = {
+      x: 0,
+      y: 0,
+    };
+
+    this.wincalls.GetCursorPos(point);
+
+    this.entitiesHandler.sheetToggle(point);
   }
 
   public run(): void {

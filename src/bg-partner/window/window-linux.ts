@@ -32,8 +32,6 @@ export class WindowLinux extends WindowCommon {
         )
       : 0;
 
-    console.log(windowTitleHeight);
-
     this.windowId = wmctrlValues[0];
 
     this.windowRect.left = wmctrlValues[1];
