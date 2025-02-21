@@ -35,19 +35,19 @@ export const handlers: Handlers = {
 
 export class Main {
   constructor() {
-    handlers.wincalls = linux() ? null : new Wincalls();
+    handlers.wincalls = linux ? null : new Wincalls();
 
-    handlers.linuxcalls = linux() ? new Linuxcalls() : null;
+    handlers.linuxcalls = linux ? new Linuxcalls() : null;
 
-    handlers.memread = linux() ? new MemreadLinux() : new MemreadWin32();
+    handlers.memread = linux ? new MemreadLinux() : new MemreadWin32();
 
-    handlers.memscan = linux() ? new MemscanLinux() : new MemscanWin32();
+    handlers.memscan = linux ? new MemscanLinux() : new MemscanWin32();
 
-    handlers.window = linux() ? new WindowLinux() : new WindowWin32();
+    handlers.window = linux ? new WindowLinux() : new WindowWin32();
 
     handlers.entities = new Entities();
 
-    handlers.shortcuts = linux() ? new ShortcutsLinux() : new ShortcutsWin32();
+    handlers.shortcuts = linux ? new ShortcutsLinux() : new ShortcutsWin32();
   }
 
   public run(): void {

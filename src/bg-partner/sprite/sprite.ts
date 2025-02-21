@@ -105,18 +105,18 @@ export class Sprite {
     this.x = this.memread.memReadNumber(
       this.targetProcess,
       this.basePtr + BigInt(0xc),
-      linux() ? 'UINT16' : 'UINT32'
+      linux ? 'UINT16' : 'UINT32'
     ) as number;
 
     this.y = this.memread.memReadNumber(
       this.targetProcess,
       this.basePtr + BigInt(0x10),
-      linux() ? 'UINT16' : 'UINT32'
+      linux ? 'UINT16' : 'UINT32'
     ) as number;
 
     const namePtr = this.memread.memReadNumber(
       this.targetProcess,
-      this.basePtr + BigInt(linux() ? 0x3910 : 0x3928),
+      this.basePtr + BigInt(linux ? 0x3910 : 0x3928),
       'PTR'
     );
 
@@ -125,13 +125,13 @@ export class Sprite {
     this.viewportX = this.memread.memReadNumber(
       this.targetProcess,
       this.gameAreaPtr + BigInt(0x5c8 + 0x78 + 0x8),
-      linux() ? 'INT16' : 'INT32'
+      linux ? 'INT16' : 'INT32'
     ) as number;
 
     this.viewportY = this.memread.memReadNumber(
       this.targetProcess,
       this.gameAreaPtr + BigInt(0x5c8 + 0x78 + 0x8 + 0x4),
-      linux() ? 'INT16' : 'INT32'
+      linux ? 'INT16' : 'INT32'
     ) as number;
 
     this.scrollX = this.memread.memReadNumber(

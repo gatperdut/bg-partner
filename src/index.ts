@@ -14,12 +14,10 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-export const linux = (): boolean => {
-  return os.platform() === 'linux';
-};
+export const linux = os.platform() === 'linux';
 
 const run = (): void => {
-  if (linux()) {
+  if (linux) {
     execSync('sudo ls');
   }
 
