@@ -200,11 +200,11 @@ export class Wincalls {
   };
 
   public getWindowThreadProcessId = (windowHandle: HANDLE_PTR_TYPE): number => {
-    const windowPid: number[] = [0];
+    const windowId: number[] = [0];
 
-    this.GetWindowThreadProcessId(windowHandle, windowPid);
+    this.GetWindowThreadProcessId(windowHandle, windowId);
 
-    return windowPid[0];
+    return windowId[0];
   };
 
   public EnumWindows = this.user32.func(STDCALL, 'EnumWindows', 'bool', [

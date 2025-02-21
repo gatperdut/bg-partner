@@ -1,16 +1,15 @@
 import { execSync } from 'child_process';
 import { globalShortcut } from 'electron';
-import { Entities } from '../entities';
-import { WindowLinux } from '../window/window-linux';
+import { handlers } from '../main';
 
-export class KeyboardLinux {
-  constructor(private windowHandler: WindowLinux, private entitiesHandler: Entities) {
+export class ShortcutsLinux {
+  constructor() {
     globalShortcut.register('CommandOrControl+A', (): void => {
-      this.windowHandler.focused && this.sheetToggle();
+      handlers.window.focused && this.sheetToggle();
     });
 
     globalShortcut.register('CommandOrControl+Q', (): void => {
-      this.windowHandler.focused && this.borderless();
+      handlers.window.focused && this.borderless();
     });
   }
 
@@ -26,12 +25,12 @@ export class KeyboardLinux {
       y: Number.parseInt(partsY[1], 10),
     };
 
-    this.entitiesHandler.sheetToggle(point);
+    handlers.entities.sheetToggle(point);
   }
 
   private borderless(): void {
     execSync(
-      `wmctrl -i -r ${this.windowHandler.windowId} -e 0,0,0,${this.windowHandler.screenSize.width},${this.windowHandler.screenSize.height}`
+      `wmctrl -i -r ${handlers.window.windowId} -e 0,0,0,${handlers.window.screenSize.width},${handlers.window.screenSize.height}`
     );
   }
 }

@@ -2,7 +2,7 @@ import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
 
 export type TargetProcess = HANDLE_PTR_TYPE | number;
 
-export class MemCommon {
+export class MemscanCommon {
   public targetProcess: TargetProcess;
 
   public pid: number;
@@ -12,12 +12,4 @@ export class MemCommon {
   protected waitingPrinted: boolean = false;
 
   public gameObjectPtrs: bigint[];
-
-  public init(): void {
-    // Empty
-  }
-
-  public run(): void {
-    // Empty
-  }
 }

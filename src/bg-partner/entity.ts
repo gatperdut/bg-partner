@@ -1,5 +1,5 @@
-import { TargetProcess } from './mem/mem-common';
 import { Memread } from './memread/memread';
+import { TargetProcess } from './memscan/memscan-common';
 import { Sheet } from './sheet/sheet';
 import { Sprite } from './sprite/sprite';
 import { WindowCommon } from './window/window-common';

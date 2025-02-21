@@ -3,12 +3,6 @@ import _ from 'lodash-es';
 import { WindowCommon } from './window-common';
 
 export class WindowLinux extends WindowCommon {
-  public windowId: number;
-
-  constructor() {
-    super();
-  }
-
   public init(): void {
     // Empty
   }

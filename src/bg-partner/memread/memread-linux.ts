@@ -1,16 +1,12 @@
 import { NUMBER } from '../koffi/defs/primitives';
 
-import { Linuxcalls } from '../linuxcalls';
-import { TargetProcess } from '../mem/mem-common';
+import { handlers } from '../main';
+import { TargetProcess } from '../memscan/memscan-common';
 import { joinName } from '../utils';
 
 export class MemreadLinux {
-  constructor(private linuxcalls: Linuxcalls) {
-    // Empty
-  }
-
   public memReadNumber(pid: TargetProcess, ptr: bigint, type: NUMBER): number | bigint {
-    return this.linuxcalls.readNumber(pid as number, ptr, type);
+    return handlers.linuxcalls.readNumber(pid as number, ptr, type);
 
     // return Number.parseInt(
     //   execSync(

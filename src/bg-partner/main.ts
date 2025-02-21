@@ -1,51 +1,53 @@
 import 'source-map-support/register';
 import { linux } from '../index';
 import { Entities } from './entities';
-import { KeyboardLinux } from './keyboard/keyboard-linux';
-import { KeyboardWin32 } from './keyboard/keyboard-win32';
 import { Linuxcalls } from './linuxcalls';
-import { MemLinux } from './mem/mem-linux';
-import { MemWin32 } from './mem/mem-win32';
 import { Memread } from './memread/memread';
 import { MemreadLinux } from './memread/memread-linux';
 import { MemreadWin32 } from './memread/memread-win32';
+import { MemscanLinux } from './memscan/memscan-linux';
+import { MemscanWin32 } from './memscan/memscan-win32';
+import { ShortcutsLinux } from './shortcuts/shortcuts-linux';
+import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
 import { Wincalls } from './wincalls';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 
+export type Handlers = {
+  linuxcalls: Linuxcalls;
+  wincalls: Wincalls;
+  memread: Memread;
+  memscan: MemscanLinux | MemscanWin32;
+  window: WindowLinux | WindowWin32;
+  entities: Entities;
+  shortcuts: ShortcutsLinux | ShortcutsWin32;
+};
+
+export const handlers: Handlers = {
+  linuxcalls: null,
+  wincalls: null,
+  memread: null,
+  memscan: null,
+  window: null,
+  entities: null,
+  shortcuts: null,
+};
+
 export class Main {
-  private linuxcalls: Linuxcalls;
-
-  private wincalls: Wincalls;
-
-  public memread: Memread;
-
-  private memHandler: MemLinux | MemWin32;
-
-  private windowHandler: WindowLinux | WindowWin32;
-
-  private entitiesHandler: Entities;
-
-  private keyboardHandler: KeyboardLinux | KeyboardWin32;
-
   constructor() {
-    this.wincalls = linux() ? null : new Wincalls();
+    handlers.wincalls = linux() ? null : new Wincalls();
 
-    this.linuxcalls = linux() ? new Linuxcalls() : null;
+    handlers.linuxcalls = linux() ? new Linuxcalls() : null;
 
-    this.memread = linux() ? new MemreadLinux(this.linuxcalls) : new MemreadWin32(this.wincalls);
+    handlers.memread = linux() ? new MemreadLinux() : new MemreadWin32();
 
-    this.memHandler = linux()
-      ? new MemLinux(this.memread)
-      : new MemWin32(this.wincalls, this.memread);
+    handlers.memscan = linux() ? new MemscanLinux() : new MemscanWin32();
 
-    this.windowHandler = linux() ? new WindowLinux() : new WindowWin32(this.wincalls);
+    handlers.window = linux() ? new WindowLinux() : new WindowWin32();
 
-    this.entitiesHandler = new Entities(this.windowHandler, this.memread);
+    handlers.entities = new Entities();
 
-    this.keyboardHandler = linux()
-      ? new KeyboardLinux(this.windowHandler as WindowLinux, this.entitiesHandler)
-      : new KeyboardWin32(this.windowHandler as WindowWin32, this.entitiesHandler, this.wincalls);
+    handlers.shortcuts = linux() ? new ShortcutsLinux() : new ShortcutsWin32();
   }
 
   public run(): void {
@@ -53,24 +55,24 @@ export class Main {
   }
 
   private loop(): void {
-    if (!this.memHandler.alive) {
-      this.memHandler.init();
+    if (!handlers.memscan.alive) {
+      handlers.memscan.init();
     }
 
-    this.memHandler.run();
+    handlers.memscan.run();
 
-    if (!this.memHandler.alive) {
-      this.windowHandler.teardown();
+    if (!handlers.memscan.alive) {
+      handlers.window.teardown();
 
-      this.entitiesHandler.teardown();
+      handlers.entities.teardown();
 
       return;
     }
 
-    this.windowHandler.init(this.memHandler.pid);
+    handlers.window.init(handlers.memscan.pid);
 
-    this.windowHandler.run(this.memHandler.pid);
+    handlers.window.run(handlers.memscan.pid);
 
-    this.entitiesHandler.run(this.memHandler.targetProcess, this.memHandler.gameObjectPtrs);
+    handlers.entities.run(handlers.memscan.targetProcess, handlers.memscan.gameObjectPtrs);
   }
 }

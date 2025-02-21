@@ -1,6 +1,6 @@
 import { linux } from '../../index';
-import { TargetProcess } from '../mem/mem-common';
 import { Memread } from '../memread/memread';
+import { TargetProcess } from '../memscan/memscan-common';
 import { Derived, derivedEmpty, derivedFill } from './derived';
 
 export class Sprite {

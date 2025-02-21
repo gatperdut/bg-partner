@@ -1,22 +1,17 @@
 import _ from 'lodash';
 import { Entity } from './entity';
-import { TargetProcess } from './mem/mem-common';
-import { Memread } from './memread/memread';
-import { WindowCommon } from './window/window-common';
+import { handlers } from './main';
+import { TargetProcess } from './memscan/memscan-common';
 
 export class Entities {
   private entities: Record<number, Entity> = {};
-
-  constructor(private windowHandler: WindowCommon, private memread: Memread) {
-    // Empty
-  }
 
   public run(processHandle: TargetProcess, gameObjectPtrs: bigint[]): void {
     const entities: Entity[] = _.filter(
       _.map(
         gameObjectPtrs,
         (gameObjectPtr: bigint): Entity =>
-          new Entity(this.windowHandler, processHandle, gameObjectPtr, this.memread)
+          new Entity(handlers.window, processHandle, gameObjectPtr, handlers.memread)
       ),
       (entity: Entity): boolean => entity.loaded
     );

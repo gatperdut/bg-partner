@@ -1,4 +1,5 @@
 import Electron from 'electron';
+import { HANDLE_PTR_TYPE } from '../koffi/defs/handles';
 
 export type WindowRect = {
   left: number;
@@ -8,23 +9,21 @@ export type WindowRect = {
 };
 
 export abstract class WindowCommon {
-  public screenSize: Electron.Size;
+  public windowId: number;
 
-  public windowRect: WindowRect;
+  public windowHandle: HANDLE_PTR_TYPE;
 
-  constructor() {
-    this.screenSize = {
-      width: 0,
-      height: 0,
-    };
+  public screenSize: Electron.Size = {
+    width: 0,
+    height: 0,
+  };
 
-    this.windowRect = {
-      left: 0,
-      top: 0,
-      right: 0,
-      bottom: 0,
-    };
-  }
+  public windowRect: WindowRect = {
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+  };
 
   public run(pid: number): void {
     const screenSize: Electron.Size = Electron.screen.getPrimaryDisplay().size;

@@ -1,5 +1,5 @@
-import { TargetProcess } from '../mem/mem-common';
 import { Memread } from '../memread/memread';
+import { TargetProcess } from '../memscan/memscan-common';
 
 export type Derived = {
   hpMax: number;

@@ -1,12 +1,8 @@
 import { execSync } from 'child_process';
-import { Memread } from '../memread/memread';
-import { MemCommon } from './mem-common';
+import { handlers } from '../main';
+import { MemscanCommon } from './memscan-common';
 
-export class MemLinux extends MemCommon {
-  constructor(private memread: Memread) {
-    super();
-  }
-
+export class MemscanLinux extends MemscanCommon {
   private pidGet(): number {
     return Number.parseInt(execSync('pidof BaldursGateII').toString(), 10);
   }
@@ -50,7 +46,7 @@ export class MemLinux extends MemCommon {
       return;
     }
 
-    const numEntities: number = this.memread.memReadNumber(
+    const numEntities: number = handlers.memread.memReadNumber(
       this.pid,
       BigInt(0x55555613f776),
       'INT16'
@@ -60,7 +56,7 @@ export class MemLinux extends MemCommon {
 
     for (let i = 2001 * 16; i <= numEntities * 16 + 96; i += 16) {
       this.gameObjectPtrs.push(
-        BigInt(this.memread.memReadNumber(this.pid, listPointer + BigInt(i + 8), 'PTR'))
+        BigInt(handlers.memread.memReadNumber(this.pid, listPointer + BigInt(i + 8), 'PTR'))
       );
     }
   }
