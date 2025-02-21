@@ -9,7 +9,7 @@ import {
 import { handlers } from '../main';
 import { VOIDPTR } from '../syscalls/primitives';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
-import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from '../syscalls/win32/types-win32';
+import { MODULEENTRY32, PROCESSENTRY32 } from '../syscalls/win32/types-win32';
 import { joinASCII } from '../utils';
 import { MemscanOs, TargetProcess } from './memscan';
 
@@ -38,7 +38,7 @@ export class MemscanWin32 extends MemscanOs {
       0
     );
 
-    const processEntry32: PROCESSENTRY32_TYPE = this.syscalls.helpersWin32.PROCESSENTRY32Empty();
+    const processEntry32: PROCESSENTRY32 = this.syscalls.helpersWin32.PROCESSENTRY32Empty();
 
     this.syscalls.syscallsKernel32.Process32First(this.processSnapshot, processEntry32);
 
@@ -70,7 +70,7 @@ export class MemscanWin32 extends MemscanOs {
 
     this.printed = false;
 
-    const moduleEntry32: MODULEENTRY32_TYPE = this.syscalls.helpersWin32.MODULEENTRY32Empty();
+    const moduleEntry32: MODULEENTRY32 = this.syscalls.helpersWin32.MODULEENTRY32Empty();
 
     const moduleSnapshot: VOIDPTR = this.syscalls.syscallsKernel32.CreateToolhelp32Snapshot(
       TH32CS_SNAPMODULE,

@@ -2,7 +2,7 @@ import koffi from 'koffi';
 import { VOIDPTR } from '../primitives';
 import { SyscallsUser32 } from './libs/syscalls-user32';
 import { StructsWin32 } from './structs-win32';
-import { MODULEENTRY32_TYPE, PROCESSENTRY32_TYPE } from './types-win32';
+import { MODULEENTRY32, PROCESSENTRY32 } from './types-win32';
 
 export class HelpersWin32 {
   constructor(private syscallsUser32: SyscallsUser32, private structsWin32: StructsWin32) {
@@ -17,7 +17,7 @@ export class HelpersWin32 {
     return windowId[0];
   }
 
-  public PROCESSENTRY32Empty = (): PROCESSENTRY32_TYPE => {
+  public PROCESSENTRY32Empty = (): PROCESSENTRY32 => {
     return {
       dwSize: koffi.sizeof(this.structsWin32.PROCESSENTRY32),
       cntUsage: 0,
@@ -32,7 +32,7 @@ export class HelpersWin32 {
     };
   };
 
-  public MODULEENTRY32Empty(): MODULEENTRY32_TYPE {
+  public MODULEENTRY32Empty(): MODULEENTRY32 {
     return {
       dwSize: koffi.sizeof(this.structsWin32.MODULEENTRY32),
       th32ModuleID: 0,

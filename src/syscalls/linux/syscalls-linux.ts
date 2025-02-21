@@ -2,7 +2,7 @@ import { Primitive } from '../primitives';
 import { HelpersLinux } from './helpers-linux';
 import { SyscallsLibc } from './libs/libc';
 import { StructsLinux } from './structs-linux';
-import { IOVEC_TYPE } from './types-linux';
+import { IOVEC } from './types-linux';
 
 export class SyscallsLinux {
   public structsLinux: StructsLinux = new StructsLinux();
@@ -12,9 +12,9 @@ export class SyscallsLinux {
   public helpersLinux: HelpersLinux = new HelpersLinux();
 
   public readNumber(pid: number, ptr: bigint, primitive: Primitive): number | bigint {
-    const iovecsLocal: IOVEC_TYPE[] = [this.helpersLinux.IOVECEmpty(primitive, null)];
+    const iovecsLocal: IOVEC[] = [this.helpersLinux.IOVECEmpty(primitive, null)];
 
-    const iovecsRemote: IOVEC_TYPE[] = [this.helpersLinux.IOVECEmpty(primitive, ptr)];
+    const iovecsRemote: IOVEC[] = [this.helpersLinux.IOVECEmpty(primitive, ptr)];
 
     this.syscallsLibc.process_vm_readv(pid, iovecsLocal, 1, iovecsRemote, 1, 0);
 

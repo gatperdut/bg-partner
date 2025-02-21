@@ -1,4 +1,4 @@
-export type IOVEC_TYPE = {
+export type IOVEC = {
   iov_base: Uint8Array | bigint;
   iov_len: number;
 };

@@ -1,8 +1,8 @@
 import { Primitive, PrimitiveSizesLinux } from '../primitives';
-import { IOVEC_TYPE } from './types-linux';
+import { IOVEC } from './types-linux';
 
 export class HelpersLinux {
-  public IOVECEmpty = (primitive: Primitive, base: bigint): IOVEC_TYPE => {
+  public IOVECEmpty = (primitive: Primitive, base: bigint): IOVEC => {
     const length: number = PrimitiveSizesLinux[primitive];
 
     return {
