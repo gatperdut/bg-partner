@@ -10,8 +10,6 @@ export const DWMWA_EXTENDED_FRAME_BOUNDS: number = 9;
 
 export const VK_LSHIFT = 0xa0;
 
-export const VK_RMENU = 0xa5;
-
 export const STILL_ACTIVE = 259;
 
 export const SW_SHOW = 5;

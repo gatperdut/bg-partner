@@ -5,14 +5,12 @@ import { WindowLinux } from '../window/window-linux';
 
 export class KeyboardLinux {
   constructor(private windowHandler: WindowLinux, private entitiesHandler: Entities) {
-    globalShortcut.register('CommandOrControl+A', () => {
+    globalShortcut.register('CommandOrControl+A', (): void => {
       this.windowHandler.focused && this.sheetToggle();
     });
 
-    globalShortcut.register('CommandOrControl+Q', () => {
-      execSync(
-        `wmctrl -i -r ${windowHandler.windowId} -e 0,0,0,${windowHandler.screenSize.width},${windowHandler.screenSize.height}`
-      );
+    globalShortcut.register('CommandOrControl+Q', (): void => {
+      this.windowHandler.focused && this.borderless();
     });
   }
 
@@ -31,7 +29,9 @@ export class KeyboardLinux {
     this.entitiesHandler.sheetToggle(point);
   }
 
-  public run(): void {
-    // Empty
+  private borderless(): void {
+    execSync(
+      `wmctrl -i -r ${this.windowHandler.windowId} -e 0,0,0,${this.windowHandler.screenSize.width},${this.windowHandler.screenSize.height}`
+    );
   }
 }

@@ -5,7 +5,6 @@ import {
   HWND_TOP,
   SW_SHOW,
   SWP_ASYNCWINDOWPOS,
-  VK_RMENU,
   WS_MAXIMIZE,
 } from '../koffi/defs/constants';
 
@@ -18,8 +17,12 @@ export class KeyboardWin32 {
     private entitiesHandler: Entities,
     private wincalls: Wincalls
   ) {
-    globalShortcut.register('CommandOrControl+A', () => {
+    globalShortcut.register('CommandOrControl+A', (): void => {
       this.windowHandler.focused && this.sheetToggle();
+    });
+
+    globalShortcut.register('CommandOrControl+Q', (): void => {
+      this.windowHandler.focused && this.borderless();
     });
   }
 
@@ -34,27 +37,19 @@ export class KeyboardWin32 {
     this.entitiesHandler.sheetToggle(point);
   }
 
-  public run(): void {
-    if (!this.windowHandler.focused) {
-      return;
-    }
+  private borderless(): void {
+    this.wincalls.SetWindowLongA(this.windowHandler.windowHandle, GWL_STYLE, WS_MAXIMIZE);
 
-    const rAlt = this.wincalls.GetAsyncKeyState(VK_RMENU);
+    this.wincalls.ShowWindow(this.windowHandler.windowHandle, SW_SHOW);
 
-    if (rAlt) {
-      this.wincalls.SetWindowLongA(this.windowHandler.windowHandle, GWL_STYLE, WS_MAXIMIZE);
-
-      this.wincalls.ShowWindow(this.windowHandler.windowHandle, SW_SHOW);
-
-      this.wincalls.SetWindowPos(
-        this.windowHandler.windowHandle,
-        HWND_TOP,
-        0,
-        0,
-        this.windowHandler.screenSize.width,
-        this.windowHandler.screenSize.height,
-        SWP_ASYNCWINDOWPOS
-      );
-    }
+    this.wincalls.SetWindowPos(
+      this.windowHandler.windowHandle,
+      HWND_TOP,
+      0,
+      0,
+      this.windowHandler.screenSize.width,
+      this.windowHandler.screenSize.height,
+      SWP_ASYNCWINDOWPOS
+    );
   }
 }

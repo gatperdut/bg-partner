@@ -72,7 +72,5 @@ export class Main {
     this.windowHandler.run(this.memHandler.pid);
 
     this.entitiesHandler.run(this.memHandler.targetProcess, this.memHandler.gameObjectPtrs);
-
-    this.keyboardHandler.run();
   }
 }

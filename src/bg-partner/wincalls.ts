@@ -265,8 +265,6 @@ export class Wincalls {
     };
   };
 
-  public GetAsyncKeyState = this.user32.func(STDCALL, 'GetAsyncKeyState', UINT16, [INT32]);
-
   public GetCursorPos = this.user32.func(STDCALL, 'GetCursorPos', BOOL, [
     koffi.out(this.POINT_PTR),
   ]);
