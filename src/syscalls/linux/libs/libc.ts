@@ -1,4 +1,5 @@
 import koffi, { IKoffiLib, KoffiFunction } from 'koffi';
+import { KoffiPrimitives } from '../../../koffi/primitives';
 import { StructsLinux } from '../structs-linux';
 
 export class SyscallsLibc {
@@ -9,6 +10,15 @@ export class SyscallsLibc {
   public libc: IKoffiLib = koffi.load('libc.so.6');
 
   public process_vm_readv: KoffiFunction = this.libc.func(
-    'int process_vm_readv(int pid, iovec *local_iov, unsigned long liovcnt, iovec *remote_iov, unsigned long riovcnt, unsigned long flags)'
+    'process_vm_readv',
+    KoffiPrimitives.INT32,
+    [
+      KoffiPrimitives.INT32,
+      this.structsLinux.IOVEC_PTR,
+      KoffiPrimitives.ULONG,
+      this.structsLinux.IOVEC_PTR,
+      KoffiPrimitives.ULONG,
+      KoffiPrimitives.ULONG,
+    ]
   );
 }

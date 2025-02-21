@@ -1,58 +1,25 @@
-import { Primitive, PrimitiveSizesLinux } from '../../koffi/primitives';
+import { Primitive } from '../../koffi/primitives';
+import { HelpersLinux } from './helpers-linux';
 import { SyscallsLibc } from './libs/libc';
 import { StructsLinux } from './structs-linux';
+import { IOVEC_TYPE } from './types-linux';
 
 export class SyscallsLinux {
   public structsLinux: StructsLinux = new StructsLinux();
 
   public syscallsLibc: SyscallsLibc = new SyscallsLibc(this.structsLinux);
 
+  public helpersLinux: HelpersLinux = new HelpersLinux();
+
   public readNumber(pid: number, ptr: bigint, primitive: Primitive): number | bigint {
-    const length: number = PrimitiveSizesLinux[primitive];
+    const iovecsLocal: IOVEC_TYPE[] = [this.helpersLinux.IOVECEmpty(primitive, null)];
 
-    const buf = new Uint8Array(length);
+    const iovecsRemote: IOVEC_TYPE[] = [this.helpersLinux.IOVECEmpty(primitive, ptr)];
 
-    const local_iov = [{ iov_base: buf, iov_len: length }];
+    this.syscallsLibc.process_vm_readv(pid, iovecsLocal, 1, iovecsRemote, 1, 0);
 
-    const remote_iov = [{ iov_base: ptr, iov_len: length }];
+    const dataView = new DataView((iovecsLocal[0].iov_base as Uint8Array).buffer);
 
-    this.syscallsLibc.process_vm_readv(pid, local_iov, 1, remote_iov, 1, 0);
-
-    const dataView = new DataView(local_iov[0].iov_base.buffer);
-
-    switch (primitive) {
-      case 'BOOL':
-        return dataView.getInt8(0);
-
-      case 'BYTE':
-        return dataView.getInt8(0);
-
-      case 'UINT8':
-        return dataView.getUint8(0);
-
-      case 'INT16':
-        return dataView.getInt16(0, true);
-
-      case 'UINT16':
-        return dataView.getUint16(0, true);
-
-      case 'INT32':
-        return dataView.getInt32(0, true);
-
-      case 'UINT32':
-        return dataView.getUint32(0, true);
-
-      case 'DWORD':
-        return dataView.getInt32(0, true);
-
-      case 'LONG':
-        return dataView.getInt32(0, true);
-
-      case 'ULONG':
-        return dataView.getInt32(0, true);
-
-      case 'ADDR':
-        return dataView.getBigInt64(0, true);
-    }
+    return this.helpersLinux.dataView2Value(dataView, primitive);
   }
 }

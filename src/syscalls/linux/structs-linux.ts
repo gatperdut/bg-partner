@@ -1,8 +1,11 @@
 import koffi, { IKoffiCType } from 'koffi';
+import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../koffi/primitives';
 
 export class StructsLinux {
-  public iovec: IKoffiCType = koffi.struct('iovec', {
-    iov_base: 'void *',
-    iov_len: 'int',
+  public IOVEC: IKoffiCType = koffi.struct('IOVEC', {
+    iov_base: KoffiPrimitivePtrs.VOID,
+    iov_len: KoffiPrimitives.INT32,
   });
+
+  public IOVEC_PTR: IKoffiCType = koffi.pointer(this.IOVEC);
 }
