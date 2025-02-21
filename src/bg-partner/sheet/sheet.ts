@@ -18,7 +18,15 @@ export class Sheet {
   public window: BrowserWindow;
 
   constructor(private windowHandler: WindowCommon, private sprite: Sprite, name: string) {
+    const position: [number, number] = this.position();
+
     this.window = new BrowserWindow({
+      x: position[0],
+      y: position[1],
+      width: this.width,
+      height: this.height,
+      minWidth: this.width,
+      minHeight: this.height,
       webPreferences: {
         preload: SHEET_WINDOW_PRELOAD_WEBPACK_ENTRY,
       },
@@ -32,28 +40,18 @@ export class Sheet {
       resizable: false,
     });
 
-    this.window.setContentSize(this.width, this.height);
-
-    this.window.setSize(this.width, this.height);
-
-    this.window.setMinimumSize(this.width, this.height);
-
-    this.window.setShape([{ x: 0, y: 0, width: this.width, height: this.height }]);
-
     this.window.setAlwaysOnTop(true, 'screen-saver');
 
     this.window.loadURL(SHEET_WINDOW_WEBPACK_ENTRY);
 
-    if (name && sprite.name.includes(name)) {
-      // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
-      this.window.webContents.openDevTools({ mode: 'detach' });
-    }
+    // if (name && sprite.name.includes(name)) {
+    //   // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
+    //   this.window.webContents.openDevTools({ mode: 'detach' });
+    // }
 
     this.window.webContents.once('dom-ready', (): void => {
       this.update();
     });
-
-    this.position();
 
     this.windowHandler.setForeground();
 
@@ -72,7 +70,7 @@ export class Sheet {
     this.window.webContents.send('sheet.initialize', params);
   }
 
-  private position(): void {
+  private position(): [number, number] {
     const rectWidth: number =
       this.windowHandler.windowRect.right - this.windowHandler.windowRect.left;
 
@@ -93,7 +91,7 @@ export class Sheet {
 
     let sheetScreenY: number;
 
-    const sheetSize: number[] = this.window.getSize();
+    const sheetSize: [number, number] = [this.width, this.height];
 
     // X
     const sheetPercentWidth: number = sheetSize[0] / rectWidth;
@@ -133,7 +131,7 @@ export class Sheet {
       sheetScreenY = spriteScreenY - Math.round(sheetSize[1] / 2);
     }
 
-    this.window.setPosition(sheetScreenX, sheetScreenY);
+    return [sheetScreenX, sheetScreenY];
   }
 
   public teardown(): void {
