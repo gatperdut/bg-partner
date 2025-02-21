@@ -50,10 +50,7 @@ export class MemscanLinux extends MemscanOs {
       return;
     }
 
-    const entitiesNum: number = handlers.memread.memReadNumber(
-      this.offsetEntitiesNum,
-      'INT16'
-    ) as number;
+    const entitiesNum: number = handlers.memread.memReadNumber(this.offsetEntitiesNum, 'INT16');
 
     for (let i = 2001 * 16; i <= entitiesNum * 16 + 96; i += 16) {
       this.gameObjectPtrs.push(

@@ -10,7 +10,7 @@ export class Sprite {
 
   public id: number;
 
-  public gameAreaPtr: bigint;
+  public gameAreaAddr: bigint;
 
   public hp: number;
 
@@ -53,7 +53,7 @@ export class Sprite {
       !this.id ||
       this.type !== 0x31 ||
       !this.hp ||
-      !this.gameAreaPtr ||
+      !this.gameAreaAddr ||
       this.x < 0 ||
       this.y < 0 ||
       !this.name ||
@@ -63,54 +63,45 @@ export class Sprite {
   }
 
   public basic(): void {
-    this.type = this.memread.memReadNumber(this.basePtr + BigInt(0x8), 'UINT8') as number;
+    this.type = this.memread.memReadNumber(this.basePtr + BigInt(0x8), 'UINT8');
 
-    this.gameAreaPtr = this.memread.memReadNumber(this.basePtr + BigInt(0x18), 'ADDR') as bigint;
+    this.gameAreaAddr = this.memread.memReadBigint(this.basePtr + BigInt(0x18), 'ADDR');
 
-    this.hp = this.memread.memReadNumber(this.basePtr + BigInt(0x560 + 0x1c), 'INT16') as number;
+    this.hp = this.memread.memReadNumber(this.basePtr + BigInt(0x560 + 0x1c), 'INT16');
 
-    this.canBeSeen = this.memread.memReadNumber(this.basePtr + BigInt(0x4c), 'INT16') as number;
+    this.canBeSeen = this.memread.memReadNumber(this.basePtr + BigInt(0x4c), 'INT16');
 
     this.resref = this.memread.memReadString(this.basePtr + BigInt(0x540)).replace(/\*/g, '');
 
-    this.id = this.memread.memReadNumber(this.basePtr + BigInt(0x48), 'UINT32') as number;
+    this.id = this.memread.memReadNumber(this.basePtr + BigInt(0x48), 'UINT32');
 
-    this.x = this.memread.memReadNumber(
-      this.basePtr + BigInt(0xc),
-      linux ? 'UINT16' : 'UINT32'
-    ) as number;
+    this.x = this.memread.memReadNumber(this.basePtr + BigInt(0xc), linux ? 'UINT16' : 'UINT32');
 
-    this.y = this.memread.memReadNumber(
-      this.basePtr + BigInt(0x10),
-      linux ? 'UINT16' : 'UINT32'
-    ) as number;
+    this.y = this.memread.memReadNumber(this.basePtr + BigInt(0x10), linux ? 'UINT16' : 'UINT32');
 
-    const namePtr = this.memread.memReadNumber(
+    const nameAddr: bigint = this.memread.memReadBigint(
       this.basePtr + BigInt(linux ? 0x3910 : 0x3928),
       'ADDR'
     );
 
-    this.name = this.memread.memReadString(BigInt(namePtr));
+    this.name = this.memread.memReadString(BigInt(nameAddr));
 
     this.viewportX = this.memread.memReadNumber(
-      this.gameAreaPtr + BigInt(0x5c8 + 0x78 + 0x8),
+      this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8),
       linux ? 'INT16' : 'INT32'
-    ) as number;
+    );
 
     this.viewportY = this.memread.memReadNumber(
-      this.gameAreaPtr + BigInt(0x5c8 + 0x78 + 0x8 + 0x4),
+      this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8 + 0x4),
       linux ? 'INT16' : 'INT32'
-    ) as number;
+    );
 
-    this.scrollX = this.memread.memReadNumber(
-      this.gameAreaPtr + BigInt(0x5c8 + 0xc0),
-      'INT32'
-    ) as number;
+    this.scrollX = this.memread.memReadNumber(this.gameAreaAddr + BigInt(0x5c8 + 0xc0), 'INT32');
 
     this.scrollY = this.memread.memReadNumber(
-      this.gameAreaPtr + BigInt(0x5c8 + 0xc0 + 0x4),
+      this.gameAreaAddr + BigInt(0x5c8 + 0xc0 + 0x4),
       'INT32'
-    ) as number;
+    );
 
     this.relativeX = this.x - this.scrollX;
 
@@ -118,9 +109,9 @@ export class Sprite {
   }
 
   public advanced(): void {
-    this.enemyAlly = this.memread.memReadNumber(this.basePtr + BigInt(0x38), 'BYTE') as number;
+    this.enemyAlly = this.memread.memReadNumber(this.basePtr + BigInt(0x38), 'BYTE');
 
-    this.race = this.memread.memReadNumber(this.basePtr + BigInt(0x30 + 0xa), 'BYTE') as number;
+    this.race = this.memread.memReadNumber(this.basePtr + BigInt(0x30 + 0xa), 'BYTE');
 
     derivedFill(this.memread, this.basePtr + BigInt(0x1120), this.derived);
 

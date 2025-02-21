@@ -1,6 +1,5 @@
 import { handlers } from '../main';
-import { MemscanWin32 } from '../memscan/memscan-win32';
-import { Primitive, PrimitiveSizesWin32, VOIDPTR } from '../syscalls/primitives';
+import { Primitive } from '../syscalls/primitives';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
 import { joinASCII } from '../utils';
 
@@ -9,20 +8,12 @@ export class MemreadWin32 {
     return handlers.syscalls as SyscallsWin32;
   }
 
-  public memReadNumber(ptr: bigint, primitive: Primitive): number | bigint {
-    const bytesRead: number[] = [null];
+  public memReadNumber(ptr: bigint, primitive: Primitive): number {
+    return this.syscalls.helpersWin32.memReadNumber(ptr, primitive) as number;
+  }
 
-    const value: number[] = [null];
-
-    this.syscalls.syscallsKernel32.ReadProcessMemoryNumber[primitive](
-      (handlers.memscan as MemscanWin32).targetProcess as VOIDPTR,
-      ptr as unknown as VOIDPTR,
-      value,
-      PrimitiveSizesWin32[primitive],
-      bytesRead
-    );
-
-    return primitive === 'ADDR' ? BigInt(value[0]) : value[0];
+  public memReadBigint(ptr: bigint, primitive: Primitive): bigint {
+    return this.syscalls.helpersWin32.memReadNumber(ptr, primitive) as bigint;
   }
 
   public memReadString(ptr: bigint): string {
@@ -32,7 +23,7 @@ export class MemreadWin32 {
 
     let i: number = 0;
 
-    while ((character = this.memReadNumber(ptr + BigInt(i), 'UINT8') as number)) {
+    while ((character = this.memReadNumber(ptr + BigInt(i), 'UINT8'))) {
       result.push(character);
 
       i++;

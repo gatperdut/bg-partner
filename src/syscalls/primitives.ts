@@ -81,3 +81,5 @@ export const PrimitiveSizesLinux: Record<Primitive, number> = {
 };
 
 export type VOIDPTR = typeof KoffiPrimitivePtrs.VOID;
+
+export type Value = number | bigint;

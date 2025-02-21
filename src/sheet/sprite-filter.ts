@@ -8,7 +8,7 @@ export const spriteSanitize = (sprite: Sprite): Sprite => {
     memread: null,
     invalid: false,
     basic: null,
-    gameAreaPtr: null,
+    gameAreaAddr: null,
     advanced: null,
     // Basic
     type: sprite.type,

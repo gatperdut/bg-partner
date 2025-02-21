@@ -126,7 +126,7 @@ export class MemscanWin32 extends MemscanOs {
     const entitiesNum: number = handlers.memread.memReadNumber(
       this.modBaseAddr + BigInt(this.offsetEntitiesNum),
       'INT32'
-    ) as number;
+    );
 
     for (let i: number = 2001 * 16; i <= entitiesNum * 16 + 96; i += 16) {
       this.gameObjectPtrs.push(

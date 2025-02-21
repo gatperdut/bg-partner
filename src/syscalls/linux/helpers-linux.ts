@@ -1,7 +1,12 @@
 import { Primitive, PrimitiveSizesLinux } from '../primitives';
+import { SyscallsLibc } from './libs/libc';
 import { IOVEC } from './types-linux';
 
 export class HelpersLinux {
+  constructor(private syscallsLibc: SyscallsLibc) {
+    // Empty
+  }
+
   public IOVECEmpty = (primitive: Primitive, base: bigint): IOVEC => {
     const length: number = PrimitiveSizesLinux[primitive];
 
@@ -11,7 +16,19 @@ export class HelpersLinux {
     };
   };
 
-  public dataView2Value(dataView: DataView, primitive: Primitive): number | bigint {
+  public readNumber(pid: number, ptr: bigint, primitive: Primitive): number | bigint {
+    const iovecsLocal: IOVEC[] = [this.IOVECEmpty(primitive, null)];
+
+    const iovecsRemote: IOVEC[] = [this.IOVECEmpty(primitive, ptr)];
+
+    this.syscallsLibc.process_vm_readv(pid, iovecsLocal, 1, iovecsRemote, 1, 0);
+
+    const dataView = new DataView((iovecsLocal[0].iov_base as Uint8Array).buffer);
+
+    return this.dataView2Value(dataView, primitive);
+  }
+
+  private dataView2Value(dataView: DataView, primitive: Primitive): number | bigint {
     switch (primitive) {
       case 'VOID':
         return null;

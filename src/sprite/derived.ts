@@ -11,5 +11,5 @@ export const derivedEmpty = (): Derived => {
 };
 
 export const derivedFill = (memread: Memread, basePtr: bigint, derived: Derived): void => {
-  derived.hpMax = memread.memReadNumber(basePtr + BigInt(0x4), 'INT16') as number;
+  derived.hpMax = memread.memReadNumber(basePtr + BigInt(0x4), 'INT16');
 };

@@ -13,5 +13,9 @@ export class SyscallsWin32 {
 
   public syscallsDwmapi: SyscallsDwmapi = new SyscallsDwmapi(this.structsWin32);
 
-  public helpersWin32: HelpersWin32 = new HelpersWin32(this.syscallsUser32, this.structsWin32);
+  public helpersWin32: HelpersWin32 = new HelpersWin32(
+    this.syscallsUser32,
+    this.syscallsKernel32,
+    this.structsWin32
+  );
 }

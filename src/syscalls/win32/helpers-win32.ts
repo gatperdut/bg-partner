@@ -1,11 +1,18 @@
 import koffi from 'koffi';
-import { VOIDPTR } from '../primitives';
+import { handlers } from '../../main';
+import { MemscanWin32 } from '../../memscan/memscan-win32';
+import { Primitive, PrimitiveSizesWin32, Value, VOIDPTR } from '../primitives';
+import { SyscallsKernel32 } from './libs/syscalls-kernel32';
 import { SyscallsUser32 } from './libs/syscalls-user32';
 import { StructsWin32 } from './structs-win32';
 import { MODULEENTRY32, PROCESSENTRY32 } from './types-win32';
 
 export class HelpersWin32 {
-  constructor(private syscallsUser32: SyscallsUser32, private structsWin32: StructsWin32) {
+  constructor(
+    private syscallsUser32: SyscallsUser32,
+    private syscallsKernel32: SyscallsKernel32,
+    private structsWin32: StructsWin32
+  ) {
     // Empty
   }
 
@@ -45,5 +52,21 @@ export class HelpersWin32 {
       szModule: new Array(255 + 1).fill(0),
       szExePath: new Array(260).fill(0),
     };
+  }
+
+  public memReadNumber(ptr: bigint, primitive: Primitive): Value {
+    const bytesRead: number[] = [null];
+
+    const value: number[] = [null];
+
+    this.syscallsKernel32.ReadProcessMemoryNumber[primitive](
+      (handlers.memscan as MemscanWin32).targetProcess as VOIDPTR,
+      ptr as unknown as VOIDPTR,
+      value,
+      PrimitiveSizesWin32[primitive],
+      bytesRead
+    );
+
+    return primitive === 'ADDR' ? BigInt(value[0]) : value[0];
   }
 }

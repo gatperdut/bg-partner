@@ -9,8 +9,12 @@ export class MemreadLinux {
     return handlers.syscalls as SyscallsLinux;
   }
 
-  public memReadNumber(ptr: bigint, primitive: Primitive): number | bigint {
-    return this.syscalls.readNumber(handlers.memscan.pid, ptr, primitive);
+  public memReadNumber(ptr: bigint, primitive: Primitive): number {
+    return this.syscalls.helpersLinux.readNumber(handlers.memscan.pid, ptr, primitive) as number;
+  }
+
+  public memReadBigint(ptr: bigint, primitive: Primitive): bigint {
+    return this.syscalls.helpersLinux.readNumber(handlers.memscan.pid, ptr, primitive) as bigint;
   }
 
   public memReadString(ptr: bigint): string {
@@ -20,7 +24,7 @@ export class MemreadLinux {
 
     let i: number = 0;
 
-    while ((character = this.memReadNumber(ptr + BigInt(i), 'UINT8') as number)) {
+    while ((character = this.memReadNumber(ptr + BigInt(i), 'UINT8'))) {
       result.push(character);
 
       i++;
