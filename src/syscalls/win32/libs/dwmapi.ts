@@ -3,7 +3,7 @@ import { STDCALL } from '../../../const/const-win32';
 import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../primitives';
 import { StructsWin32 } from '../structs-win32';
 
-export class SyscallsDwmapi {
+export class Dwmapi {
   constructor(private structsWin32: StructsWin32) {
     // Empty
   }

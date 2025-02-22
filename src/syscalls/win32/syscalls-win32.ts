@@ -1,21 +1,17 @@
 import { HelpersWin32 } from './helpers-win32';
-import { SyscallsDwmapi } from './libs/syscalls-dwmapi';
-import { SyscallsKernel32 } from './libs/syscalls-kernel32';
-import { SyscallsUser32 } from './libs/syscalls-user32';
+import { Dwmapi } from './libs/dwmapi';
+import { Kernel32 } from './libs/kernel32';
+import { User32 } from './libs/user32';
 import { StructsWin32 } from './structs-win32';
 
 export class SyscallsWin32 {
-  public structsWin32: StructsWin32 = new StructsWin32();
+  public structs: StructsWin32 = new StructsWin32();
 
-  public syscallsUser32: SyscallsUser32 = new SyscallsUser32(this.structsWin32);
+  public user32: User32 = new User32(this.structs);
 
-  public syscallsKernel32: SyscallsKernel32 = new SyscallsKernel32(this.structsWin32);
+  public kernel32: Kernel32 = new Kernel32(this.structs);
 
-  public syscallsDwmapi: SyscallsDwmapi = new SyscallsDwmapi(this.structsWin32);
+  public dwmapi: Dwmapi = new Dwmapi(this.structs);
 
-  public helpersWin32: HelpersWin32 = new HelpersWin32(
-    this.syscallsUser32,
-    this.syscallsKernel32,
-    this.structsWin32
-  );
+  public helpers: HelpersWin32 = new HelpersWin32(this.user32, this.kernel32, this.structs);
 }

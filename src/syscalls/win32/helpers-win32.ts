@@ -2,15 +2,15 @@ import koffi from 'koffi';
 import { handlers } from '../../handlers';
 import { MemscanWin32 } from '../../memscan/memscan-win32';
 import { Primitive, PrimitiveSizesWin32, Value, VOIDPTR } from '../primitives';
-import { SyscallsKernel32 } from './libs/syscalls-kernel32';
-import { SyscallsUser32 } from './libs/syscalls-user32';
+import { Kernel32 } from './libs/kernel32';
+import { User32 } from './libs/user32';
 import { StructsWin32 } from './structs-win32';
 import { MODULEENTRY32, POINT, PROCESSENTRY32, RECT } from './types-win32';
 
 export class HelpersWin32 {
   constructor(
-    private syscallsUser32: SyscallsUser32,
-    private syscallsKernel32: SyscallsKernel32,
+    private syscallsUser32: User32,
+    private syscallsKernel32: Kernel32,
     private structsWin32: StructsWin32
   ) {
     // Empty

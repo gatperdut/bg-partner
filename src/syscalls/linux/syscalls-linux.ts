@@ -1,11 +1,11 @@
 import { HelpersLinux } from './helpers-linux';
-import { SyscallsLibc } from './libs/libc';
+import { Libc } from './libs/libc';
 import { StructsLinux } from './structs-linux';
 
 export class SyscallsLinux {
-  public structsLinux: StructsLinux = new StructsLinux();
+  public structs: StructsLinux = new StructsLinux();
 
-  public syscallsLibc: SyscallsLibc = new SyscallsLibc(this.structsLinux);
+  public libc: Libc = new Libc(this.structs);
 
-  public helpersLinux: HelpersLinux = new HelpersLinux(this.syscallsLibc);
+  public helpers: HelpersLinux = new HelpersLinux(this.libc);
 }

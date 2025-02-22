@@ -28,14 +28,11 @@ export class MemscanWin32 extends MemscanOs {
   private modBaseAddr: bigint;
 
   public init(): void {
-    this.processSnapshot = syscallsWin32().syscallsKernel32.CreateToolhelp32Snapshot(
-      TH32CS_SNAPPROCESS,
-      0
-    );
+    this.processSnapshot = syscallsWin32().kernel32.CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
-    const processEntry32: PROCESSENTRY32 = syscallsWin32().helpersWin32.PROCESSENTRY32Empty();
+    const processEntry32: PROCESSENTRY32 = syscallsWin32().helpers.PROCESSENTRY32Empty();
 
-    syscallsWin32().syscallsKernel32.Process32First(this.processSnapshot, processEntry32);
+    syscallsWin32().kernel32.Process32First(this.processSnapshot, processEntry32);
 
     do {
       if (joinASCII(processEntry32.szExeFile) === 'Baldur.exe') {
@@ -43,7 +40,7 @@ export class MemscanWin32 extends MemscanOs {
 
         break;
       }
-    } while (syscallsWin32().syscallsKernel32.Process32Next(this.processSnapshot, processEntry32));
+    } while (syscallsWin32().kernel32.Process32Next(this.processSnapshot, processEntry32));
 
     if (!this.pid) {
       if (!this.printed) {
@@ -54,9 +51,9 @@ export class MemscanWin32 extends MemscanOs {
 
       this.gameObjectPtrs = [];
 
-      syscallsWin32().syscallsKernel32.CloseHandle(this.processSnapshot);
+      syscallsWin32().kernel32.CloseHandle(this.processSnapshot);
 
-      syscallsWin32().syscallsKernel32.CloseHandle(this.targetProcess);
+      syscallsWin32().kernel32.CloseHandle(this.targetProcess);
 
       return;
     }
@@ -65,36 +62,36 @@ export class MemscanWin32 extends MemscanOs {
 
     this.printed = false;
 
-    const moduleEntry32: MODULEENTRY32 = syscallsWin32().helpersWin32.MODULEENTRY32Empty();
+    const moduleEntry32: MODULEENTRY32 = syscallsWin32().helpers.MODULEENTRY32Empty();
 
-    const moduleSnapshot: VOIDPTR = syscallsWin32().syscallsKernel32.CreateToolhelp32Snapshot(
+    const moduleSnapshot: VOIDPTR = syscallsWin32().kernel32.CreateToolhelp32Snapshot(
       TH32CS_SNAPMODULE,
       this.pid
     );
 
-    syscallsWin32().syscallsKernel32.Module32First(moduleSnapshot, moduleEntry32);
+    syscallsWin32().kernel32.Module32First(moduleSnapshot, moduleEntry32);
 
     do {
       if (joinASCII(moduleEntry32.szModule) === 'Baldur.exe') {
         break;
       }
-    } while (syscallsWin32().syscallsKernel32.Module32Next(this.processSnapshot, moduleEntry32));
+    } while (syscallsWin32().kernel32.Module32Next(this.processSnapshot, moduleEntry32));
 
     this.modBaseAddr = koffi.address(moduleEntry32.modBaseAddr);
 
-    this.targetProcess = syscallsWin32().syscallsKernel32.OpenProcess(
+    this.targetProcess = syscallsWin32().kernel32.OpenProcess(
       PROCESS_VM_READ | PROCESS_QUERY_LIMITED_INFORMATION,
       true,
       this.pid
     );
 
-    syscallsWin32().syscallsKernel32.CloseHandle(moduleSnapshot);
+    syscallsWin32().kernel32.CloseHandle(moduleSnapshot);
   }
 
   private get aliveGet(): boolean {
     const result: number[] = [0];
 
-    syscallsWin32().syscallsKernel32.GetExitCodeProcess(this.targetProcess, result);
+    syscallsWin32().kernel32.GetExitCodeProcess(this.targetProcess, result);
 
     return result[0] === STILL_ACTIVE;
   }
@@ -107,11 +104,11 @@ export class MemscanWin32 extends MemscanOs {
     if (!this.alive) {
       this.pid = null;
 
-      syscallsWin32().syscallsKernel32.CloseHandle(this.processSnapshot);
+      syscallsWin32().kernel32.CloseHandle(this.processSnapshot);
 
       this.processSnapshot = null;
 
-      syscallsWin32().syscallsKernel32.CloseHandle(this.targetProcess);
+      syscallsWin32().kernel32.CloseHandle(this.targetProcess);
 
       this.targetProcess = null;
 

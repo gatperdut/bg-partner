@@ -2,7 +2,7 @@ import koffi, { IKoffiLib, KoffiFunction } from 'koffi';
 import { KoffiPrimitives } from '../../primitives';
 import { StructsLinux } from '../structs-linux';
 
-export class SyscallsLibc {
+export class Libc {
   constructor(private structsLinux: StructsLinux) {
     // Empty
   }

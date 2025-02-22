@@ -4,7 +4,7 @@ import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../primitives';
 import { StructsWin32 } from '../structs-win32';
 import { EnumWindowsCallbackFn } from '../types-win32';
 
-export class SyscallsUser32 {
+export class User32 {
   constructor(private structsWin32: StructsWin32) {
     // Empty
   }

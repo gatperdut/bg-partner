@@ -4,11 +4,11 @@ import { joinASCII } from '../utils';
 
 export class MemreadWin32 {
   public memReadNumber(ptr: bigint, primitive: Exclude<Primitive, 'ADDR'>): number {
-    return syscallsWin32().helpersWin32.memReadNumber(ptr, primitive) as number;
+    return syscallsWin32().helpers.memReadNumber(ptr, primitive) as number;
   }
 
   public memReadBigint(ptr: bigint, primitive: Extract<Primitive, 'ADDR'>): bigint {
-    return syscallsWin32().helpersWin32.memReadNumber(ptr, primitive) as bigint;
+    return syscallsWin32().helpers.memReadNumber(ptr, primitive) as bigint;
   }
 
   public memReadString(ptr: bigint): string {

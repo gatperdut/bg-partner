@@ -5,7 +5,7 @@ import { KoffiPrimitivePtrs, KoffiPrimitives, Primitive, Primitives } from '../.
 import { StructsWin32 } from '../structs-win32';
 import { ReadProcessMemoryFn } from '../types-win32';
 
-export class SyscallsKernel32 {
+export class Kernel32 {
   constructor(private structsWin32: StructsWin32) {
     _.each(Primitives, (primitive: Primitive): void => {
       this.ReadProcessMemoryNumber[primitive] = this.ReadProcessMemoryNumberDefine(primitive);

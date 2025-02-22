@@ -5,11 +5,11 @@ import { joinASCII } from '../utils';
 
 export class MemreadLinux {
   public memReadNumber(ptr: bigint, primitive: Exclude<Primitive, 'ADDR'>): number {
-    return syscallsLinux().helpersLinux.readNumber(handlers.memscan.pid, ptr, primitive) as number;
+    return syscallsLinux().helpers.readNumber(handlers.memscan.pid, ptr, primitive) as number;
   }
 
   public memReadBigint(ptr: bigint, primitive: Extract<Primitive, 'ADDR'>): bigint {
-    return syscallsLinux().helpersLinux.readNumber(handlers.memscan.pid, ptr, primitive) as bigint;
+    return syscallsLinux().helpers.readNumber(handlers.memscan.pid, ptr, primitive) as bigint;
   }
 
   public memReadString(ptr: bigint): string {

@@ -23,23 +23,23 @@ export class ShortcutsWin32 {
   }
 
   private sheetToggle(): void {
-    const point: POINT = syscallsWin32().helpersWin32.POINTEmpty();
+    const point: POINT = syscallsWin32().helpers.POINTEmpty();
 
-    syscallsWin32().syscallsUser32.GetCursorPos(point);
+    syscallsWin32().user32.GetCursorPos(point);
 
     handlers.entities.sheetToggle(point);
   }
 
   private borderless(): void {
-    syscallsWin32().syscallsUser32.SetWindowLongA(
+    syscallsWin32().user32.SetWindowLongA(
       (handlers.window as WindowWin32).handle,
       GWL_STYLE,
       WS_MAXIMIZE
     );
 
-    syscallsWin32().syscallsUser32.ShowWindow((handlers.window as WindowWin32).handle, SW_SHOW);
+    syscallsWin32().user32.ShowWindow((handlers.window as WindowWin32).handle, SW_SHOW);
 
-    syscallsWin32().syscallsUser32.SetWindowPos(
+    syscallsWin32().user32.SetWindowPos(
       (handlers.window as WindowWin32).handle,
       HWND_TOP,
       0,
