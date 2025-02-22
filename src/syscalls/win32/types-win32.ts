@@ -17,15 +17,27 @@ export type PROCESSENTRY32 = {
 
 export type MODULEENTRY32 = {
   dwSize: number;
-  th32ModuleID: 0;
-  th32ProcessID: 0;
-  GlblcntUsage: 0;
-  ProccntUsage: 0;
-  modBaseAddr: 0;
-  modBaseSize: 0;
-  hModule: 0;
+  th32ModuleID: number;
+  th32ProcessID: number;
+  GlblcntUsage: number;
+  ProccntUsage: number;
+  modBaseAddr: number;
+  modBaseSize: number;
+  hModule: number;
   szModule: number[];
   szExePath: number[];
+};
+
+export type RECT = {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+};
+
+export type POINT = {
+  x: number;
+  y: number;
 };
 
 export type ReadProcessMemoryFn = (

@@ -5,7 +5,7 @@ import { Primitive, PrimitiveSizesWin32, Value, VOIDPTR } from '../primitives';
 import { SyscallsKernel32 } from './libs/syscalls-kernel32';
 import { SyscallsUser32 } from './libs/syscalls-user32';
 import { StructsWin32 } from './structs-win32';
-import { MODULEENTRY32, PROCESSENTRY32 } from './types-win32';
+import { MODULEENTRY32, POINT, PROCESSENTRY32, RECT } from './types-win32';
 
 export class HelpersWin32 {
   constructor(
@@ -51,6 +51,22 @@ export class HelpersWin32 {
       hModule: 0,
       szModule: new Array(255 + 1).fill(0),
       szExePath: new Array(260).fill(0),
+    };
+  }
+
+  public RECTEmpty(): RECT {
+    return {
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+    };
+  }
+
+  public POINTEmpty(): POINT {
+    return {
+      x: 0,
+      y: 0,
     };
   }
 

@@ -9,6 +9,7 @@ import {
 
 import { handlers } from '../main';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
+import { POINT } from '../syscalls/win32/types-win32';
 import { WindowWin32 } from '../window/window-win32';
 
 export class ShortcutsWin32 {
@@ -27,10 +28,7 @@ export class ShortcutsWin32 {
   }
 
   private sheetToggle(): void {
-    const point: Electron.Point = {
-      x: null,
-      y: null,
-    };
+    const point: POINT = this.syscalls.helpersWin32.POINTEmpty();
 
     this.syscalls.syscallsUser32.GetCursorPos(point);
 
