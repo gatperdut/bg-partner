@@ -15,7 +15,7 @@ export type ConfigObj = {
 export class Config {
   private schema: ObjectSchema<ConfigObj> = Joi.object<ConfigObj>({
     exe: Joi.string().pattern(new RegExp('^[a-zA-Z0-9.]+$')).min(1),
-    display: Joi.number().integer().min(0),
+    display: Joi.number().integer().min(0).allow(null),
     ms: Joi.number().integer().min(100),
   });
 
@@ -31,7 +31,7 @@ export class Config {
     const configObj: ConfigObj = this.fileread();
 
     if (this.schema.validate(configObj).error) {
-      console.log('Configuration file does not look valid, using defaults.');
+      console.log('Configuration file looks invalid. Will revert to defaults.');
 
       this.obj = this.default;
 
@@ -42,7 +42,7 @@ export class Config {
 
     this.filewrite(this.obj);
 
-    console.log(this.stringify(this.obj));
+    console.log('Configuration:', this.stringify(this.obj));
   }
 
   private get filePath(): string {
@@ -57,7 +57,7 @@ export class Config {
     const filePath: string = this.filePath;
 
     if (!fs.existsSync(filePath)) {
-      console.log('Configuration file not found, will generate one with defaults.');
+      console.log('Configuration file not found. Will create one with defaults.');
 
       this.filewrite(this.default);
 
@@ -67,7 +67,7 @@ export class Config {
     try {
       return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     } catch (error) {
-      console.log('Configuration file could not be parsed as JSON, using defaults.');
+      console.log('Configuration file could not be parsed as JSON. Will revert to defaults.');
       return this.default;
     }
   }

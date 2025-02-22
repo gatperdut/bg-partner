@@ -58,7 +58,7 @@ export class MemscanWin32 extends MemscanOs {
       return;
     }
 
-    console.log('Process found, PID:', this.pid);
+    console.log(`Process found. PID: ${this.pid}.`);
 
     this.printed = false;
 

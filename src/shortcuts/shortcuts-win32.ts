@@ -42,10 +42,10 @@ export class ShortcutsWin32 {
     syscallsWin32().user32.SetWindowPos(
       (handlers.window as WindowWin32).handle,
       HWND_TOP,
-      handlers.window.screen.x,
-      handlers.window.screen.y,
-      handlers.window.screen.width,
-      handlers.window.screen.height,
+      handlers.window.display.x,
+      handlers.window.display.y,
+      handlers.window.display.width,
+      handlers.window.display.height,
       SWP_ASYNCWINDOWPOS
     );
   }

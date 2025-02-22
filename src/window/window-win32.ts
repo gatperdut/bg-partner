@@ -36,8 +36,6 @@ export class WindowWin32 extends WindowOs {
   };
 
   public run(): void {
-    super.run();
-
     const rect: RECT = syscallsWin32().helpers.RECTEmpty();
 
     syscallsWin32().dwmapi.DwmGetWindowAttribute(

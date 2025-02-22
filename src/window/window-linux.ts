@@ -9,8 +9,6 @@ export class WindowLinux extends WindowOs {
   }
 
   public run(): void {
-    super.run();
-
     const wmctrlValues: number[] = _.map(
       execSync(`wmctrl -lpG | awk '$3 == ${handlers.memscan.pid} {print $1, $4, $5, $6, $7}'`)
         .toString()

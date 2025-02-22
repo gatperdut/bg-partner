@@ -1,4 +1,6 @@
 import Electron from 'electron';
+import _ from 'lodash-es';
+import { config } from '../handlers';
 import { WindowLinux } from './window-linux';
 import { WindowWin32 } from './window-win32';
 
@@ -7,12 +9,7 @@ export type Window = WindowLinux | WindowWin32;
 export abstract class WindowOs {
   public id: number;
 
-  public screen: Electron.Rectangle = {
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-  };
+  public display: Electron.Rectangle;
 
   public window: Electron.Rectangle = {
     x: 0,
@@ -21,14 +18,33 @@ export abstract class WindowOs {
     height: 0,
   };
 
-  public run(): void {
-    const display: Electron.Display = Electron.screen.getPrimaryDisplay();
+  constructor() {
+    const index: number = config().display;
 
-    const screenSize: Electron.Size = Electron.screen.getPrimaryDisplay().size;
+    if (_.isNull(index)) {
+      this.use(Electron.screen.getPrimaryDisplay().bounds);
+      return;
+    }
 
-    this.screen.width = screenSize.width;
+    const displays: Electron.Display[] = Electron.screen.getAllDisplays();
 
-    this.screen.height = screenSize.height;
+    if (index > displays.length - 1) {
+      console.log(`Display with index ${index} not found. Will revert to primary display.`);
+
+      this.use(Electron.screen.getPrimaryDisplay().bounds);
+
+      return;
+    }
+
+    this.display = displays[index].bounds;
+  }
+
+  private use(display: Electron.Rectangle): void {
+    this.display = display;
+
+    console.log(
+      `Display: ${display.width}x${display.height}, offset (${display.x}, ${display.y}).`
+    );
   }
 
   public get windowLeft(): number {
