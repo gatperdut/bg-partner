@@ -3,13 +3,8 @@ import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../const/const-win32';
 import { handlers } from '../main';
 import { VOIDPTR } from '../syscalls/primitives';
 import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
-import { EnumWindowsCallbackFn } from '../syscalls/win32/types-win32';
+import { EnumWindowsCallbackFn, RECT } from '../syscalls/win32/types-win32';
 import { WindowOs } from './window';
-
-export type Screen = {
-  width: number;
-  height: number;
-};
 
 export class WindowWin32 extends WindowOs {
   public handle: VOIDPTR;
@@ -50,18 +45,22 @@ export class WindowWin32 extends WindowOs {
   public run(): void {
     super.run();
 
+    const rect: RECT = this.syscalls.helpersWin32.RECTEmpty();
+
     this.syscalls.syscallsDwmapi.DwmGetWindowAttribute(
       this.handle,
       DWMWA_EXTENDED_FRAME_BOUNDS,
-      this.rect,
+      rect,
       koffi.sizeof(this.syscalls.structsWin32.RECT)
     );
+
+    this.rect = rect;
   }
 
   public get focused(): boolean {
     const foreground: VOIDPTR = this.syscalls.syscallsUser32.GetForegroundWindow();
 
-    const foregroundPid = this.syscalls.helpersWin32.getWindowThreadProcessId(foreground);
+    const foregroundPid: number = this.syscalls.helpersWin32.getWindowThreadProcessId(foreground);
 
     return this.id === foregroundPid;
   }

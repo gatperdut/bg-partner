@@ -17,8 +17,8 @@ export const spriteSanitize = (sprite: Sprite): Sprite => {
     id: sprite.id,
     hp: sprite.hp,
     viewport: {
-      x: sprite.viewport.x,
-      y: sprite.viewport.y,
+      width: sprite.viewport.width,
+      height: sprite.viewport.height,
     },
     scroll: {
       x: sprite.scroll.x,

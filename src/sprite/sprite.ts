@@ -15,7 +15,7 @@ export class Sprite {
 
   public hp: number;
 
-  public viewport: Electron.Point = { x: null, y: null };
+  public viewport: Electron.Size = { width: null, height: null };
 
   public scroll: Electron.Point = { x: null, y: null };
 
@@ -85,12 +85,12 @@ export class Sprite {
 
     this.name = this.memread.memReadString(BigInt(nameAddr));
 
-    this.viewport.x = this.memread.memReadNumber(
+    this.viewport.width = this.memread.memReadNumber(
       this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8),
       linux ? 'INT16' : 'INT32'
     );
 
-    this.viewport.y = this.memread.memReadNumber(
+    this.viewport.height = this.memread.memReadNumber(
       this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8 + 0x4),
       linux ? 'INT16' : 'INT32'
     );
@@ -122,10 +122,12 @@ export class Sprite {
   public get screen(): Electron.Point {
     return {
       x: Math.round(
-        handlers.window.rect.left + (this.relative.x / this.viewport.x) * handlers.window.rectWidth
+        handlers.window.rect.left +
+          (this.relative.x / this.viewport.width) * handlers.window.rectWidth
       ),
       y: Math.round(
-        handlers.window.rect.top + (this.relative.y / this.viewport.y) * handlers.window.rectHeight
+        handlers.window.rect.top +
+          (this.relative.y / this.viewport.height) * handlers.window.rectHeight
       ),
     };
   }
