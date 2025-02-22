@@ -40,4 +40,8 @@ export class Entity {
       this.sheet = new Sheet(this.sprite);
     }
   }
+
+  public teardown(): void {
+    this.sheet?.teardown();
+  }
 }

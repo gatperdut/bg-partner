@@ -36,6 +36,8 @@ export class Entities {
 
     _.each(remove, (id: number): void => {
       if (this.entities[id]) {
+        this.entities[id].teardown();
+
         delete this.entities[id];
       }
     });
@@ -60,6 +62,10 @@ export class Entities {
   }
 
   public teardown(): void {
+    _.each(_.values(this.entities), (entity: Entity): void => {
+      entity.teardown();
+    });
+
     this.entities = {};
   }
 }
