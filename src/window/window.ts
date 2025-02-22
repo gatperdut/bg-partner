@@ -2,13 +2,6 @@ import Electron from 'electron';
 import { WindowLinux } from './window-linux';
 import { WindowWin32 } from './window-win32';
 
-export type Rect = {
-  left: number;
-  top: number;
-  right: number;
-  bottom: number;
-};
-
 export type Window = WindowLinux | WindowWin32;
 
 export abstract class WindowOs {
@@ -19,11 +12,11 @@ export abstract class WindowOs {
     height: 0,
   };
 
-  public rect: Rect = {
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
+  public rectangle: Electron.Rectangle = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
   };
 
   public run(): void {
@@ -34,11 +27,11 @@ export abstract class WindowOs {
     this.screen.height = screenSize.height;
   }
 
-  public get rectWidth(): number {
-    return this.rect.right - this.rect.left;
+  public get rectangleLeft(): number {
+    return this.rectangle.x;
   }
 
-  public get rectHeight(): number {
-    return this.rect.bottom - this.rect.top;
+  public get rectangleTop(): number {
+    return this.rectangle.y;
   }
 }

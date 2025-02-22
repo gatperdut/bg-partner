@@ -67,10 +67,6 @@ export class Sheet {
   }
 
   private position(): Electron.Point {
-    const rectWidth: number = handlers.window.rectWidth;
-
-    const rectHeight: number = handlers.window.rectHeight;
-
     const spriteScreen: Electron.Point = this.sprite.screen;
 
     const sheetScreen: Electron.Point = {
@@ -84,17 +80,17 @@ export class Sheet {
     };
 
     const sheetPercent: Electron.Size = {
-      width: sheetSize.width / rectWidth,
-      height: sheetSize.height / rectHeight,
+      width: sheetSize.width / handlers.window.rectangle.width,
+      height: sheetSize.height / handlers.window.rectangle.height,
     };
 
     const spritePercent: Electron.Size = {
-      width: (spriteScreen.x - handlers.window.rect.left) / rectWidth,
-      height: (spriteScreen.y - handlers.window.rect.top) / rectHeight,
+      width: (spriteScreen.x - handlers.window.rectangleLeft) / handlers.window.rectangle.width,
+      height: (spriteScreen.y - handlers.window.rectangleTop) / handlers.window.rectangle.height,
     };
 
     // X
-    const marginPercentX = 50 / rectWidth;
+    const marginPercentX = 50 / handlers.window.rectangle.width;
 
     if (spritePercent.width + sheetPercent.width + marginPercentX > 0.95) {
       sheetScreen.x = spriteScreen.x - sheetSize.width - 50;
@@ -105,18 +101,22 @@ export class Sheet {
     // Y
     const sheetPercentHalfHeight: number = sheetPercent.height / 2;
 
-    const sheetHalfHeight: number = sheetPercentHalfHeight * rectHeight;
+    const sheetHalfHeight: number = sheetPercentHalfHeight * handlers.window.rectangle.height;
 
     const sheetPercentTopOverflow: number = spritePercent.height - sheetPercentHalfHeight - 0.05;
 
     const sheetPercentBottomOverflow: number = spritePercent.height + sheetPercentHalfHeight - 0.95;
 
     if (sheetPercentTopOverflow < 0) {
-      const sheetTopOverflow: number = Math.round(sheetPercentTopOverflow * rectHeight);
+      const sheetTopOverflow: number = Math.round(
+        sheetPercentTopOverflow * handlers.window.rectangle.height
+      );
 
       sheetScreen.y = spriteScreen.y - sheetHalfHeight - sheetTopOverflow;
     } else if (sheetPercentBottomOverflow > 0) {
-      const sheetBottomOverflow: number = Math.round(sheetPercentBottomOverflow * rectHeight);
+      const sheetBottomOverflow: number = Math.round(
+        sheetPercentBottomOverflow * handlers.window.rectangle.height
+      );
 
       sheetScreen.y = spriteScreen.y - sheetHalfHeight - sheetBottomOverflow;
     } else {

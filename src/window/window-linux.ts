@@ -31,13 +31,13 @@ export class WindowLinux extends WindowOs {
 
     this.id = wmctrlValues[0];
 
-    this.rect.left = wmctrlValues[1];
+    this.rectangle.x = wmctrlValues[1];
 
-    this.rect.top = wmctrlValues[2] - windowTitleHeight;
+    this.rectangle.y = wmctrlValues[2] - windowTitleHeight;
 
-    this.rect.right = this.rect.left + wmctrlValues[3];
+    this.rectangle.width = wmctrlValues[3];
 
-    this.rect.bottom = this.rect.top + wmctrlValues[4];
+    this.rectangle.height = wmctrlValues[4];
   }
 
   public get focused(): boolean {

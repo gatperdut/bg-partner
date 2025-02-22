@@ -122,12 +122,12 @@ export class Sprite {
   public get screen(): Electron.Point {
     return {
       x: Math.round(
-        handlers.window.rect.left +
-          (this.relative.x / this.viewport.width) * handlers.window.rectWidth
+        handlers.window.rectangleLeft +
+          (this.relative.x / this.viewport.width) * handlers.window.rectangle.width
       ),
       y: Math.round(
-        handlers.window.rect.top +
-          (this.relative.y / this.viewport.height) * handlers.window.rectHeight
+        handlers.window.rectangleTop +
+          (this.relative.y / this.viewport.height) * handlers.window.rectangle.height
       ),
     };
   }

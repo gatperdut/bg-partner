@@ -47,7 +47,13 @@ export class WindowWin32 extends WindowOs {
       koffi.sizeof(syscallsWin32().structs.RECT)
     );
 
-    this.rect = rect;
+    this.rectangle.x = rect.left;
+
+    this.rectangle.y = rect.top;
+
+    this.rectangle.width = rect.right - rect.left;
+
+    this.rectangle.height = rect.bottom - rect.top;
   }
 
   public get focused(): boolean {
