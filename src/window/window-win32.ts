@@ -53,7 +53,7 @@ export class WindowWin32 extends WindowOs {
     this.syscalls.syscallsDwmapi.DwmGetWindowAttribute(
       this.handle,
       DWMWA_EXTENDED_FRAME_BOUNDS,
-      this.windowRect,
+      this.rect,
       koffi.sizeof(this.syscalls.structsWin32.RECT)
     );
   }

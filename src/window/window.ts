@@ -2,7 +2,7 @@ import Electron from 'electron';
 import { WindowLinux } from './window-linux';
 import { WindowWin32 } from './window-win32';
 
-export type WindowRect = {
+export type Rect = {
   left: number;
   top: number;
   right: number;
@@ -19,7 +19,7 @@ export abstract class WindowOs {
     height: 0,
   };
 
-  public windowRect: WindowRect = {
+  public rect: Rect = {
     left: 0,
     top: 0,
     right: 0,
@@ -34,11 +34,11 @@ export abstract class WindowOs {
     this.screen.height = screenSize.height;
   }
 
-  public setForeground(): void {
-    // Empty
+  public get rectWidth(): number {
+    return this.rect.right - this.rect.left;
   }
 
-  public teardown(): void {
-    // Empty
+  public get rectHeight(): number {
+    return this.rect.bottom - this.rect.top;
   }
 }

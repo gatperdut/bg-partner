@@ -10,6 +10,7 @@ export const spriteSanitize = (sprite: Sprite): Sprite => {
     basic: null,
     gameAreaAddr: null,
     advanced: null,
+    screen: null,
     // Basic
     type: sprite.type,
     canBeSeen: sprite.canBeSeen,

@@ -1,4 +1,3 @@
-import { handlers } from '../main';
 import { Memread } from '../memread/memread';
 import { Sheet } from '../sheet/sheet';
 import { Sprite } from '../sprite/sprite';
@@ -27,20 +26,10 @@ export class Entity {
   }
 
   public pointMatch(pointScreen: Electron.Point): boolean {
-    const rectWidth: number = handlers.window.windowRect.right - handlers.window.windowRect.left;
-
-    const rectHeight: number = handlers.window.windowRect.bottom - handlers.window.windowRect.top;
-
-    const spriteScreenX: number = Math.round(
-      handlers.window.windowRect.left + (this.sprite.relativeX / this.sprite.viewportX) * rectWidth
-    );
-
-    const spriteScreenY: number = Math.round(
-      handlers.window.windowRect.top + (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
-    );
+    const spritePoint: Electron.Point = this.sprite.screen;
 
     return (
-      Math.abs(spriteScreenX - pointScreen.x) < 20 && Math.abs(spriteScreenY - pointScreen.y) < 20
+      Math.abs(spritePoint.x - pointScreen.x) < 20 && Math.abs(spritePoint.y - pointScreen.y) < 20
     );
   }
 

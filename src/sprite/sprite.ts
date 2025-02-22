@@ -1,4 +1,5 @@
 import { linux } from '../index';
+import { handlers } from '../main';
 import { Memread } from '../memread/memread';
 import { Derived, derivedEmpty, derivedFill } from './derived';
 
@@ -118,5 +119,16 @@ export class Sprite {
     derivedFill(this.memread, this.basePtr + BigInt(0x2a70), this.derivedBonus);
 
     derivedFill(this.memread, this.basePtr + BigInt(0x1dc8), this.derivedTemp);
+  }
+
+  public get screen(): Electron.Point {
+    return {
+      x: Math.round(
+        handlers.window.rect.left + (this.relativeX / this.viewportX) * handlers.window.rectWidth
+      ),
+      y: Math.round(
+        handlers.window.rect.top + (this.relativeY / this.viewportY) * handlers.window.rectHeight
+      ),
+    };
   }
 }

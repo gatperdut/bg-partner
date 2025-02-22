@@ -18,11 +18,11 @@ export class Sheet {
   public window: BrowserWindow;
 
   constructor(private sprite: Sprite) {
-    const position: [number, number] = this.position();
+    const position: Electron.Point = this.position();
 
     this.window = new BrowserWindow({
-      x: position[0],
-      y: position[1],
+      x: position.x,
+      y: position.y,
       width: this.width,
       height: this.height,
       minWidth: this.width,
@@ -66,64 +66,64 @@ export class Sheet {
     this.window.webContents.send(`sheet.update`, params);
   }
 
-  private position(): [number, number] {
-    const rectWidth: number = handlers.window.windowRect.right - handlers.window.windowRect.left;
+  private position(): Electron.Point {
+    const rectWidth: number = handlers.window.rectWidth;
 
-    const rectHeight: number = handlers.window.windowRect.bottom - handlers.window.windowRect.top;
+    const rectHeight: number = handlers.window.rectHeight;
 
-    const spriteScreenX: number = Math.round(
-      handlers.window.windowRect.left + (this.sprite.relativeX / this.sprite.viewportX) * rectWidth
-    );
+    const spriteScreen: Electron.Point = this.sprite.screen;
 
-    const spriteScreenY: number = Math.round(
-      handlers.window.windowRect.top + (this.sprite.relativeY / this.sprite.viewportY) * rectHeight
-    );
+    const sheetScreen: Electron.Point = {
+      x: 0,
+      y: 0,
+    };
 
-    let sheetScreenX: number;
+    const sheetSize: Electron.Point = {
+      x: this.width,
+      y: this.height,
+    };
 
-    let sheetScreenY: number;
+    const sheetPercent: Electron.Point = {
+      x: sheetSize.x / rectWidth,
+      y: sheetSize.y / rectHeight,
+    };
 
-    const sheetSize: [number, number] = [this.width, this.height];
+    const spritePercent: Electron.Point = {
+      x: (spriteScreen.x - handlers.window.rect.left) / rectWidth,
+      y: (spriteScreen.y - handlers.window.rect.top) / rectHeight,
+    };
 
     // X
-    const sheetPercentWidth: number = sheetSize[0] / rectWidth;
-
-    const spritePercentX: number = (spriteScreenX - handlers.window.windowRect.left) / rectWidth;
-
     const marginPercentX = 50 / rectWidth;
 
-    if (spritePercentX + sheetPercentWidth + marginPercentX > 0.95) {
-      sheetScreenX = spriteScreenX - sheetSize[0] - 50;
+    if (spritePercent.x + sheetPercent.x + marginPercentX > 0.95) {
+      sheetScreen.x = spriteScreen.x - sheetSize.x - 50;
     } else {
-      sheetScreenX = spriteScreenX + 50;
+      sheetScreen.x = spriteScreen.x + 50;
     }
 
     // Y
-    const sheetPercentHeight: number = sheetSize[1] / rectHeight;
-
-    const spritePercentY: number = (spriteScreenY - handlers.window.windowRect.top) / rectHeight;
-
-    const sheetPercentHalfHeight: number = sheetPercentHeight / 2;
+    const sheetPercentHalfHeight: number = sheetPercent.y / 2;
 
     const sheetHalfHeight: number = sheetPercentHalfHeight * rectHeight;
 
-    const sheetPercentTopOverflow: number = spritePercentY - sheetPercentHalfHeight - 0.05;
+    const sheetPercentTopOverflow: number = spritePercent.y - sheetPercentHalfHeight - 0.05;
 
-    const sheetPercentBottomOverflow: number = spritePercentY + sheetPercentHalfHeight - 0.95;
+    const sheetPercentBottomOverflow: number = spritePercent.y + sheetPercentHalfHeight - 0.95;
 
     if (sheetPercentTopOverflow < 0) {
       const sheetTopOverflow: number = Math.round(sheetPercentTopOverflow * rectHeight);
 
-      sheetScreenY = spriteScreenY - sheetHalfHeight - sheetTopOverflow;
+      sheetScreen.y = spriteScreen.y - sheetHalfHeight - sheetTopOverflow;
     } else if (sheetPercentBottomOverflow > 0) {
       const sheetBottomOverflow: number = Math.round(sheetPercentBottomOverflow * rectHeight);
 
-      sheetScreenY = spriteScreenY - sheetHalfHeight - sheetBottomOverflow;
+      sheetScreen.y = spriteScreen.y - sheetHalfHeight - sheetBottomOverflow;
     } else {
-      sheetScreenY = spriteScreenY - Math.round(sheetSize[1] / 2);
+      sheetScreen.y = spriteScreen.y - Math.round(sheetSize.y / 2);
     }
 
-    return [sheetScreenX, sheetScreenY];
+    return sheetScreen;
   }
 
   public teardown(): void {
