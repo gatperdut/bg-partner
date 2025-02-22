@@ -12,7 +12,11 @@ export class MemscanLinux extends MemscanOs {
   }
 
   private pidGet(): number {
-    return Number.parseInt(execSync('pidof BaldursGateII').toString(), 10);
+    try {
+      return Number.parseInt(execSync('pidof BaldursGateII').toString(), 10);
+    } catch (err) {
+      return null;
+    }
   }
 
   public init(): void {
