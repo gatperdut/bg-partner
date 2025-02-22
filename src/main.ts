@@ -10,12 +10,17 @@ import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
 import { SyscallsLinux } from './syscalls/linux/syscalls-linux';
 import { SyscallsWin32 } from './syscalls/win32/syscalls-win32';
 
-import { handlers } from './handlers';
+import { Config } from './config/config';
+import { config, handlers } from './handlers';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 
 export class Main {
   constructor() {
+    handlers.config = new Config();
+
+    console.log(config());
+
     handlers.syscalls = linux ? new SyscallsLinux() : new SyscallsWin32();
 
     handlers.memread = linux ? new MemreadLinux() : new MemreadWin32();

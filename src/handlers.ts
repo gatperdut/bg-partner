@@ -1,3 +1,4 @@
+import { Config, ConfigObj } from './config/config';
 import { Entities } from './entities/entities';
 import { Memread } from './memread/memread';
 import { MemreadLinux } from './memread/memread-linux';
@@ -16,6 +17,7 @@ import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 
 export type Handlers = {
+  config: Config;
   syscalls: Syscalls;
   memread: Memread;
   memscan: Memscan;
@@ -25,12 +27,17 @@ export type Handlers = {
 };
 
 export const handlers: Handlers = {
+  config: null,
   syscalls: null,
   memread: null,
   memscan: null,
   window: null,
   entities: null,
   shortcuts: null,
+};
+
+export const config = (): ConfigObj => {
+  return handlers.config.obj;
 };
 
 export const syscallsLinux = (): SyscallsLinux => {

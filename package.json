@@ -46,6 +46,7 @@
   "dependencies": {
     "css-fx-layout": "^3.0.5",
     "electron-squirrel-startup": "^1.0.1",
+    "joi": "^17.13.3",
     "koffi": "^2.10.1",
     "lodash-es": "4.17.21"
   }
