@@ -3,17 +3,17 @@ import { EaTable } from '../tables/ea';
 import { RaceTable } from '../tables/race';
 import './sheet.scss';
 
-export type SheetAPIOnInitializeParams = { sprite: Sprite; eaTable: EaTable; raceTable: RaceTable };
+export type SheetAPIOnUpdateParams = { sprite: Sprite; eaTable: EaTable; raceTable: RaceTable };
 
-export type SheetAPIOnInitializeMethod = (params: SheetAPIOnInitializeParams) => void;
+export type SheetAPIOnUpdateMethod = (params: SheetAPIOnUpdateParams) => void;
 
-export type SheetAPIOnInitialize = (data: SheetAPIOnInitializeMethod) => void;
+export type SheetAPIOnUpdate = (data: SheetAPIOnUpdateMethod) => void;
 
-export type SheetAPISheetClose = (id: number) => void;
+export type SheetAPIclose = (id: number) => void;
 
 export type SheetAPI = {
-  initialize: SheetAPIOnInitialize;
-  sheetClose: SheetAPISheetClose;
+  update: SheetAPIOnUpdate;
+  close: SheetAPIclose;
 };
 
 declare global {
@@ -26,7 +26,7 @@ class SheetRenderer {
   private sprite: Sprite;
 
   constructor() {
-    window.sheetAPI.initialize((params: SheetAPIOnInitializeParams): void => {
+    window.sheetAPI.update((params: SheetAPIOnUpdateParams): void => {
       this.sprite = params.sprite;
 
       document.getElementById('name').textContent = params.sprite.name;
@@ -43,7 +43,7 @@ class SheetRenderer {
     document.body.addEventListener(
       'click',
       (): void => {
-        window.sheetAPI.sheetClose(this.sprite.id);
+        window.sheetAPI.close(this.sprite.id);
       },
       true
     );

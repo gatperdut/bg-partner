@@ -1,20 +1,19 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { SheetAPIOnInitialize, SheetAPIOnInitializeMethod, SheetAPISheetClose } from './renderer';
+import { SheetAPIOnUpdate, SheetAPIOnUpdateMethod, SheetAPIclose } from './renderer';
 
 export type SheetAPIBridge = {
-  sheetClose: SheetAPISheetClose;
-  initialize: (callback: SheetAPIOnInitialize) => Electron.IpcRenderer;
+  close: SheetAPIclose;
+  update: (callback: SheetAPIOnUpdate) => Electron.IpcRenderer;
 };
 
 const sheetAPIBridge: SheetAPIBridge = {
-  sheetClose: (id: number): void => {
+  close: (id: number): void => {
     ipcRenderer.send(`sheet.close.${id}`);
   },
-  initialize: (callback: SheetAPIOnInitialize): Electron.IpcRenderer => {
+  update: (callback: SheetAPIOnUpdate): Electron.IpcRenderer => {
     return ipcRenderer.on(
-      'sheet.update',
-      (_event: Electron.IpcRendererEvent, value: SheetAPIOnInitializeMethod): void =>
-        callback(value)
+      `sheet.update`,
+      (_event: Electron.IpcRendererEvent, value: SheetAPIOnUpdateMethod): void => callback(value)
     );
   },
 };

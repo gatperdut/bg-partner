@@ -3,7 +3,7 @@ import { handlers } from '../main';
 import { Sprite } from '../sprite/sprite';
 import { eaTable } from '../tables/ea';
 import { raceTable } from '../tables/race';
-import { SheetAPIOnInitializeParams } from './renderer';
+import { SheetAPIOnUpdateParams } from './renderer';
 import { spriteSanitize } from './sprite-filter';
 
 declare const SHEET_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -49,10 +49,6 @@ export class Sheet {
     // this.window.webContents.openDevTools({ mode: 'detach' });
     // }
 
-    // this.window.webContents.once('dom-ready', (): void => {
-    //   this.update();
-    // });
-
     handlers.window.setForeground();
 
     ipcMain.on(`sheet.close.${sprite.id}`, (_event: Electron.IpcMainEvent): void => {
@@ -61,13 +57,13 @@ export class Sheet {
   }
 
   public update(): void {
-    const params: SheetAPIOnInitializeParams = {
+    const params: SheetAPIOnUpdateParams = {
       sprite: spriteSanitize(this.sprite),
       eaTable: eaTable,
       raceTable: raceTable,
     };
 
-    this.window.webContents.send('sheet.update', params);
+    this.window.webContents.send(`sheet.update`, params);
   }
 
   private position(): [number, number] {
