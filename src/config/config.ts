@@ -6,17 +6,22 @@ import { linux } from '../index';
 
 export type ConfigObj = {
   exe: string;
+
+  display: number;
+
   ms: number;
 };
 
 export class Config {
   private schema: ObjectSchema<ConfigObj> = Joi.object<ConfigObj>({
     exe: Joi.string().pattern(new RegExp('^[a-zA-Z0-9.]+$')).min(1),
+    display: Joi.number().integer().min(0),
     ms: Joi.number().integer().min(100),
   });
 
   private default: ConfigObj = {
     exe: linux ? 'BaldursGateII' : 'Baldur.exe',
+    display: null,
     ms: 300,
   };
 
