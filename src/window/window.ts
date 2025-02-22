@@ -22,7 +22,7 @@ export abstract class WindowOs {
     const index: number = config().display;
 
     if (_.isNull(index)) {
-      this.use(Electron.screen.getPrimaryDisplay().bounds);
+      this.use(Electron.screen.getPrimaryDisplay().bounds, null);
       return;
     }
 
@@ -31,27 +31,21 @@ export abstract class WindowOs {
     if (index > displays.length - 1) {
       console.log(`Display with index ${index} not found. Will revert to primary display.`);
 
-      this.use(Electron.screen.getPrimaryDisplay().bounds);
+      this.use(Electron.screen.getPrimaryDisplay().bounds, null);
 
       return;
     }
 
-    this.use(displays[index].bounds);
+    this.use(displays[index].bounds, index);
   }
 
-  private use(display: Electron.Rectangle): void {
+  private use(display: Electron.Rectangle, index: number): void {
     this.display = display;
 
     console.log(
-      `Display: ${display.width}x${display.height}, offset (${display.x}, ${display.y}).`
+      `${_.isNull(index) ? 'Primary display' : `Display #${index}`}: ${display.width}x${
+        display.height
+      }, offset (${display.x}, ${display.y}).`
     );
-  }
-
-  public get windowLeft(): number {
-    return this.window.x;
-  }
-
-  public get windowTop(): number {
-    return this.window.y;
   }
 }
