@@ -19,8 +19,6 @@ export class Main {
   constructor() {
     handlers.config = new Config();
 
-    console.log(config());
-
     handlers.syscalls = linux ? new SyscallsLinux() : new SyscallsWin32();
 
     handlers.memread = linux ? new MemreadLinux() : new MemreadWin32();
@@ -35,7 +33,7 @@ export class Main {
   }
 
   public run(): void {
-    setInterval(this.loop.bind(this), 300);
+    setInterval(this.loop.bind(this), config().ms);
   }
 
   private loop(): void {

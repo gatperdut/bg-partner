@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { handlers } from '../handlers';
+import { config, handlers } from '../handlers';
 import { MemscanOs } from './memscan';
 
 export class MemscanLinux extends MemscanOs {
@@ -13,7 +13,7 @@ export class MemscanLinux extends MemscanOs {
 
   private pidGet(): number {
     try {
-      return Number.parseInt(execSync('pidof BaldursGateII').toString(), 10);
+      return Number.parseInt(execSync(`pidof ${config().exe}`).toString(), 10);
     } catch (err) {
       return null;
     }
