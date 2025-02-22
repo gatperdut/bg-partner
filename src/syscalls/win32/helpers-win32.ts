@@ -1,5 +1,5 @@
 import koffi from 'koffi';
-import { handlers } from '../../main';
+import { handlers } from '../../handlers';
 import { MemscanWin32 } from '../../memscan/memscan-win32';
 import { Primitive, PrimitiveSizesWin32, Value, VOIDPTR } from '../primitives';
 import { SyscallsKernel32 } from './libs/syscalls-kernel32';

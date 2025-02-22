@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 import _ from 'lodash-es';
-import { handlers } from '../main';
+import { handlers } from '../handlers';
 import { WindowOs } from './window';
 
 export class WindowLinux extends WindowOs {

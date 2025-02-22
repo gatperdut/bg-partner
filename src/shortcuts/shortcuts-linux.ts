@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 import { globalShortcut } from 'electron';
-import { handlers } from '../main';
+import { handlers } from '../handlers';
 
 export class ShortcutsLinux {
   constructor() {

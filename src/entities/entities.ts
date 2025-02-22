@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { handlers } from '../main';
+import { handlers } from '../handlers';
 import { Entity } from './entity';
 
 export class Entities {

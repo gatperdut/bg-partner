@@ -1,39 +1,18 @@
 import 'source-map-support/register';
 import { Entities } from './entities/entities';
 import { linux } from './index';
-import { Memread } from './memread/memread';
 import { MemreadLinux } from './memread/memread-linux';
 import { MemreadWin32 } from './memread/memread-win32';
-import { Memscan } from './memscan/memscan';
 import { MemscanLinux } from './memscan/memscan-linux';
 import { MemscanWin32 } from './memscan/memscan-win32';
-import { Shortcuts } from './shortcuts/shortcuts';
 import { ShortcutsLinux } from './shortcuts/shortcuts-linux';
 import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
 import { SyscallsLinux } from './syscalls/linux/syscalls-linux';
-import { Syscalls } from './syscalls/syscalls';
 import { SyscallsWin32 } from './syscalls/win32/syscalls-win32';
-import { Window } from './window/window';
+
+import { handlers } from './handlers';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
-
-export type Handlers = {
-  syscalls: Syscalls;
-  memread: Memread;
-  memscan: Memscan;
-  window: Window;
-  entities: Entities;
-  shortcuts: Shortcuts;
-};
-
-export const handlers: Handlers = {
-  syscalls: null,
-  memread: null,
-  memscan: null,
-  window: null,
-  entities: null,
-  shortcuts: null,
-};
 
 export class Main {
   constructor() {

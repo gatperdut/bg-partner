@@ -7,8 +7,7 @@ import {
   WS_MAXIMIZE,
 } from '../const/const-win32';
 
-import { handlers } from '../main';
-import { SyscallsWin32 } from '../syscalls/win32/syscalls-win32';
+import { handlers, syscallsWin32 } from '../handlers';
 import { POINT } from '../syscalls/win32/types-win32';
 import { WindowWin32 } from '../window/window-win32';
 
@@ -23,28 +22,24 @@ export class ShortcutsWin32 {
     });
   }
 
-  private get syscalls(): SyscallsWin32 {
-    return handlers.syscalls as SyscallsWin32;
-  }
-
   private sheetToggle(): void {
-    const point: POINT = this.syscalls.helpersWin32.POINTEmpty();
+    const point: POINT = syscallsWin32().helpersWin32.POINTEmpty();
 
-    this.syscalls.syscallsUser32.GetCursorPos(point);
+    syscallsWin32().syscallsUser32.GetCursorPos(point);
 
     handlers.entities.sheetToggle(point);
   }
 
   private borderless(): void {
-    this.syscalls.syscallsUser32.SetWindowLongA(
+    syscallsWin32().syscallsUser32.SetWindowLongA(
       (handlers.window as WindowWin32).handle,
       GWL_STYLE,
       WS_MAXIMIZE
     );
 
-    this.syscalls.syscallsUser32.ShowWindow((handlers.window as WindowWin32).handle, SW_SHOW);
+    syscallsWin32().syscallsUser32.ShowWindow((handlers.window as WindowWin32).handle, SW_SHOW);
 
-    this.syscalls.syscallsUser32.SetWindowPos(
+    syscallsWin32().syscallsUser32.SetWindowPos(
       (handlers.window as WindowWin32).handle,
       HWND_TOP,
       0,

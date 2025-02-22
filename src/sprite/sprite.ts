@@ -1,5 +1,5 @@
+import { handlers } from '../handlers';
 import { linux } from '../index';
-import { handlers } from '../main';
 import { Memread } from '../memread/memread';
 import { Derived, derivedEmpty, derivedFill } from './derived';
 

@@ -1,5 +1,5 @@
 import { BrowserWindow, ipcMain } from 'electron';
-import { handlers } from '../main';
+import { handlers } from '../handlers';
 import { Sprite } from '../sprite/sprite';
 import { eaTable } from '../tables/ea';
 import { raceTable } from '../tables/race';

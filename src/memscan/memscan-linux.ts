@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { handlers } from '../main';
+import { handlers } from '../handlers';
 import { MemscanOs } from './memscan';
 
 export class MemscanLinux extends MemscanOs {
