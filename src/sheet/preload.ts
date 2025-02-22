@@ -12,8 +12,9 @@ const sheetAPIBridge: SheetAPIBridge = {
   },
   initialize: (callback: SheetAPIOnInitialize): Electron.IpcRenderer => {
     return ipcRenderer.on(
-      'sheet.initialize',
-      (_event: Electron.IpcRendererEvent, value: SheetAPIOnInitializeMethod): any => callback(value)
+      'sheet.update',
+      (_event: Electron.IpcRendererEvent, value: SheetAPIOnInitializeMethod): void =>
+        callback(value)
     );
   },
 };

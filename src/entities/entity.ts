@@ -19,7 +19,11 @@ export class Entity {
   public update(): void {
     this.sprite.basic();
 
-    this.sprite.advanced();
+    if (this.sheet?.window) {
+      this.sprite.advanced();
+
+      this.sheet.update();
+    }
   }
 
   public pointMatch(pointScreen: Electron.Point): boolean {
@@ -44,7 +48,7 @@ export class Entity {
     if (this.sheet?.window) {
       this.sheet.teardown();
     } else {
-      this.sheet = new Sheet(this.sprite, 'moe');
+      this.sheet = new Sheet(this.sprite);
     }
   }
 }

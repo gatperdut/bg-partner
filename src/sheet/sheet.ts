@@ -17,7 +17,7 @@ export class Sheet {
 
   public window: BrowserWindow;
 
-  constructor(private sprite: Sprite, name: string) {
+  constructor(private sprite: Sprite) {
     const position: [number, number] = this.position();
 
     this.window = new BrowserWindow({
@@ -44,14 +44,14 @@ export class Sheet {
 
     this.window.loadURL(SHEET_WINDOW_WEBPACK_ENTRY);
 
-    // if (name && sprite.name.includes(name)) {
+    // if (sprite.name ==='Imoen') {
     //   // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
-    //   this.window.webContents.openDevTools({ mode: 'detach' });
+    // this.window.webContents.openDevTools({ mode: 'detach' });
     // }
 
-    this.window.webContents.once('dom-ready', (): void => {
-      this.update();
-    });
+    // this.window.webContents.once('dom-ready', (): void => {
+    //   this.update();
+    // });
 
     handlers.window.setForeground();
 
@@ -67,7 +67,7 @@ export class Sheet {
       raceTable: raceTable,
     };
 
-    this.window.webContents.send('sheet.initialize', params);
+    this.window.webContents.send('sheet.update', params);
   }
 
   private position(): [number, number] {

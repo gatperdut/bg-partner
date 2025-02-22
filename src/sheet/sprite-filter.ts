@@ -3,7 +3,7 @@ import { Sprite } from '../sprite/sprite';
 
 export const spriteSanitize = (sprite: Sprite): Sprite => {
   const result: Sprite = {
-    // Problematic
+    // Ignore
     basePtr: null,
     memread: null,
     invalid: false,
