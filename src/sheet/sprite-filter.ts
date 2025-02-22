@@ -16,14 +16,22 @@ export const spriteSanitize = (sprite: Sprite): Sprite => {
     canBeSeen: sprite.canBeSeen,
     id: sprite.id,
     hp: sprite.hp,
-    viewportX: sprite.viewportX,
-    viewportY: sprite.viewportY,
-    scrollX: sprite.scrollX,
-    scrollY: sprite.scrollY,
-    relativeX: sprite.relativeX,
-    relativeY: sprite.relativeY,
-    x: sprite.x,
-    y: sprite.y,
+    viewport: {
+      x: sprite.viewport.x,
+      y: sprite.viewport.y,
+    },
+    scroll: {
+      x: sprite.scroll.x,
+      y: sprite.scroll.y,
+    },
+    relative: {
+      x: sprite.relative.x,
+      y: sprite.relative.y,
+    },
+    pos: {
+      x: sprite.pos.x,
+      y: sprite.pos.y,
+    },
     name: sprite.name,
     resref: sprite.resref,
     // Advanced

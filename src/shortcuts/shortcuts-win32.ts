@@ -28,8 +28,8 @@ export class ShortcutsWin32 {
 
   private sheetToggle(): void {
     const point: Electron.Point = {
-      x: 0,
-      y: 0,
+      x: null,
+      y: null,
     };
 
     this.syscalls.syscallsUser32.GetCursorPos(point);

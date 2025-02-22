@@ -74,8 +74,8 @@ export class Sheet {
     const spriteScreen: Electron.Point = this.sprite.screen;
 
     const sheetScreen: Electron.Point = {
-      x: 0,
-      y: 0,
+      x: null,
+      y: null,
     };
 
     const sheetSize: Electron.Point = {

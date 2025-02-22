@@ -15,21 +15,13 @@ export class Sprite {
 
   public hp: number;
 
-  public viewportX: number;
+  public viewport: Electron.Point = { x: null, y: null };
 
-  public viewportY: number;
+  public scroll: Electron.Point = { x: null, y: null };
 
-  public scrollX: number;
+  public relative: Electron.Point = { x: null, y: null };
 
-  public scrollY: number;
-
-  public relativeX: number;
-
-  public relativeY: number;
-
-  public x: number;
-
-  public y: number;
+  public pos: Electron.Point = { x: null, y: null };
 
   public name: string;
 
@@ -55,8 +47,8 @@ export class Sprite {
       this.type !== 0x31 ||
       !this.hp ||
       !this.gameAreaAddr ||
-      this.x < 0 ||
-      this.y < 0 ||
+      this.pos.x < 0 ||
+      this.pos.y < 0 ||
       !this.name ||
       !this.resref ||
       !this.canBeSeen
@@ -76,9 +68,15 @@ export class Sprite {
 
     this.id = this.memread.memReadNumber(this.basePtr + BigInt(0x48), 'UINT32');
 
-    this.x = this.memread.memReadNumber(this.basePtr + BigInt(0xc), linux ? 'UINT16' : 'UINT32');
+    this.pos.x = this.memread.memReadNumber(
+      this.basePtr + BigInt(0xc),
+      linux ? 'UINT16' : 'UINT32'
+    );
 
-    this.y = this.memread.memReadNumber(this.basePtr + BigInt(0x10), linux ? 'UINT16' : 'UINT32');
+    this.pos.y = this.memread.memReadNumber(
+      this.basePtr + BigInt(0x10),
+      linux ? 'UINT16' : 'UINT32'
+    );
 
     const nameAddr: bigint = this.memread.memReadBigint(
       this.basePtr + BigInt(linux ? 0x3910 : 0x3928),
@@ -87,26 +85,26 @@ export class Sprite {
 
     this.name = this.memread.memReadString(BigInt(nameAddr));
 
-    this.viewportX = this.memread.memReadNumber(
+    this.viewport.x = this.memread.memReadNumber(
       this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8),
       linux ? 'INT16' : 'INT32'
     );
 
-    this.viewportY = this.memread.memReadNumber(
+    this.viewport.y = this.memread.memReadNumber(
       this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8 + 0x4),
       linux ? 'INT16' : 'INT32'
     );
 
-    this.scrollX = this.memread.memReadNumber(this.gameAreaAddr + BigInt(0x5c8 + 0xc0), 'INT32');
+    this.scroll.x = this.memread.memReadNumber(this.gameAreaAddr + BigInt(0x5c8 + 0xc0), 'INT32');
 
-    this.scrollY = this.memread.memReadNumber(
+    this.scroll.y = this.memread.memReadNumber(
       this.gameAreaAddr + BigInt(0x5c8 + 0xc0 + 0x4),
       'INT32'
     );
 
-    this.relativeX = this.x - this.scrollX;
+    this.relative.x = this.pos.x - this.scroll.x;
 
-    this.relativeY = this.y - this.scrollY;
+    this.relative.y = this.pos.y - this.scroll.y;
   }
 
   public advanced(): void {
@@ -124,10 +122,10 @@ export class Sprite {
   public get screen(): Electron.Point {
     return {
       x: Math.round(
-        handlers.window.rect.left + (this.relativeX / this.viewportX) * handlers.window.rectWidth
+        handlers.window.rect.left + (this.relative.x / this.viewport.x) * handlers.window.rectWidth
       ),
       y: Math.round(
-        handlers.window.rect.top + (this.relativeY / this.viewportY) * handlers.window.rectHeight
+        handlers.window.rect.top + (this.relative.y / this.viewport.y) * handlers.window.rectHeight
       ),
     };
   }
