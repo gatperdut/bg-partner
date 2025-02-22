@@ -36,7 +36,7 @@ export abstract class WindowOs {
       return;
     }
 
-    this.display = displays[index].bounds;
+    this.use(displays[index].bounds);
   }
 
   private use(display: Electron.Rectangle): void {

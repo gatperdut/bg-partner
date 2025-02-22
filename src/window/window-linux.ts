@@ -43,7 +43,7 @@ export class WindowLinux extends WindowOs {
   }
 
   public setForeground(): void {
-    execSync(`xdotool windowactivate ${this.id}`);
+    execSync(`xdotool windowfocus ${this.id}`);
   }
 
   public teardown(): void {
