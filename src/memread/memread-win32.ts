@@ -8,11 +8,11 @@ export class MemreadWin32 {
     return handlers.syscalls as SyscallsWin32;
   }
 
-  public memReadNumber(ptr: bigint, primitive: Primitive): number {
+  public memReadNumber(ptr: bigint, primitive: Exclude<Primitive, 'ADDR'>): number {
     return this.syscalls.helpersWin32.memReadNumber(ptr, primitive) as number;
   }
 
-  public memReadBigint(ptr: bigint, primitive: Primitive): bigint {
+  public memReadBigint(ptr: bigint, primitive: Extract<Primitive, 'ADDR'>): bigint {
     return this.syscalls.helpersWin32.memReadNumber(ptr, primitive) as bigint;
   }
 

@@ -9,11 +9,11 @@ export class MemreadLinux {
     return handlers.syscalls as SyscallsLinux;
   }
 
-  public memReadNumber(ptr: bigint, primitive: Primitive): number {
+  public memReadNumber(ptr: bigint, primitive: Exclude<Primitive, 'ADDR'>): number {
     return this.syscalls.helpersLinux.readNumber(handlers.memscan.pid, ptr, primitive) as number;
   }
 
-  public memReadBigint(ptr: bigint, primitive: Primitive): bigint {
+  public memReadBigint(ptr: bigint, primitive: Extract<Primitive, 'ADDR'>): bigint {
     return this.syscalls.helpersLinux.readNumber(handlers.memscan.pid, ptr, primitive) as bigint;
   }
 
