@@ -22,9 +22,9 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
+            name: 'sheet_window',
             html: './src/sheet/sheet.html',
             js: './src/sheet/renderer.ts',
-            name: 'sheet_window',
             preload: {
               js: './src/sheet/preload.ts',
             },
@@ -41,20 +41,6 @@ const config: ForgeConfig = {
       [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
-  ],
-  publishers: [
-    {
-      name: '@electron-forge/publisher-github',
-      config: {
-        repository: {
-          owner: 'gatperdut',
-          name: 'bg-partner',
-        },
-        draft: true,
-        prerelease: false,
-        generateReleaseNotes: true,
-      },
-    },
   ],
 };
 
