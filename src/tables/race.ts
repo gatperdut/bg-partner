@@ -97,7 +97,7 @@ export const raceTable: RaceTable = {
   203: 'Magical crossbow',
   204: 'Magical staff',
   205: 'Magical sling',
-  206: 'Magical mACE',
+  206: 'Magical mace',
   207: 'Magical dagger',
   208: 'Magical spear',
   209: 'Magical fist',
