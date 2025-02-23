@@ -3,7 +3,7 @@ import { handlers } from '../handlers';
 import { Sprite } from '../sprite/sprite';
 import { eaTable } from '../tables/ea';
 import { raceTable } from '../tables/race';
-import { SheetAPIOnUpdateParams } from './renderer';
+import { SheetAPIUpdateParams } from './renderer';
 import { spriteSanitize } from './sprite-filter';
 
 declare const SHEET_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -44,26 +44,34 @@ export class Sheet {
 
     this.window.loadURL(SHEET_WINDOW_WEBPACK_ENTRY);
 
-    // if (sprite.name ==='Imoen') {
-    //   // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
+    // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
     // this.window.webContents.openDevTools({ mode: 'detach' });
-    // }
 
     handlers.window.setForeground();
 
     ipcMain.on(`sheet.close.${sprite.id}`, (_event: Electron.IpcMainEvent): void => {
       this.teardown();
     });
+
+    ipcMain.on(
+      `sheet.move.${this.sprite.id}`,
+      (_event: Electron.IpcMainEvent, movement: Electron.Point): void => {
+        this.window.setPosition(
+          this.window.getPosition()[0] + movement.x,
+          this.window.getPosition()[1] + movement.y
+        );
+      }
+    );
   }
 
   public update(): void {
-    const params: SheetAPIOnUpdateParams = {
+    const params: SheetAPIUpdateParams = {
       sprite: spriteSanitize(this.sprite),
       eaTable: eaTable,
       raceTable: raceTable,
     };
 
-    this.window.webContents.send(`sheet.update`, params);
+    this.window.webContents.send('sheet.update', params);
   }
 
   private position(): Electron.Point {
@@ -128,6 +136,8 @@ export class Sheet {
 
   public teardown(): void {
     ipcMain.removeAllListeners(`sheet.close.${this.sprite.id}`);
+
+    ipcMain.removeAllListeners(`sheet.move.${this.sprite.id}`);
 
     this.window.destroy();
 

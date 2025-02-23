@@ -3,17 +3,20 @@ import { EaTable } from '../tables/ea';
 import { RaceTable } from '../tables/race';
 import './sheet.scss';
 
-export type SheetAPIOnUpdateParams = { sprite: Sprite; eaTable: EaTable; raceTable: RaceTable };
+export type SheetAPIUpdateParams = { sprite: Sprite; eaTable: EaTable; raceTable: RaceTable };
 
-export type SheetAPIOnUpdateMethod = (params: SheetAPIOnUpdateParams) => void;
+export type SheetAPIUpdateMethod = (params: SheetAPIUpdateParams) => void;
 
-export type SheetAPIOnUpdate = (data: SheetAPIOnUpdateMethod) => void;
+export type SheetAPIMove = (id: number, movement: Electron.Point) => void;
 
-export type SheetAPIclose = (id: number) => void;
+export type SheetAPIUpdate = (data: SheetAPIUpdateMethod) => void;
+
+export type SheetAPIClose = (id: number) => void;
 
 export type SheetAPI = {
-  update: SheetAPIOnUpdate;
-  close: SheetAPIclose;
+  move: SheetAPIMove;
+  update: SheetAPIUpdate;
+  close: SheetAPIClose;
 };
 
 declare global {
@@ -25,8 +28,10 @@ declare global {
 class SheetRenderer {
   private sprite: Sprite;
 
+  private dragging: boolean = false;
+
   constructor() {
-    window.sheetAPI.update((params: SheetAPIOnUpdateParams): void => {
+    window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
       this.sprite = params.sprite;
 
       document.getElementById('name').textContent = params.sprite.name;
@@ -47,6 +52,27 @@ class SheetRenderer {
       },
       true
     );
+
+    document.addEventListener('mousedown', (): void => {
+      this.dragging = true;
+    });
+
+    document.addEventListener('mouseup', (): void => {
+      this.dragging = false;
+    });
+
+    document.addEventListener('mousemove', (event: MouseEvent): void => {
+      if (!this.dragging) {
+        return;
+      }
+
+      const movement: Electron.Point = {
+        x: event.movementX,
+        y: event.movementY,
+      };
+
+      window.sheetAPI.move(this.sprite.id, movement);
+    });
   }
 }
 
