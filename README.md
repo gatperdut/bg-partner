@@ -63,7 +63,7 @@ Additionally, make sure the following tools are available (via `apt`, `pacman`, 
 
 ## Bugs and reports
 
-BG partner is very much in development, specially when it comes to testing under different environments. So far, only the Steam version of the games under Windows 11 / Ubuntu are officially supported.
+BG partner is very much in development, specially when it comes to testing under different environments. So far, only the Steam version of the games under Ubuntu / Windows 11 are officially supported.
 
 If you encounter problems or would like to share your suggestions please note them down [here](https://github.com/gatperdut/bg-partner/issues).
 
