@@ -1,9 +1,12 @@
 {
   "name": "bg-partner",
   "productName": "BG partner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Baldur's Gate partner.",
-  "os": ["linux", "win32"],
+  "os": [
+    "linux",
+    "win32"
+  ],
   "keywords": [
     "Baldur's Gate",
     "BG",
