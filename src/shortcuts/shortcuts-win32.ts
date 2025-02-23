@@ -1,4 +1,3 @@
-import { globalShortcut } from 'electron';
 import {
   GWL_STYLE,
   HWND_TOP,
@@ -7,7 +6,7 @@ import {
   WS_MAXIMIZE,
 } from '../const/const-win32';
 
-import { config, handlers, syscallsWin32 } from '../handlers';
+import { handlers, syscallsWin32 } from '../handlers';
 import { POINT } from '../syscalls/win32/types-win32';
 import { WindowWin32 } from '../window/window-win32';
 import { ShortcutsOS } from './shortcuts';
@@ -15,17 +14,9 @@ import { ShortcutsOS } from './shortcuts';
 export class ShortcutsWin32 extends ShortcutsOS {
   constructor() {
     super();
-
-    globalShortcut.register(config().accelSheet, (): void => {
-      handlers.window.focused && this.sheetToggle();
-    });
-
-    globalShortcut.register(config().accelBorderless, (): void => {
-      handlers.window.focused && this.borderless();
-    });
   }
 
-  private sheetToggle(): void {
+  protected sheetToggle(): void {
     const point: POINT = syscallsWin32().helpers.POINTEmpty();
 
     syscallsWin32().user32.GetCursorPos(point);
@@ -33,7 +24,7 @@ export class ShortcutsWin32 extends ShortcutsOS {
     handlers.entities.sheetToggle(point);
   }
 
-  private borderless(): void {
+  protected borderless(): void {
     syscallsWin32().user32.SetWindowLongA(
       (handlers.window as WindowWin32).handle,
       GWL_STYLE,

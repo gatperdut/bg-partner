@@ -1,22 +1,13 @@
 import { execSync } from 'child_process';
-import { globalShortcut } from 'electron';
-import { config, handlers } from '../handlers';
+import { handlers } from '../handlers';
 import { ShortcutsOS } from './shortcuts';
 
 export class ShortcutsLinux extends ShortcutsOS {
   constructor() {
     super();
-
-    globalShortcut.register(config().accelSheet, (): void => {
-      handlers.window.focused && this.sheetToggle();
-    });
-
-    globalShortcut.register(config().accelBorderless, (): void => {
-      handlers.window.focused && this.borderless();
-    });
   }
 
-  private sheetToggle(): void {
+  protected sheetToggle(): void {
     const parts: string[] = execSync('xdotool getmouselocation').toString().split(' ');
 
     const partsX = parts[0].split(':');
@@ -31,7 +22,7 @@ export class ShortcutsLinux extends ShortcutsOS {
     handlers.entities.sheetToggle(point);
   }
 
-  private borderless(): void {
+  protected borderless(): void {
     execSync(
       `wmctrl -i -r ${handlers.window.id} -e 0,${handlers.window.display.x},${handlers.window.display.y},${handlers.window.display.width},${handlers.window.display.height}`
     );
