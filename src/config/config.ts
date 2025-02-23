@@ -10,6 +10,10 @@ export type ConfigObj = {
   display: number;
 
   ms: number;
+
+  accelMax: string;
+
+  accelOpen: string;
 };
 
 export class Config {
@@ -17,12 +21,16 @@ export class Config {
     exe: Joi.string().pattern(new RegExp('^[a-zA-Z0-9.]+$')).min(1),
     display: Joi.number().integer().min(0).allow(null),
     ms: Joi.number().integer().min(100),
+    accelMax: Joi.string().min(1),
+    accelOpen: Joi.string().min(1),
   });
 
   private default: ConfigObj = {
     exe: linux ? 'BaldursGateII' : 'Baldur.exe',
     display: null,
     ms: 300,
+    accelMax: 'CommandOrControl+Q',
+    accelOpen: 'CommandOrControl+A',
   };
 
   public obj: ConfigObj;
@@ -34,22 +42,22 @@ export class Config {
       console.log('Configuration file looks invalid. Will revert to defaults.');
 
       this.obj = this.default;
+    } else {
+      console.log('Configuration file looks valid.');
 
-      return;
+      this.obj = { ...this.default, ...configObj };
     }
-
-    this.obj = { ...this.default, ...configObj };
 
     this.filewrite(this.obj);
 
-    console.log('Configuration:', this.stringify(this.obj));
+    console.log(this.stringify(this.obj));
   }
 
   private get filePath(): string {
     const exePath: string = app.getPath('exe');
 
     const dirPath: string = path.dirname(exePath);
-
+    console.log(dirPath);
     return path.join(dirPath, 'bg-partner.ini');
   }
 

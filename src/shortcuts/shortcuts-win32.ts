@@ -10,9 +10,12 @@ import {
 import { handlers, syscallsWin32 } from '../handlers';
 import { POINT } from '../syscalls/win32/types-win32';
 import { WindowWin32 } from '../window/window-win32';
+import { ShortcutsOS } from './shortcuts';
 
-export class ShortcutsWin32 {
+export class ShortcutsWin32 extends ShortcutsOS {
   constructor() {
+    super();
+
     globalShortcut.register('CommandOrControl+A', (): void => {
       handlers.window.focused && this.sheetToggle();
     });

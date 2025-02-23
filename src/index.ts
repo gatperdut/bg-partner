@@ -1,6 +1,7 @@
 import { execSync } from 'child_process';
 import { app } from 'electron';
 import os from 'os';
+import { handlers } from './handlers';
 import { Main } from './main';
 
 declare global {
@@ -27,4 +28,8 @@ app.on('ready', run);
 
 app.on('window-all-closed', (): void => {
   // Prevent default.
+});
+
+app.on('will-quit', (): void => {
+  handlers.shortcuts.teardown();
 });
