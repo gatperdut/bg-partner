@@ -1,6 +1,6 @@
 # BG partner
 
-BG (Baldur's Gate) partner is a windows/linux companion tool for the 2.6.6 versions of Baldur's Gate and Baldur's Gate II: Shadows of Amn. It produces overlays on user-selected creatures detailing their stats and effects.
+BG (Baldur's Gate) partner is a windows/linux (32 and 64 bits respectively) companion tool for the 2.6.6 versions of Baldur's Gate and Baldur's Gate II: Shadows of Amn. It produces overlays on user-selected creatures detailing their stats and effects.
 
 ## Acknowledgments
 
