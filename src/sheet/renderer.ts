@@ -34,17 +34,25 @@ class SheetRenderer {
     window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
       this.sprite = params.sprite;
 
-      document.getElementById('name').textContent = params.sprite.name;
-
-      document.getElementById('enemyAlly').title = params.eaTable[params.sprite.enemyAlly];
-
-      document.getElementById('hp').textContent = params.sprite.hp.toString();
-
-      document.getElementById('hpMax').textContent = params.sprite.derived.hpMax.toString();
-
-      document.getElementById('race').textContent = params.raceTable[params.sprite.race];
+      this.update(params);
     });
 
+    this.setEventListeners();
+  }
+
+  private update(params: SheetAPIUpdateParams): void {
+    document.getElementById('name').textContent = params.sprite.name;
+
+    document.getElementById('enemyAlly').title = params.eaTable[params.sprite.enemyAlly];
+
+    document.getElementById('hp').textContent = params.sprite.hp.toString();
+
+    document.getElementById('hpMax').textContent = params.sprite.derived.hpMax.toString();
+
+    document.getElementById('race').textContent = params.raceTable[params.sprite.race];
+  }
+
+  private setEventListeners(): void {
     document.body.addEventListener(
       'contextmenu',
       (): void => {
