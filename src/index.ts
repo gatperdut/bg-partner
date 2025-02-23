@@ -30,6 +30,6 @@ app.on('window-all-closed', (): void => {
   // Prevent default.
 });
 
-app.on('will-quit', (): void => {
+app.on('before-quit', (): void => {
   handlers.shortcuts.teardown();
 });

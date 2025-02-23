@@ -1,17 +1,17 @@
 import { execSync } from 'child_process';
 import { globalShortcut } from 'electron';
-import { handlers } from '../handlers';
+import { config, handlers } from '../handlers';
 import { ShortcutsOS } from './shortcuts';
 
 export class ShortcutsLinux extends ShortcutsOS {
   constructor() {
     super();
 
-    globalShortcut.register('CommandOrControl+A', (): void => {
+    globalShortcut.register(config().accelSheet, (): void => {
       handlers.window.focused && this.sheetToggle();
     });
 
-    globalShortcut.register('CommandOrControl+Q', (): void => {
+    globalShortcut.register(config().accelBorderless, (): void => {
       handlers.window.focused && this.borderless();
     });
   }

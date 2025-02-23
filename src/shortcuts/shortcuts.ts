@@ -6,7 +6,6 @@ export type Shortcuts = ShortcutsLinux | ShortcutsWin32;
 
 export abstract class ShortcutsOS {
   public teardown(): void {
-    console.log('UNREGIS');
     globalShortcut.unregisterAll();
   }
 }

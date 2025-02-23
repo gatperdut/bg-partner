@@ -7,7 +7,7 @@ import {
   WS_MAXIMIZE,
 } from '../const/const-win32';
 
-import { handlers, syscallsWin32 } from '../handlers';
+import { config, handlers, syscallsWin32 } from '../handlers';
 import { POINT } from '../syscalls/win32/types-win32';
 import { WindowWin32 } from '../window/window-win32';
 import { ShortcutsOS } from './shortcuts';
@@ -16,11 +16,11 @@ export class ShortcutsWin32 extends ShortcutsOS {
   constructor() {
     super();
 
-    globalShortcut.register('CommandOrControl+A', (): void => {
+    globalShortcut.register(config().accelSheet, (): void => {
       handlers.window.focused && this.sheetToggle();
     });
 
-    globalShortcut.register('CommandOrControl+Q', (): void => {
+    globalShortcut.register(config().accelBorderless, (): void => {
       handlers.window.focused && this.borderless();
     });
   }

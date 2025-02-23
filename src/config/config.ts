@@ -1,6 +1,7 @@
 import { app } from 'electron';
 import * as fs from 'fs';
-import Joi, { ObjectSchema } from 'joi';
+import Joi, { ObjectSchema, ValidationError, ValidationErrorItem } from 'joi';
+import _ from 'lodash-es';
 import * as path from 'path';
 import { linux } from '../index';
 
@@ -11,26 +12,33 @@ export type ConfigObj = {
 
   ms: number;
 
-  accelMax: string;
+  accelBorderless: string;
 
-  accelOpen: string;
+  accelSheet: string;
 };
 
+export type ConfigObjKey = keyof ConfigObj;
+
 export class Config {
+  private exePattern: RegExp = /^[a-zA-Z0-9.]+$/;
+
+  private accelPattern: RegExp =
+    /^(?:(?:CommandOrControl|CmdOrCtrl|Control|Ctrl|Alt|AltGr|Shift|Super))\+[A-Za-z0-9]+$/;
+
   private schema: ObjectSchema<ConfigObj> = Joi.object<ConfigObj>({
-    exe: Joi.string().pattern(new RegExp('^[a-zA-Z0-9.]+$')).min(1),
+    exe: Joi.string().pattern(this.exePattern).min(1),
     display: Joi.number().integer().min(0).allow(null),
     ms: Joi.number().integer().min(100),
-    accelMax: Joi.string().min(1),
-    accelOpen: Joi.string().min(1),
+    accelBorderless: Joi.string().pattern(this.accelPattern).min(1),
+    accelSheet: Joi.string().pattern(this.accelPattern).min(1),
   });
 
   private default: ConfigObj = {
     exe: linux ? 'BaldursGateII' : 'Baldur.exe',
     display: null,
     ms: 300,
-    accelMax: 'CommandOrControl+Q',
-    accelOpen: 'CommandOrControl+A',
+    accelBorderless: 'CommandOrControl+Q',
+    accelSheet: 'CommandOrControl+A',
   };
 
   public obj: ConfigObj;
@@ -38,26 +46,34 @@ export class Config {
   constructor() {
     const configObj: ConfigObj = this.fileread();
 
-    if (this.schema.validate(configObj).error) {
-      console.log('Configuration file looks invalid. Will revert to defaults.');
+    const errors: ValidationError = this.schema.validate(configObj).error;
 
-      this.obj = this.default;
-    } else {
-      console.log('Configuration file looks valid.');
+    if (errors) {
+      _.each(errors.details, (error: ValidationErrorItem): void => {
+        const field: ConfigObjKey = error.path[0] as ConfigObjKey;
 
-      this.obj = { ...this.default, ...configObj };
+        console.log(`Configuration file "${field}" is invalid. Will revert to default.`);
+
+        this.defaultField(configObj, field);
+      });
     }
+
+    this.obj = { ...this.default, ...configObj };
 
     this.filewrite(this.obj);
 
     console.log(this.stringify(this.obj));
   }
 
+  private defaultField<K extends ConfigObjKey>(configObj: ConfigObj, field: K) {
+    configObj[field] = this.default[field];
+  }
+
   private get filePath(): string {
     const exePath: string = app.getPath('exe');
 
     const dirPath: string = path.dirname(exePath);
-    console.log(dirPath);
+
     return path.join(dirPath, 'bg-partner.ini');
   }
 
