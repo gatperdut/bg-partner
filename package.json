@@ -21,14 +21,10 @@
   "scripts": {
     "start": "tsx node_modules/@electron-forge/cli/src/electron-forge-start",
     "package": "tsx node_modules/@electron-forge/cli/src/electron-forge-package",
-    "postPackage": "./cleanup.sh",
     "make": "tsx node_modules/@electron-forge/cli/src/electron-forge-make"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.6.1",
-    "@electron-forge/maker-deb": "^7.6.1",
-    "@electron-forge/maker-rpm": "^7.6.1",
-    "@electron-forge/maker-zip": "^7.6.1",
     "@electron-forge/plugin-auto-unpack-natives": "^7.6.1",
     "@electron-forge/plugin-fuses": "^7.6.1",
     "@electron-forge/plugin-webpack": "^7.6.1",

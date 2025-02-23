@@ -8,11 +8,33 @@ Though implemented from scratch, this project draws heavily from [BG2RadarOverla
 
 ## Quickstart
 
-Go to [releases](https://github.com/gatperdut/bg-partner/releases) and download the version for your OS into your game folder.
-
-Run the executable after reading these next sections.
+Go to [releases](https://github.com/gatperdut/bg-partner/releases) and download the version for your, then unzip the files somewhere, and follow the instructions below according to your OS.
 
 Whether you run first BGPartner and then the game, or viceversa, is irrelevant.
+
+### Windows
+
+Just run the executable. For some output, run it from a shell.
+
+### Linux
+
+Linux is a bit more involved.
+
+First off, ASLR (address space layout randomization) needs to be disabled and process tracing needs to be allowed. The following commands will take care of changing the system settings, but these will not survive a system restart.
+
+- ASLR: `echo 0 | sudo tee /proc/sys/kernel/randomize_va_space`
+- ptrace: `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope`
+
+There are ways the changes permanent, but that is not recommended. Re-run the commands next time you boot up the computer and want to use BGPartner.
+
+When you are done with BGPartner, exchange the `0` with a `1` in the commands and run them again (or simply restart).
+
+Additionally, make sure the following tools are available:
+
+- `xdotool`
+- `wmctrl`
+
+You can use `apt`, `pacman`, etc. For example, `sudo apt install xdotool`.
 
 ### Configuration
 
@@ -41,29 +63,7 @@ On its first execution BGPartner will create a file called `bg-partner.json` whe
 
 Note that both `accelBorderless` and `accelSheet` need to follow the pattern indicated by [Electron's accelerators](https://www.electronjs.org/docs/latest/api/accelerator).
 
-### Windows
 
-Simply run the executable.
-
-### Linux
-
-Linux is a bit more involved.
-
-First off, ASLR (address space layout randomization) needs to be disabled and process tracing needs to be allowed. The following commands will take care of changing the system settings, but these will not survive a system restart.
-
-- ASLR: `echo 0 | sudo tee /proc/sys/kernel/randomize_va_space`
-- ptrace: `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope`
-
-There are ways the changes permanent, but that is not recommended. Re-run the commands next time you boot up the computer and want to use BGPartner.
-
-When you are done with BGPartner, exchange the `0` with a `1` in the commands and run them again (or simply restart).
-
-Additionally, make sure the following tools are available:
-
-- `xdotool`
-- `wmctrl`
-
-You can use `apt`, `pacman`, etc. For example, `sudo apt install xdotool`.
 
 ## Bugs and reports
 
@@ -83,16 +83,12 @@ Additionally:
 
 [Visual Studio Code](https://code.visualstudio.com/) is a good IDE to consider.
 
-You may need to whitelist in Windows Defender the folder where the source code resides. There might be slowdowns otherwise.
+You may need to tell Windows Defender to whitelist the folder where the source code resides. There might be slowdowns otherwise.
 
-## Publishing
+## Development TODOs
 
-`GITHUB_TOKEN` must be available in the path.
-
-- Windows: `$Env:GITHUB_TOKEN="<token>"`
-
-- Linux: `export GITHUB_TOKEN=<token>`
-
-Delete local tag: `git tag --delete <tag>`
-
-Delete remote tag: `git push --delete origin <tag>`.
+* Check crash when closing the game (seen only on windows, check linux too).
+* accelQuit.
+* check running from a shell in windows.
+* move all the webpack stuff + cleanup.ts into a folder.
+* app icon!

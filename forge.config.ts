@@ -1,5 +1,3 @@
-import { MakerDeb } from '@electron-forge/maker-deb';
-import { MakerRpm } from '@electron-forge/maker-rpm';
 import { MakerZIP } from '@electron-forge/maker-zip';
 import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
@@ -15,7 +13,7 @@ const config: ForgeConfig = {
     asar: true,
     prune: true,
   },
-  makers: [new MakerZIP({}, ['win32']), new MakerRpm({}, ['linux']), new MakerDeb({}, ['linux'])],
+  makers: [new MakerZIP({}, ['linux', 'win32'])],
   hooks: {
     postPackage: async (config: ResolvedForgeConfig, options): Promise<void> => {
       cleanup(options.outputPaths[0]);

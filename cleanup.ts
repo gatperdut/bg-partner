@@ -14,6 +14,8 @@ export const cleanup = (outputDir: string): void => {
     'd3dcompiler_47.dll',
   ];
 
+  // chrome_crashpad_handler chrome-sandbox libvk_swiftshader.so libvulkan.so.1
+
   const deleteFolders: string[] = [
     'locales',
     path.join('resources/app.asar.unpacked/.webpack/main/native_modules/build/koffi/darwin_arm64'),
