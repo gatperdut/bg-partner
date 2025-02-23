@@ -10,10 +10,6 @@ declare global {
   }
 }
 
-if (require('electron-squirrel-startup')) {
-  app.quit();
-}
-
 export const linux = os.platform() === 'linux';
 
 const run = (): void => {
