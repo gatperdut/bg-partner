@@ -12,9 +12,11 @@ export const cleanup = (outputDir: string): void => {
     'libGLESv2.dll',
     'libEGL.dll',
     'd3dcompiler_47.dll',
+    'libvk_swiftshader.so',
+    'libvulkan.so.1',
+    'chrome-sandbox',
+    'chrome_crashpad_handler',
   ];
-
-  // chrome_crashpad_handler chrome-sandbox libvk_swiftshader.so libvulkan.so.1
 
   const deleteFolders: string[] = [
     'locales',

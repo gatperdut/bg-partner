@@ -11,7 +11,6 @@ import { rendererConfig } from './webpack.renderer.config';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
-    prune: true,
     icon: './assets/icons/icon.ico',
   },
   makers: [new MakerZIP({}, ['linux', 'win32'])],
