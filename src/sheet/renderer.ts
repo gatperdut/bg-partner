@@ -41,7 +41,7 @@ class SheetRenderer {
     });
 
     document.body.addEventListener(
-      'click',
+      'contextmenu',
       (): void => {
         window.sheetAPI.close(this.sprite.id);
       },
