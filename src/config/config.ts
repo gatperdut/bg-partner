@@ -74,7 +74,7 @@ export class Config {
 
     const dirPath: string = path.dirname(exePath);
 
-    return path.join(dirPath, 'bg-partner.ini');
+    return path.join(dirPath, 'bg-partner.json');
   }
 
   private fileread(): ConfigObj {
