@@ -4,9 +4,10 @@ BG (Baldur's Gate) partner is a windows/linux (32 and 64 bits respectively) comp
 
 ## Acknowledgments
 
-Though implemented from scratch, this project draws heavy inspiration from [BG2RadarOverlay](https://github.com/tapahob/BG2RadarOverlay) and [EEEx's documentation](https://eeex-docs.readthedocs.io/en/latest/).
+Though implemented from scratch, this project draws heavily from [BG2RadarOverlay](https://github.com/tapahob/BG2RadarOverlay) and [EEEx's documentation](https://eeex-docs.readthedocs.io).
 
 ## Quickstart
+
 Go to [releases](https://github.com/gatperdut/bg-partner/releases) and download the version for your OS into your game folder.
 
 Run the executable after reading these next sections.
@@ -14,6 +15,7 @@ Run the executable after reading these next sections.
 Whether you run first BG partner and then the game, or viceversa, is irrelevant.
 
 ### Configuration
+
 On its first execution BG partner will create a file called `bg-partner.json` where it stores its configuration, which you can edit. These are the default values:
 
 ```
@@ -27,39 +29,41 @@ On its first execution BG partner will create a file called `bg-partner.json` wh
 
 ```
 
-* `exe`: name of the executable. On Windows this is always `Baldur.exe`, on Linux it's either `BaldursGate` or `BaldursGateII`.
+- `exe`: name of the executable. On Windows this is always `Baldur.exe`. On Linux it is either `BaldursGate` or `BaldursGateII`.
 
-* `display`: `null` to use your primary display, or a number between 0 and 1 less than your number of displays (`0` or `1` if you have two displays, for example). May require a bit of trial and error, though `0` most likely corresponds to your primary display. Run the game in whatever display you select here.
+- `display`: `null` to use your primary display, or a number between 0 and 1 less than your number of displays (`0` or `1` if you have two displays, for example). May require a bit of trial and error, though `0` most likely corresponds to your primary display. Run the game in whatever display you select here.
 
-* `ms`: refresh rate in milliseconds.
+- `ms`: refresh rate in milliseconds.
 
-* `accelBorderless`: shortcut to make the game's window fullscreen borderless.
+- `accelBorderless`: shortcut to make the game's window fullscreen borderless.
 
-* `accelSheet`: shortcut to open the overlay when the mouse is over the selection circle of a creature.
+- `accelSheet`: shortcut to open the overlay when the mouse is over the selection circle of a creature.
 
 Note that both `accelBorderless` and `accelSheet` need to follow the pattern indicated by [Electron's accelerators](https://www.electronjs.org/docs/latest/api/accelerator).
 
-
 ### Windows
+
 Simply run the executable.
 
 ### Linux
+
 Linux is a bit more involved.
 
 First off, ASLR (address space layout randomization) needs to be disabled and process tracing needs to be allowed. The following commands will take care of changing the system settings, but these will not survive a system restart.
 
-  * ASLR: `echo 0 | sudo tee /proc/sys/kernel/randomize_va_space`
-  * ptrace: `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope`
+- ASLR: `echo 0 | sudo tee /proc/sys/kernel/randomize_va_space`
+- ptrace: `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope`
 
-There are ways the changes permanent, but that's not recommended. Re-run the commands next time you boot up the computer and want to use BG partner.
+There are ways the changes permanent, but that is not recommended. Re-run the commands next time you boot up the computer and want to use BG partner.
 
 When you are done with BG partner, exchange the `0` with a `1` in the commands and run them again (or simply restart).
 
+Additionally, make sure the following tools are available:
 
-Additionally, make sure the following tools are available (via `apt`, `pacman`, etc. For example, `sudo apt install xdotool`):
+- `xdotool`
+- `wmctrl`
 
-  * `xdotool`
-  * `wmctrl`
+You can use `apt`, `pacman`, etc. For example, `sudo apt install xdotool`.
 
 ## Bugs and reports
 
@@ -73,8 +77,18 @@ Same requirements apply as for running BG partner in your OS of choice.
 
 Additionally:
 
-* Check `.nvmrc` for the Node.js version.
-* `npm i` to install dependencies.
-* `npm run start` to launch.
+- Check `.nvmrc` for the Node.js version. On Linux, `nvm use`.
+- `npm i` to install dependencies.
+- `npm run start` to launch.
 
 [Visual Studio Code](https://code.visualstudio.com/) is a good IDE to consider.
+
+You may need to whitelist in Windows Defender the folder where the source code resides. There might be slowdowns otherwise.
+
+## Publishing
+
+`GITHUB_TOKEN` must be available in the path.
+
+- Windows: `$Env:GITHUB_TOKEN="<token>"`
+
+- Linux: `export GITHUB_TOKEN=<token>`
