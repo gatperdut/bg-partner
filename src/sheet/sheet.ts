@@ -18,6 +18,17 @@ export class Sheet {
   public window: BrowserWindow;
 
   constructor(private sprite: Sprite) {
+    this.windowCreate();
+
+    // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
+    // this.window.webContents.openDevTools({ mode: 'detach' });
+
+    handlers.window.setForeground();
+
+    this.setListeners();
+  }
+
+  private windowCreate(): void {
     const position: Electron.Point = this.position();
 
     this.window = new BrowserWindow({
@@ -43,13 +54,10 @@ export class Sheet {
     this.window.setAlwaysOnTop(true, 'screen-saver');
 
     this.window.loadURL(SHEET_WINDOW_WEBPACK_ENTRY);
+  }
 
-    // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
-    // this.window.webContents.openDevTools({ mode: 'detach' });
-
-    handlers.window.setForeground();
-
-    ipcMain.on(`sheet.close.${sprite.id}`, (_event: Electron.IpcMainEvent): void => {
+  private setListeners(): void {
+    ipcMain.on(`sheet.close.${this.sprite.id}`, (): void => {
       this.teardown();
     });
 

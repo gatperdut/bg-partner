@@ -53,6 +53,7 @@ class SheetRenderer {
   }
 
   private setEventListeners(): void {
+    // I assume these listeners do not need to be removed?
     document.body.addEventListener(
       'contextmenu',
       (): void => {
