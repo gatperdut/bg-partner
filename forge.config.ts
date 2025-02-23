@@ -18,7 +18,7 @@ const config: ForgeConfig = {
   makers: [
     new MakerSquirrel({
       authors: 'gatperdut',
-      description: "Baldur's gate partner.",
+      description: "Baldur's Gate partner.",
     }),
     new MakerZIP({}, ['darwin']),
     new MakerRpm({}),

@@ -1,9 +1,17 @@
 {
-  "name": "bg-companion-electron",
-  "productName": "bg-companion-electron",
+  "name": "bg-partner",
+  "productName": "BG partner",
   "version": "1.0.0",
   "description": "Baldur's Gate partner.",
-  "keywords": [],
+  "os": ["linux", "win32"],
+  "keywords": [
+    "Baldur's Gate",
+    "BG",
+    "BG2",
+    "Tales of the Sword Coast",
+    "Shadows of Amn",
+    "Throne of Bhaal"
+  ],
   "author": "gatperdut",
   "license": "MIT",
   "main": ".webpack/main",
