@@ -4,16 +4,23 @@ import { MakerZIP } from '@electron-forge/maker-zip';
 import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
-import type { ForgeConfig } from '@electron-forge/shared-types';
+import type { ForgeConfig, ResolvedForgeConfig } from '@electron-forge/shared-types';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
+import { cleanup } from './cleanup';
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
 
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
+    prune: true,
   },
   makers: [new MakerZIP({}, ['win32']), new MakerRpm({}, ['linux']), new MakerDeb({}, ['linux'])],
+  hooks: {
+    postPackage: async (config: ResolvedForgeConfig, options): Promise<void> => {
+      cleanup(options.outputPaths[0]);
+    },
+  },
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
