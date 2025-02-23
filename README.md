@@ -92,3 +92,7 @@ You may need to whitelist in Windows Defender the folder where the source code r
 - Windows: `$Env:GITHUB_TOKEN="<token>"`
 
 - Linux: `export GITHUB_TOKEN=<token>`
+
+Delete local tag: `git tag --delete <tag>`
+
+Delete remote tag: `git push --delete origin <tag>`.
