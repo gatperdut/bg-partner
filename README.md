@@ -86,6 +86,4 @@ You may need to tell Windows Defender to whitelist the folder where the source c
 ## Development TODOs
 
 - check crash in linux when closing BG in wmctrl.
-- check running from a shell in windows.
 - move all the webpack stuff + cleanup.ts into a folder.
-- app icon! windows ok. linux?
