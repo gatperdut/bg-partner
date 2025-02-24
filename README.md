@@ -63,8 +63,6 @@ On its first execution BGPartner will create a file called `bg-partner.json` whe
 
 Note that both `accelBorderless` and `accelSheet` need to follow the pattern indicated by [Electron's accelerators](https://www.electronjs.org/docs/latest/api/accelerator).
 
-
-
 ## Bugs and reports
 
 BGPartner is very much in development, specially when it comes to testing under different environments. So far, only the Steam version of the games under Ubuntu / Windows 11 are officially supported.
@@ -87,8 +85,7 @@ You may need to tell Windows Defender to whitelist the folder where the source c
 
 ## Development TODOs
 
-* Check crash when closing the game (seen only on windows, check linux too).
-* accelQuit.
-* check running from a shell in windows.
-* move all the webpack stuff + cleanup.ts into a folder.
-* app icon!
+- check crash in linux when closing BG in wmctrl.
+- check running from a shell in windows.
+- move all the webpack stuff + cleanup.ts into a folder.
+- app icon! windows ok. linux?
