@@ -13,13 +13,10 @@ import { rendererConfig } from './webpack.renderer.config';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
-    icon: path.join(
-      __dirname,
-      'src',
-      'assets',
-      'icons',
-      os.platform() === 'linux' ? '512x512.png' : '256x256.ico'
-    ),
+    icon:
+      os.platform() === 'linux'
+        ? undefined
+        : path.join(__dirname, 'src', 'assets', 'icons', '256x256'),
   },
   makers: [new MakerZIP({}, ['linux', 'win32'])],
   hooks: {

@@ -25,13 +25,7 @@ export class Control {
     this.window = new BrowserWindow({
       x: Math.round(handlers.window.display.width / 2 - this.width / 2),
       y: Math.round(handlers.window.display.height / 2 - this.height / 2),
-      icon: path.join(
-        app.getAppPath(),
-        'src',
-        'assets',
-        'icons',
-        linux ? '512x512.png' : '256x256.ico'
-      ),
+      icon: linux ? null : path.join(app.getAppPath(), 'src', 'assets', 'icons', '256x256.ico'),
       width: this.width,
       height: this.height,
       minWidth: this.width,
