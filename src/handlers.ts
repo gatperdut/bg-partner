@@ -12,6 +12,7 @@ import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
 import { SyscallsLinux } from './syscalls/linux/syscalls-linux';
 import { Syscalls } from './syscalls/syscalls';
 import { SyscallsWin32 } from './syscalls/win32/syscalls-win32';
+import { Control } from './views/control/control';
 import { Window } from './window/window';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
@@ -24,6 +25,7 @@ export type Handlers = {
   window: Window;
   entities: Entities;
   shortcuts: Shortcuts;
+  control: Control;
 };
 
 export const handlers: Handlers = {
@@ -34,6 +36,7 @@ export const handlers: Handlers = {
   window: null,
   entities: null,
   shortcuts: null,
+  control: null,
 };
 
 export const config = (): ConfigObj => {

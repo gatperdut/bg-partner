@@ -12,6 +12,7 @@ import { SyscallsWin32 } from './syscalls/win32/syscalls-win32';
 
 import { Config } from './config/config';
 import { config, handlers } from './handlers';
+import { Control } from './views/control/control';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 
@@ -30,6 +31,8 @@ export class Main {
     handlers.entities = new Entities();
 
     handlers.shortcuts = linux ? new ShortcutsLinux() : new ShortcutsWin32();
+
+    handlers.control = new Control();
   }
 
   public run(): void {
@@ -42,6 +45,8 @@ export class Main {
     }
 
     handlers.memscan.run();
+
+    handlers.control.run();
 
     if (!handlers.memscan.alive) {
       handlers.window.teardown();

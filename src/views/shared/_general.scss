@@ -1,0 +1,16 @@
+html {
+  height: 100%;
+  padding: 5px;
+  font-family: 'Modesto';
+  background: url('../../assets/images/background.jpg');
+  background-size: cover;
+  background-position: center center;
+  user-select: none;
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 5px;
+  height: calc(100% - 25px);
+}

@@ -1,6 +1,6 @@
-import { Sprite } from '../sprite/sprite';
-import { EaTable } from '../tables/ea';
-import { RaceTable } from '../tables/race';
+import { Sprite } from '../../sprite/sprite';
+import { EaTable } from '../../tables/ea';
+import { RaceTable } from '../../tables/race';
 import './sheet.scss';
 
 export type SheetAPIUpdateParams = { sprite: Sprite; eaTable: EaTable; raceTable: RaceTable };

@@ -11,6 +11,7 @@ import { rendererConfig } from './webpack.renderer.config';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
+    // TODO does this work for windows, at least?
     icon: '/home/carlosr/Desktop/bg-partner/src/assets/icons/256x256.ico',
   },
   makers: [new MakerZIP({}, ['linux', 'win32'])],
@@ -27,11 +28,19 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
-            name: 'sheet_window',
-            html: './src/sheet/sheet.html',
-            js: './src/sheet/renderer.ts',
+            name: 'sheet',
+            html: './src/views/sheet/sheet.html',
+            js: './src/views/sheet/renderer.ts',
             preload: {
-              js: './src/sheet/preload.ts',
+              js: './src/views/sheet/preload.ts',
+            },
+          },
+          {
+            name: 'control',
+            html: './src/views/control/control.html',
+            js: './src/views/control/renderer.ts',
+            preload: {
+              js: './src/views/control/preload.ts',
             },
           },
         ],

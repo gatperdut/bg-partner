@@ -1,14 +1,14 @@
 import { BrowserWindow, ipcMain } from 'electron';
-import { handlers } from '../handlers';
-import { Sprite } from '../sprite/sprite';
-import { eaTable } from '../tables/ea';
-import { raceTable } from '../tables/race';
+import { handlers } from '../../handlers';
+import { Sprite } from '../../sprite/sprite';
+import { eaTable } from '../../tables/ea';
+import { raceTable } from '../../tables/race';
 import { SheetAPIUpdateParams } from './renderer';
 import { spriteSanitize } from './sprite-filter';
 
-declare const SHEET_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+declare const SHEET_PRELOAD_WEBPACK_ENTRY: string;
 
-declare const SHEET_WINDOW_WEBPACK_ENTRY: string;
+declare const SHEET_WEBPACK_ENTRY: string;
 
 export class Sheet {
   private width: number = 400;
@@ -39,10 +39,11 @@ export class Sheet {
       minWidth: this.width,
       minHeight: this.height,
       webPreferences: {
-        preload: SHEET_WINDOW_PRELOAD_WEBPACK_ENTRY,
+        preload: SHEET_PRELOAD_WEBPACK_ENTRY,
       },
       frame: false,
       show: true,
+      minimizable: false,
       maximizable: false,
       focusable: false,
       skipTaskbar: true,
@@ -53,7 +54,7 @@ export class Sheet {
 
     this.window.setAlwaysOnTop(true, 'screen-saver');
 
-    this.window.loadURL(SHEET_WINDOW_WEBPACK_ENTRY);
+    this.window.loadURL(SHEET_WEBPACK_ENTRY);
   }
 
   private setListeners(): void {
@@ -147,7 +148,7 @@ export class Sheet {
 
     ipcMain.removeAllListeners(`sheet.move.${this.sprite.id}`);
 
-    this.window.destroy();
+    this.window?.destroy();
 
     this.window = null;
   }
