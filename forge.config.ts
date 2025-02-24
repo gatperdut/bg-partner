@@ -4,6 +4,8 @@ import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 import type { ForgeConfig, ResolvedForgeConfig } from '@electron-forge/shared-types';
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
+import os from 'os';
+import path from 'path';
 import { cleanup } from './cleanup';
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
@@ -11,8 +13,13 @@ import { rendererConfig } from './webpack.renderer.config';
 const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
-    // TODO does this work for windows, at least?
-    icon: '/home/carlosr/Desktop/bg-partner/src/assets/icons/256x256.ico',
+    icon: path.join(
+      __dirname,
+      'src',
+      'assets',
+      'icons',
+      os.platform() === 'linux' ? '512x512.png' : '256x256.ico'
+    ),
   },
   makers: [new MakerZIP({}, ['linux', 'win32'])],
   hooks: {

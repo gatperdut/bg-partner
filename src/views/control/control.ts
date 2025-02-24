@@ -1,5 +1,7 @@
 import { app, BrowserWindow, ipcMain, IpcMainEvent } from 'electron';
+import path from 'path';
 import { handlers } from '../../handlers';
+import { linux } from '../../index';
 
 declare const CONTROL_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -23,6 +25,13 @@ export class Control {
     this.window = new BrowserWindow({
       x: Math.round(handlers.window.display.width / 2 - this.width / 2),
       y: Math.round(handlers.window.display.height / 2 - this.height / 2),
+      icon: path.join(
+        app.getAppPath(),
+        'src',
+        'assets',
+        'icons',
+        linux ? '512x512.png' : '256x256.ico'
+      ),
       width: this.width,
       height: this.height,
       minWidth: this.width,
@@ -51,7 +60,7 @@ export class Control {
     });
 
     ipcMain.once('control.configSet', (event: IpcMainEvent, height: number): void => {
-      this.window.setBounds({ height: height });
+      this.window.setBounds({ height: height + (linux ? 0 : 35) });
     });
   }
 
