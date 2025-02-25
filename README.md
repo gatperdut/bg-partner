@@ -4,7 +4,7 @@ BGPartner (Baldur's Gate Partner) is a Linux/Windows (64 and 32 bits respectivel
 
 ## Acknowledgments
 
-Though implemented from scratch, this project draws heavily from [BG2RadarOverlay](https://github.com/tapahob/BG2RadarOverlay) and [EEEx's documentation](https://eeex-docs.readthedocs.io).
+Though implemented from scratch, this project draws heavily from [BG2RadarOverlay](https://github.com/tapahob/BG2RadarOverlay) and makes extensive use of [EEEx's documentation](https://eeex-docs.readthedocs.io).
 
 ## Quickstart
 
@@ -40,7 +40,7 @@ Once you are ready, go in your terminal to BGPartner's directory and `sudo ./BGP
 
 ### Configuration
 
-On its first execution BGPartner will create a file called `bg-partner.json` where it stores its configuration, which you can edit. These are the default values:
+On its first execution BGPartner will create a file called  a [JSON](https://www.shapediver.com/blog/json-objects-explained) file called `bg-partner.json` where it stores its configuration, which you can edit. These are the default values:
 
 ```
   {
@@ -55,7 +55,7 @@ On its first execution BGPartner will create a file called `bg-partner.json` whe
 
 - `exe`: the name of the executable. On Windows this is always `Baldur.exe`, and will likely require no change. On Linux it is either `BaldursGate` or `BaldursGateII`, so edit accordingly.
 
-- `display`: `null` to use your primary display, or a number between 0 and 1 less than your number of displays (`0` or `1` if you have two displays, for example). May require a bit of trial and error, though `0` most likely corresponds to your primary display. Run the game in whatever display you select here.
+- `display`: `null` to use your primary display, or a number between 0 and 1 less than your number of displays (`0` or `1` if you have two displays, for example). May require a bit of trial and error, though `0` most likely corresponds to your primary display. Run the game in whatever display you select here. 
 
 - `ms`: refresh rate in milliseconds.
 
@@ -77,7 +77,11 @@ Once BGPartner launches successfully, you will see this window:
 
 ![Control window](src/assets/readme/control.png)
 
-The upper line will display "❌ Process not found" if no running instance of a game could be found.
+The upper line will display "❌ Process not found." if no running instance of a game could be found.
+
+The next 2 lines are Linux-Only (they will not appear on Windows) and will indicate if the configuration steps from above were successful. If they were not, they will display "❌ ASLR is enabled." and "❌ ptrace is not allowed." respectively.
+
+Next up is the configuration in use. This will closely resemble your `bg-partner.json`, though individual keys may have reverted to the defaults if the provided value is invalid. The whole object might have been replaced, too, if, for example, you provided an invalid JSON. So make sure to double-check.
 
 As the bottom line indicates, BGPartner will shut down as soon as this window is closed.
 

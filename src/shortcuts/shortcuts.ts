@@ -7,11 +7,11 @@ export type Shortcuts = ShortcutsLinux | ShortcutsWin32;
 
 export abstract class ShortcutsOS {
   constructor() {
-    globalShortcut.register(config().accelSheet, (): void => {
+    globalShortcut.register(config().obj.accelSheet, (): void => {
       handlers.window.focused && this.sheetToggle();
     });
 
-    globalShortcut.register(config().accelBorderless, (): void => {
+    globalShortcut.register(config().obj.accelBorderless, (): void => {
       handlers.window.focused && this.borderless();
     });
   }

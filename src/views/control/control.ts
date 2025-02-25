@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain, IpcMainEvent } from 'electron';
 import path from 'path';
-import { handlers } from '../../handlers';
+import { config, handlers, reqsLinux } from '../../handlers';
 import { linux } from '../../index';
 
 declare const CONTROL_PRELOAD_WEBPACK_ENTRY: string;
@@ -18,7 +18,7 @@ export class Control {
     this.windowCreate();
 
     // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
-    // this.window.webContents.openDevTools({ mode: 'detach' });
+    this.window.webContents.openDevTools({ mode: 'detach' });
   }
 
   private windowCreate(): void {
@@ -46,7 +46,11 @@ export class Control {
     this.window.removeMenu();
 
     this.window.loadURL(CONTROL_WEBPACK_ENTRY).then((): void => {
-      this.window.webContents.send('control.config', { configObj: handlers.config.obj });
+      if (linux) {
+        this.window.webContents.send('control.reqs', { reqsObj: reqsLinux().obj });
+      }
+
+      this.window.webContents.send('control.config', { configObj: config().obj });
     });
 
     this.window.once('closed', (): void => {

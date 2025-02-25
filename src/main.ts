@@ -12,12 +12,15 @@ import { SyscallsWin32 } from './syscalls/win32/syscalls-win32';
 
 import { Config } from './config/config';
 import { config, handlers } from './handlers';
+import { ReqsLinux } from './reqs/reqs-linux';
 import { Control } from './views/control/control';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 
 export class Main {
   constructor() {
+    handlers.reqs = linux ? new ReqsLinux() : null;
+
     handlers.config = new Config();
 
     handlers.syscalls = linux ? new SyscallsLinux() : new SyscallsWin32();
@@ -36,7 +39,7 @@ export class Main {
   }
 
   public run(): void {
-    setInterval(this.loop.bind(this), config().ms);
+    setInterval(this.loop.bind(this), config().obj.ms);
   }
 
   private loop(): void {

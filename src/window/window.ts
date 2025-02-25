@@ -19,7 +19,7 @@ export abstract class WindowOs {
   };
 
   constructor() {
-    const index: number = config().display;
+    const index: number = config().obj.display;
 
     if (_.isNull(index)) {
       this.use(Electron.screen.getPrimaryDisplay().bounds, null);

@@ -14,7 +14,7 @@ export class MemscanLinux extends MemscanOs {
 
   private pidGet(): number {
     try {
-      return Number.parseInt(execSync(`pidof ${config().exe} ${devnull}`).toString(), 10);
+      return Number.parseInt(execSync(`pidof ${config().obj.exe} ${devnull}`).toString(), 10);
     } catch (err) {
       return null;
     }

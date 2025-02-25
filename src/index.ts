@@ -1,4 +1,3 @@
-import { execSync } from 'child_process';
 import { app } from 'electron';
 import os from 'os';
 import { handlers } from './handlers';
@@ -13,10 +12,6 @@ declare global {
 export const linux = os.platform() === 'linux';
 
 const run = (): void => {
-  if (linux) {
-    execSync('sudo ls');
-  }
-
   new Main().run();
 };
 
