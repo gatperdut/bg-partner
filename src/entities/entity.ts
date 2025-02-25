@@ -1,4 +1,3 @@
-import { Memread } from '../memread/memread';
 import { Sprite } from '../sprite/sprite';
 import { Sheet } from '../views/sheet/sheet';
 
@@ -9,8 +8,8 @@ export class Entity {
 
   public sprite: Sprite;
 
-  constructor(private gameObjectPtr: bigint, private memread: Memread) {
-    this.sprite = new Sprite(this.gameObjectPtr, this.memread);
+  constructor(private gameObjectPtr: bigint) {
+    this.sprite = new Sprite(this.gameObjectPtr);
 
     this.loaded = !this.sprite.invalid;
   }

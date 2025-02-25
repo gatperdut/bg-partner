@@ -9,7 +9,7 @@ export class Entities {
     const entities: Entity[] = _.filter(
       _.map(
         handlers.memscan.gameObjectPtrs,
-        (gameObjectPtr: bigint): Entity => new Entity(gameObjectPtr, handlers.memread)
+        (gameObjectPtr: bigint): Entity => new Entity(gameObjectPtr)
       ),
       (entity: Entity): boolean => entity.loaded
     );
