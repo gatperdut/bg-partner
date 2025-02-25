@@ -1,4 +1,5 @@
 import { execSync } from 'child_process';
+import { devnull } from '../const/const-linux';
 import { handlers } from '../handlers';
 import { ShortcutsOS } from './shortcuts';
 
@@ -8,7 +9,7 @@ export class ShortcutsLinux extends ShortcutsOS {
   }
 
   protected sheetToggle(): void {
-    const parts: string[] = execSync('xdotool getmouselocation').toString().split(' ');
+    const parts: string[] = execSync(`xdotool getmouselocation ${devnull}`).toString().split(' ');
 
     const partsX = parts[0].split(':');
 

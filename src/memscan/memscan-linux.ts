@@ -1,4 +1,5 @@
 import { execSync } from 'child_process';
+import { devnull } from '../const/const-linux';
 import { config, handlers } from '../handlers';
 import { MemscanOs } from './memscan';
 
@@ -13,7 +14,7 @@ export class MemscanLinux extends MemscanOs {
 
   private pidGet(): number {
     try {
-      return Number.parseInt(execSync(`pidof ${config().exe}`).toString(), 10);
+      return Number.parseInt(execSync(`pidof ${config().exe} ${devnull}`).toString(), 10);
     } catch (err) {
       return null;
     }
