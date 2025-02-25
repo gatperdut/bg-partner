@@ -6,9 +6,9 @@ import type { ForgeConfig, ResolvedForgeConfig } from '@electron-forge/shared-ty
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
 import os from 'os';
 import path from 'path';
-import { cleanup } from './cleanup';
-import { mainConfig } from './webpack.main.config';
-import { rendererConfig } from './webpack.renderer.config';
+import { cleanup } from './webpack/cleanup';
+import { mainConfig } from './webpack/webpack.main.config';
+import { rendererConfig } from './webpack/webpack.renderer.config';
 
 const config: ForgeConfig = {
   packagerConfig: {

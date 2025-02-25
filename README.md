@@ -1,6 +1,6 @@
 # BGPartner
 
-BGPartner (Baldur's Gate Partner) is a windows/linux (32 and 64 bits respectively) companion tool for the 2.6.6 versions of Baldur's Gate and Baldur's Gate II: Shadows of Amn. It produces overlays on user-selected creatures detailing their stats and effects.
+BGPartner (Baldur's Gate Partner) is a Linux/Windows (64 and 32 bits respectively) companion tool for the 2.6.6 versions of Baldur's Gate and Baldur's Gate II: Shadows of Amn. It produces overlays on user-selected creatures detailing their stats and effects.
 
 ## Acknowledgments
 
@@ -14,7 +14,7 @@ Whether you run first BGPartner and then the game, or viceversa, is irrelevant.
 
 ### Windows
 
-Just run the executable. For some output, run it from a shell.
+Just run the executable - double-click on it, or run it from a shell for some more output with `BGPartner.exe`.
 
 ### Linux
 
@@ -36,13 +36,15 @@ Additionally, make sure the following tools are available:
 
 You can use `apt`, `pacman`, etc. For example, `sudo apt install xdotool`.
 
+Once you are ready, go in your terminal to BGPartner's directory and `sudo ./BGPartner`.
+
 ### Configuration
 
 On its first execution BGPartner will create a file called `bg-partner.json` where it stores its configuration, which you can edit. These are the default values:
 
 ```
   {
-    "exe": "BaldursGateII" / "Baldur.exe",
+    "exe": "BaldursGateII" (Linux) / "Baldur.exe" (Windows),
     "display": null,
     "ms": 300,
     "accelBorderless": "CommandOrControl+Q",
@@ -51,7 +53,7 @@ On its first execution BGPartner will create a file called `bg-partner.json` whe
 
 ```
 
-- `exe`: name of the executable. On Windows this is always `Baldur.exe`. On Linux it is either `BaldursGate` or `BaldursGateII`.
+- `exe`: the name of the executable. On Windows this is always `Baldur.exe`, and will likely require no change. On Linux it is either `BaldursGate` or `BaldursGateII`, so edit accordingly.
 
 - `display`: `null` to use your primary display, or a number between 0 and 1 less than your number of displays (`0` or `1` if you have two displays, for example). May require a bit of trial and error, though `0` most likely corresponds to your primary display. Run the game in whatever display you select here.
 
@@ -61,7 +63,29 @@ On its first execution BGPartner will create a file called `bg-partner.json` whe
 
 - `accelSheet`: shortcut to open the overlay when the mouse is over the selection circle of a creature.
 
-Note that both `accelBorderless` and `accelSheet` need to follow the pattern indicated by [Electron's accelerators](https://www.electronjs.org/docs/latest/api/accelerator).
+Note that both `accelBorderless` and `accelSheet` need to follow the pattern indicated by [Electron's accelerators](https://www.electronjs.org/docs/latest/api/accelerator). Keep in mind that:
+
+- Accelerators will only work while the game is focused.
+
+- They *will* block that same combination of keys everywhere else in your system while BGPartner is running.
+
+### How to use
+
+The games must *not* be run in "Full screen" mode (deactivate that option in the "Graphics" options).
+
+Once BGPartner launches successfully, you will see this window:
+
+![Control window](src/assets/readme/control.png)
+
+The upper line will display "❌ Process not found" if no running instance of a game could be found.
+
+As the bottom line indicates, BGPartner will shut down as soon as this window is closed.
+
+Now go to your game and use your `accelBorderless` shortcut to make the game window borderless. It will also take the full display.
+
+Next, move the mouse over some creature and use your `accelSheet` shortcut. You will see something like this:
+
+TODO
 
 ## Bugs and reports
 
@@ -86,4 +110,3 @@ You may need to tell Windows Defender to whitelist the folder where the source c
 ## Development TODOs
 
 - check crash in linux when closing BG in wmctrl.
-- move all the webpack stuff + cleanup.ts into a folder.
