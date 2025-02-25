@@ -1,3 +1,6 @@
+import { handlers } from '../handlers';
+import { linux } from '../index';
+
 export class Basic {
   public type: number;
 
@@ -21,11 +24,62 @@ export class Basic {
 
   public resref: string;
 
-  constructor(base: bigint) {
-    // Empty
+  constructor(private base: bigint) {
+    this.run();
   }
 
-  public run() {
-    // Empty
+  public run(): void {
+    this.type = handlers.memread.memReadNumber(this.base + BigInt(0x8), 'UINT8');
+
+    this.gameAreaAddr = handlers.memread.memReadBigint(this.base + BigInt(0x18), 'ADDR');
+
+    this.hp = handlers.memread.memReadNumber(this.base + BigInt(0x560 + 0x1c), 'INT16');
+
+    this.canBeSeen = handlers.memread.memReadNumber(this.base + BigInt(0x4c), 'INT16');
+
+    this.resref = handlers.memread.memReadString(this.base + BigInt(0x540)).replace(/\*/g, '');
+
+    this.id = handlers.memread.memReadNumber(this.base + BigInt(0x48), 'UINT32');
+
+    this.pos.x = handlers.memread.memReadNumber(
+      this.base + BigInt(0xc),
+      linux ? 'UINT16' : 'UINT32'
+    );
+
+    this.pos.y = handlers.memread.memReadNumber(
+      this.base + BigInt(0x10),
+      linux ? 'UINT16' : 'UINT32'
+    );
+
+    const nameAddr: bigint = handlers.memread.memReadBigint(
+      this.base + BigInt(linux ? 0x3910 : 0x3928),
+      'ADDR'
+    );
+
+    this.name = handlers.memread.memReadString(BigInt(nameAddr));
+
+    this.viewport.width = handlers.memread.memReadNumber(
+      this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8),
+      linux ? 'INT16' : 'INT32'
+    );
+
+    this.viewport.height = handlers.memread.memReadNumber(
+      this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8 + 0x4),
+      linux ? 'INT16' : 'INT32'
+    );
+
+    this.scroll.x = handlers.memread.memReadNumber(
+      this.gameAreaAddr + BigInt(0x5c8 + 0xc0),
+      'INT32'
+    );
+
+    this.scroll.y = handlers.memread.memReadNumber(
+      this.gameAreaAddr + BigInt(0x5c8 + 0xc0 + 0x4),
+      'INT32'
+    );
+
+    this.relative.x = this.pos.x - this.scroll.x;
+
+    this.relative.y = this.pos.y - this.scroll.y;
   }
 }

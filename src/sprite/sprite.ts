@@ -1,135 +1,64 @@
 import { handlers } from '../handlers';
-import { linux } from '../index';
-import { Derived, derivedEmpty, derivedFill } from './derived';
+import { Basic } from './basic';
+import { Derived } from './derived';
+import { Profile } from './profile';
 
 export class Sprite {
-  // Basic
-  public type: number;
+  public basic: Basic;
 
-  public canBeSeen: number;
+  public profile: Profile;
 
-  public id: number;
+  public derived: Derived;
 
-  public gameAreaAddr: bigint;
+  public derivedBonus: Derived;
 
-  public hp: number;
+  public derivedTemp: Derived;
 
-  public viewport: Electron.Size = { width: null, height: null };
+  constructor(public base: bigint) {
+    this.basic = new Basic(base);
 
-  public scroll: Electron.Point = { x: null, y: null };
+    this.profile = new Profile(base);
 
-  public relative: Electron.Point = { x: null, y: null };
+    this.derived = new Derived(base + BigInt(0x1120));
 
-  public pos: Electron.Point = { x: null, y: null };
+    this.derivedBonus = new Derived(base + BigInt(0x2a70));
 
-  public name: string;
-
-  public resref: string;
-
-  // Advanced
-  public enemyAlly: number;
-
-  public race: number;
-
-  // Derived
-  public derived: Derived = derivedEmpty();
-  public derivedBonus: Derived = derivedEmpty();
-  public derivedTemp: Derived = derivedEmpty();
-
-  constructor(public basePtr: bigint) {
-    this.basic();
+    this.derivedTemp = new Derived(base + BigInt(0x1dc8));
   }
 
-  public get invalid(): boolean {
+  public invalid(): boolean {
     return (
-      !this.id ||
-      this.type !== 0x31 ||
-      !this.hp ||
-      !this.gameAreaAddr ||
-      this.pos.x < 0 ||
-      this.pos.y < 0 ||
-      !this.name ||
-      !this.resref ||
-      !this.canBeSeen
+      !this.basic.id ||
+      this.basic.type !== 0x31 ||
+      !this.basic.hp ||
+      !this.basic.gameAreaAddr ||
+      this.basic.pos.x < 0 ||
+      this.basic.pos.y < 0 ||
+      !this.basic.name ||
+      !this.basic.resref ||
+      !this.basic.canBeSeen
     );
   }
 
-  public basic(): void {
-    this.type = handlers.memread.memReadNumber(this.basePtr + BigInt(0x8), 'UINT8');
+  public details(): void {
+    this.profile.run();
 
-    this.gameAreaAddr = handlers.memread.memReadBigint(this.basePtr + BigInt(0x18), 'ADDR');
+    this.derived.run();
 
-    this.hp = handlers.memread.memReadNumber(this.basePtr + BigInt(0x560 + 0x1c), 'INT16');
+    this.derivedBonus.run();
 
-    this.canBeSeen = handlers.memread.memReadNumber(this.basePtr + BigInt(0x4c), 'INT16');
-
-    this.resref = handlers.memread.memReadString(this.basePtr + BigInt(0x540)).replace(/\*/g, '');
-
-    this.id = handlers.memread.memReadNumber(this.basePtr + BigInt(0x48), 'UINT32');
-
-    this.pos.x = handlers.memread.memReadNumber(
-      this.basePtr + BigInt(0xc),
-      linux ? 'UINT16' : 'UINT32'
-    );
-
-    this.pos.y = handlers.memread.memReadNumber(
-      this.basePtr + BigInt(0x10),
-      linux ? 'UINT16' : 'UINT32'
-    );
-
-    const nameAddr: bigint = handlers.memread.memReadBigint(
-      this.basePtr + BigInt(linux ? 0x3910 : 0x3928),
-      'ADDR'
-    );
-
-    this.name = handlers.memread.memReadString(BigInt(nameAddr));
-
-    this.viewport.width = handlers.memread.memReadNumber(
-      this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8),
-      linux ? 'INT16' : 'INT32'
-    );
-
-    this.viewport.height = handlers.memread.memReadNumber(
-      this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8 + 0x4),
-      linux ? 'INT16' : 'INT32'
-    );
-
-    this.scroll.x = handlers.memread.memReadNumber(
-      this.gameAreaAddr + BigInt(0x5c8 + 0xc0),
-      'INT32'
-    );
-
-    this.scroll.y = handlers.memread.memReadNumber(
-      this.gameAreaAddr + BigInt(0x5c8 + 0xc0 + 0x4),
-      'INT32'
-    );
-
-    this.relative.x = this.pos.x - this.scroll.x;
-
-    this.relative.y = this.pos.y - this.scroll.y;
+    this.derivedTemp.run();
   }
 
-  public advanced(): void {
-    this.enemyAlly = handlers.memread.memReadNumber(this.basePtr + BigInt(0x38), 'BYTE');
-
-    this.race = handlers.memread.memReadNumber(this.basePtr + BigInt(0x30 + 0xa), 'BYTE');
-
-    derivedFill(handlers.memread, this.basePtr + BigInt(0x1120), this.derived);
-
-    derivedFill(handlers.memread, this.basePtr + BigInt(0x2a70), this.derivedBonus);
-
-    derivedFill(handlers.memread, this.basePtr + BigInt(0x1dc8), this.derivedTemp);
-  }
-
-  public get screen(): Electron.Point {
+  public screen(): Electron.Point {
     return {
       x: Math.round(
         handlers.window.window.x +
-          (this.relative.x / this.viewport.width) * handlers.window.window.width
+          (this.basic.relative.x / this.basic.viewport.width) * handlers.window.window.width
       ),
       y: Math.round(
         handlers.window.window.y +
-          (this.relative.y / this.viewport.height) * handlers.window.window.height
+          (this.basic.relative.y / this.basic.viewport.height) * handlers.window.window.height
       ),
     };
   }

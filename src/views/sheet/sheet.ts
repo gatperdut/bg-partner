@@ -4,7 +4,7 @@ import { Sprite } from '../../sprite/sprite';
 import { eaTable } from '../../tables/ea';
 import { raceTable } from '../../tables/race';
 import { SheetAPIUpdateParams } from './renderer';
-import { spriteSanitize } from './sprite-filter';
+import { spriteView } from './sprite-view';
 
 declare const SHEET_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -58,12 +58,12 @@ export class Sheet {
   }
 
   private setListeners(): void {
-    ipcMain.on(`sheet.close.${this.sprite.id}`, (): void => {
+    ipcMain.on(`sheet.close.${this.sprite.basic.id}`, (): void => {
       this.teardown();
     });
 
     ipcMain.on(
-      `sheet.move.${this.sprite.id}`,
+      `sheet.move.${this.sprite.basic.id}`,
       (_event: Electron.IpcMainEvent, movement: Electron.Point): void => {
         this.window.setPosition(
           this.window.getPosition()[0] + movement.x,
@@ -75,7 +75,7 @@ export class Sheet {
 
   public update(): void {
     const params: SheetAPIUpdateParams = {
-      sprite: spriteSanitize(this.sprite),
+      spriteView: spriteView(this.sprite),
       eaTable: eaTable,
       raceTable: raceTable,
     };
@@ -84,7 +84,7 @@ export class Sheet {
   }
 
   private position(): Electron.Point {
-    const spriteScreen: Electron.Point = this.sprite.screen;
+    const spriteScreen: Electron.Point = this.sprite.screen();
 
     const sheetScreen: Electron.Point = {
       x: null,
@@ -144,9 +144,9 @@ export class Sheet {
   }
 
   public teardown(): void {
-    ipcMain.removeAllListeners(`sheet.close.${this.sprite.id}`);
+    ipcMain.removeAllListeners(`sheet.close.${this.sprite.basic.id}`);
 
-    ipcMain.removeAllListeners(`sheet.move.${this.sprite.id}`);
+    ipcMain.removeAllListeners(`sheet.move.${this.sprite.basic.id}`);
 
     this.window?.destroy();
 

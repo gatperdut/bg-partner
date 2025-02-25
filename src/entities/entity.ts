@@ -11,21 +11,21 @@ export class Entity {
   constructor(private gameObjectPtr: bigint) {
     this.sprite = new Sprite(this.gameObjectPtr);
 
-    this.loaded = !this.sprite.invalid;
+    this.loaded = !this.sprite.invalid();
   }
 
   public update(): void {
-    this.sprite.basic();
+    this.sprite.basic.run();
 
     if (this.sheet?.window) {
-      this.sprite.advanced();
+      this.sprite.details();
 
       this.sheet.update();
     }
   }
 
   public pointMatch(pointScreen: Electron.Point): boolean {
-    const spritePoint: Electron.Point = this.sprite.screen;
+    const spritePoint: Electron.Point = this.sprite.screen();
 
     return (
       Math.abs(spritePoint.x - pointScreen.x) < 20 && Math.abs(spritePoint.y - pointScreen.y) < 20

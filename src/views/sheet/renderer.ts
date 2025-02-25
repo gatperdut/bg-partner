@@ -1,9 +1,13 @@
-import { Sprite } from '../../sprite/sprite';
 import { EaTable } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
 import './sheet.scss';
+import { SpriteView } from './sprite-view';
 
-export type SheetAPIUpdateParams = { sprite: Sprite; eaTable: EaTable; raceTable: RaceTable };
+export type SheetAPIUpdateParams = {
+  spriteView: SpriteView;
+  eaTable: EaTable;
+  raceTable: RaceTable;
+};
 
 export type SheetAPIUpdateMethod = (params: SheetAPIUpdateParams) => void;
 
@@ -26,13 +30,13 @@ declare global {
 }
 
 class SheetRenderer {
-  private sprite: Sprite;
+  private sprite: SpriteView;
 
   private dragging: boolean = false;
 
   constructor() {
     window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
-      this.sprite = params.sprite;
+      this.sprite = params.spriteView;
 
       this.update(params);
     });
@@ -41,15 +45,16 @@ class SheetRenderer {
   }
 
   private update(params: SheetAPIUpdateParams): void {
-    document.getElementById('name').textContent = params.sprite.name;
+    document.getElementById('name').textContent = params.spriteView.basic.name;
 
-    document.getElementById('enemyAlly').title = params.eaTable[params.sprite.enemyAlly];
+    document.getElementById('enemyAlly').title =
+      params.eaTable[params.spriteView.profile.enemyAlly];
 
-    document.getElementById('hp').textContent = params.sprite.hp.toString();
+    document.getElementById('hp').textContent = params.spriteView.basic.hp.toString();
 
-    document.getElementById('hpMax').textContent = params.sprite.derived.hpMax.toString();
+    document.getElementById('hpMax').textContent = params.spriteView.derived.hpMax.toString();
 
-    document.getElementById('race').textContent = params.raceTable[params.sprite.race];
+    document.getElementById('race').textContent = params.raceTable[params.spriteView.profile.race];
   }
 
   private setEventListeners(): void {
@@ -57,7 +62,7 @@ class SheetRenderer {
     document.body.addEventListener(
       'contextmenu',
       (): void => {
-        window.sheetAPI.close(this.sprite.id);
+        window.sheetAPI.close(this.sprite.basic.id);
       },
       true
     );
@@ -80,7 +85,7 @@ class SheetRenderer {
         y: event.movementY,
       };
 
-      window.sheetAPI.move(this.sprite.id, movement);
+      window.sheetAPI.move(this.sprite.basic.id, movement);
     });
   }
 }

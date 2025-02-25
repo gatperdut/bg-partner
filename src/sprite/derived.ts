@@ -1,15 +1,13 @@
-import { Memread } from '../memread/memread';
+import { handlers } from '../handlers';
 
-export type Derived = {
-  hpMax: number;
-};
+export class Derived {
+  public hpMax: number;
 
-export const derivedEmpty = (): Derived => {
-  return {
-    hpMax: null,
-  };
-};
+  constructor(private base: bigint) {
+    // Empty
+  }
 
-export const derivedFill = (memread: Memread, basePtr: bigint, derived: Derived): void => {
-  derived.hpMax = memread.memReadNumber(basePtr + BigInt(0x4), 'INT16');
-};
+  public run(): void {
+    this.hpMax = handlers.memread.memReadNumber(this.base + BigInt(0x4), 'INT16');
+  }
+}

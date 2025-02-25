@@ -24,13 +24,13 @@ export class Entities {
   }
 
   private entitiesRemove(entities: Entity[]): void {
-    const spriteIds: number[] = _.map(entities, (entity: Entity): number => entity.sprite.id);
+    const spriteIds: number[] = _.map(entities, (entity: Entity): number => entity.sprite.basic.id);
 
     const remove: number[] = [];
 
     _.each(_.values(this.entities), (entity: Entity): void => {
-      if (!spriteIds.includes(entity.sprite.id)) {
-        remove.push(entity.sprite.id);
+      if (!spriteIds.includes(entity.sprite.basic.id)) {
+        remove.push(entity.sprite.basic.id);
       }
     });
 
@@ -45,10 +45,10 @@ export class Entities {
 
   private entitiesInsert(entities: Entity[]): void {
     _.each(entities, (entity: Entity): void => {
-      if (!this.entities[entity.sprite.id]) {
-        this.entities[entity.sprite.id] = entity;
+      if (!this.entities[entity.sprite.basic.id]) {
+        this.entities[entity.sprite.basic.id] = entity;
       } else {
-        this.entities[entity.sprite.id].sprite.basePtr = entity.sprite.basePtr;
+        this.entities[entity.sprite.basic.id].sprite.base = entity.sprite.base;
       }
     });
   }
