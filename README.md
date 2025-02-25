@@ -61,15 +61,13 @@ On its first execution BGPartner will create a [JSON](https://www.shapediver.com
 
 - `ms`: refresh rate in milliseconds.
 
-- `accelBorderless`: shortcut to make the game's window borderless and fullscreen.
+- `accelBorderless`: accelerator to make the game's window borderless and fullscreen.
 
-- `accelSheet`: shortcut to open the overlay when the mouse is over the selection circle of a creature.
+- `accelSheet`: accelerator to open the overlay when the mouse is over the selection circle of a creature.
 
-Note that both `accelBorderless` and `accelSheet` need to follow the pattern indicated by [Electron's accelerators](https://www.electronjs.org/docs/latest/api/accelerator). Keep in mind that:
+Accelerators will only be active while the game is focused, so those key combinations will remain available to be used elsewhere while BGPartner is running.
 
-- Accelerators will only work while the game is focused.
-
-- They _will_ block that same combination of keys everywhere else in your system while BGPartner is running.
+Accelerators must follow the pattern indicated by [Electron's accelerators](https://www.electronjs.org/docs/latest/api/accelerator).
 
 ### How to use
 

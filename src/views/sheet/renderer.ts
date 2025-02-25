@@ -55,6 +55,15 @@ class SheetRenderer {
     document.getElementById('hpMax').textContent = params.spriteView.derived.hpMax.toString();
 
     document.getElementById('race').textContent = params.raceTable[params.spriteView.profile.race];
+
+    document.getElementById(
+      'str'
+    ).textContent = `${params.spriteView.derived.str.toString()} (${params.spriteView.derived.strExc.toString()}%)`;
+    document.getElementById('dex').textContent = params.spriteView.derived.dex.toString();
+    document.getElementById('con').textContent = params.spriteView.derived.con.toString();
+    document.getElementById('int').textContent = params.spriteView.derived.int.toString();
+    document.getElementById('wis').textContent = params.spriteView.derived.wis.toString();
+    document.getElementById('cha').textContent = params.spriteView.derived.cha.toString();
   }
 
   private setEventListeners(): void {
