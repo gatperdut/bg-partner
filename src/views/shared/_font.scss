@@ -1,13 +1,22 @@
 @font-face {
   font-family: 'Modesto';
   src: url('../../assets/fonts/modesto-regular.ttf');
+  font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Modesto';
   src: url('../../assets/fonts/modesto-italic.ttf');
+  font-weight: normal;
   font-style: italic;
+}
+
+@font-face {
+  font-family: 'Modesto';
+  src: url('../../assets/fonts/modesto-bold.ttf');
+  font-weight: bold;
+  font-style: normal;
 }
 
 .fs-1 {
