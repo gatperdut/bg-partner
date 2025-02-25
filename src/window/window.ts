@@ -1,6 +1,6 @@
 import Electron from 'electron';
 import _ from 'lodash-es';
-import { config } from '../handlers';
+import { config, handlers } from '../handlers';
 import { WindowLinux } from './window-linux';
 import { WindowWin32 } from './window-win32';
 
@@ -17,6 +17,8 @@ export abstract class WindowOs {
     width: 0,
     height: 0,
   };
+
+  public focusedLast: boolean = null;
 
   constructor() {
     const index: number = config().obj.display;
@@ -47,5 +49,11 @@ export abstract class WindowOs {
         display.height
       }, offset (${display.x}, ${display.y}).`
     );
+  }
+
+  protected focusChanged(focused: boolean): void {
+    handlers.entities.focusChanged(focused);
+
+    handlers.shortcuts.focusChanged(focused);
   }
 }

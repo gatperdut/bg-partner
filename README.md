@@ -116,3 +116,5 @@ You may need to tell Windows Defender to whitelist the folder where the source c
 ## Development TODOs
 
 - check crash in linux when closing BG in wmctrl.
+
+- readme: how to close sheets. sheets hide when game loses focus.

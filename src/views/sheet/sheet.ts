@@ -143,6 +143,10 @@ export class Sheet {
     return sheetScreen;
   }
 
+  public focusChanged(focused: boolean): void {
+    focused ? this.window?.show() : this.window?.hide();
+  }
+
   public teardown(): void {
     ipcMain.removeAllListeners(`sheet.close.${this.sprite.basic.id}`);
 

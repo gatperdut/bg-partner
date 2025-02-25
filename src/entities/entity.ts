@@ -40,6 +40,10 @@ export class Entity {
     }
   }
 
+  public focusChanged(focused: boolean): void {
+    this.sheet?.focusChanged(focused);
+  }
+
   public teardown(): void {
     this.sheet?.teardown();
   }

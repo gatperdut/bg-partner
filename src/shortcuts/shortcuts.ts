@@ -7,17 +7,33 @@ export type Shortcuts = ShortcutsLinux | ShortcutsWin32;
 
 export abstract class ShortcutsOS {
   constructor() {
-    globalShortcut.register(config().obj.accelSheet, (): void => {
-      handlers.window.focused && this.sheetToggle();
-    });
+    // Empty
+  }
 
-    globalShortcut.register(config().obj.accelBorderless, (): void => {
-      handlers.window.focused && this.borderless();
-    });
+  private accelSheet: () => void = (): void => {
+    handlers.window.focusedLast && this.sheetToggle();
+  };
+
+  private accelBorderless: () => void = (): void => {
+    handlers.window.focusedLast && this.borderless();
+  };
+
+  private register(): void {
+    globalShortcut.register(config().obj.accelSheet, this.accelSheet);
+
+    globalShortcut.register(config().obj.accelBorderless, this.accelBorderless);
+  }
+
+  private unregister(): void {
+    globalShortcut.unregisterAll();
   }
 
   public teardown(): void {
-    globalShortcut.unregisterAll();
+    this.unregister();
+  }
+
+  public focusChanged(focused: boolean): void {
+    focused ? this.register() : this.unregister();
   }
 
   protected sheetToggle(): void {

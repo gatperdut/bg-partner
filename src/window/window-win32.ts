@@ -52,14 +52,26 @@ export class WindowWin32 extends WindowOs {
     this.window.width = rect.right - rect.left;
 
     this.window.height = rect.bottom - rect.top;
+
+    this.focusedUpdate();
   }
 
-  public get focused(): boolean {
+  private get focused(): boolean {
     const foreground: VOIDPTR = syscallsWin32().user32.GetForegroundWindow();
 
     const foregroundPid: number = syscallsWin32().helpers.getWindowThreadProcessId(foreground);
 
     return this.id === foregroundPid;
+  }
+
+  protected focusedUpdate(): void {
+    const focused: boolean = this.focused;
+
+    if (this.focusedLast !== focused) {
+      this.focusChanged(focused);
+    }
+
+    this.focusedLast = focused;
   }
 
   public setForeground(): void {

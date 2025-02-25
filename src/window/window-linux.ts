@@ -51,9 +51,11 @@ export class WindowLinux extends WindowOs {
     this.window.width = wmctrlValues[3];
 
     this.window.height = wmctrlValues[4];
+
+    this.focusedUpdate();
   }
 
-  public get focused(): boolean {
+  private get focused(): boolean {
     try {
       return (
         Number.parseInt(execSync(`xdotool getwindowfocus ${devnull}`).toString(), 10) === this.id
@@ -61,6 +63,16 @@ export class WindowLinux extends WindowOs {
     } catch (err) {
       return false;
     }
+  }
+
+  protected focusedUpdate(): void {
+    const focused: boolean = this.focused;
+
+    if (this.focusedLast !== focused) {
+      this.focusChanged(focused);
+    }
+
+    this.focusedLast = focused;
   }
 
   public setForeground(): void {

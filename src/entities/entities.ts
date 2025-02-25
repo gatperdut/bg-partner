@@ -61,6 +61,12 @@ export class Entities {
     entity?.sheetToggle();
   }
 
+  public focusChanged(focused: boolean): void {
+    _.each(_.values(this.entities), (entity: Entity): void => {
+      entity.focusChanged(focused);
+    });
+  }
+
   public teardown(): void {
     _.each(_.values(this.entities), (entity: Entity): void => {
       entity.teardown();
