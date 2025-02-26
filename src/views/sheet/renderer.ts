@@ -56,6 +56,8 @@ class SheetRenderer {
 
     document.getElementById('race').textContent = params.raceTable[params.spriteView.profile.race];
 
+    document.getElementById('base').textContent = `0x${params.spriteView.base.toString(16)}`;
+
     document.getElementById(
       'str'
     ).textContent = `${params.spriteView.derived.str.toString()} (${params.spriteView.derived.strExc.toString()}%)`;
@@ -83,68 +85,98 @@ class SheetRenderer {
     document.getElementById('wis3').textContent = params.spriteView.derivedTemp.wis.toString();
     document.getElementById('cha3').textContent = params.spriteView.derivedTemp.cha.toString();
 
-    document.getElementById('resistFire').textContent =
-      params.spriteView.derived.resistFire.toString();
-    document.getElementById('resistCold').textContent =
-      params.spriteView.derived.resistCold.toString();
-    document.getElementById('resistElectricity').textContent =
-      params.spriteView.derived.resistElectricity.toString();
-    document.getElementById('resistAcid').textContent =
-      params.spriteView.derived.resistAcid.toString();
-    document.getElementById('resistMagic').textContent =
-      params.spriteView.derived.resistMagic.toString();
-    document.getElementById('resistPoison').textContent =
-      params.spriteView.derived.resistPoison.toString();
-    document.getElementById('resistSlashing').textContent =
-      params.spriteView.derived.resistSlashing.toString();
-    document.getElementById('resistCrushing').textContent =
-      params.spriteView.derived.resistCrushing.toString();
-    document.getElementById('resistPiercing').textContent =
-      params.spriteView.derived.resistPiercing.toString();
-    document.getElementById('resistMissile').textContent =
-      params.spriteView.derived.resistMissile.toString();
+    document.getElementById(
+      'resistFire'
+    ).textContent = `${params.spriteView.derived.resistFire.toString()}%`;
+    document.getElementById(
+      'resistCold'
+    ).textContent = `${params.spriteView.derived.resistCold.toString()}%`;
+    document.getElementById(
+      'resistElectricity'
+    ).textContent = `${params.spriteView.derived.resistElectricity.toString()}%`;
+    document.getElementById(
+      'resistAcid'
+    ).textContent = `${params.spriteView.derived.resistAcid.toString()}%`;
+    document.getElementById(
+      'resistMagic'
+    ).textContent = `${params.spriteView.derived.resistMagic.toString()}%`;
+    document.getElementById(
+      'resistPoison'
+    ).textContent = `${params.spriteView.derived.resistPoison.toString()}%`;
+    document.getElementById(
+      'resistSlashing'
+    ).textContent = `${params.spriteView.derived.resistSlashing.toString()}%`;
+    document.getElementById(
+      'resistCrushing'
+    ).textContent = `${params.spriteView.derived.resistCrushing.toString()}%`;
+    document.getElementById(
+      'resistPiercing'
+    ).textContent = `${params.spriteView.derived.resistPiercing.toString()}%`;
+    document.getElementById(
+      'resistMissile'
+    ).textContent = `${params.spriteView.derived.resistMissile.toString()}%`;
 
-    document.getElementById('resistFire2').textContent =
-      params.spriteView.derivedBonus.resistFire.toString();
-    document.getElementById('resistCold2').textContent =
-      params.spriteView.derivedBonus.resistCold.toString();
-    document.getElementById('resistElectricity2').textContent =
-      params.spriteView.derivedBonus.resistElectricity.toString();
-    document.getElementById('resistAcid2').textContent =
-      params.spriteView.derivedBonus.resistAcid.toString();
-    document.getElementById('resistMagic2').textContent =
-      params.spriteView.derivedBonus.resistMagic.toString();
-    document.getElementById('resistPoison2').textContent =
-      params.spriteView.derivedBonus.resistPoison.toString();
-    document.getElementById('resistSlashing2').textContent =
-      params.spriteView.derivedBonus.resistSlashing.toString();
-    document.getElementById('resistCrushing2').textContent =
-      params.spriteView.derivedBonus.resistCrushing.toString();
-    document.getElementById('resistPiercing2').textContent =
-      params.spriteView.derivedBonus.resistPiercing.toString();
-    document.getElementById('resistMissile2').textContent =
-      params.spriteView.derivedBonus.resistMissile.toString();
+    document.getElementById(
+      'resistFire2'
+    ).textContent = `${params.spriteView.derivedBonus.resistFire.toString()}%`;
+    document.getElementById(
+      'resistCold2'
+    ).textContent = `${params.spriteView.derivedBonus.resistCold.toString()}%`;
+    document.getElementById(
+      'resistElectricity2'
+    ).textContent = `${params.spriteView.derivedBonus.resistElectricity.toString()}%`;
+    document.getElementById(
+      'resistAcid2'
+    ).textContent = `${params.spriteView.derivedBonus.resistAcid.toString()}%`;
+    document.getElementById(
+      'resistMagic2'
+    ).textContent = `${params.spriteView.derivedBonus.resistMagic.toString()}%`;
+    document.getElementById(
+      'resistPoison2'
+    ).textContent = `${params.spriteView.derivedBonus.resistPoison.toString()}%`;
+    document.getElementById(
+      'resistSlashing2'
+    ).textContent = `${params.spriteView.derivedBonus.resistSlashing.toString()}%`;
+    document.getElementById(
+      'resistCrushing2'
+    ).textContent = `${params.spriteView.derivedBonus.resistCrushing.toString()}%`;
+    document.getElementById(
+      'resistPiercing2'
+    ).textContent = `${params.spriteView.derivedBonus.resistPiercing.toString()}%`;
+    document.getElementById(
+      'resistMissile2'
+    ).textContent = `${params.spriteView.derivedBonus.resistMissile.toString()}%`;
 
-    document.getElementById('resistFire3').textContent =
-      params.spriteView.derivedTemp.resistFire.toString();
-    document.getElementById('resistCold3').textContent =
-      params.spriteView.derivedTemp.resistCold.toString();
-    document.getElementById('resistElectricity3').textContent =
-      params.spriteView.derivedTemp.resistElectricity.toString();
-    document.getElementById('resistAcid3').textContent =
-      params.spriteView.derivedTemp.resistAcid.toString();
-    document.getElementById('resistMagic3').textContent =
-      params.spriteView.derivedTemp.resistMagic.toString();
-    document.getElementById('resistPoison3').textContent =
-      params.spriteView.derivedTemp.resistPoison.toString();
-    document.getElementById('resistSlashing3').textContent =
-      params.spriteView.derivedTemp.resistSlashing.toString();
-    document.getElementById('resistCrushing3').textContent =
-      params.spriteView.derivedTemp.resistCrushing.toString();
-    document.getElementById('resistPiercing3').textContent =
-      params.spriteView.derivedTemp.resistPiercing.toString();
-    document.getElementById('resistMissile3').textContent =
-      params.spriteView.derivedTemp.resistMissile.toString();
+    document.getElementById(
+      'resistFire3'
+    ).textContent = `${params.spriteView.derivedTemp.resistFire.toString()}%`;
+    document.getElementById(
+      'resistCold3'
+    ).textContent = `${params.spriteView.derivedTemp.resistCold.toString()}%`;
+    document.getElementById(
+      'resistElectricity3'
+    ).textContent = `${params.spriteView.derivedTemp.resistElectricity.toString()}%`;
+    document.getElementById(
+      'resistAcid3'
+    ).textContent = `${params.spriteView.derivedTemp.resistAcid.toString()}%`;
+    document.getElementById(
+      'resistMagic3'
+    ).textContent = `${params.spriteView.derivedTemp.resistMagic.toString()}%`;
+    document.getElementById(
+      'resistPoison3'
+    ).textContent = `${params.spriteView.derivedTemp.resistPoison.toString()}%`;
+    document.getElementById(
+      'resistSlashing3'
+    ).textContent = `${params.spriteView.derivedTemp.resistSlashing.toString()}%`;
+    document.getElementById(
+      'resistCrushing3'
+    ).textContent = `${params.spriteView.derivedTemp.resistCrushing.toString()}%`;
+    document.getElementById(
+      'resistPiercing3'
+    ).textContent = `${params.spriteView.derivedTemp.resistPiercing.toString()}%`;
+    document.getElementById(
+      'resistMissile3'
+    ).textContent = `${params.spriteView.derivedTemp.resistMissile.toString()}%`;
 
     document.getElementById('saveVsDeath').textContent =
       params.spriteView.derived.saveVsDeath.toString();

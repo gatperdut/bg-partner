@@ -111,6 +111,28 @@ Additionally:
 
 You may need to tell Windows Defender to whitelist the folder where the source code resides. There might be slowdowns otherwise.
 
+### gdb
+
+#### Linux
+
+Simply do `pidof BaldursGate` or `pidof BaldursGateII` and then, with the produced pid, do `gdb -p <pid>`.
+
+#### Windows
+
+You can install gdb with an admin shell via Chocolatey.
+
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+choco install mingw -y
+
+$env:Path += ";C:\ProgramData\chocolatey\bin"
+```
+
+In a newly opened regular shell do `(Get-Process Baldur).Id` and then, with the produced pid, do `gdb -p <pid>`.
+
+But it will suck. TODO.
+
 ## Development TODOs
 
 - check crash in linux when closing BG in wmctrl.
