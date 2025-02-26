@@ -7,6 +7,7 @@ export type Shortcuts = ShortcutsLinux | ShortcutsWin32;
 
 export abstract class ShortcutsOS {
   constructor() {
+    // TODO remove when window.ts early return is removed.
     this.register();
     // Empty
   }
