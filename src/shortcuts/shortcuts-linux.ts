@@ -20,6 +20,8 @@ export class ShortcutsLinux extends ShortcutsOS {
       y: Number.parseInt(partsY[1], 10),
     };
 
+    console.log(point);
+
     handlers.entities.sheetToggle(point);
   }
 

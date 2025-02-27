@@ -27,32 +27,61 @@ export class WindowLinux extends WindowOs {
       return;
     }
 
-    let windowTitleHeight: number;
+    let windowOffset: Electron.Point;
 
-    try {
-      windowTitleHeight = this.id
-        ? wmctrlValues[2] -
-          Number.parseInt(
-            execSync(
-              `xwininfo -id ${this.id} | grep "Absolute upper-left Y" | awk '{print $4}' ${devnull}`
-            ).toString()
-          )
-        : 0;
-    } catch (err) {
-      return;
+    if (this.id) {
+      windowOffset = this.windowOffsetGet(wmctrlValues);
+
+      if (!windowOffset) {
+        return;
+      }
+    } else {
+      windowOffset = { x: 0, y: 0 };
     }
 
     this.id = wmctrlValues[0];
 
-    this.window.x = wmctrlValues[1];
+    this.window.x = wmctrlValues[1] - windowOffset.x;
 
-    this.window.y = wmctrlValues[2] - windowTitleHeight;
+    this.window.y = wmctrlValues[2] - windowOffset.y;
 
     this.window.width = wmctrlValues[3];
 
     this.window.height = wmctrlValues[4];
 
+    console.log(this.window);
     this.focusedUpdate();
+  }
+
+  private windowOffsetGet(wmctrlValues: number[]): Electron.Point {
+    const result: Electron.Point = { x: 0, y: 0 };
+
+    try {
+      // const xwininfo: string = execSync(`xwininfo -id ${this.id}`).toString();
+
+      result.x = this.id
+        ? Number.parseInt(
+            execSync(
+              `xwininfo -id ${this.id} | grep "Relative upper-left X" | awk '{print $4}' ${devnull}`
+            ).toString(),
+            10
+          )
+        : 0;
+
+      result.y = this.id
+        ? wmctrlValues[2] -
+          Number.parseInt(
+            execSync(
+              `xwininfo -id ${this.id} | grep "Absolute upper-left Y" | awk '{print $4}' ${devnull}`
+            ).toString(),
+            10
+          )
+        : 0;
+    } catch (err) {
+      return null;
+    }
+
+    return result;
   }
 
   private get focused(): boolean {
