@@ -17,7 +17,9 @@ export class Effects {
     let node: Node = this.ptrList.head;
 
     for (let i: number = 0; i <= this.ptrList.count; i++) {
-      this.effects.push(new Effect(node.data));
+      const effect: Effect = new Effect(node.data);
+
+      this.effects.push(effect);
 
       node = new Node(node.next);
     }

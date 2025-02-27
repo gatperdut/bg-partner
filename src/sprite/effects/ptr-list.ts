@@ -13,10 +13,6 @@ export class PtrList {
 
     this.tail = new Node(this.base + BigInt(0x10));
 
-    // this.head = new Node(this.base + BigInt(0x10));
-
-    // this.tail = new Node(this.base + BigInt(0x30));
-
     this.count = handlers.memread.memReadNumber(this.base + BigInt(0x18), 'INT32');
   }
 }
