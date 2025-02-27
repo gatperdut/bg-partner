@@ -22,14 +22,14 @@ Just run the executable - double-click on it, or run it from a shell for some mo
 
 Linux is a bit more involved.
 
-First off, ASLR (address space layout randomization) needs to be disabled and process tracing needs to be allowed. The following commands will take care of changing the system settings, but these will not survive a system restart.
+First off, both `ASLR` (address space layout randomization) and `ptrace_scope` need to be disabled. The following commands will take care of changing the system settings, but these will not survive a system restart.
 
-- ASLR: `echo 0 | sudo tee /proc/sys/kernel/randomize_va_space`
-- ptrace: `echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope`
+- ASLR: `echo 0 > /proc/sys/kernel/randomize_va_space`
+- ptrace: `echo 0 > /proc/sys/kernel/yama/ptrace_scope`
 
-There are ways to make the changes permanent, but that is not recommended. Re-run the commands next time you boot up the computer and want to use BGPartner.
+There are ways to make the changes permanent, but that is not recommended. Re-run the commands next time you boot up the computer and want to use BGPartner. Alternatively, check [linux_on.sh](scripts/linux_on.sh) that automatizes it.
 
-When you are done with BGPartner, exchange the `0` with a `1` in the commands and run them again (or simply restart).
+When you are done with BGPartner, exchange the `0` with a `1` in the commands and run them again (or simply restart, or run [linux_off.sh](scripts/linux_off.sh)).
 
 Additionally, make sure the following tools are available:
 
@@ -79,7 +79,7 @@ Once BGPartner launches successfully, you will see this window:
 
 The upper line will display "❌ Process not found." if no running instance of a game could be found.
 
-The next 2 lines are Linux-Only and will indicate if the configuration steps from above were successful. If they were not, they will display "❌ ASLR is enabled." and "❌ ptrace is not allowed." respectively.
+The next 2 lines are Linux-Only and will indicate if the configuration steps from above were successful. If they were not, they will display "❌ ASLR is enabled." and "❌ ptrace_scope is enabled." respectively.
 
 Next up is the configuration in use. This will closely resemble your `bg-partner.json`, though individual keys may have reverted to the defaults if the provided value was invalid. The JSON object might have been replaced in its entirety, too, if, for example, you provided an invalid JSON. So make sure to double-check.
 
@@ -96,6 +96,8 @@ TODO
 BGPartner is very much in development, specially when it comes to testing under different environments. So far, only the Steam version of the games under Ubuntu / Windows 11 are officially supported.
 
 If you encounter problems or would like to share your suggestions please note them down as a Github issue [here](https://github.com/gatperdut/bg-partner/issues).
+
+BGPartner never quite worked on Ubuntu with Wayland, so xorg is recommended.
 
 ## Development
 

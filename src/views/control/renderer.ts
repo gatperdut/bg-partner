@@ -64,8 +64,8 @@ class ControlRenderer {
       : '❌ ASLR is enabled.';
 
     document.getElementById('reqs-ptrace').textContent = reqsObj.ptrace
-      ? '✅ ptrace is allowed.'
-      : '❌ ptrace is not allowed.';
+      ? '✅ ptrace_scope is disabled.'
+      : '❌ ptrace_scope is enabled.';
   }
 
   private updateAlive(alive: boolean): void {
