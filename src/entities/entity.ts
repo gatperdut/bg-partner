@@ -27,10 +27,6 @@ export class Entity {
   public pointMatch(pointScreen: Electron.Point): boolean {
     const spritePoint: Electron.Point = this.sprite.screen();
 
-    if (this.sprite.basic.name === 'Minsc') {
-      console.log('Minsc', spritePoint);
-    }
-
     return (
       Math.abs(spritePoint.x - pointScreen.x) < 20 && Math.abs(spritePoint.y - pointScreen.y) < 20
     );
