@@ -1,6 +1,7 @@
 import { handlers } from '../handlers';
 import { Basic } from './basic';
 import { Derived } from './derived';
+import { Effects } from './effects/effects';
 import { Profile } from './profile';
 
 export class Sprite {
@@ -14,6 +15,8 @@ export class Sprite {
 
   public derivedTemp: Derived;
 
+  public timedEffects: Effects;
+
   constructor(public base: bigint) {
     this.basic = new Basic(base);
 
@@ -24,6 +27,8 @@ export class Sprite {
     this.derivedBonus = new Derived(base + BigInt(0x2a70));
 
     this.derivedTemp = new Derived(base + BigInt(0x1dc8));
+
+    this.timedEffects = new Effects(base + BigInt(0x4a00));
   }
 
   public invalid(): boolean {
@@ -48,6 +53,8 @@ export class Sprite {
     this.derivedBonus.run();
 
     this.derivedTemp.run();
+
+    this.timedEffects.run();
   }
 
   public screen(): Electron.Point {
