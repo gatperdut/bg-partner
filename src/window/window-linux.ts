@@ -49,7 +49,6 @@ export class WindowLinux extends WindowOs {
 
     this.window.height = wmctrlValues[4];
 
-    console.log(this.window);
     this.focusedUpdate();
   }
 

@@ -28,7 +28,7 @@ export class Entity {
     const spritePoint: Electron.Point = this.sprite.screen();
 
     if (this.sprite.basic.name === 'Minsc') {
-      console.log(spritePoint);
+      console.log('Minsc', spritePoint);
     }
 
     return (
