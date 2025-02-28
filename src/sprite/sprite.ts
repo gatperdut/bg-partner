@@ -1,4 +1,5 @@
 import { handlers } from '../handlers';
+import { linux } from '../index';
 import { Basic } from './basic';
 import { Derived } from './derived';
 import { Effects } from './effects/effects';
@@ -28,7 +29,7 @@ export class Sprite {
 
     this.derivedTemp = new Derived(base + BigInt(0x1dc8));
 
-    this.timedEffects = new Effects(base + BigInt(0x4a00));
+    this.timedEffects = new Effects(base + BigInt(0x4a00 - (linux ? 0x18 : 0)));
   }
 
   public invalid(): boolean {

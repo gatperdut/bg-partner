@@ -17,7 +17,7 @@ export class Entity {
   public update(): void {
     this.sprite.basic.run();
 
-    if (this.sheet?.window?.isVisible()) {
+    if (this.sheet?.window && !this.sheet.window.isDestroyed() && this.sheet.window.isVisible()) {
       this.sprite.details();
 
       this.sheet.update();
