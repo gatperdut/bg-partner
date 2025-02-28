@@ -1,3 +1,4 @@
+import { Components } from './components/components';
 import { Config } from './config/config';
 import { Entities } from './entities/entities';
 import { Memread } from './memread/memread';
@@ -29,6 +30,7 @@ export type Handlers = {
   entities: Entities;
   shortcuts: Shortcuts;
   control: Control;
+  components: Components;
 };
 
 export const handlers: Handlers = {
@@ -41,6 +43,7 @@ export const handlers: Handlers = {
   entities: null,
   shortcuts: null,
   control: null,
+  components: null,
 };
 
 export const reqsLinux = (): ReqsLinux => {

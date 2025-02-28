@@ -3,24 +3,24 @@ import {
   ControlAPIConfig,
   ControlAPIConfigMethod,
   ControlAPIConfigSet,
-  ControlAPIReqs,
-  ControlAPIReqsMethod,
+  ControlAPISetup,
+  ControlAPISetupMethod,
   ControlAPIUpdate,
   ControlAPIUpdateMethod,
 } from './renderer';
 
 export type ControlAPIBridge = {
-  reqs: (callback: ControlAPIReqs) => Electron.IpcRenderer;
+  setup: (callback: ControlAPISetup) => Electron.IpcRenderer;
   config: (callback: ControlAPIConfig) => Electron.IpcRenderer;
   configSet: ControlAPIConfigSet;
   update: (callback: ControlAPIUpdate) => Electron.IpcRenderer;
 };
 
 const controlAPIBridge: ControlAPIBridge = {
-  reqs: (callback: ControlAPIReqs): Electron.IpcRenderer => {
+  setup: (callback: ControlAPISetup): Electron.IpcRenderer => {
     return ipcRenderer.on(
-      'control.reqs',
-      (_event: Electron.IpcRendererEvent, value: ControlAPIReqsMethod): void => callback(value)
+      'control.setup',
+      (_event: Electron.IpcRendererEvent, value: ControlAPISetupMethod): void => callback(value)
     );
   },
   config: (callback: ControlAPIConfig): Electron.IpcRenderer => {

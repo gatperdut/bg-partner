@@ -2,12 +2,12 @@ import { ConfigObj } from '../../config/config';
 import { ReqsObj } from '../../reqs/reqs';
 import './control.scss';
 
-// control.reqs
-export type ControlAPIReqsParams = { reqsObj: ReqsObj };
+// control.setup
+export type ControlAPISetupParams = { reqsObj: ReqsObj };
 
-export type ControlAPIReqsMethod = (params: ControlAPIReqsParams) => void;
+export type ControlAPISetupMethod = (params: ControlAPISetupParams) => void;
 
-export type ControlAPIReqs = (data: ControlAPIReqsMethod) => void;
+export type ControlAPISetup = (data: ControlAPISetupMethod) => void;
 
 // control.config
 export type ControlAPIConfigParams = { configObj: ConfigObj };
@@ -27,7 +27,7 @@ export type ControlAPIUpdateMethod = (params: ControlAPIUpdateParams) => void;
 export type ControlAPIUpdate = (data: ControlAPIUpdateMethod) => void;
 
 export type ControlAPI = {
-  reqs: ControlAPIReqs;
+  setup: ControlAPISetup;
   config: ControlAPIConfig;
   configSet: ControlAPIConfigSet;
   update: ControlAPIUpdate;
@@ -43,7 +43,7 @@ class ControlRenderer {
   private alivePrev: boolean = null;
 
   constructor() {
-    window.controlAPI.reqs((params: ControlAPIReqsParams): void => {
+    window.controlAPI.setup((params: ControlAPISetupParams): void => {
       this.reqs(params.reqsObj);
     });
 

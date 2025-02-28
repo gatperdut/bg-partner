@@ -1,3 +1,4 @@
+import { Derived } from '../../sprite/derived';
 import { Sprite } from '../../sprite/sprite';
 
 type Stripped<T> = Pick<
@@ -8,6 +9,8 @@ type Stripped<T> = Pick<
 >;
 
 export type SpriteView = Stripped<Sprite>;
+
+export type DerivedView = Stripped<Derived>;
 
 export const spriteView = (sprite: Sprite): SpriteView => {
   return {

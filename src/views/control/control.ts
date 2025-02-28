@@ -47,7 +47,7 @@ export class Control {
 
     this.window.loadURL(CONTROL_WEBPACK_ENTRY).then((): void => {
       if (linux) {
-        this.window.webContents.send('control.reqs', { reqsObj: reqsLinux().obj });
+        this.window.webContents.send('control.setup', { reqsObj: reqsLinux().obj });
       }
 
       this.window.webContents.send('control.config', { configObj: config().obj });

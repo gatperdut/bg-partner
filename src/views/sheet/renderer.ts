@@ -1,11 +1,26 @@
 import { EaTable } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
-import { Abilities } from './abilities/abilities';
+import { AbilitiesGroup } from './components/abilities-group/abilities-group';
 import './sheet.scss';
 import { SpriteView } from './sprite-view';
 
+// sheet.setup
+export type SheetAPISetupParams = {
+  components: Record<string, string>;
+};
+
+export type SheetAPISetupMethod = (params: SheetAPISetupParams) => void;
+
+export type SheetAPISetup = (data: SheetAPISetupMethod) => void;
+
+// sheet.move
+export type SheetAPIMove = (id: number, movement: Electron.Point) => void;
+
+// sheet.close
+export type SheetAPIClose = (id: number) => void;
+
+// sheet.update
 export type SheetAPIUpdateParams = {
-  templates: Record<string, string>;
   spriteView: SpriteView;
   eaTable: EaTable;
   raceTable: RaceTable;
@@ -13,13 +28,10 @@ export type SheetAPIUpdateParams = {
 
 export type SheetAPIUpdateMethod = (params: SheetAPIUpdateParams) => void;
 
-export type SheetAPIMove = (id: number, movement: Electron.Point) => void;
-
 export type SheetAPIUpdate = (data: SheetAPIUpdateMethod) => void;
 
-export type SheetAPIClose = (id: number) => void;
-
 export type SheetAPI = {
+  setup: SheetAPISetup;
   move: SheetAPIMove;
   update: SheetAPIUpdate;
   close: SheetAPIClose;
@@ -34,13 +46,19 @@ declare global {
 class SheetRenderer {
   private sprite: SpriteView;
 
+  private components: Record<string, string>;
+
   private dragging: boolean = false;
 
   constructor() {
+    window.sheetAPI.setup((params: SheetAPISetupParams): void => {
+      this.components = params.components;
+    });
+
     window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
       this.sprite = params.spriteView;
 
-      this.update(params);
+      this.components && this.update(params);
     });
 
     this.setEventListeners();
@@ -60,36 +78,11 @@ class SheetRenderer {
 
     document.getElementById('base').innerHTML = `0x${params.spriteView.base.toString(16)}`;
 
-    document.getElementById('abilities').innerHTML = new Abilities(
-      params.templates.abilities,
+    document.getElementById('abilitiesGroup').innerHTML = new AbilitiesGroup(
+      this.components.abilitiesGroup,
+      this.components.abilities,
       params.spriteView
     ).html;
-    // document.getElementById(
-    //   'str'
-    // ).innerHTML = `${params.spriteView.derived.str.toString()} (${params.spriteView.derived.strExc.toString()}%)`;
-    // document.getElementById('dex').innerHTML = params.spriteView.derived.dex.toString();
-    // document.getElementById('con').innerHTML = params.spriteView.derived.con.toString();
-    // document.getElementById('int').innerHTML = params.spriteView.derived.int.toString();
-    // document.getElementById('wis').innerHTML = params.spriteView.derived.wis.toString();
-    // document.getElementById('cha').innerHTML = params.spriteView.derived.cha.toString();
-
-    document.getElementById(
-      'str2'
-    ).innerHTML = `${params.spriteView.derivedBonus.str.toString()} (${params.spriteView.derivedBonus.strExc.toString()}%)`;
-    document.getElementById('dex2').innerHTML = params.spriteView.derivedBonus.dex.toString();
-    document.getElementById('con2').innerHTML = params.spriteView.derivedBonus.con.toString();
-    document.getElementById('int2').innerHTML = params.spriteView.derivedBonus.int.toString();
-    document.getElementById('wis2').innerHTML = params.spriteView.derivedBonus.wis.toString();
-    document.getElementById('cha2').innerHTML = params.spriteView.derivedBonus.cha.toString();
-
-    document.getElementById(
-      'str3'
-    ).innerHTML = `${params.spriteView.derivedTemp.str.toString()} (${params.spriteView.derivedTemp.strExc.toString()}%)`;
-    document.getElementById('dex3').innerHTML = params.spriteView.derivedTemp.dex.toString();
-    document.getElementById('con3').innerHTML = params.spriteView.derivedTemp.con.toString();
-    document.getElementById('int3').innerHTML = params.spriteView.derivedTemp.int.toString();
-    document.getElementById('wis3').innerHTML = params.spriteView.derivedTemp.wis.toString();
-    document.getElementById('cha3').innerHTML = params.spriteView.derivedTemp.cha.toString();
 
     document.getElementById(
       'resistFire'

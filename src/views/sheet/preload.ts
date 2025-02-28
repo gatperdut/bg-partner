@@ -1,7 +1,16 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { SheetAPIClose, SheetAPIMove, SheetAPIUpdate, SheetAPIUpdateMethod } from './renderer';
+import {
+  SheetAPIClose,
+  SheetAPIMove,
+  SheetAPISetup,
+  SheetAPISetupMethod,
+  SheetAPIUpdate,
+  SheetAPIUpdateMethod,
+} from './renderer';
 
 export type SheetAPIBridge = {
+  setup: (callback: SheetAPISetup) => Electron.IpcRenderer;
+
   move: SheetAPIMove;
 
   close: SheetAPIClose;
@@ -10,6 +19,12 @@ export type SheetAPIBridge = {
 };
 
 const sheetAPIBridge: SheetAPIBridge = {
+  setup: (callback: SheetAPISetup): Electron.IpcRenderer => {
+    return ipcRenderer.on(
+      'sheet.setup',
+      (_event: Electron.IpcRendererEvent, value: SheetAPISetupMethod): void => callback(value)
+    );
+  },
   move: (id: number, movement: Electron.Point): void => {
     ipcRenderer.send(`sheet.move.${id}`, movement);
   },

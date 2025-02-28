@@ -10,6 +10,7 @@ import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
 import { SyscallsLinux } from './syscalls/linux/syscalls-linux';
 import { SyscallsWin32 } from './syscalls/win32/syscalls-win32';
 
+import { Components } from './components/components';
 import { Config } from './config/config';
 import { config, handlers } from './handlers';
 import { ReqsLinux } from './reqs/reqs-linux';
@@ -36,6 +37,8 @@ export class Main {
     handlers.shortcuts = linux ? new ShortcutsLinux() : new ShortcutsWin32();
 
     handlers.control = new Control();
+
+    handlers.components = new Components();
   }
 
   public run(): void {
