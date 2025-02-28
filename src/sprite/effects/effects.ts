@@ -1,3 +1,5 @@
+import _ from 'lodash-es';
+import { effectTable } from '../../tables/effect';
 import { Effect } from './effect';
 import { Node } from './node';
 import { PtrList } from './ptr-list';
@@ -8,20 +10,33 @@ export class Effects {
   public effects: Effect[] = [];
 
   constructor(private base: bigint) {
-    this.ptrList = new PtrList(base);
+    // Empty
   }
 
+  private printed: boolean = false;
+
   public run(): void {
+    this.ptrList = new PtrList(this.base);
+
     this.effects.length = 0;
 
     let node: Node = this.ptrList.head;
 
     for (let i: number = 0; i <= this.ptrList.count; i++) {
-      const effect: Effect = new Effect(node.data);
+      const effect: Effect = new Effect(node.data());
 
       this.effects.push(effect);
 
-      node = new Node(node.next);
+      node = node.next();
+    }
+
+    if (!this.printed) {
+      console.log(this.ptrList.count, 'effects');
+      _.each(this.effects, (effect) => {
+        console.log(effectTable[effect.id]);
+      });
+      console.log(this.effects);
+      this.printed = true;
     }
   }
 }
