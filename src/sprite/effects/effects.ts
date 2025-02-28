@@ -22,12 +22,12 @@ export class Effects {
 
     let node: Node = this.ptrList.head;
 
-    for (let i: number = 0; i <= this.ptrList.count; i++) {
+    for (let i: number = 0; i < this.ptrList.count; i++) {
       const effect: Effect = new Effect(node.data());
 
       this.effects.push(effect);
 
-      node = node.next();
+      node = node.next;
     }
 
     if (!this.printed) {

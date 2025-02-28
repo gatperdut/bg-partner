@@ -5,14 +5,16 @@ export class Node {
 
   public dataPtr: bigint;
 
+  public next: Node;
+
   constructor(private base: bigint) {
     this.nextPtr = this.base;
 
-    this.dataPtr = this.base + BigInt(0x10);
-  }
+    if (this.nextPtr) {
+      this.next = new Node(handlers.memread.memReadBigint(this.nextPtr, 'ADDR'));
+    }
 
-  public next(): Node {
-    return new Node(handlers.memread.memReadBigint(this.nextPtr, 'ADDR'));
+    this.dataPtr = this.base + BigInt(0x10);
   }
 
   public data(): bigint {
