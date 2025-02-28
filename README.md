@@ -57,7 +57,7 @@ On its first execution BGPartner will create a [JSON](https://www.shapediver.com
 
 - `exe`: the name of the executable. On Windows this is always `Baldur.exe`, and will likely require no change. On Linux it is either `BaldursGate` or `BaldursGateII`, so edit accordingly.
 
-- `display`: `null` to use your primary display, or a number between 0 and 1 less than your number of displays (`0` or `1` if you have two displays, for example). May require a bit of trial and error, though `0` most likely corresponds to your primary display. Run the game in whatever display you select here.
+- `display`: `null` to use your primary display, or a number between 0 and 1 less than your number of displays (`0` or `1` if you have two displays, for example). This may require a bit of trial and error. Run the game in whatever display you select here.
 
 - `ms`: refresh rate in milliseconds.
 
