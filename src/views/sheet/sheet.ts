@@ -1,4 +1,6 @@
 import { BrowserWindow, ipcMain } from 'electron';
+import fs from 'fs';
+import path from 'path';
 import { handlers } from '../../handlers';
 import { Sprite } from '../../sprite/sprite';
 import { eaTable } from '../../tables/ea';
@@ -17,15 +19,26 @@ export class Sheet {
 
   public window: BrowserWindow;
 
+  public templates: Record<string, string> = {};
+
   constructor(private sprite: Sprite) {
+    this.templatesSetup();
+
     this.windowCreate();
 
     // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
-    // this.window.webContents.openDevTools({ mode: 'detach' });
+    this.window.webContents.openDevTools({ mode: 'detach' });
 
     handlers.window.setForeground();
 
     this.setListeners();
+  }
+
+  private templatesSetup(): void {
+    this.templates.abilities = fs.readFileSync(
+      path.join(__dirname, 'views', 'sheet', 'abilities', 'abilities.hbs'),
+      'utf-8'
+    );
   }
 
   private windowCreate(): void {
@@ -50,6 +63,7 @@ export class Sheet {
       hasShadow: false,
       transparent: false,
       resizable: false,
+      autoHideMenuBar: true,
     });
 
     this.window.setAlwaysOnTop(true, 'screen-saver');
@@ -75,6 +89,7 @@ export class Sheet {
 
   public update(): void {
     const params: SheetAPIUpdateParams = {
+      templates: this.templates,
       spriteView: spriteView(this.sprite),
       eaTable: eaTable,
       raceTable: raceTable,

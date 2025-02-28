@@ -31,10 +31,12 @@
     "@electron-forge/plugin-fuses": "^7.6.1",
     "@electron-forge/plugin-webpack": "^7.6.1",
     "@electron/fuses": "^1.8.0",
+    "@types/handlebars": "^4.0.40",
     "@types/lodash-es": "^4.17.12",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",
+    "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^6.11.0",
     "electron": "34.1.1",
     "eslint": "^8.57.1",
@@ -51,6 +53,7 @@
   },
   "dependencies": {
     "css-fx-layout": "^3.0.5",
+    "handlebars": "^4.7.8",
     "joi": "^17.13.3",
     "koffi": "^2.10.1",
     "lodash-es": "4.17.21"

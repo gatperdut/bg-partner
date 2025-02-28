@@ -8,8 +8,6 @@ export const PROCESS_QUERY_LIMITED_INFORMATION: number = 0x1000;
 
 export const DWMWA_EXTENDED_FRAME_BOUNDS: number = 9;
 
-export const VK_LSHIFT = 0xa0;
-
 export const STILL_ACTIVE = 259;
 
 export const SW_SHOW = 5;
