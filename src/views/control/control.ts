@@ -63,6 +63,7 @@ export class Control {
   }
 
   public run(): void {
-    this.window?.webContents.send('control.update', { alive: handlers.memscan.alive });
+    !this.window.isDestroyed() &&
+      this.window?.webContents.send('control.update', { alive: handlers.memscan.alive });
   }
 }
