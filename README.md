@@ -137,6 +137,6 @@ But it will suck. TODO.
 
 ## Development TODOs
 
-- check crash in linux when closing BG in wmctrl.
-
 - readme: how to close sheets. sheets hide when game loses focus.
+
+- sheets in windows become gradually bigger when draging them?!
