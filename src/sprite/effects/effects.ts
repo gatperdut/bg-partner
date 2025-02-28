@@ -35,7 +35,6 @@ export class Effects {
       _.each(this.effects, (effect) => {
         console.log(effectTable[effect.id]);
       });
-      console.log(this.effects);
       this.printed = true;
     }
   }
