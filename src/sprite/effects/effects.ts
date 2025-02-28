@@ -22,7 +22,11 @@ export class Effects {
     for (let i: number = 0; i < count; i++) {
       const effectPtr: bigint = handlers.memread.memReadBigint(nodePtr + BigInt(0x10), 'ADDR');
 
-      this.effects.push(new Effect(effectPtr));
+      const effect: Effect = new Effect(effectPtr);
+
+      if (!effect.invalid()) {
+        this.effects.push(effect);
+      }
 
       nodePtr = handlers.memread.memReadBigint(nodePtr, 'ADDR');
     }
