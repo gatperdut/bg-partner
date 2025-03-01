@@ -13,6 +13,7 @@ export class Components {
     );
   }
 
+  // TODO can this be automatized?
   constructor() {
     this.register('abilities', ['sheet', 'components', 'abilities', 'abilities.hbs']);
 
@@ -31,5 +32,9 @@ export class Components {
       'resistances-group',
       'resistances-group.hbs',
     ]);
+
+    this.register('saves', ['sheet', 'components', 'saves', 'saves.hbs']);
+
+    this.register('savesGroup', ['sheet', 'components', 'saves-group', 'saves-group.hbs']);
   }
 }

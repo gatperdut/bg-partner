@@ -1,7 +1,7 @@
 import Handlebars from 'handlebars';
 import { DerivedView } from '../../sprite-view';
 
-export class Abilities {
+export class Saves {
   public html: string;
 
   constructor(templateAbilities: string, derivedView: DerivedView) {

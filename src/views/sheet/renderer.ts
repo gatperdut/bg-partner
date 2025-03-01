@@ -3,6 +3,7 @@ import { EaTable } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
 import { AbilitiesGroup } from './components/abilities-group/abilities-group';
 import { ResistancesGroup } from './components/resistances-group/resistances-group';
+import { SavesGroup } from './components/saves-group/saves-group';
 import './sheet.scss';
 import { SpriteView } from './sprite-view';
 
@@ -90,38 +91,10 @@ class SheetRenderer {
       params.spriteView
     ).html;
 
-    document.getElementById('saveVsDeath').innerHTML =
-      params.spriteView.derived.saveVsDeath.toString();
-    document.getElementById('saveVsWands').innerHTML =
-      params.spriteView.derived.saveVsWands.toString();
-    document.getElementById('saveVsPoly').innerHTML =
-      params.spriteView.derived.saveVsPoly.toString();
-    document.getElementById('saveVsBreath').innerHTML =
-      params.spriteView.derived.saveVsBreath.toString();
-    document.getElementById('saveVsSpell').innerHTML =
-      params.spriteView.derived.saveVsSpell.toString();
-
-    document.getElementById('saveVsDeath2').innerHTML =
-      params.spriteView.derivedBonus.saveVsDeath.toString();
-    document.getElementById('saveVsWands2').innerHTML =
-      params.spriteView.derivedBonus.saveVsWands.toString();
-    document.getElementById('saveVsPoly2').innerHTML =
-      params.spriteView.derivedBonus.saveVsPoly.toString();
-    document.getElementById('saveVsBreath2').innerHTML =
-      params.spriteView.derivedBonus.saveVsBreath.toString();
-    document.getElementById('saveVsSpell2').innerHTML =
-      params.spriteView.derivedBonus.saveVsSpell.toString();
-
-    document.getElementById('saveVsDeath3').innerHTML =
-      params.spriteView.derivedTemp.saveVsDeath.toString();
-    document.getElementById('saveVsWands3').innerHTML =
-      params.spriteView.derivedTemp.saveVsWands.toString();
-    document.getElementById('saveVsPoly3').innerHTML =
-      params.spriteView.derivedTemp.saveVsPoly.toString();
-    document.getElementById('saveVsBreath3').innerHTML =
-      params.spriteView.derivedTemp.saveVsBreath.toString();
-    document.getElementById('saveVsSpell3').innerHTML =
-      params.spriteView.derivedTemp.saveVsSpell.toString();
+    document.getElementById('savesGroup').innerHTML = new SavesGroup(
+      this.components,
+      params.spriteView
+    ).html;
   }
 
   private setEventListeners(): void {

@@ -7,13 +7,21 @@ export class AbilitiesGroup {
   public html: string;
 
   constructor(componentsRecord: ComponentsRecord, spriteView: SpriteView) {
-    const abilities = new Abilities(componentsRecord.abilities, spriteView.derived);
+    const abilities: Abilities = new Abilities(componentsRecord.abilities, spriteView.derived);
 
-    const abilitiesBonus = new Abilities(componentsRecord.abilities, spriteView.derivedBonus);
+    const abilitiesBonus: Abilities = new Abilities(
+      componentsRecord.abilities,
+      spriteView.derivedBonus
+    );
 
-    const abilitiesTemp = new Abilities(componentsRecord.abilities, spriteView.derivedTemp);
+    const abilitiesTemp: Abilities = new Abilities(
+      componentsRecord.abilities,
+      spriteView.derivedTemp
+    );
 
-    const compiled = Handlebars.compile(componentsRecord.abilitiesGroup);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
+      componentsRecord.abilitiesGroup
+    );
 
     this.html = compiled({
       abilities: abilities.html,
