@@ -109,7 +109,7 @@ Additionally:
 - `npm i` to install dependencies.
 - `npm run start` to launch.
 
-[Visual Studio Code](https://code.visualstudio.com/) is a good IDE to consider.
+[Visual Studio Code](https://code.visualstudio.com) is a good IDE to consider.
 
 You may need to tell Windows Defender to whitelist the folder where the source code resides. There might be slowdowns otherwise.
 
