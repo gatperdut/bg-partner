@@ -1,22 +1,19 @@
 import Handlebars from 'handlebars';
+import { ComponentsRecord } from '../../../../components/components';
 import { SpriteView } from '../../sprite-view';
 import { Resistances } from '../resistances/resistances';
 
 export class ResistancesGroup {
   public html: string;
 
-  constructor(
-    templateResistancesGroup: string,
-    templateResistances: string,
-    spriteView: SpriteView
-  ) {
-    const resistances = new Resistances(templateResistances, spriteView.derived);
+  constructor(componentsRecord: ComponentsRecord, spriteView: SpriteView) {
+    const resistances = new Resistances(componentsRecord.resistances, spriteView.derived);
 
-    const resistancesBonus = new Resistances(templateResistances, spriteView.derivedBonus);
+    const resistancesBonus = new Resistances(componentsRecord.resistances, spriteView.derivedBonus);
 
-    const resistancesTemp = new Resistances(templateResistances, spriteView.derivedTemp);
+    const resistancesTemp = new Resistances(componentsRecord.resistances, spriteView.derivedTemp);
 
-    const compiled = Handlebars.compile(templateResistancesGroup);
+    const compiled = Handlebars.compile(componentsRecord.resistancesGroup);
 
     this.html = compiled({
       resistances: resistances.html,

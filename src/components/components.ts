@@ -1,42 +1,35 @@
 import fs from 'fs';
 import path from 'path';
 
+export type ComponentsRecord = Record<string, string>;
+
 export class Components {
-  public components: Record<string, string> = {};
+  public componentsRecord: ComponentsRecord = {};
+
+  private register(name: string, segments: string[]): void {
+    this.componentsRecord[name] = fs.readFileSync(
+      path.join(__dirname, ...['views', ...segments]),
+      'utf-8'
+    );
+  }
 
   constructor() {
-    this.components.abilities = fs.readFileSync(
-      path.join(__dirname, 'views', 'sheet', 'components', 'abilities', 'abilities.hbs'),
-      'utf-8'
-    );
+    this.register('abilities', ['sheet', 'components', 'abilities', 'abilities.hbs']);
 
-    this.components.abilitiesGroup = fs.readFileSync(
-      path.join(
-        __dirname,
-        'views',
-        'sheet',
-        'components',
-        'abilities-group',
-        'abilities-group.hbs'
-      ),
-      'utf-8'
-    );
+    this.register('abilitiesGroup', [
+      'sheet',
+      'components',
+      'abilities-group',
+      'abilities-group.hbs',
+    ]);
 
-    this.components.resistances = fs.readFileSync(
-      path.join(__dirname, 'views', 'sheet', 'components', 'resistances', 'resistances.hbs'),
-      'utf-8'
-    );
+    this.register('resistances', ['sheet', 'components', 'resistances', 'resistances.hbs']);
 
-    this.components.resistancesGroup = fs.readFileSync(
-      path.join(
-        __dirname,
-        'views',
-        'sheet',
-        'components',
-        'resistances-group',
-        'resistances-group.hbs'
-      ),
-      'utf-8'
-    );
+    this.register('resistancesGroup', [
+      'sheet',
+      'components',
+      'resistances-group',
+      'resistances-group.hbs',
+    ]);
   }
 }

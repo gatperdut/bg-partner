@@ -1,3 +1,4 @@
+import { ComponentsRecord } from '../../components/components';
 import { EaTable } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
 import { AbilitiesGroup } from './components/abilities-group/abilities-group';
@@ -7,7 +8,7 @@ import { SpriteView } from './sprite-view';
 
 // sheet.setup
 export type SheetAPISetupParams = {
-  components: Record<string, string>;
+  componentsRecord: ComponentsRecord;
 };
 
 export type SheetAPISetupMethod = (params: SheetAPISetupParams) => void;
@@ -47,13 +48,13 @@ declare global {
 class SheetRenderer {
   private sprite: SpriteView;
 
-  private components: Record<string, string>;
+  private components: ComponentsRecord;
 
   private dragging: boolean = false;
 
   constructor() {
     window.sheetAPI.setup((params: SheetAPISetupParams): void => {
-      this.components = params.components;
+      this.components = params.componentsRecord;
     });
 
     window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
@@ -80,14 +81,12 @@ class SheetRenderer {
     document.getElementById('base').innerHTML = `0x${params.spriteView.base.toString(16)}`;
 
     document.getElementById('abilitiesGroup').innerHTML = new AbilitiesGroup(
-      this.components.abilitiesGroup,
-      this.components.abilities,
+      this.components,
       params.spriteView
     ).html;
 
     document.getElementById('resistancesGroup').innerHTML = new ResistancesGroup(
-      this.components.resistancesGroup,
-      this.components.resistances,
+      this.components,
       params.spriteView
     ).html;
 

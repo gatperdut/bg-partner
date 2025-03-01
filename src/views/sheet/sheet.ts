@@ -56,7 +56,9 @@ export class Sheet {
     this.window.setAlwaysOnTop(true, 'screen-saver');
 
     this.window.loadURL(SHEET_WEBPACK_ENTRY).then((): void => {
-      this.window.webContents.send('sheet.setup', { components: handlers.components.components });
+      this.window.webContents.send('sheet.setup', {
+        componentsRecord: handlers.components.componentsRecord,
+      });
     });
   }
 
