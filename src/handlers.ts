@@ -10,6 +10,8 @@ import { MemscanWin32 } from './memscan/memscan-win32';
 import { Reqs } from './reqs/reqs';
 import { ReqsLinux } from './reqs/reqs-linux';
 import { ReqsWin32 } from './reqs/reqs-win32';
+import { Spells } from './res/spl/spells';
+import { Talks } from './res/tlk/talks';
 import { Shortcuts } from './shortcuts/shortcuts';
 import { ShortcutsLinux } from './shortcuts/shortcuts-linux';
 import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
@@ -24,6 +26,8 @@ import { WindowWin32 } from './window/window-win32';
 export type Handlers = {
   reqs: Reqs;
   config: Config;
+  talks: Talks;
+  spells: Spells;
   syscalls: Syscalls;
   memread: Memread;
   memscan: Memscan;
@@ -36,7 +40,9 @@ export type Handlers = {
 
 export const handlers: Handlers = {
   reqs: null,
+  talks: null,
   config: null,
+  spells: null,
   syscalls: null,
   memread: null,
   memscan: null,
@@ -46,6 +52,8 @@ export const handlers: Handlers = {
   control: null,
   components: null,
 };
+
+// TODO add the missing ones? and maybe use them?
 
 export const reqsLinux = (): ReqsLinux => {
   return handlers.reqs as ReqsLinux;

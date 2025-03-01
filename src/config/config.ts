@@ -11,6 +11,8 @@ export type ConfigObj = {
 
   path: string;
 
+  locale: string;
+
   display: number;
 
   ms: number;
@@ -29,6 +31,8 @@ export class Config {
 
   private pathPatternWin32: RegExp = /^(~|[a-zA-Z]:|\\\\[^<>:"|?*\n]+)(\\[^<>:"|?*\n]+)*\\?$/;
 
+  private localePattern: RegExp = /^(de_DE|en_US|es_ES|fr_FR|it_IT|ko_KR|pl_PL|ru_RU|zh_CN)$/;
+
   private accelPattern: RegExp =
     /^(?:(?:CommandOrControl|CmdOrCtrl|Control|Ctrl|Alt|AltGr|Shift|Super))\+[A-Za-z0-9]+$/;
 
@@ -37,6 +41,7 @@ export class Config {
     path: Joi.string()
       .pattern(linux ? this.pathPatternLinux : this.pathPatternWin32)
       .min(1),
+    locale: Joi.string().pattern(this.localePattern).min(5).max(5),
     display: Joi.number().integer().min(0).allow(null),
     ms: Joi.number().integer().min(100),
     accelBorderless: Joi.string().pattern(this.accelPattern).min(1),
@@ -46,6 +51,7 @@ export class Config {
   private default: ConfigObj = {
     exe: linux ? 'BaldursGateII' : 'Baldur.exe',
     path: null,
+    locale: 'en_US',
     display: null,
     ms: 300,
     accelBorderless: 'CommandOrControl+Q',

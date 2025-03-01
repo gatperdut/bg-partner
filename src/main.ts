@@ -15,6 +15,8 @@ import { Config } from './config/config';
 import { config, handlers } from './handlers';
 import { ReqsLinux } from './reqs/reqs-linux';
 import { ReqsWin32 } from './reqs/reqs-win32';
+import { Spells } from './res/spl/spells';
+import { Talks } from './res/tlk/talks';
 import { Control } from './views/control/control';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
@@ -24,6 +26,10 @@ export class Main {
     handlers.reqs = linux ? new ReqsLinux() : new ReqsWin32();
 
     handlers.config = new Config();
+
+    handlers.talks = new Talks();
+
+    handlers.spells = new Spells();
 
     handlers.syscalls = linux ? new SyscallsLinux() : new SyscallsWin32();
 

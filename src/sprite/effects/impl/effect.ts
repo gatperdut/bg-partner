@@ -2,6 +2,8 @@ import { handlers } from '../../../handlers';
 import { effectTable } from '../../../tables/effect';
 
 export abstract class Effect {
+  public effectId: number;
+
   public res: string;
 
   public res2: string;
@@ -21,6 +23,8 @@ export abstract class Effect {
   public param5: number;
 
   constructor(public id: number, protected base: bigint) {
+    this.effectId = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x8), 'INT32');
+
     this.res = handlers.memread.memReadString(base + BigInt(0x8 + 0x28));
 
     this.res2 = handlers.memread.memReadString(base + BigInt(0x8 + 0x68));

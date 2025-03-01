@@ -14,6 +14,7 @@ export type ReqsOsObj = {
 
 export abstract class ReqsOs {
   public pathCheck(): boolean {
+    // TODO could check for the individual files that are needed? chitin.key in particular is unlikely to be used.
     return fs.existsSync(path.join(handlers.config.obj.path, 'chitin.key'));
   }
 }

@@ -11,3 +11,20 @@ export const joinASCII = (codes: number[]): string => {
 
   return result.join('');
 };
+
+export const readBufferString = (buffer: Buffer, base: number, length: number): string => {
+  const result: number[] = [];
+
+  let code: number;
+  for (let i: number = 0; i < length; i++) {
+    code = buffer.readUInt8(base + i);
+
+    if (!code) {
+      break;
+    }
+
+    result.push(code);
+  }
+
+  return joinASCII(result);
+};
