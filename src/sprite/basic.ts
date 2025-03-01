@@ -52,7 +52,7 @@ export class Basic {
     );
 
     const nameAddr: bigint = handlers.memread.memReadBigint(
-      this.base + BigInt(linux ? 0x3910 : 0x3928),
+      this.base + BigInt(0x3928 - (linux ? 0x18 : 0x0)),
       'ADDR'
     );
 

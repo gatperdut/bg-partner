@@ -25,9 +25,9 @@ export class Sprite {
 
     this.derived = new Derived(base + BigInt(0x1120));
 
-    this.derivedBonus = new Derived(base + BigInt(0x2a70));
+    this.derivedTemp = new Derived(base + BigInt(0x1dc8 - (linux ? 0x8 : 0x0)));
 
-    this.derivedTemp = new Derived(base + BigInt(0x1dc8));
+    this.derivedBonus = new Derived(base + BigInt(0x2a70 - (linux ? 0x10 : 0x0)));
 
     this.timedEffects = new Effects(base + BigInt(0x4a00 - (linux ? 0x18 : 0)));
   }
