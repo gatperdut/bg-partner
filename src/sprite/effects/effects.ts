@@ -1,10 +1,15 @@
 import _ from 'lodash-es';
 import { handlers } from '../../handlers';
 import { effectTable } from '../../tables/effect';
-import { Effect } from './effect';
+import { EffectFactory } from './effect-factory';
+import { Effect } from './impl/effect';
 
 export class Effects {
   public effects: Effect[] = [];
+
+  private effectFactory: EffectFactory = new EffectFactory();
+
+  public static invalidRegex: RegExp = /^(Graphics|Script)|Sound_Effect$/;
 
   constructor(private base: bigint) {
     // Empty
@@ -22,21 +27,29 @@ export class Effects {
     for (let i: number = 0; i < count; i++) {
       const effectPtr: bigint = handlers.memread.memReadBigint(nodePtr + BigInt(0x10), 'ADDR');
 
-      const effect: Effect = new Effect(effectPtr);
+      const id: number = handlers.memread.memReadNumber(effectPtr + BigInt(0x8 + 0x8), 'UINT32');
 
-      if (!effect.invalid()) {
-        this.effects.push(effect);
+      if (this.invalid(id)) {
+        continue;
       }
+
+      const effect: Effect = this.effectFactory.create(id, effectPtr);
+
+      this.effects.push(effect);
 
       nodePtr = handlers.memread.memReadBigint(nodePtr, 'ADDR');
     }
 
     if (!this.printed) {
       _.each(this.effects, (effect: Effect): void => {
-        console.log(effectTable[effect.id]);
+        effect.summary();
       });
 
       this.printed = true;
     }
+  }
+
+  public invalid(id: number): boolean {
+    return Effects.invalidRegex.test(effectTable[id]);
   }
 }
