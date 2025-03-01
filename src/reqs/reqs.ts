@@ -1,5 +1,4 @@
 import fs from 'fs';
-import os from 'os';
 import path from 'path';
 import { handlers } from '../handlers';
 import { ReqsLinux, ReqsLinuxObj } from './reqs-linux';
@@ -14,12 +13,6 @@ export type ReqsOsObj = {
 
 export abstract class ReqsOs {
   public pathCheck(): boolean {
-    const configPath: string = handlers.config.obj.path;
-
-    const configPathExpanded: string = configPath.startsWith('~')
-      ? path.join(os.homedir(), configPath.slice(1))
-      : configPath;
-
-    return fs.existsSync(path.join(configPathExpanded, 'chitin.key'));
+    return fs.existsSync(path.join(handlers.config.obj.path, 'chitin.key'));
   }
 }

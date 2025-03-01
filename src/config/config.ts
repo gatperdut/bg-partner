@@ -2,6 +2,7 @@ import { app } from 'electron';
 import * as fs from 'fs';
 import Joi, { ObjectSchema, ValidationError, ValidationErrorItem } from 'joi';
 import _ from 'lodash-es';
+import os from 'os';
 import * as path from 'path';
 import { linux } from '../index';
 
@@ -24,7 +25,7 @@ export type ConfigObjKey = keyof ConfigObj;
 export class Config {
   private exePattern: RegExp = /^[a-zA-Z0-9.]+$/;
 
-  private pathPatternLinux: RegExp = /^(~|\/)([^<>:"|?*\n]+\/?)*$/;
+  private pathPatternLinux: RegExp = /^\/(?:[a-zA-Z0-9._-]+\/?)*$/;
 
   private pathPatternWin32: RegExp = /^(~|[a-zA-Z]:|\\\\[^<>:"|?*\n]+)(\\[^<>:"|?*\n]+)*\\?$/;
 
@@ -76,7 +77,11 @@ export class Config {
   }
 
   private defaultField<K extends ConfigObjKey>(configObj: ConfigObj, field: K) {
-    configObj[field] = this.default[field];
+    if (field === 'path') {
+      configObj.path = os.homedir();
+    } else {
+      configObj[field] = this.default[field];
+    }
   }
 
   private get filePath(): string {

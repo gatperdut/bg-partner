@@ -47,7 +47,7 @@ On its first execution BGPartner will create a [JSON](https://www.shapediver.com
 ```
   {
     "exe": "BaldursGateII" (Linux) / "Baldur.exe" (Windows),
-    "path": null,
+    "path": "/home/<user>" (Linux) / "TODO" (Windows),
     "display": null,
     "ms": 300,
     "accelBorderless": "CommandOrControl+Q",
@@ -58,7 +58,7 @@ On its first execution BGPartner will create a [JSON](https://www.shapediver.com
 
 - `exe`: the name of the executable. On Windows this is always `Baldur.exe`, and will likely require no change. On Linux it is either `BaldursGate` or `BaldursGateII`, so edit accordingly.
 
-- `path`: the path to the installation folder. On Linux, `~` can be used.
+- `path`: the path to the installation folder. Use absolute paths and, on Linux, avoid `~`.
 
 - `display`: `null` to use your primary display, or a number between 0 and 1 less than your number of displays (`0` or `1` if you have two displays, for example). This may require a bit of trial and error. Run the game in whatever display you select here.
 
