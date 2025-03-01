@@ -1,7 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import {
-  ControlAPIConfig,
-  ControlAPIConfigMethod,
   ControlAPIConfigSet,
   ControlAPISetup,
   ControlAPISetupMethod,
@@ -11,7 +9,6 @@ import {
 
 export type ControlAPIBridge = {
   setup: (callback: ControlAPISetup) => Electron.IpcRenderer;
-  config: (callback: ControlAPIConfig) => Electron.IpcRenderer;
   configSet: ControlAPIConfigSet;
   update: (callback: ControlAPIUpdate) => Electron.IpcRenderer;
 };
@@ -21,12 +18,6 @@ const controlAPIBridge: ControlAPIBridge = {
     return ipcRenderer.on(
       'control.setup',
       (_event: Electron.IpcRendererEvent, value: ControlAPISetupMethod): void => callback(value)
-    );
-  },
-  config: (callback: ControlAPIConfig): Electron.IpcRenderer => {
-    return ipcRenderer.on(
-      'control.config',
-      (_event: Electron.IpcRendererEvent, value: ControlAPIConfigMethod): void => callback(value)
     );
   },
   configSet: (height: number): void => {

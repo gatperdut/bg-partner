@@ -5,20 +5,20 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-echo 0 > /proc/sys/kernel/randomize_va_space
+echo 1 > /proc/sys/kernel/randomize_va_space
 
-echo 0 > /proc/sys/kernel/yama/ptrace_scope
+echo 1 > /proc/sys/kernel/yama/ptrace_scope
 
 current_value=$(cat /proc/sys/kernel/randomize_va_space)
-if [ "$current_value" -eq 0 ]; then
-    echo "ASLR has been disabled."
+if [ "$current_value" -eq 1 ]; then
+    echo "ASLR has been enabled."
 else
-    echo "Failed to disable ASLR."
+    echo "Failed to enable ASLR."
 fi
 
 current_value=$(cat /proc/sys/kernel/yama/ptrace_scope)
-if [ "$current_value" -eq 0 ]; then
-    echo "ptrace_scope has been disabled."
+if [ "$current_value" -eq 1 ]; then
+    echo "ptrace_scope has been enabled."
 else
-    echo "Failed to disable ptrace_scope."
+    echo "Failed to enable ptrace_scope."
 fi

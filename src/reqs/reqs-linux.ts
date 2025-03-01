@@ -14,10 +14,10 @@ export class ReqsLinux {
   };
 
   constructor() {
-    this.run();
+    // Empty
   }
 
-  private run(): void {
+  public run(): void {
     const aslrOut: string = execSync(`cat /proc/sys/kernel/randomize_va_space ${devnull}`)
       .toString()
       .trim();

@@ -46,11 +46,11 @@ export class Control {
     this.window.removeMenu();
 
     this.window.loadURL(CONTROL_WEBPACK_ENTRY).then((): void => {
-      if (linux) {
-        this.window.webContents.send('control.setup', { reqsObj: reqsLinux().obj });
-      }
-
-      this.window.webContents.send('control.config', { configObj: config().obj });
+      this.window.webContents.send('control.setup', {
+        linux: linux,
+        reqsObj: reqsLinux().obj,
+        configObj: config().obj,
+      });
     });
 
     this.window.once('closed', (): void => {
@@ -64,6 +64,10 @@ export class Control {
 
   public run(): void {
     !this.window.isDestroyed() &&
-      this.window?.webContents.send('control.update', { alive: handlers.memscan.alive });
+      this.window?.webContents.send('control.update', {
+        linux: linux,
+        alive: handlers.memscan.alive,
+        reqsObj: reqsLinux().obj,
+      });
   }
 }

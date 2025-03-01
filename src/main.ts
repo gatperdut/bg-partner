@@ -46,6 +46,10 @@ export class Main {
   }
 
   private loop(): void {
+    if (linux) {
+      handlers.reqs.run();
+    }
+
     if (!handlers.memscan.alive) {
       handlers.memscan.init();
     }
