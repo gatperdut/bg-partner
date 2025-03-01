@@ -36,9 +36,7 @@ class ControlRenderer {
 
   constructor() {
     window.controlAPI.setup((params: ControlAPISetupParams): void => {
-      if (params.linux) {
-        this.reqs(params.reqsObj);
-      }
+      this.reqs(params.linux, params.reqsObj);
 
       this.updateConfig(params.configObj);
 
@@ -48,20 +46,24 @@ class ControlRenderer {
     window.controlAPI.update((params: ControlAPIUpdateParams): void => {
       this.updateAlive(params.alive);
 
-      if (params.linux) {
-        this.reqs(params.reqsObj);
-      }
+      this.reqs(params.linux, params.reqsObj);
     });
   }
 
-  private reqs(reqsObj: ReqsObj): void {
-    document.getElementById('reqs-aslr').textContent = reqsObj.aslr
-      ? '✅ ASLR is disabled.'
-      : '❌ ASLR is enabled.';
+  private reqs(linux: boolean, reqsObj: ReqsObj): void {
+    document.getElementById('reqs-path').textContent = reqsObj.path
+      ? '✅ Path looks valid.'
+      : '❌ Path looks invalid.';
 
-    document.getElementById('reqs-ptrace').textContent = reqsObj.ptrace
-      ? '✅ ptrace_scope is disabled.'
-      : '❌ ptrace_scope is enabled.';
+    if (linux) {
+      document.getElementById('reqs-aslr').textContent = reqsObj.aslr
+        ? '✅ ASLR is disabled.'
+        : '❌ ASLR is enabled.';
+
+      document.getElementById('reqs-ptrace').textContent = reqsObj.ptrace
+        ? '✅ ptrace_scope is disabled.'
+        : '❌ ptrace_scope is enabled.';
+    }
   }
 
   private updateAlive(alive: boolean): void {
