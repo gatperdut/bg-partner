@@ -9,10 +9,6 @@ export class ReqsWin32 extends ReqsOs {
     path: null,
   };
 
-  constructor() {
-    super();
-  }
-
   public run(): void {
     // path
     this.obj.path = this.pathCheck();

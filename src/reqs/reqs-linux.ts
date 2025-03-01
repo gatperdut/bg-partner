@@ -15,10 +15,6 @@ export class ReqsLinux extends ReqsOs {
     ptrace: null,
   };
 
-  constructor() {
-    super();
-  }
-
   public run(): void {
     // path
     this.obj.path = this.pathCheck();
