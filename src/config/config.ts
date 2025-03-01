@@ -8,6 +8,8 @@ import { linux } from '../index';
 export type ConfigObj = {
   exe: string;
 
+  path: string;
+
   display: number;
 
   ms: number;
@@ -22,11 +24,18 @@ export type ConfigObjKey = keyof ConfigObj;
 export class Config {
   private exePattern: RegExp = /^[a-zA-Z0-9.]+$/;
 
+  private pathPatternLinux: RegExp = /^(~|\/)([^<>:"|?*\n]+\/?)*$/;
+
+  private pathPatternWin32: RegExp = /^(~|[a-zA-Z]:|\\\\[^<>:"|?*\n]+)(\\[^<>:"|?*\n]+)*\\?$/;
+
   private accelPattern: RegExp =
     /^(?:(?:CommandOrControl|CmdOrCtrl|Control|Ctrl|Alt|AltGr|Shift|Super))\+[A-Za-z0-9]+$/;
 
   private schema: ObjectSchema<ConfigObj> = Joi.object<ConfigObj>({
     exe: Joi.string().pattern(this.exePattern).min(1),
+    path: Joi.string()
+      .pattern(linux ? this.pathPatternLinux : this.pathPatternWin32)
+      .min(1),
     display: Joi.number().integer().min(0).allow(null),
     ms: Joi.number().integer().min(100),
     accelBorderless: Joi.string().pattern(this.accelPattern).min(1),
@@ -35,6 +44,7 @@ export class Config {
 
   private default: ConfigObj = {
     exe: linux ? 'BaldursGateII' : 'Baldur.exe',
+    path: null,
     display: null,
     ms: 300,
     accelBorderless: 'CommandOrControl+Q',

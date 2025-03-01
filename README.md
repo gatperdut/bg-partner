@@ -1,6 +1,6 @@
 # BGPartner
 
-BGPartner (Baldur's Gate Partner) is a Linux/Windows (64 and 32 bits respectively) companion tool for the 2.6.6 versions of Baldur's Gate and Baldur's Gate II: Shadows of Amn. It produces overlays on user-selected creatures detailing their stats and active effects.
+BGPartner (Baldur's Gate Partner) is a Linux/Windows (64 and 32 bits respectively) companion tool for the Enhanced Editions v2.6.6 of Baldur's Gate and Baldur's Gate II: Shadows of Amn. It produces overlays on user-selected creatures detailing their stats and active effects.
 
 It's a [Node.js](https://nodejs.org) + [Electron](https://www.electronjs.org)/[Forge](https://www.electronforge.io) + [Koffi](https://koffi.dev) + [Handlebars](https://handlebarsjs.com) project.
 
@@ -47,6 +47,7 @@ On its first execution BGPartner will create a [JSON](https://www.shapediver.com
 ```
   {
     "exe": "BaldursGateII" (Linux) / "Baldur.exe" (Windows),
+    "path": null,
     "display": null,
     "ms": 300,
     "accelBorderless": "CommandOrControl+Q",
@@ -56,6 +57,8 @@ On its first execution BGPartner will create a [JSON](https://www.shapediver.com
 ```
 
 - `exe`: the name of the executable. On Windows this is always `Baldur.exe`, and will likely require no change. On Linux it is either `BaldursGate` or `BaldursGateII`, so edit accordingly.
+
+- `path`: the path to the installation folder. On Linux, `~` can be used.
 
 - `display`: `null` to use your primary display, or a number between 0 and 1 less than your number of displays (`0` or `1` if you have two displays, for example). This may require a bit of trial and error. Run the game in whatever display you select here.
 
