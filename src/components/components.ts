@@ -21,5 +21,22 @@ export class Components {
       ),
       'utf-8'
     );
+
+    this.components.resistances = fs.readFileSync(
+      path.join(__dirname, 'views', 'sheet', 'components', 'resistances', 'resistances.hbs'),
+      'utf-8'
+    );
+
+    this.components.resistancesGroup = fs.readFileSync(
+      path.join(
+        __dirname,
+        'views',
+        'sheet',
+        'components',
+        'resistances-group',
+        'resistances-group.hbs'
+      ),
+      'utf-8'
+    );
   }
 }

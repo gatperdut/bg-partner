@@ -1,6 +1,7 @@
 import { EaTable } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
 import { AbilitiesGroup } from './components/abilities-group/abilities-group';
+import { ResistancesGroup } from './components/resistances-group/resistances-group';
 import './sheet.scss';
 import { SpriteView } from './sprite-view';
 
@@ -84,98 +85,11 @@ class SheetRenderer {
       params.spriteView
     ).html;
 
-    document.getElementById(
-      'resistFire'
-    ).innerHTML = `${params.spriteView.derived.resistFire.toString()}%`;
-    document.getElementById(
-      'resistCold'
-    ).innerHTML = `${params.spriteView.derived.resistCold.toString()}%`;
-    document.getElementById(
-      'resistElectricity'
-    ).innerHTML = `${params.spriteView.derived.resistElectricity.toString()}%`;
-    document.getElementById(
-      'resistAcid'
-    ).innerHTML = `${params.spriteView.derived.resistAcid.toString()}%`;
-    document.getElementById(
-      'resistMagic'
-    ).innerHTML = `${params.spriteView.derived.resistMagic.toString()}%`;
-    document.getElementById(
-      'resistPoison'
-    ).innerHTML = `${params.spriteView.derived.resistPoison.toString()}%`;
-    document.getElementById(
-      'resistSlashing'
-    ).innerHTML = `${params.spriteView.derived.resistSlashing.toString()}%`;
-    document.getElementById(
-      'resistCrushing'
-    ).innerHTML = `${params.spriteView.derived.resistCrushing.toString()}%`;
-    document.getElementById(
-      'resistPiercing'
-    ).innerHTML = `${params.spriteView.derived.resistPiercing.toString()}%`;
-    document.getElementById(
-      'resistMissile'
-    ).innerHTML = `${params.spriteView.derived.resistMissile.toString()}%`;
-
-    document.getElementById(
-      'resistFire2'
-    ).innerHTML = `${params.spriteView.derivedBonus.resistFire.toString()}%`;
-    document.getElementById(
-      'resistCold2'
-    ).innerHTML = `${params.spriteView.derivedBonus.resistCold.toString()}%`;
-    document.getElementById(
-      'resistElectricity2'
-    ).innerHTML = `${params.spriteView.derivedBonus.resistElectricity.toString()}%`;
-    document.getElementById(
-      'resistAcid2'
-    ).innerHTML = `${params.spriteView.derivedBonus.resistAcid.toString()}%`;
-    document.getElementById(
-      'resistMagic2'
-    ).innerHTML = `${params.spriteView.derivedBonus.resistMagic.toString()}%`;
-    document.getElementById(
-      'resistPoison2'
-    ).innerHTML = `${params.spriteView.derivedBonus.resistPoison.toString()}%`;
-    document.getElementById(
-      'resistSlashing2'
-    ).innerHTML = `${params.spriteView.derivedBonus.resistSlashing.toString()}%`;
-    document.getElementById(
-      'resistCrushing2'
-    ).innerHTML = `${params.spriteView.derivedBonus.resistCrushing.toString()}%`;
-    document.getElementById(
-      'resistPiercing2'
-    ).innerHTML = `${params.spriteView.derivedBonus.resistPiercing.toString()}%`;
-    document.getElementById(
-      'resistMissile2'
-    ).innerHTML = `${params.spriteView.derivedBonus.resistMissile.toString()}%`;
-
-    document.getElementById(
-      'resistFire3'
-    ).innerHTML = `${params.spriteView.derivedTemp.resistFire.toString()}%`;
-    document.getElementById(
-      'resistCold3'
-    ).innerHTML = `${params.spriteView.derivedTemp.resistCold.toString()}%`;
-    document.getElementById(
-      'resistElectricity3'
-    ).innerHTML = `${params.spriteView.derivedTemp.resistElectricity.toString()}%`;
-    document.getElementById(
-      'resistAcid3'
-    ).innerHTML = `${params.spriteView.derivedTemp.resistAcid.toString()}%`;
-    document.getElementById(
-      'resistMagic3'
-    ).innerHTML = `${params.spriteView.derivedTemp.resistMagic.toString()}%`;
-    document.getElementById(
-      'resistPoison3'
-    ).innerHTML = `${params.spriteView.derivedTemp.resistPoison.toString()}%`;
-    document.getElementById(
-      'resistSlashing3'
-    ).innerHTML = `${params.spriteView.derivedTemp.resistSlashing.toString()}%`;
-    document.getElementById(
-      'resistCrushing3'
-    ).innerHTML = `${params.spriteView.derivedTemp.resistCrushing.toString()}%`;
-    document.getElementById(
-      'resistPiercing3'
-    ).innerHTML = `${params.spriteView.derivedTemp.resistPiercing.toString()}%`;
-    document.getElementById(
-      'resistMissile3'
-    ).innerHTML = `${params.spriteView.derivedTemp.resistMissile.toString()}%`;
+    document.getElementById('resistancesGroup').innerHTML = new ResistancesGroup(
+      this.components.resistancesGroup,
+      this.components.resistances,
+      params.spriteView
+    ).html;
 
     document.getElementById('saveVsDeath').innerHTML =
       params.spriteView.derived.saveVsDeath.toString();
