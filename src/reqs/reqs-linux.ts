@@ -1,5 +1,4 @@
 import { execSync } from 'child_process';
-import _ from 'lodash-es';
 import { devnull } from '../const/const-linux';
 import { ReqsOs, ReqsOsObj } from './reqs';
 
@@ -22,9 +21,7 @@ export class ReqsLinux extends ReqsOs {
 
   public run(): void {
     // path
-    if (_.isNull(this.obj.path)) {
-      this.obj.path = this.pathCheck();
-    }
+    this.obj.path = this.pathCheck();
 
     // ASLR
     const aslrOut: string = execSync(`cat /proc/sys/kernel/randomize_va_space ${devnull}`)
@@ -43,5 +40,9 @@ export class ReqsLinux extends ReqsOs {
     const ptrace: number = Number.parseInt(ptraceOut, 10);
 
     this.obj.ptrace = ptrace === 0;
+  }
+
+  public valid(): boolean {
+    return this.obj.path && this.obj.aslr && this.obj.ptrace;
   }
 }

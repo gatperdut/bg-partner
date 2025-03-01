@@ -14,13 +14,14 @@ import { Components } from './components/components';
 import { Config } from './config/config';
 import { config, handlers } from './handlers';
 import { ReqsLinux } from './reqs/reqs-linux';
+import { ReqsWin32 } from './reqs/reqs-win32';
 import { Control } from './views/control/control';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 
 export class Main {
   constructor() {
-    handlers.reqs = linux ? new ReqsLinux() : null;
+    handlers.reqs = linux ? new ReqsLinux() : new ReqsWin32();
 
     handlers.config = new Config();
 
@@ -58,7 +59,7 @@ export class Main {
 
     handlers.control.run();
 
-    if (!handlers.memscan.alive) {
+    if (!handlers.memscan.alive || !handlers.reqs.valid()) {
       handlers.window.teardown();
 
       handlers.entities.teardown();

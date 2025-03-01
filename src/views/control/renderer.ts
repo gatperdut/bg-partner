@@ -1,5 +1,6 @@
 import { ConfigObj } from '../../config/config';
 import { ReqsObj } from '../../reqs/reqs';
+import { ReqsLinuxObj } from '../../reqs/reqs-linux';
 import './control.scss';
 
 // control.setup
@@ -56,11 +57,11 @@ class ControlRenderer {
       : '❌ Path looks invalid.';
 
     if (linux) {
-      document.getElementById('reqs-aslr').textContent = reqsObj.aslr
+      document.getElementById('reqs-aslr').textContent = (reqsObj as ReqsLinuxObj).aslr
         ? '✅ ASLR is disabled.'
         : '❌ ASLR is enabled.';
 
-      document.getElementById('reqs-ptrace').textContent = reqsObj.ptrace
+      document.getElementById('reqs-ptrace').textContent = (reqsObj as ReqsLinuxObj).ptrace
         ? '✅ ptrace_scope is disabled.'
         : '❌ ptrace_scope is enabled.';
     }

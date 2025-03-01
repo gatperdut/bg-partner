@@ -9,6 +9,7 @@ import { MemscanLinux } from './memscan/memscan-linux';
 import { MemscanWin32 } from './memscan/memscan-win32';
 import { Reqs } from './reqs/reqs';
 import { ReqsLinux } from './reqs/reqs-linux';
+import { ReqsWin32 } from './reqs/reqs-win32';
 import { Shortcuts } from './shortcuts/shortcuts';
 import { ShortcutsLinux } from './shortcuts/shortcuts-linux';
 import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
@@ -47,7 +48,11 @@ export const handlers: Handlers = {
 };
 
 export const reqsLinux = (): ReqsLinux => {
-  return handlers.reqs;
+  return handlers.reqs as ReqsLinux;
+};
+
+export const reqsWin32 = (): ReqsWin32 => {
+  return handlers.reqs as ReqsWin32;
 };
 
 export const config = (): Config => {
