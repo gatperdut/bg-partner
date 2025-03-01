@@ -1,6 +1,6 @@
 # BGPartner
 
-BGPartner (Baldur's Gate Partner) is a Linux/Windows (64 and 32 bits respectively) companion tool for the 2.6.6 versions of Baldur's Gate and Baldur's Gate II: Shadows of Amn. It produces overlays on user-selected creatures detailing their stats and effects.
+BGPartner (Baldur's Gate Partner) is a Linux/Windows (64 and 32 bits respectively) companion tool for the 2.6.6 versions of Baldur's Gate and Baldur's Gate II: Shadows of Amn. It produces overlays on user-selected creatures detailing their stats and active effects.
 
 It's a [Node.js](https://nodejs.org) + [Electron Forge](https://www.electronforge.io) + [Koffi](https://koffi.dev) + [Handlebars](https://handlebarsjs.com) project.
 
