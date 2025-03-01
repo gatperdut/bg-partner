@@ -116,7 +116,7 @@ Additionally:
 
 You may need to tell Windows Defender to whitelist the folder where the source code resides. There might be slowdowns otherwise.
 
-### gdb
+### gdb process
 
 #### Linux
 
@@ -137,6 +137,16 @@ $env:Path += ";C:\ProgramData\chocolatey\bin"
 In a newly opened regular shell do `(Get-Process Baldur).Id` and then, with the produced pid, do `gdb -p <pid>`.
 
 But it will suck. TODO.
+
+### gdb for files
+You can also use gdb to examine binary files like `.biff`, but it needs a dummy process, and you must allocate enough memory for the file. For example, the following will print `66 'B'	73 'I'	70 'F'	70 'F'` if executed from the game's `data` folder:
+```
+bash&
+gdb -p $(pgrep -n bash)
+(gdb) call malloc(1024 * 1024 * 2)
+(gdb) restore Spells.bif binary $1
+(gdb) x/4cb $1
+```
 
 ## Development TODOs
 
