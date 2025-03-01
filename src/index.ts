@@ -22,5 +22,5 @@ app.on('window-all-closed', (): void => {
 });
 
 app.on('before-quit', (): void => {
-  handlers.shortcuts.teardown();
+  handlers.shortcuts?.teardown();
 });
