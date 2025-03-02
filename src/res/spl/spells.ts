@@ -3,8 +3,10 @@ import path from 'path';
 import { handlers } from '../../handlers';
 import { Spell } from './spell';
 
+export type SpellsRecord = Record<string, Spell>;
+
 export class Spells {
-  public spells: Spell[] = [];
+  public spells: SpellsRecord = {};
 
   constructor() {
     const buffer: Buffer = fs.readFileSync(
@@ -23,7 +25,13 @@ export class Spells {
 
       const spell: Spell = new Spell(buffer, spellOffset, spellSize);
 
-      this.spells.push(spell);
+      if (spell.code) {
+        if (this.spells[spell.code]) {
+          console.log('spell code appears twice?', spell.code);
+        }
+
+        this.spells[spell.code] = spell;
+      }
     }
   }
 }

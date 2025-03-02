@@ -1,26 +1,52 @@
-import { joinASCII } from '../../utils';
+import { handlers } from '../../handlers';
+import { readBufferString } from '../../utils';
 
 export class Spell {
+  public code: string;
+
+  public name: string;
+
+  public mschool: number;
+
+  public msectype: number;
+
+  public description: string;
+
+  public level: number;
+
+  public bam: string;
+
+  // TODO
+  public bypassMirrorImage: boolean;
+
   constructor(buffer: Buffer, offset: number, size: number) {
     const data: Buffer = Uint8Array.prototype.slice.call(buffer, offset, offset + size);
 
-    const featureTableOffset = data.readInt32LE(0x6a);
+    const extendedHeaderOffset: number = data.readInt32LE(0x64);
 
-    const featureOffset = data.readUint16LE(0x6e);
-    const featureCount = data.readUint16LE(0x70);
+    this.bam = readBufferString(data, extendedHeaderOffset + 0x4, 8);
 
-    for (let i = 0; i < featureCount; i++) {
-      console.log(this.readStr(data, featureTableOffset + i * 48 + 0x14, 8));
-    }
-  }
-
-  private readStr(buffer: Buffer, base: number, length: number): string {
-    const result: number[] = [];
-
-    for (let i: number = 0; i < length; i++) {
-      result.push(buffer.readUInt8(base + i));
+    if (!this.bam) {
+      console.log('no BAM?');
     }
 
-    return joinASCII(result);
+    this.code = this.bam.slice(0, -1);
+
+    this.mschool = data.readInt8(0x25);
+
+    this.msectype = data.readInt8(0x27);
+
+    const nameRef1: number = data.readInt32LE(0x8);
+
+    const nameRef2: number = data.readInt32LE(0xc);
+
+    this.name =
+      handlers.talks.talks[nameRef1] || handlers.talks.talks[nameRef2] || 'No name available.';
+
+    const descriptionRef: number = data.readInt32LE(0x50);
+
+    this.description = handlers.talks.talks[descriptionRef] || 'No description available.';
+
+    this.level = data.readInt32LE(0x34);
   }
 }
