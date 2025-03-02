@@ -10,12 +10,12 @@ import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
 import { SyscallsLinux } from './syscalls/linux/syscalls-linux';
 import { SyscallsWin32 } from './syscalls/win32/syscalls-win32';
 
+import { Chitin } from './chitin/chitin';
 import { Components } from './components/components';
 import { Config } from './config/config';
 import { config, handlers } from './handlers';
 import { ReqsLinux } from './reqs/reqs-linux';
 import { ReqsWin32 } from './reqs/reqs-win32';
-import { Spells } from './res/spl/spells';
 import { Talks } from './res/tlk/talks';
 import { Control } from './views/control/control';
 import { WindowLinux } from './window/window-linux';
@@ -29,7 +29,9 @@ export class Main {
 
     handlers.talks = new Talks();
 
-    handlers.spells = new Spells();
+    handlers.chitin = new Chitin();
+
+    // handlers.spells = new Spells();
 
     handlers.syscalls = linux ? new SyscallsLinux() : new SyscallsWin32();
 

@@ -1,3 +1,4 @@
+import { Chitin } from './chitin/chitin';
 import { Components } from './components/components';
 import { Config } from './config/config';
 import { Entities } from './entities/entities';
@@ -27,6 +28,7 @@ export type Handlers = {
   reqs: Reqs;
   config: Config;
   talks: Talks;
+  chitin: Chitin;
   spells: Spells;
   syscalls: Syscalls;
   memread: Memread;
@@ -42,6 +44,7 @@ export const handlers: Handlers = {
   reqs: null,
   talks: null,
   config: null,
+  chitin: null,
   spells: null,
   syscalls: null,
   memread: null,
