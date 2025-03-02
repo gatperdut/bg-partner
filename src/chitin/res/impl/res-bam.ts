@@ -2,7 +2,6 @@ import zlib from 'zlib';
 import { Bif } from '../../../chitin/bif';
 import { readBufferString } from '../../../utils';
 import { Res } from './res';
-
 export class ResBAM extends Res {
   private image: Buffer;
 
@@ -17,16 +16,16 @@ export class ResBAM extends Res {
 
     if (this.v === 'V1') {
       if (this.signature === 'BAM') {
-        this.BAM(file);
+        this.v1BAM(file);
       } else {
-        this.BAMC(file);
+        this.v1BAMC(file);
       }
     } else {
       this.v2(file);
     }
   }
 
-  private BAM(file: Buffer): void {
+  private v1BAM(file: Buffer): void {
     const frameEntriesOffset: number = file.readUint32LE(0xc);
 
     const width: number = file.readUint16LE(frameEntriesOffset + 0x0);
@@ -42,7 +41,7 @@ export class ResBAM extends Res {
     const frameDataCompressed: boolean = !!(frameData[0] >> 31);
   }
 
-  private BAMC(file: Buffer): void {
+  private v1BAMC(file: Buffer): void {
     const data: Buffer = file.subarray(0xc, file.length);
 
     this.image = zlib.inflateSync(data);

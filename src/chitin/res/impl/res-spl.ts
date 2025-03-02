@@ -15,7 +15,5 @@ export class ResSPL extends Res {
     this.v = readBufferString(file, 0x4, 4).trim();
 
     this.bam = readBufferString(file, 0x3a, 8);
-
-    console.log(this.bam);
   }
 }
