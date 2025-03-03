@@ -1,4 +1,7 @@
+import _ from 'lodash-es';
 import { ComponentsRecord } from '../../components/components';
+import { Effect } from '../../sprite/effects/impl/effect';
+import { Effect218 } from '../../sprite/effects/impl/effect-218';
 import { EaTable } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
 import { AbilitiesGroup } from './components/abilities-group/abilities-group';
@@ -47,7 +50,7 @@ declare global {
 }
 
 class SheetRenderer {
-  private sprite: SpriteView;
+  private spriteView: SpriteView;
 
   private components: ComponentsRecord;
 
@@ -59,7 +62,7 @@ class SheetRenderer {
     });
 
     window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
-      this.sprite = params.spriteView;
+      this.spriteView = params.spriteView;
 
       this.components && this.update(params);
     });
@@ -95,6 +98,14 @@ class SheetRenderer {
       this.components,
       params.spriteView
     ).html;
+
+    const effect = _.find(this.spriteView.timedEffects.effects, (effect: Effect): boolean => {
+      return effect.resSource === 'SPWI408';
+    });
+
+    (document.getElementById('timedEffects') as HTMLImageElement).src = `data:image/bmp;base64,${
+      (effect as Effect218).image
+    }`;
   }
 
   private setEventListeners(): void {
@@ -102,7 +113,7 @@ class SheetRenderer {
     document.body.addEventListener(
       'contextmenu',
       (): void => {
-        window.sheetAPI.close(this.sprite.basic.id);
+        window.sheetAPI.close(this.spriteView.basic.id);
       },
       true
     );
@@ -125,7 +136,7 @@ class SheetRenderer {
         y: event.movementY,
       };
 
-      window.sheetAPI.move(this.sprite.basic.id, movement);
+      window.sheetAPI.move(this.spriteView.basic.id, movement);
     });
   }
 }

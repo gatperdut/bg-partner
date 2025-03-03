@@ -2,9 +2,9 @@ import { handlers } from '../../../handlers';
 import { effectTable } from '../../../tables/effect';
 
 export abstract class Effect {
-  public sourceId: number;
+  public school: number;
 
-  public effectId: number;
+  public secondaryType: number;
 
   public res: string;
 
@@ -25,9 +25,9 @@ export abstract class Effect {
   public param5: number;
 
   constructor(public id: number, protected base: bigint) {
-    this.sourceId = handlers.memread.memReadNumber(base + BigInt(0x110), 'INT32');
+    this.school = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x44), 'UINT32');
 
-    this.effectId = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x8), 'INT32');
+    this.secondaryType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0xc8), 'INT32');
 
     this.res = handlers.memread.memReadString(base + BigInt(0x8 + 0x28));
 

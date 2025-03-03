@@ -3,10 +3,16 @@ import { Bif } from '../../../chitin/bif';
 import { readBufferString } from '../../../utils';
 import { Res } from './res';
 export class ResBAM extends Res {
-  private image: Buffer;
+  public image: Buffer;
 
-  constructor(buffer: Buffer, bifs: Bif[]) {
+  private palette: Buffer;
+
+  constructor(buffer: Buffer, private bifs: Bif[]) {
     super('BAM', buffer, bifs);
+
+    if (!this.name.includes('SPWI408')) {
+      return;
+    }
 
     const file: Buffer = this.bif.files[this.fileIndex];
 
@@ -25,29 +31,81 @@ export class ResBAM extends Res {
     }
   }
 
-  private v1BAM(file: Buffer): void {
-    const frameEntriesOffset: number = file.readUint32LE(0xc);
+  private paletteSet(buffer: Buffer, offset: number): void {
+    const paletteOffset: number = buffer.readUint32LE(offset);
 
-    const width: number = file.readUint16LE(frameEntriesOffset + 0x0);
-
-    const height: number = file.readUint16LE(frameEntriesOffset + 0x2);
-
-    const frameData: Uint32Array = new Uint32Array(1);
-
-    frameData[0] = file.readInt32LE(frameEntriesOffset + 0x8);
-
-    const frameDataOffset: number = frameData[0] & 0x7fffffff;
-
-    const frameDataCompressed: boolean = !!(frameData[0] >> 31);
+    this.palette = buffer.subarray(paletteOffset, paletteOffset + 256 * 4);
   }
 
-  private v1BAMC(file: Buffer): void {
-    const data: Buffer = file.subarray(0xc, file.length);
+  private v1BAM(buffer: Buffer): void {
+    const frameEntriesOffset: number = buffer.readUint32LE(0xc);
 
-    this.image = zlib.inflateSync(data);
+    const width: number = buffer.readUint16LE(frameEntriesOffset + 0x0);
+
+    const height: number = buffer.readUint16LE(frameEntriesOffset + 0x2);
+
+    const frameEntryMeta: Uint32Array = new Uint32Array(1);
+
+    frameEntryMeta[0] = buffer.readInt32LE(frameEntriesOffset + 0x8);
+
+    const frameDataOffset: number = frameEntryMeta[0] & 0x7fffffff;
+
+    const frameDataCompressed: boolean = !!(frameEntryMeta[0] >> 31);
+
+    frameDataCompressed
+      ? this.v1BAMCompressed(buffer)
+      : this.v1BAMUncompressed(buffer, frameDataOffset, width, height);
   }
 
-  private v2(file: Buffer): void {
+  private v1BAMCompressed(buffer: Buffer): void {
+    // Empty
+  }
+
+  private v1BAMUncompressed(
+    buffer: Buffer,
+    frameDataOffset: number,
+    width: number,
+    height: number
+  ): void {
+    this.paletteSet(buffer, 0x10);
+
+    const squared: number = width * height;
+
+    this.image = Buffer.alloc(squared * 4);
+
+    for (let i: number = 0; i < squared; i++) {
+      const imageBase: number = i * 4;
+
+      const bufferBase: number = frameDataOffset + i;
+
+      this.image.writeUInt8(this.palette.readUint8(buffer[bufferBase] + 0), imageBase + 0);
+      this.image.writeUInt8(this.palette.readUint8(buffer[bufferBase] + 1), imageBase + 1);
+      this.image.writeUInt8(this.palette.readUint8(buffer[bufferBase] + 2), imageBase + 2);
+      this.image.writeUInt8(this.palette.readUint8(buffer[bufferBase] + 3), imageBase + 3);
+    }
+  }
+
+  private v1BAMC(buffer: Buffer): void {
+    const data: Buffer = buffer.subarray(0xc, buffer.length);
+
+    const subBAM: Buffer = zlib.inflateSync(data);
+
+    const subSignature: string = readBufferString(subBAM, 0x0, 4).trim();
+
+    const subV: string = readBufferString(subBAM, 0x4, 4).trim();
+
+    if (subV === 'V1') {
+      if (subSignature === 'BAM') {
+        this.v1BAM(subBAM);
+      } else {
+        this.v1BAMC(subBAM);
+      }
+    } else {
+      this.v2(subBAM);
+    }
+  }
+
+  private v2(buffer: Buffer): void {
     // Empty
   }
 }
