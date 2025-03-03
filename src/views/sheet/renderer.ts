@@ -99,13 +99,17 @@ class SheetRenderer {
       params.spriteView
     ).html;
 
-    const effect = _.find(this.spriteView.timedEffects.effects, (effect: Effect): boolean => {
-      return effect.resSource === 'SPWI408';
-    });
+    const effect: Effect218 = _.find(
+      this.spriteView.timedEffects.effects,
+      (effect: Effect): boolean => {
+        return effect.resSource === 'SPWI408';
+      }
+    ) as Effect218;
 
-    (document.getElementById('timedEffects') as HTMLImageElement).src = `data:image/bmp;base64,${
-      (effect as Effect218).image
-    }`;
+    const image: HTMLImageElement = document.getElementById('timedEffects') as HTMLImageElement;
+    image.src = `data:image/png;base64,${effect.image}`;
+    image.width = effect.size.width * 6;
+    image.height = effect.size.height * 6;
   }
 
   private setEventListeners(): void {

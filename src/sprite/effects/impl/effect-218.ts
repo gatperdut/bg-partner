@@ -7,12 +7,18 @@ import { Effect } from './effect';
 export class Effect218 extends Effect {
   public image: string;
 
+  public size: Electron.Size;
+
   constructor(public id: number, protected base: bigint) {
     super(id, base);
 
-    this.image = (
-      handlers.chitin.ress.BAM[(handlers.chitin.ress.SPL[this.resSource] as ResSPL).bam] as ResBAM
-    ).image.toString('base64');
+    const resBAM: ResBAM = handlers.chitin.ress.BAM[
+      (handlers.chitin.ress.SPL[this.resSource] as ResSPL).bam
+    ] as ResBAM;
+
+    this.image = resBAM.image.toString('base64');
+
+    this.size = resBAM.size;
   }
 
   public summary(): void {
