@@ -18,12 +18,12 @@ export class ResBAM extends Res {
     y: null,
   };
 
-  private palette: Buffer;
+  private palette: number[][];
 
-  constructor(buffer: Buffer, private bifs: Bif[]) {
+  constructor(buffer: Buffer, bifs: Bif[]) {
     super('BAM', buffer, bifs);
 
-    if (!this.name.includes('SPWI408')) {
+    if (this.name !== 'SPWI408C') {
       return;
     }
 
@@ -55,7 +55,7 @@ export class ResBAM extends Res {
 
     this.center.y = buffer.readUint16LE(frameEntriesOffset + 0x6);
 
-    const frameEntryMeta: Uint32Array = new Uint32Array(1);
+    const frameEntryMeta: Int32Array = new Int32Array(1);
 
     frameEntryMeta[0] = buffer.readInt32LE(frameEntriesOffset + 0x8);
 
@@ -75,50 +75,38 @@ export class ResBAM extends Res {
   private v1BAMUncompressed(buffer: Buffer, frameDataOffset: number): void {
     this.paletteSet(buffer, 0x10);
 
-    const image: Buffer = Buffer.alloc(this.size.width * this.size.height * 4);
+    const imageLength = this.size.width * this.size.height;
 
-    let transparentIndex: number = null;
+    let count: number = 0;
 
-    for (let h: number = 0; h < this.size.height; h++) {
-      for (let w: number = 0; w < this.size.width; w++) {
-        const imageBase: number = (h * this.size.width + w) * 4;
+    const image: Buffer = Buffer.alloc(imageLength * 4);
 
-        const bufferBase: number = frameDataOffset + h * this.size.width + w;
+    let i = 0;
 
-        const paletteIndex: number = buffer[bufferBase];
+    while (count < imageLength) {
+      const index: number = buffer.readUint8(frameDataOffset + i);
 
-        const paletteEntry: number[] = [
-          this.palette.readUint8(paletteIndex * 4 + 0),
-          this.palette.readUint8(paletteIndex * 4 + 1),
-          this.palette.readUint8(paletteIndex * 4 + 2),
-          this.palette.readUint8(paletteIndex * 4 + 3),
-        ];
-
-        if (_.isNull(transparentIndex)) {
-          if (
-            paletteEntry[0] === 0 &&
-            paletteEntry[1] === 255 &&
-            paletteEntry[2] === 0 &&
-            paletteEntry[3] === 0
-          ) {
-            transparentIndex = paletteIndex;
-          }
+      if (index === 0) {
+        const repeats = buffer.readUint8(frameDataOffset + i + 1);
+        for (let j = 0; j < repeats + 1; j++) {
+          image.writeUInt8(0x00, count * 4 + 0);
+          image.writeUInt8(0x00, count * 4 + 1);
+          image.writeUInt8(0x00, count * 4 + 2);
+          image.writeUInt8(0xff, count * 4 + 3);
         }
-
-        if (paletteIndex === transparentIndex) {
-          image.writeUInt8(0xff, imageBase + 0);
-          image.writeUInt8(0xff, imageBase + 1);
-          image.writeUInt8(0xff, imageBase + 2);
-          image.writeUInt8(0x00, imageBase + 3);
-        } else {
-          image.writeUInt8(paletteEntry[2], imageBase + 0);
-          image.writeUInt8(paletteEntry[1], imageBase + 1);
-          image.writeUInt8(paletteEntry[0], imageBase + 2);
-          image.writeUInt8(paletteEntry[3], imageBase + 3);
-        }
+        count += repeats + 1;
+        i++;
+      } else {
+        image.writeUInt8(this.palette[index][0], count * 4 + 2);
+        image.writeUInt8(this.palette[index][1], count * 4 + 1);
+        image.writeUInt8(this.palette[index][2], count * 4 + 0);
+        image.writeUInt8(this.palette[index][3], count * 4 + 3);
+        count += 1;
       }
-    }
 
+      i++;
+    }
+    console.log('DONE');
     sharp(image, { raw: { width: this.size.width, height: this.size.height, channels: 4 } })
       .toFormat('png')
       .toBuffer()
@@ -135,6 +123,10 @@ export class ResBAM extends Res {
     const subSignature: string = readBufferString(subBAM, 0x0, 4).trim();
 
     const subV: string = readBufferString(subBAM, 0x4, 4).trim();
+
+    const length: number = buffer.readInt32LE(0x8);
+
+    console.log(`read ${length}, got ${subBAM.length}`);
 
     if (subV === 'V1') {
       if (subSignature === 'BAM') {
@@ -154,6 +146,6 @@ export class ResBAM extends Res {
   private paletteSet(buffer: Buffer, offset: number): void {
     const paletteOffset: number = buffer.readUint32LE(offset);
 
-    this.palette = buffer.subarray(paletteOffset, paletteOffset + 256 * 4);
+    this.palette = _.chunk([...buffer.subarray(paletteOffset, paletteOffset + 256 * 4)], 4);
   }
 }
