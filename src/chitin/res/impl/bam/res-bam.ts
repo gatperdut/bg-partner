@@ -21,10 +21,6 @@ export class ResBAM extends Res {
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('BAM', buffer, bifs);
 
-    if (this.name !== 'SPWI408C') {
-      return;
-    }
-
     this.decide(this.file);
   }
 
@@ -53,6 +49,10 @@ export class ResBAM extends Res {
 
     this.size.height = bam.readUint16LE(framesOffset + 0x2);
 
+    if (!this.size.width || !this.size.height) {
+      return;
+    }
+
     this.center.x = bam.readUint16LE(framesOffset + 0x4);
 
     this.center.y = bam.readUint16LE(framesOffset + 0x6);
@@ -74,7 +74,7 @@ export class ResBAM extends Res {
     // Empty
   }
 
-  private v1BAMRle(pxdata: Buffer, palette: Palette): void {
+  private v1BAMRle(pxData: Buffer, palette: Palette): void {
     const image: Buffer = Buffer.alloc(this.size.width * this.size.height * 4);
 
     let pxIdx: number = 0;
@@ -82,14 +82,14 @@ export class ResBAM extends Res {
     let written: number = 0;
 
     while (written < image.length) {
-      const paletteIndex: number = pxdata.readUint8(pxIdx);
+      const paletteIdx: number = pxData.readUint8(pxIdx);
 
-      const paletteValue: number[] = palette.values[paletteIndex];
+      const paletteValue: number[] = palette.values[paletteIdx];
 
       let repeats: number = 0;
 
-      if (paletteIndex === palette.rleIndex) {
-        repeats = pxdata.readUint8(pxIdx + 1);
+      if (paletteIdx === palette.rleIndex) {
+        repeats = pxData.readUint8(pxIdx + 1);
 
         pxIdx++;
       }
@@ -111,15 +111,17 @@ export class ResBAM extends Res {
       .toBuffer()
       .then((buffer: Buffer): void => {
         this.image = buffer;
+
+        console.log(this.name);
       });
   }
 
   private v1BAMC(buffer: Buffer): void {
     const data: Buffer = buffer.subarray(0xc, buffer.length);
 
-    const subBAM: Buffer = zlib.inflateSync(data);
+    const subBam: Buffer = zlib.inflateSync(data);
 
-    this.decide(subBAM);
+    this.decide(subBam);
   }
 
   private v2(buffer: Buffer): void {
