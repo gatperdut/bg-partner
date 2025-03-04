@@ -3,15 +3,9 @@ import { Resext } from '../../../tables/resext';
 import { readBufferString } from '../../../utils';
 
 export class Res {
-  public signature: string;
-
-  public v: string;
-
   public name: string;
 
-  public bif: Bif;
-
-  public fileIndex: number;
+  public file: Buffer;
 
   constructor(public resext: Resext, buffer: Buffer, bifs: Bif[]) {
     this.name = readBufferString(buffer, 0x0, 8);
@@ -20,8 +14,10 @@ export class Res {
 
     locator[0] = buffer.readUInt32LE(0xa);
 
-    this.bif = bifs[(locator[0] >> 20) & 0xfff];
+    const bif: Bif = bifs[(locator[0] >> 20) & 0xfff];
 
-    this.fileIndex = locator[0] & 0x3fff;
+    const fileIndex: number = locator[0] & 0x3fff;
+
+    this.file = bif.files[fileIndex];
   }
 }

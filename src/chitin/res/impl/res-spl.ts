@@ -8,12 +8,10 @@ export class ResSPL extends Res {
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('SPL', buffer, bifs);
 
-    const file: Buffer = this.bif.files[this.fileIndex];
+    const signature: string = readBufferString(this.file, 0x0, 4).trim();
 
-    this.signature = readBufferString(file, 0x0, 4).trim();
+    const v: string = readBufferString(this.file, 0x4, 4).trim();
 
-    this.v = readBufferString(file, 0x4, 4).trim();
-
-    this.bam = readBufferString(file, 0x3a, 8);
+    this.bam = readBufferString(this.file, 0x3a, 8);
   }
 }
