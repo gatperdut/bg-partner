@@ -21,6 +21,10 @@ export class ResBAM extends Res {
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('BAM', buffer, bifs);
 
+    // if (this.name !== 'SPPR725C') {
+    //   return;
+    // }
+
     this.decide(this.file);
   }
 
@@ -70,8 +74,23 @@ export class ResBAM extends Res {
     rle ? this.v1BamRle(data, palette) : this.v1BamNoRle(data, palette);
   }
 
-  private v1BamNoRle(data: Buffer, palette: Palette): void {
-    // Empty
+  private v1BamNoRle(pxData: Buffer, palette: Palette): void {
+    const image: Buffer = Buffer.alloc(this.size.width * this.size.height * 4);
+
+    for (let i: number = 0; i < this.size.width * this.size.height; i++) {
+      const paletteIdx: number = pxData.readUint8(i);
+
+      const paletteValue: number[] = palette.values[paletteIdx];
+
+      image.writeUInt8(paletteValue[0], i + 2);
+      image.writeUInt8(paletteValue[1], i + 1);
+      image.writeUInt8(paletteValue[2], i + 0);
+      image.writeUInt8(paletteValue[3], i + 3);
+    }
+
+    console.log(this.name, this.size.width, this.size.height);
+
+    this.svg(image);
   }
 
   private v1BamRle(pxData: Buffer, palette: Palette): void {
@@ -106,13 +125,17 @@ export class ResBAM extends Res {
       pxIdx++;
     }
 
+    this.svg(image);
+  }
+
+  private svg(image: Buffer): void {
     sharp(image, { raw: { width: this.size.width, height: this.size.height, channels: 4 } })
       .toFormat('png')
       .toBuffer()
       .then((buffer: Buffer): void => {
         this.image = buffer;
 
-        console.log(this.name);
+        // console.log(this.name);
       });
   }
 

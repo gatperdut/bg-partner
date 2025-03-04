@@ -18,6 +18,8 @@ export class Effect218 extends Effect {
 
     this.image = resBAM.image.toString('base64');
 
+    // this.image = (handlers.chitin.ress.BAM['SPPR725C'] as ResBAM).image.toString('base64');
+
     this.size = resBAM.size;
   }
 
