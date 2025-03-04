@@ -33,7 +33,7 @@ export class ResBAM extends Res {
       if (signature === 'BAM') {
         this.v1BAM(bam);
       } else {
-        this.v1BAMC(bam);
+        this.v1BamC(bam);
       }
     } else {
       this.v2(bam);
@@ -67,14 +67,14 @@ export class ResBAM extends Res {
 
     const data: Buffer = bam.subarray(dataOffset, bam.length);
 
-    rle ? this.v1BAMRle(data, palette) : this.v1BAMNoRle(data, palette);
+    rle ? this.v1BamRle(data, palette) : this.v1BamNoRle(data, palette);
   }
 
-  private v1BAMNoRle(data: Buffer, palette: Palette): void {
+  private v1BamNoRle(data: Buffer, palette: Palette): void {
     // Empty
   }
 
-  private v1BAMRle(pxData: Buffer, palette: Palette): void {
+  private v1BamRle(pxData: Buffer, palette: Palette): void {
     const image: Buffer = Buffer.alloc(this.size.width * this.size.height * 4);
 
     let pxIdx: number = 0;
@@ -116,7 +116,7 @@ export class ResBAM extends Res {
       });
   }
 
-  private v1BAMC(buffer: Buffer): void {
+  private v1BamC(buffer: Buffer): void {
     const data: Buffer = buffer.subarray(0xc, buffer.length);
 
     const subBam: Buffer = zlib.inflateSync(data);
