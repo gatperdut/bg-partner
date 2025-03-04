@@ -21,7 +21,7 @@ export class Sheet {
     this.windowCreate();
 
     // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
-    // this.window.webContents.openDevTools({ mode: 'detach' });
+    this.window.webContents.openDevTools({ mode: 'detach' });
 
     handlers.window.setForeground();
 

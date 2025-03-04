@@ -15,9 +15,15 @@ export class Components {
 
   // TODO can this be automatized?
   constructor() {
-    this.register('condition', ['sheet', 'components', 'condition', 'condition.hbs']);
+    this.register('condition', ['sheet', 'components', 'conditions', 'condition', 'condition.hbs']);
 
-    this.register('conditions', ['sheet', 'components', 'conditions', 'conditions.hbs']);
+    this.register('conditions', [
+      'sheet',
+      'components',
+      'conditions',
+      'conditions',
+      'conditions.hbs',
+    ]);
 
     this.register('abilities', ['sheet', 'components', 'abilities', 'abilities.hbs']);
 

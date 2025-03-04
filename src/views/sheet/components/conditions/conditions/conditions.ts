@@ -9,27 +9,15 @@ export class Conditions {
   public html: string;
 
   constructor(componentsRecord: ComponentsRecord, spriteView: SpriteView) {
-    const conditions: Condition[] = _.map(
+    const conditions: string[] = _.map(
       spriteView.timedEffects.effects,
-      (effect: Effect): Condition => new Condition(componentsRecord.condition, effect)
+      (effect: Effect): string => new Condition(componentsRecord.condition, effect).html
     );
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(componentsRecord.effectsGroup);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(componentsRecord.conditions);
 
     this.html = compiled({
       conditions: conditions,
     });
   }
 }
-
-// const effect: Effect218 = _.find(
-//   this.spriteView.timedEffects.effects,
-//   (effect: Effect): boolean => {
-//     return effect.resSource === 'SPWI408';
-//   }
-// ) as Effect218;
-
-// const image: HTMLImageElement = document.getElementById('timedEffects') as HTMLImageElement;
-// image.src = `data:image/png;base64,${effect.image}`;
-// image.width = effect.size.width * 6;
-// image.height = effect.size.height * 6;

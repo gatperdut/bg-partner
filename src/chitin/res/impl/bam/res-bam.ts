@@ -142,8 +142,11 @@ export class ResBAM extends Res {
     })
       .toFormat('png')
       .toBuffer()
-      .then((buffer: Buffer): void => {
+      .then((buffer: Buffer): Buffer => {
         this.imageBuffer = buffer;
+
+        return buffer;
+
         // console.log(this.name);
       });
   }
