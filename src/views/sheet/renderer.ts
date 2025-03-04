@@ -1,10 +1,8 @@
-import _ from 'lodash-es';
 import { ComponentsRecord } from '../../components/components';
-import { Effect } from '../../sprite/effects/impl/effect';
-import { Effect218 } from '../../sprite/effects/impl/effect-218';
 import { EaTable } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
 import { AbilitiesGroup } from './components/abilities-group/abilities-group';
+import { Conditions } from './components/conditions/conditions/conditions';
 import { ResistancesGroup } from './components/resistances-group/resistances-group';
 import { SavesGroup } from './components/saves-group/saves-group';
 import './sheet.scss';
@@ -99,17 +97,10 @@ class SheetRenderer {
       params.spriteView
     ).html;
 
-    const effect: Effect218 = _.find(
-      this.spriteView.timedEffects.effects,
-      (effect: Effect): boolean => {
-        return effect.resSource === 'SPWI408';
-      }
-    ) as Effect218;
-
-    const image: HTMLImageElement = document.getElementById('timedEffects') as HTMLImageElement;
-    image.src = `data:image/png;base64,${effect.image}`;
-    image.width = effect.size.width * 6;
-    image.height = effect.size.height * 6;
+    document.getElementById('conditions').innerHTML = new Conditions(
+      this.components,
+      params.spriteView
+    ).html;
   }
 
   private setEventListeners(): void {
