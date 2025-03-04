@@ -6,7 +6,7 @@ import { Res } from '../res';
 import { Palette } from './palette';
 
 export class ResBAM extends Res {
-  public image: Buffer;
+  private imageBuffer: Buffer;
 
   public size: Electron.Size = {
     width: null,
@@ -25,26 +25,34 @@ export class ResBAM extends Res {
     //   return;
     // }
 
-    this.decide(this.file);
+    // this.decide(this.file);
   }
 
-  private decide(bam: Buffer): void {
+  public image(): Promise<Buffer> {
+    if (this.imageBuffer) {
+      return Promise.resolve(this.imageBuffer);
+    }
+
+    return this.decide(this.file);
+  }
+
+  private decide(bam: Buffer): Promise<Buffer> {
     const signature: string = readBufferString(bam, 0x0, 4).trim();
 
     const v: string = readBufferString(bam, 0x4, 4).trim();
 
     if (v === 'V1') {
       if (signature === 'BAM') {
-        this.v1BAM(bam);
+        return this.v1BAM(bam);
       } else {
-        this.v1BamC(bam);
+        return this.v1BamC(bam);
       }
     } else {
-      this.v2(bam);
+      return this.v2(bam);
     }
   }
 
-  private v1BAM(bam: Buffer): void {
+  private v1BAM(bam: Buffer): Promise<Buffer> {
     const framesOffset: number = bam.readUint32LE(0xc);
 
     const palette: Palette = new Palette(bam, 0x10);
@@ -71,10 +79,10 @@ export class ResBAM extends Res {
 
     const data: Buffer = bam.subarray(dataOffset, bam.length);
 
-    rle ? this.v1BamRle(data, palette) : this.v1BamNoRle(data, palette);
+    return rle ? this.v1BamRle(data, palette) : this.v1BamNoRle(data, palette);
   }
 
-  private v1BamNoRle(pxData: Buffer, palette: Palette): void {
+  private v1BamNoRle(pxData: Buffer, palette: Palette): Promise<Buffer> {
     const image: Buffer = Buffer.alloc(this.size.width * this.size.height * 4);
 
     for (let i: number = 0; i < this.size.width * this.size.height; i++) {
@@ -90,10 +98,10 @@ export class ResBAM extends Res {
 
     console.log(this.name, this.size.width, this.size.height);
 
-    this.svg(image);
+    return this.svg(image);
   }
 
-  private v1BamRle(pxData: Buffer, palette: Palette): void {
+  private v1BamRle(pxData: Buffer, palette: Palette): Promise<Buffer> {
     const image: Buffer = Buffer.alloc(this.size.width * this.size.height * 4);
 
     let pxIdx: number = 0;
@@ -125,29 +133,30 @@ export class ResBAM extends Res {
       pxIdx++;
     }
 
-    this.svg(image);
+    return this.svg(image);
   }
 
-  private svg(image: Buffer): void {
-    sharp(image, { raw: { width: this.size.width, height: this.size.height, channels: 4 } })
+  private svg(image: Buffer): Promise<Buffer> {
+    return <Promise<Buffer>>sharp(image, {
+      raw: { width: this.size.width, height: this.size.height, channels: 4 },
+    })
       .toFormat('png')
       .toBuffer()
       .then((buffer: Buffer): void => {
-        this.image = buffer;
-
+        this.imageBuffer = buffer;
         // console.log(this.name);
       });
   }
 
-  private v1BamC(buffer: Buffer): void {
+  private v1BamC(buffer: Buffer): Promise<Buffer> {
     const data: Buffer = buffer.subarray(0xc, buffer.length);
 
     const subBam: Buffer = zlib.inflateSync(data);
 
-    this.decide(subBam);
+    return this.decide(subBam);
   }
 
-  private v2(buffer: Buffer): void {
-    // Empty
+  private v2(buffer: Buffer): Promise<Buffer> {
+    return Promise.resolve(null);
   }
 }

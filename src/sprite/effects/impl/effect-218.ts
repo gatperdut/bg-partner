@@ -16,7 +16,9 @@ export class Effect218 extends Effect {
       (handlers.chitin.ress.SPL[this.resSource] as ResSPL).bam
     ] as ResBAM;
 
-    this.image = resBAM.image.toString('base64');
+    resBAM.image().then((imageBuf: Buffer): void => {
+      this.image = imageBuf.toString('base64');
+    });
 
     // this.image = (handlers.chitin.ress.BAM['SPPR725C'] as ResBAM).image.toString('base64');
 
