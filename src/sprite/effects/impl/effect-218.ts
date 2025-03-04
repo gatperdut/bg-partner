@@ -1,4 +1,4 @@
-import { ResBAM } from '../../../chitin/res/impl/res-bam';
+import { ResBAM } from '../../../chitin/res/impl/bam/res-bam';
 import { ResSPL } from '../../../chitin/res/impl/res-spl';
 import { handlers } from '../../../handlers';
 import { Effect } from './effect';

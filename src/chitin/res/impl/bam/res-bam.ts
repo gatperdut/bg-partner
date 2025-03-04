@@ -1,0 +1,128 @@
+import sharp from 'sharp';
+import zlib from 'zlib';
+import { readBufferString } from '../../../../utils';
+import { Bif } from '../../../bif';
+import { Res } from '../res';
+import { Palette } from './palette';
+
+export class ResBAM extends Res {
+  public image: Buffer;
+
+  public size: Electron.Size = {
+    width: null,
+    height: null,
+  };
+
+  public center: Electron.Point = {
+    x: null,
+    y: null,
+  };
+
+  constructor(buffer: Buffer, bifs: Bif[]) {
+    super('BAM', buffer, bifs);
+
+    if (this.name !== 'SPWI408C') {
+      return;
+    }
+
+    this.decide(this.file);
+  }
+
+  private decide(bam: Buffer): void {
+    const signature: string = readBufferString(bam, 0x0, 4).trim();
+
+    const v: string = readBufferString(bam, 0x4, 4).trim();
+
+    if (v === 'V1') {
+      if (signature === 'BAM') {
+        this.v1BAM(bam);
+      } else {
+        this.v1BAMC(bam);
+      }
+    } else {
+      this.v2(bam);
+    }
+  }
+
+  private v1BAM(bam: Buffer): void {
+    const framesOffset: number = bam.readUint32LE(0xc);
+
+    const palette: Palette = new Palette(bam, 0x10);
+
+    this.size.width = bam.readUint16LE(framesOffset + 0x0);
+
+    this.size.height = bam.readUint16LE(framesOffset + 0x2);
+
+    this.center.x = bam.readUint16LE(framesOffset + 0x4);
+
+    this.center.y = bam.readUint16LE(framesOffset + 0x6);
+
+    const meta: Int32Array = new Int32Array(1);
+
+    meta[0] = bam.readInt32LE(framesOffset + 0x8);
+
+    const dataOffset: number = meta[0] & 0x7fffffff;
+
+    const rle: boolean = !(meta[0] >> 31);
+
+    const data: Buffer = bam.subarray(dataOffset, bam.length);
+
+    rle ? this.v1BAMRle(data, palette) : this.v1BAMNoRle(data, palette);
+  }
+
+  private v1BAMNoRle(data: Buffer, palette: Palette): void {
+    // Empty
+  }
+
+  private v1BAMRle(pxdata: Buffer, palette: Palette): void {
+    const image: Buffer = Buffer.alloc(this.size.width * this.size.height * 4);
+
+    let pxIdx: number = 0;
+
+    let written: number = 0;
+
+    while (written < image.length) {
+      const paletteIndex: number = pxdata.readUint8(pxIdx);
+
+      const paletteValue: number[] = palette.values[paletteIndex];
+
+      let repeats: number = 0;
+
+      if (paletteIndex === palette.rleIndex) {
+        repeats = pxdata.readUint8(pxIdx + 1);
+
+        pxIdx++;
+      }
+
+      for (let i: number = 0; i <= repeats; i++) {
+        image.writeUInt8(paletteValue[0], written + 2);
+        image.writeUInt8(paletteValue[1], written + 1);
+        image.writeUInt8(paletteValue[2], written + 0);
+        image.writeUInt8(paletteValue[3], written + 3);
+
+        written += 4;
+      }
+
+      pxIdx++;
+    }
+
+    sharp(image, { raw: { width: this.size.width, height: this.size.height, channels: 4 } })
+      .toFormat('png')
+      .toBuffer()
+      .then((buffer: Buffer): void => {
+        this.image = buffer;
+      });
+  }
+
+  private v1BAMC(buffer: Buffer): void {
+    const data: Buffer = buffer.subarray(0xc, buffer.length);
+
+    const subBAM: Buffer = zlib.inflateSync(data);
+
+    this.decide(subBAM);
+  }
+
+  private v2(buffer: Buffer): void {
+    // Empty
+  }
+}

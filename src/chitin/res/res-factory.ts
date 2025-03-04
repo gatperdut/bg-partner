@@ -1,7 +1,7 @@
 import { Resext } from '../../tables/resext';
 import { Bif } from '../bif';
+import { ResBAM } from './impl/bam/res-bam';
 import { Res } from './impl/res';
-import { ResBAM } from './impl/res-bam';
 import { ResSPL } from './impl/res-spl';
 
 export class ResFactory {
