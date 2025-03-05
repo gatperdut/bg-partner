@@ -17,11 +17,14 @@ export class Sheet {
 
   public window: BrowserWindow;
 
+  // TODO drop this.
+  public updatable: boolean = true;
+
   constructor(private sprite: Sprite) {
     this.windowCreate();
 
     // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
-    // this.window.webContents.openDevTools({ mode: 'detach' });
+    this.window.webContents.openDevTools({ mode: 'detach' });
 
     handlers.window.setForeground();
 
@@ -74,11 +77,17 @@ export class Sheet {
           this.window.getPosition()[0] + movement.x,
           this.window.getPosition()[1] + movement.y
         );
+
+        this.updatable = false;
       }
     );
   }
 
   public update(): void {
+    if (!this.updatable) {
+      return;
+    }
+
     const params: SheetAPIUpdateParams = {
       spriteView: spriteView(this.sprite),
       eaTable: eaTable,

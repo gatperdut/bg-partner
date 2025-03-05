@@ -1,3 +1,5 @@
 img {
-  scale: 2;
+  width: 52px; /* Set to the desired image size */
+  object-fit: cover;
+  margin: 5px; /* Optional: adds spacing between images */
 }

@@ -9,6 +9,9 @@ export class Effect {
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, eff: Eff) {
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.effect);
 
-    this.html = compiled(eff);
+    this.html = compiled({
+      eff: eff,
+      duration: Math.round((eff.duration - params.spriteView.basic.time) / 15),
+    });
   }
 }

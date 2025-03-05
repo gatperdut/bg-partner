@@ -13,11 +13,6 @@ export class ResBam extends Res {
     height: null,
   };
 
-  public center: Electron.Point = {
-    x: null,
-    y: null,
-  };
-
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('BAM', buffer, bifs);
 
@@ -64,10 +59,6 @@ export class ResBam extends Res {
     if (!this.size.width || !this.size.height) {
       return;
     }
-
-    this.center.x = bam.readUint16LE(framesOffset + 0x4);
-
-    this.center.y = bam.readUint16LE(framesOffset + 0x6);
 
     const meta: Int32Array = new Int32Array(1);
 

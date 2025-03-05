@@ -5,6 +5,8 @@
 
 @include fxl.class-selectors(false);
 
+@include fxl.flex-size-class-selectors(5, 95, 5, false);
+
 @include fxl.gap-class-selectors(1, 16, 1, px, false);
 
 @include spacing.get-styles(30, 1);
