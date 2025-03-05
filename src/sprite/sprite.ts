@@ -2,7 +2,7 @@ import { handlers } from '../handlers';
 import { linux } from '../index';
 import { Basic } from './basic';
 import { Derived } from './derived';
-import { Effects } from './effects/effects';
+import { Effs } from './effs/effs';
 import { Profile } from './profile';
 
 export class Sprite {
@@ -16,7 +16,7 @@ export class Sprite {
 
   public derivedTemp: Derived;
 
-  public timedEffects: Effects;
+  public timedEffs: Effs;
 
   constructor(public base: bigint) {
     this.basic = new Basic(base);
@@ -29,7 +29,7 @@ export class Sprite {
 
     this.derivedBonus = new Derived(base + BigInt(0x2a70 - (linux ? 0x10 : 0x0)));
 
-    this.timedEffects = new Effects(base + BigInt(0x4a00 - (linux ? 0x18 : 0)));
+    this.timedEffs = new Effs(base + BigInt(0x4a00 - (linux ? 0x18 : 0)));
   }
 
   public invalid(): boolean {
@@ -55,7 +55,7 @@ export class Sprite {
 
     this.derivedTemp.run();
 
-    this.timedEffects.run();
+    this.timedEffs.run();
   }
 
   public screen(): Electron.Point {

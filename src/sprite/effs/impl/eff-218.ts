@@ -1,10 +1,10 @@
 import { ResBAM } from '../../../chitin/res/impl/bam/res-bam';
 import { ResSPL } from '../../../chitin/res/impl/res-spl';
 import { handlers } from '../../../handlers';
-import { Effect } from './effect';
+import { Eff } from './eff';
 
 // Protection_Stoneskin
-export class Effect218 extends Effect {
+export class Eff218 extends Eff {
   public image: string;
 
   public size: Electron.Size;

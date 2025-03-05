@@ -1,6 +1,6 @@
-export type EffectTable = Record<number, string>;
+export type EffTable = Record<number, string>;
 
-export const effectTable: EffectTable = {
+export const effTable: EffTable = {
   0: 'Stat_AC_vs_Damage_Type_Modifier',
   1: 'Stat_Attacks_Per_Round_Modifier',
   2: 'Cure_Sleep',

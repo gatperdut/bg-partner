@@ -2,7 +2,7 @@ import { ComponentsRecord } from '../../components/components';
 import { EaTable } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
 import { AbilitiesGroup } from './components/abilities-group/abilities-group';
-import { Conditions } from './components/conditions/conditions/conditions';
+import { Effects } from './components/effects/effects/effects';
 import { ResistancesGroup } from './components/resistances-group/resistances-group';
 import { SavesGroup } from './components/saves-group/saves-group';
 import './sheet.scss';
@@ -94,7 +94,7 @@ class SheetRenderer {
 
     document.getElementById('savesGroup').innerHTML = new SavesGroup(this.components, params).html;
 
-    document.getElementById('conditions').innerHTML = new Conditions(this.components, params).html;
+    document.getElementById('effects').innerHTML = new Effects(this.components, params).html;
   }
 
   private setEventListeners(): void {

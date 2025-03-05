@@ -1,7 +1,7 @@
 import { handlers } from '../../../handlers';
-import { effectTable } from '../../../tables/effect';
+import { effTable } from '../../../tables/eff';
 
-export abstract class Effect {
+export abstract class Eff {
   public school: number;
 
   public secondaryType: number;
@@ -50,7 +50,7 @@ export abstract class Effect {
 
   public summary(): void {
     console.log(
-      `${effectTable[this.id]} ${this.param1} ${this.param2} ${this.param3} ${this.param4} ${
+      `${effTable[this.id]} ${this.param1} ${this.param2} ${this.param3} ${this.param4} ${
         this.param5
       }`
     );

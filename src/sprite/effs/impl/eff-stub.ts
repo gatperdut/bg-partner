@@ -1,6 +1,6 @@
-import { Effect } from './effect';
+import { Eff } from './eff';
 
-export class EffectStub extends Effect {
+export class EffStub extends Eff {
   constructor(public id: number, protected base: bigint) {
     super(id, base);
   }

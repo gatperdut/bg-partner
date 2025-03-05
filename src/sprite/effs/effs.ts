@@ -1,13 +1,13 @@
 import _ from 'lodash-es';
 import { handlers } from '../../handlers';
-import { effectTable } from '../../tables/effect';
-import { EffectFactory } from './effect-factory';
-import { Effect } from './impl/effect';
+import { effTable } from '../../tables/eff';
+import { EffFactory } from './eff-factory';
+import { Eff } from './impl/eff';
 
-export class Effects {
-  public effects: Effect[] = [];
+export class Effs {
+  public effs: Eff[] = [];
 
-  private effectFactory: EffectFactory = new EffectFactory();
+  private effFactory: EffFactory = new EffFactory();
 
   public static invalidRegex: RegExp = /^(Graphics|Script)|Sound_Effect$/;
 
@@ -18,31 +18,31 @@ export class Effects {
   private printed: boolean = false;
 
   public run(): void {
-    this.effects.length = 0;
+    this.effs.length = 0;
 
     const count: number = handlers.memread.memReadNumber(this.base + BigInt(0x18), 'INT32');
 
     let nodePtr: bigint = handlers.memread.memReadBigint(this.base + BigInt(0x8), 'ADDR');
 
     for (let i: number = 0; i < count; i++) {
-      const effectPtr: bigint = handlers.memread.memReadBigint(nodePtr + BigInt(0x10), 'ADDR');
+      const effPtr: bigint = handlers.memread.memReadBigint(nodePtr + BigInt(0x10), 'ADDR');
 
-      const id: number = handlers.memread.memReadNumber(effectPtr + BigInt(0x8 + 0x8), 'UINT32');
+      const id: number = handlers.memread.memReadNumber(effPtr + BigInt(0x8 + 0x8), 'UINT32');
 
       if (this.invalid(id)) {
         continue;
       }
 
-      const effect: Effect = this.effectFactory.create(id, effectPtr);
+      const eff: Eff = this.effFactory.create(id, effPtr);
 
-      this.effects.push(effect);
+      this.effs.push(eff);
 
       nodePtr = handlers.memread.memReadBigint(nodePtr, 'ADDR');
     }
 
     if (!this.printed) {
-      _.each(this.effects, (effect: Effect): void => {
-        effect.summary();
+      _.each(this.effs, (eff: Eff): void => {
+        eff.summary();
       });
 
       this.printed = true;
@@ -50,6 +50,6 @@ export class Effects {
   }
 
   public invalid(id: number): boolean {
-    return Effects.invalidRegex.test(effectTable[id]);
+    return Effs.invalidRegex.test(effTable[id]);
   }
 }
