@@ -5,7 +5,7 @@ import { Bif } from '../../../bif';
 import { Res } from '../res';
 import { Palette } from './palette';
 
-export class ResBAM extends Res {
+export class ResBam extends Res {
   private imageBuffer: Buffer;
 
   public size: Electron.Size = {
@@ -43,7 +43,7 @@ export class ResBAM extends Res {
 
     if (v === 'V1') {
       if (signature === 'BAM') {
-        return this.v1BAM(bam);
+        return this.v1Bam(bam);
       } else {
         return this.v1BamC(bam);
       }
@@ -52,7 +52,7 @@ export class ResBAM extends Res {
     }
   }
 
-  private v1BAM(bam: Buffer): Promise<Buffer> {
+  private v1Bam(bam: Buffer): Promise<Buffer> {
     const framesOffset: number = bam.readUint32LE(0xc);
 
     const palette: Palette = new Palette(bam, 0x10);

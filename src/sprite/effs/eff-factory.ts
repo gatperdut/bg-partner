@@ -1,4 +1,5 @@
 import { Eff } from './impl/eff';
+import { Eff0 } from './impl/eff-0';
 import { Eff218 } from './impl/eff-218';
 import { EffStub } from './impl/eff-stub';
 
@@ -6,6 +7,8 @@ import { EffStub } from './impl/eff-stub';
 export class EffFactory {
   public create(id: number, base: bigint): Eff {
     switch (id) {
+      case 0:
+        return new Eff0(id, base);
       case 218:
         return new Eff218(id, base);
       default:

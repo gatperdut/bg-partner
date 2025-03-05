@@ -1,7 +1,7 @@
 import { Eff } from './eff';
 
 // Protection_Stoneskin
-export class Eff218 extends Eff {
+export class Eff0 extends Eff {
   constructor(public id: number, protected base: bigint) {
     super(id, base);
   }

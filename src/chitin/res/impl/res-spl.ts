@@ -2,7 +2,7 @@ import { Bif } from '../../../chitin/bif';
 import { readBufferString } from '../../../utils';
 import { Res } from './res';
 
-export class ResSPL extends Res {
+export class ResSpl extends Res {
   public bam: string;
 
   constructor(buffer: Buffer, bifs: Bif[]) {

@@ -1,7 +1,11 @@
+import { ResBam } from '../../../chitin/res/impl/bam/res-bam';
+import { ResSpl } from '../../../chitin/res/impl/res-spl';
 import { handlers } from '../../../handlers';
 import { effTable } from '../../../tables/eff';
 
 export abstract class Eff {
+  // Memory fields
+
   public school: number;
 
   public secondaryType: number;
@@ -23,6 +27,12 @@ export abstract class Eff {
   public param4: number;
 
   public param5: number;
+
+  // Custom fields
+
+  public image: string;
+
+  public size: Electron.Size;
 
   constructor(public id: number, protected base: bigint) {
     this.school = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x44), 'UINT32');
@@ -46,6 +56,24 @@ export abstract class Eff {
     this.param4 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x60), 'INT32');
 
     this.param5 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x64), 'INT32');
+
+    this.imageSet();
+  }
+
+  private imageSet(): void {
+    const resBam: ResBam = handlers.chitin.ress.BAM[
+      (handlers.chitin.ress.SPL[this.resSource] as ResSpl)?.bam
+    ] as ResBam;
+
+    if (!resBam) {
+      return;
+    }
+
+    resBam.image().then((imageBuf: Buffer): void => {
+      this.image = imageBuf.toString('base64');
+    });
+
+    this.size = resBam.size;
   }
 
   public summary(): void {
