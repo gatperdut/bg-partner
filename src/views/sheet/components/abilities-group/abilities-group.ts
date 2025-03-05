@@ -1,27 +1,27 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../components/components';
-import { SpriteView } from '../../sprite-view';
+import { SheetAPIUpdateParams } from '../../renderer';
 import { Abilities } from '../abilities/abilities';
 
 export class AbilitiesGroup {
   public html: string;
 
-  constructor(componentsRecord: ComponentsRecord, spriteView: SpriteView) {
-    const abilities: Abilities = new Abilities(componentsRecord.abilities, spriteView.derived);
+  constructor(components: ComponentsRecord, params: SheetAPIUpdateParams) {
+    const abilities: Abilities = new Abilities(components, params, params.spriteView.derived);
 
     const abilitiesBonus: Abilities = new Abilities(
-      componentsRecord.abilities,
-      spriteView.derivedBonus
+      components,
+      params,
+      params.spriteView.derivedBonus
     );
 
     const abilitiesTemp: Abilities = new Abilities(
-      componentsRecord.abilities,
-      spriteView.derivedTemp
+      components,
+      params,
+      params.spriteView.derivedTemp
     );
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      componentsRecord.abilitiesGroup
-    );
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.abilitiesGroup);
 
     this.html = compiled({
       abilities: abilities.html,

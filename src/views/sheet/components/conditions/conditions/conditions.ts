@@ -2,19 +2,19 @@ import Handlebars from 'handlebars';
 import _ from 'lodash-es';
 import { ComponentsRecord } from '../../../../../components/components';
 import { Effect } from '../../../../../sprite/effects/impl/effect';
-import { SpriteView } from '../../../sprite-view';
+import { SheetAPIUpdateParams } from '../../../../../views/sheet/renderer';
 import { Condition } from '../condition/condition';
 
 export class Conditions {
   public html: string;
 
-  constructor(componentsRecord: ComponentsRecord, spriteView: SpriteView) {
+  constructor(components: ComponentsRecord, params: SheetAPIUpdateParams) {
     const conditions: string[] = _.map(
-      spriteView.timedEffects.effects,
-      (effect: Effect): string => new Condition(componentsRecord.condition, effect).html
+      params.spriteView.timedEffects.effects,
+      (effect: Effect): string => new Condition(components, params, effect).html
     );
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(componentsRecord.conditions);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.conditions);
 
     this.html = compiled({
       conditions: conditions,

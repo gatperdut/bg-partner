@@ -4,10 +4,10 @@ import path from 'path';
 export type ComponentsRecord = Record<string, string>;
 
 export class Components {
-  public componentsRecord: ComponentsRecord = {};
+  public components: ComponentsRecord = {};
 
   private register(name: string, segments: string[]): void {
-    this.componentsRecord[name] = fs.readFileSync(
+    this.components[name] = fs.readFileSync(
       path.join(__dirname, ...['views', ...segments]),
       'utf-8'
     );

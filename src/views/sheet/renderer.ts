@@ -10,7 +10,7 @@ import { SpriteView } from './sprite-view';
 
 // sheet.setup
 export type SheetAPISetupParams = {
-  componentsRecord: ComponentsRecord;
+  components: ComponentsRecord;
 };
 
 export type SheetAPISetupMethod = (params: SheetAPISetupParams) => void;
@@ -56,7 +56,7 @@ class SheetRenderer {
 
   constructor() {
     window.sheetAPI.setup((params: SheetAPISetupParams): void => {
-      this.components = params.componentsRecord;
+      this.components = params.components;
     });
 
     window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
@@ -84,23 +84,17 @@ class SheetRenderer {
 
     document.getElementById('abilitiesGroup').innerHTML = new AbilitiesGroup(
       this.components,
-      params.spriteView
+      params
     ).html;
 
     document.getElementById('resistancesGroup').innerHTML = new ResistancesGroup(
       this.components,
-      params.spriteView
+      params
     ).html;
 
-    document.getElementById('savesGroup').innerHTML = new SavesGroup(
-      this.components,
-      params.spriteView
-    ).html;
+    document.getElementById('savesGroup').innerHTML = new SavesGroup(this.components, params).html;
 
-    document.getElementById('conditions').innerHTML = new Conditions(
-      this.components,
-      params.spriteView
-    ).html;
+    document.getElementById('conditions').innerHTML = new Conditions(this.components, params).html;
   }
 
   private setEventListeners(): void {
