@@ -1,10 +1,7 @@
 import { ComponentsRecord } from '../../components/components';
 import { EaTable } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
-import { AbilitiesGroup } from './components/abilities-group/abilities-group';
 import { Effects } from './components/effects/effects/effects';
-import { ResistancesGroup } from './components/resistances-group/resistances-group';
-import { SavesGroup } from './components/saves-group/saves-group';
 import './sheet.scss';
 import { SpriteView } from './sprite-view';
 
@@ -82,17 +79,17 @@ class SheetRenderer {
 
     document.getElementById('base').innerHTML = `0x${params.spriteView.base.toString(16)}`;
 
-    document.getElementById('abilitiesGroup').innerHTML = new AbilitiesGroup(
-      this.components,
-      params
-    ).html;
+    // document.getElementById('abilitiesGroup').innerHTML = new AbilitiesGroup(
+    //   this.components,
+    //   params
+    // ).html;
 
-    document.getElementById('resistancesGroup').innerHTML = new ResistancesGroup(
-      this.components,
-      params
-    ).html;
+    // document.getElementById('resistancesGroup').innerHTML = new ResistancesGroup(
+    //   this.components,
+    //   params
+    // ).html;
 
-    document.getElementById('savesGroup').innerHTML = new SavesGroup(this.components, params).html;
+    // document.getElementById('savesGroup').innerHTML = new SavesGroup(this.components, params).html;
 
     document.getElementById('effects').innerHTML = new Effects(this.components, params).html;
   }

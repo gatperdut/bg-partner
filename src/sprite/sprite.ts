@@ -18,6 +18,8 @@ export class Sprite {
 
   public timedEffs: Effs;
 
+  public equippedEffs: Effs;
+
   constructor(public base: bigint) {
     this.basic = new Basic(base);
 
@@ -30,6 +32,8 @@ export class Sprite {
     this.derivedBonus = new Derived(base + BigInt(0x2a70 - (linux ? 0x10 : 0x0)));
 
     this.timedEffs = new Effs(base + BigInt(0x4a00 - (linux ? 0x18 : 0)));
+
+    this.equippedEffs = new Effs(base + BigInt(0x49b0 - (linux ? 0x18 : 0)));
   }
 
   public invalid(): boolean {
@@ -56,6 +60,8 @@ export class Sprite {
     this.derivedTemp.run();
 
     this.timedEffs.run();
+
+    this.equippedEffs.run();
   }
 
   public screen(): Electron.Point {

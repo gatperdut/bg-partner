@@ -9,7 +9,7 @@ export class Effs {
 
   private effFactory: EffFactory = new EffFactory();
 
-  public static invalidRegex: RegExp = /^(Graphics|Script)|Sound_Effect$/;
+  public invalidRegex: RegExp = /^(Graphics|Script|Colour_Set)|Sound_Effect$/;
 
   constructor(private base: bigint) {
     // Empty
@@ -50,6 +50,6 @@ export class Effs {
   }
 
   public invalid(id: number): boolean {
-    return Effs.invalidRegex.test(effTable[id]);
+    return this.invalidRegex.test(effTable[id]);
   }
 }

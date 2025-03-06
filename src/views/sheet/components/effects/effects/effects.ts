@@ -9,23 +9,11 @@ export class Effects {
   public html: string;
 
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams) {
-    const tempList = [
-      ...params.spriteView.timedEffs.effs,
-      ...params.spriteView.timedEffs.effs,
-      ...params.spriteView.timedEffs.effs,
-      ...params.spriteView.timedEffs.effs,
-      ...params.spriteView.timedEffs.effs,
-      ...params.spriteView.timedEffs.effs,
-      ...params.spriteView.timedEffs.effs,
-      ...params.spriteView.timedEffs.effs,
-      ...params.spriteView.timedEffs.effs,
-      ...params.spriteView.timedEffs.effs,
-      ...params.spriteView.timedEffs.effs,
-      ...params.spriteView.timedEffs.effs,
-    ];
-
     const effects: string[] = _.map(
-      _.filter(tempList, (eff: Eff): boolean => eff.secondaryType === 7 && eff.id !== 42),
+      _.filter(
+        [...params.spriteView.timedEffs.effs, ...params.spriteView.equippedEffs.effs],
+        (eff: Eff): boolean => !_.includes([42, 233, 313], eff.id)
+      ),
       (eff: Eff): string => new Effect(components, params, eff).html
     );
 

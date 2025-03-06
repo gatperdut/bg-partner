@@ -9,6 +9,9 @@ export class EffFactory {
     switch (id) {
       case 0:
         return new Eff0(id, base);
+      case 159:
+        console.log('159!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        return new EffStub(id, base);
       case 218:
         return new Eff218(id, base);
       default:

@@ -86,9 +86,9 @@ export abstract class Eff {
 
   public summary(): void {
     console.log(
-      `${effTable[this.id]} ${this.param1} ${this.param2} ${this.param3} ${this.param4} ${
-        this.param5
-      }`
+      `${this.id} ${effTable[this.id]} ${this.param1} ${this.param2} ${this.param3} ${
+        this.param4
+      } ${this.param5}`
     );
   }
 }
