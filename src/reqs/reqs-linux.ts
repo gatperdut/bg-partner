@@ -16,24 +16,24 @@ export class ReqsLinux extends ReqsOs {
   };
 
   public run(): void {
-    // path
     this.obj.path = this.pathCheck();
 
-    // ASLR
-    const aslrOut: string = execSync(`cat /proc/sys/kernel/randomize_va_space ${devnull}`)
-      .toString()
-      .trim();
+    let ptraceOut: string;
 
+    let aslrOut: string;
+
+    try {
+      aslrOut = execSync(`cat /proc/sys/kernel/randomize_va_space ${devnull}`).toString().trim();
+
+      ptraceOut = execSync(`cat /proc/sys/kernel/yama/ptrace_scope ${devnull}`).toString().trim();
+    } catch (err) {
+      return;
+    }
     const aslr: number = Number.parseInt(aslrOut, 10);
 
-    this.obj.aslr = aslr === 0;
-
-    // ptrace_scope
-    const ptraceOut: string = execSync(`cat /proc/sys/kernel/yama/ptrace_scope ${devnull}`)
-      .toString()
-      .trim();
-
     const ptrace: number = Number.parseInt(ptraceOut, 10);
+
+    this.obj.aslr = aslr === 0;
 
     this.obj.ptrace = ptrace === 0;
   }

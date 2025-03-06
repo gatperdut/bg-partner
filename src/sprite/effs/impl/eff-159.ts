@@ -1,9 +1,9 @@
 import { Eff } from './eff';
 
-// Protection_Stoneskin
-export class Eff218 extends Eff {
+// Spell_Effect_Mirror_Image_Exact_Number
+export class Eff159 extends Eff {
   constructor(protected base: bigint) {
-    super(218, base);
+    super(159, base);
   }
 
   public summary(): void {

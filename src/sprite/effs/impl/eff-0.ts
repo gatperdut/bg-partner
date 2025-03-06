@@ -1,9 +1,9 @@
 import { Eff } from './eff';
 
-// Protection_Stoneskin
+// Stat_AC_vs_Damage_Type_Modifier
 export class Eff0 extends Eff {
-  constructor(public id: number, protected base: bigint) {
-    super(id, base);
+  constructor(protected base: bigint) {
+    super(0, base);
   }
 
   public summary(): void {

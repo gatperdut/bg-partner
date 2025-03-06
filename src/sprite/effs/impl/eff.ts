@@ -5,7 +5,6 @@ import { effTable } from '../../../tables/eff';
 
 export abstract class Eff {
   // Memory fields
-
   public school: number;
 
   public secondaryType: number;
@@ -63,7 +62,7 @@ export abstract class Eff {
 
     this.duration = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x20), 'INT32');
 
-    this.durationType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x1c), 'INT16');
+    this.durationType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x1c), 'INT32');
 
     this.imageSet();
   }
@@ -86,9 +85,11 @@ export abstract class Eff {
 
   public summary(): void {
     console.log(
-      `${this.id} ${effTable[this.id]} ${this.param1} ${this.param2} ${this.param3} ${
+      `${this.id} ${effTable[this.id]} 1:${this.param1} 2:${this.param2} 3:${this.param3} 4:${
         this.param4
-      } ${this.param5}`
+      } 5:${this.param5} res:${this.res} res2:${this.res2} res3:${this.res3} source:${
+        this.resSource
+      } durType:${this.durationType}`
     );
   }
 }

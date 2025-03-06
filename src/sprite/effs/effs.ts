@@ -9,7 +9,9 @@ export class Effs {
 
   private effFactory: EffFactory = new EffFactory();
 
-  public invalidRegex: RegExp = /^(Graphics|Script|Colour_Set)|Sound_Effect$/;
+  // TODO we include State_Set_State here because we deal with it separately.
+  public invalidRegex: RegExp =
+    /^(Graphics|Script|Colour|Overlay|Stat_Magical|State_Set_State|Use_EFF_File|Text)|Sound_Effect$/;
 
   constructor(private base: bigint) {
     // Empty
@@ -29,6 +31,8 @@ export class Effs {
 
       const id: number = handlers.memread.memReadNumber(effPtr + BigInt(0x8 + 0x8), 'UINT32');
 
+      nodePtr = handlers.memread.memReadBigint(nodePtr, 'ADDR');
+
       if (this.invalid(id)) {
         continue;
       }
@@ -36,8 +40,6 @@ export class Effs {
       const eff: Eff = this.effFactory.create(id, effPtr);
 
       this.effs.push(eff);
-
-      nodePtr = handlers.memread.memReadBigint(nodePtr, 'ADDR');
     }
 
     if (!this.printed) {
