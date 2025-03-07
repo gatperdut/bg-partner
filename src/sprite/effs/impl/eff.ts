@@ -1,6 +1,7 @@
 import { ResBam } from '../../../chitin/res/impl/bam/res-bam';
 import { ResSpl } from '../../../chitin/res/impl/res-spl';
 import { handlers } from '../../../handlers';
+import { linux } from '../../../index';
 import { effTable } from '../../../tables/eff';
 
 export abstract class Eff {
@@ -52,7 +53,10 @@ export abstract class Eff {
 
     this.param1 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x14), 'INT32');
 
-    this.param2 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x58), 'INT32');
+    this.param2 = handlers.memread.memReadNumber(
+      base + BigInt(0x8 + (linux ? 0x18 : 0x58)),
+      'INT32'
+    );
 
     this.param3 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x5c), 'INT32');
 

@@ -1,7 +1,7 @@
 import { ComponentsRecord } from '../../components/components';
 import { EaTable } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
-import { Effects } from './components/effects/effects/effects';
+import { Buffs } from './components/buffs/buffs/buffs';
 import './sheet.scss';
 import { SpriteView } from './sprite-view';
 
@@ -91,7 +91,7 @@ class SheetRenderer {
 
     // document.getElementById('savesGroup').innerHTML = new SavesGroup(this.components, params).html;
 
-    document.getElementById('effects').innerHTML = new Effects(this.components, params).html;
+    document.getElementById('buffs').innerHTML = new Buffs(this.components, params).html;
   }
 
   private setEventListeners(): void {

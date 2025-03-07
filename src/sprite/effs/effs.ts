@@ -1,17 +1,36 @@
 import _ from 'lodash-es';
 import { handlers } from '../../handlers';
-import { effTable } from '../../tables/eff';
 import { EffFactory } from './eff-factory';
 import { Eff } from './impl/eff';
 
+export const EffTypes = ['buffs', 'imms', 'profs', 'statmods', 'states'] as const;
+
+export type EffType = (typeof EffTypes)[number];
+
 export class Effs {
-  public effs: Eff[] = [];
+  public effs: Record<EffType, Eff[]> = {
+    buffs: [],
+    imms: [],
+    profs: [],
+    statmods: [],
+    states: [],
+  };
+
+  public groups: Record<EffType, number[]> = {
+    buffs: [],
+    imms: [100, 101, 206, 293, 308, 310, 318, 324],
+    profs: [233],
+    statmods: [33, 34, 35, 36, 37],
+    states: [328],
+  };
+
+  public effsIgnored: number[] = [
+    14, 41, 53, 66, 114, 135, 138, 140, 141, 142, 169, 170, 184, 215, 240, 271, 287, 291, 295, 296,
+    315, 327, 336, 186, 187, 265, 282, 293, 309, 7, 8, 9, 50, 51, 52, 65, 153, 154, 155, 156, 158,
+    84, 85, 177, 283, 103, 139, 267, 290, 330, 174, 42, 313, 277, 276, 275, 92, 91, 90, 59,
+  ];
 
   private effFactory: EffFactory = new EffFactory();
-
-  // TODO we include State_Set_State here because we deal with it separately.
-  public invalidRegex: RegExp =
-    /^(Graphics|Script|Colour|Overlay|Stat_Magical|State_Set_State|Use_EFF_File|Text)|Sound_Effect$/;
 
   constructor(private base: bigint) {
     // Empty
@@ -20,7 +39,9 @@ export class Effs {
   private printed: boolean = false;
 
   public run(): void {
-    this.effs.length = 0;
+    _.each(EffTypes, (effType: EffType): void => {
+      this.effs[effType].length = 0;
+    });
 
     const count: number = handlers.memread.memReadNumber(this.base + BigInt(0x18), 'INT32');
 
@@ -33,25 +54,40 @@ export class Effs {
 
       nodePtr = handlers.memread.memReadBigint(nodePtr, 'ADDR');
 
-      if (this.invalid(id)) {
+      if (_.includes(this.effsIgnored, id)) {
         continue;
       }
 
       const eff: Eff = this.effFactory.create(id, effPtr);
 
-      this.effs.push(eff);
+      let added: boolean = false;
+
+      for (let j: number = 0; j < EffTypes.length; j++) {
+        const effType: EffType = EffTypes[j];
+
+        if (_.includes(this.groups[effType], id)) {
+          this.effs[effType].push(eff);
+
+          added = true;
+
+          break;
+        }
+      }
+
+      if (!added) {
+        this.effs.buffs.push(eff);
+      }
     }
 
     if (!this.printed) {
-      _.each(this.effs, (eff: Eff): void => {
-        eff.summary();
+      _.each(EffTypes, (effType: EffType): void => {
+        console.log('***', effType);
+        _.each(this.effs[effType], (eff: Eff): void => {
+          eff.summary();
+        });
       });
 
       this.printed = true;
     }
-  }
-
-  public invalid(id: number): boolean {
-    return this.invalidRegex.test(effTable[id]);
   }
 }

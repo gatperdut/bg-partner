@@ -15,9 +15,9 @@ export class Components {
 
   // TODO can this be automatized?
   constructor() {
-    this.register('effect', ['sheet', 'components', 'effects', 'effect', 'effect.hbs']);
+    this.register('buff', ['sheet', 'components', 'buffs', 'buff', 'buff.hbs']);
 
-    this.register('effects', ['sheet', 'components', 'effects', 'effects', 'effects.hbs']);
+    this.register('buffs', ['sheet', 'components', 'buffs', 'buffs', 'buffs.hbs']);
 
     this.register('abilities', ['sheet', 'components', 'abilities', 'abilities.hbs']);
 
