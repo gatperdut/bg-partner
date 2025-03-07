@@ -29,11 +29,13 @@ export class Effs {
     maybe: [106],
   };
 
-  public effsIgnored: number[] = [
+  public static effsIgnored: number[] = [
     14, 41, 53, 66, 114, 135, 138, 140, 141, 142, 169, 170, 184, 215, 240, 271, 287, 291, 295, 296,
     315, 327, 336, 186, 187, 265, 282, 293, 309, 7, 8, 9, 50, 51, 52, 65, 153, 154, 155, 156, 158,
     84, 85, 177, 283, 103, 139, 267, 290, 330, 174, 42, 313, 277, 276, 275, 92, 91, 90, 59,
   ];
+
+  public static effsGrouped: number[] = [102];
 
   constructor(private baseTimed: bigint, private baseEquipped: bigint) {
     // Empty
@@ -63,7 +65,7 @@ export class Effs {
 
       nodePtr = handlers.memread.memReadBigint(nodePtr, 'ADDR');
 
-      if (_.includes(this.effsIgnored, id)) {
+      if (_.includes(Effs.effsIgnored, id)) {
         continue;
       }
 

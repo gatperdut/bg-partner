@@ -1,10 +1,11 @@
+import _ from 'lodash-es';
 import { ResBam } from '../../chitin/res/impl/bam/res-bam';
 import { ResItm } from '../../chitin/res/impl/res-itm';
 import { ResSpl } from '../../chitin/res/impl/res-spl';
 import { handlers } from '../../handlers';
 import { linux } from '../../index';
 import { effTable } from '../../tables/eff';
-import { EffSource } from './effs';
+import { Effs, EffSource } from './effs';
 
 export class Eff {
   // Memory fields
@@ -37,6 +38,8 @@ export class Eff {
   // Custom fields
   public image: string;
 
+  public grouped: boolean;
+
   constructor(public id: number, private base: bigint, public source: EffSource) {
     this.school = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x44), 'UINT32');
 
@@ -68,18 +71,12 @@ export class Eff {
     this.durationType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x1c), 'INT32');
 
     this.imageSet();
+
+    this.grouped = _.includes(Effs.effsGrouped, this.id);
   }
 
   private imageSet(): void {
-    let resBam: ResBam = handlers.chitin.ress.BAM[
-      (handlers.chitin.ress.SPL[this.resSource] as ResSpl)?.bam
-    ] as ResBam;
-
-    if (!resBam) {
-      resBam = handlers.chitin.ress.BAM[
-        (handlers.chitin.ress.ITM[this.resSource] as ResItm)?.bam
-      ] as ResBam;
-    }
+    const resBam: ResBam = this.resBam;
 
     if (!resBam) {
       return;
@@ -98,5 +95,19 @@ export class Eff {
         this.resSource
       } durType:${this.durationType}`
     );
+  }
+
+  private get resBam(): ResBam {
+    let resBam: ResBam = handlers.chitin.ress.BAM[
+      (handlers.chitin.ress.SPL[this.resSource] as ResSpl)?.bam
+    ] as ResBam;
+
+    if (!resBam) {
+      resBam = handlers.chitin.ress.BAM[
+        (handlers.chitin.ress.ITM[this.resSource] as ResItm)?.bam
+      ] as ResBam;
+    }
+
+    return resBam;
   }
 }

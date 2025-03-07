@@ -3,11 +3,11 @@ import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/eff';
 import { SheetAPIUpdateParams } from '../../../renderer';
 
-export class Buff {
+export class BuffSingle {
   public html: string;
 
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, eff: Eff) {
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buff);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffSingle);
 
     this.html = compiled({
       eff: eff,
