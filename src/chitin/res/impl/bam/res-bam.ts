@@ -15,12 +15,6 @@ export class ResBam extends Res {
 
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('BAM', buffer, bifs);
-
-    // if (this.name !== 'SPPR725C') {
-    //   return;
-    // }
-
-    // this.decide(this.file);
   }
 
   public image(): Promise<Buffer> {
@@ -87,8 +81,6 @@ export class ResBam extends Res {
       image.writeUInt8(paletteValue[3], i + 3);
     }
 
-    console.log(this.name, this.size.width, this.size.height);
-
     return this.svg(image);
   }
 
@@ -137,8 +129,6 @@ export class ResBam extends Res {
         this.imageBuffer = buffer;
 
         return buffer;
-
-        // console.log(this.name);
       });
   }
 

@@ -8,7 +8,7 @@ export class Res {
   public file: Buffer;
 
   constructor(public resext: Resext, buffer: Buffer, bifs: Bif[]) {
-    this.name = readBufferString(buffer, 0x0, 8);
+    this.name = readBufferString(buffer, 0x0, 8).toLowerCase();
 
     const locator: Uint32Array = new Uint32Array(1);
 

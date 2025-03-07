@@ -1,4 +1,5 @@
 import { ResBam } from '../../../chitin/res/impl/bam/res-bam';
+import { ResItm } from '../../../chitin/res/impl/res-itm';
 import { ResSpl } from '../../../chitin/res/impl/res-spl';
 import { handlers } from '../../../handlers';
 import { linux } from '../../../index';
@@ -49,7 +50,7 @@ export abstract class Eff {
 
     this.res3 = handlers.memread.memReadString(base + BigInt(0x8 + 0x70));
 
-    this.resSource = handlers.memread.memReadString(base + BigInt(0x8 + 0x8c));
+    this.resSource = handlers.memread.memReadString(base + BigInt(0x8 + 0x8c)).toLowerCase();
 
     this.param1 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x14), 'INT32');
 
@@ -72,9 +73,17 @@ export abstract class Eff {
   }
 
   private imageSet(): void {
-    const resBam: ResBam = handlers.chitin.ress.BAM[
+    const hand = handlers;
+
+    let resBam: ResBam = handlers.chitin.ress.BAM[
       (handlers.chitin.ress.SPL[this.resSource] as ResSpl)?.bam
     ] as ResBam;
+
+    if (!resBam) {
+      resBam = handlers.chitin.ress.BAM[
+        (handlers.chitin.ress.ITM[this.resSource] as ResItm)?.bam
+      ] as ResBam;
+    }
 
     if (!resBam) {
       return;

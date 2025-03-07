@@ -3,7 +3,7 @@ import { handlers } from '../../handlers';
 import { EffFactory } from './eff-factory';
 import { Eff } from './impl/eff';
 
-export const EffTypes = ['buffs', 'imms', 'profs', 'statmods', 'states'] as const;
+export const EffTypes = ['buffs', 'imms', 'profs', 'statmods', 'states', 'maybe'] as const;
 
 export type EffType = (typeof EffTypes)[number];
 
@@ -14,14 +14,16 @@ export class Effs {
     profs: [],
     statmods: [],
     states: [],
+    maybe: [],
   };
 
   public groups: Record<EffType, number[]> = {
     buffs: [],
-    imms: [100, 101, 206, 293, 308, 310, 318, 324],
+    imms: [100, 101, 206, 293, 308, 310, 318, 324, 367, 208],
     profs: [233],
-    statmods: [33, 34, 35, 36, 37],
+    statmods: [33, 34, 35, 36, 37, 189, 166, 173],
     states: [328],
+    maybe: [106],
   };
 
   public effsIgnored: number[] = [
