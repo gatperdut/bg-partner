@@ -8,7 +8,7 @@ import { Palette } from './palette';
 export class ResBam extends Res {
   private imageBuffer: Buffer;
 
-  public size: Electron.Size = {
+  private size: Electron.Size = {
     width: null,
     height: null,
   };

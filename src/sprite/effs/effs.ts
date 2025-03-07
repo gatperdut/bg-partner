@@ -1,11 +1,14 @@
 import _ from 'lodash-es';
 import { handlers } from '../../handlers';
-import { EffFactory } from './eff-factory';
-import { Eff } from './impl/eff';
+import { Eff } from './eff';
 
 export const EffTypes = ['buffs', 'imms', 'profs', 'statmods', 'states', 'maybe'] as const;
 
 export type EffType = (typeof EffTypes)[number];
+
+export const EffSources = ['timed', 'equipped'] as const;
+
+export type EffSource = (typeof EffSources)[number];
 
 export class Effs {
   public effs: Record<EffType, Eff[]> = {
@@ -32,9 +35,7 @@ export class Effs {
     84, 85, 177, 283, 103, 139, 267, 290, 330, 174, 42, 313, 277, 276, 275, 92, 91, 90, 59,
   ];
 
-  private effFactory: EffFactory = new EffFactory();
-
-  constructor(private base: bigint) {
+  constructor(private baseTimed: bigint, private baseEquipped: bigint) {
     // Empty
   }
 
@@ -45,9 +46,15 @@ export class Effs {
       this.effs[effType].length = 0;
     });
 
-    const count: number = handlers.memread.memReadNumber(this.base + BigInt(0x18), 'INT32');
+    this.runInternal(this.baseTimed, 'timed');
 
-    let nodePtr: bigint = handlers.memread.memReadBigint(this.base + BigInt(0x8), 'ADDR');
+    this.runInternal(this.baseEquipped, 'equipped');
+  }
+
+  private runInternal(base: bigint, source: EffSource): void {
+    const count: number = handlers.memread.memReadNumber(base + BigInt(0x18), 'INT32');
+
+    let nodePtr: bigint = handlers.memread.memReadBigint(base + BigInt(0x8), 'ADDR');
 
     for (let i: number = 0; i < count; i++) {
       const effPtr: bigint = handlers.memread.memReadBigint(nodePtr + BigInt(0x10), 'ADDR');
@@ -60,7 +67,7 @@ export class Effs {
         continue;
       }
 
-      const eff: Eff = this.effFactory.create(id, effPtr);
+      const eff: Eff = new Eff(id, effPtr, source);
 
       let added: boolean = false;
 
