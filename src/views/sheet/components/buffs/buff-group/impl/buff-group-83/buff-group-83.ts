@@ -13,7 +13,7 @@ export class BuffGroup83 extends BuffGroup {
   ) {
     super(components, params, effs);
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.buffGroup102);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.buffGroup83);
 
     const eff: Eff83 = this.effs[0];
 
@@ -22,6 +22,7 @@ export class BuffGroup83 extends BuffGroup {
       image: eff.image,
       duration: Math.round((eff.duration - params.spriteView.basic.time) / 15),
       projImages: _.map(this.effs, (eff: Eff83): string => eff.projImage),
+      projImage: _.map(this.effs, (eff: Eff83): string => eff.projImage)[0],
     });
   }
 }

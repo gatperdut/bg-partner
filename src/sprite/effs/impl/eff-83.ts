@@ -1,5 +1,5 @@
 import { ResBam } from '../../../chitin/res/impl/bam/res-bam';
-import { ResItm } from '../../../chitin/res/impl/res-itm';
+import { ResPro } from '../../../chitin/res/impl/res-pro';
 import { handlers } from '../../../handlers';
 import { projTable } from '../../../tables/proj';
 import { EffSource } from '../effs';
@@ -15,7 +15,7 @@ export class Eff83 extends Eff {
     const tab = projTable;
 
     const projBam: ResBam = handlers.chitin.ress.BAM[
-      (handlers.chitin.ress.ITM[projTable[this.param2].toLowerCase()] as ResItm)?.bam
+      (handlers.chitin.ress.PRO[projTable[this.param2].toLowerCase()] as ResPro)?.bam
     ] as ResBam;
 
     projBam?.image().then((buf: Buffer): void => {

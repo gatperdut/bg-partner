@@ -17,6 +17,16 @@ export class Components {
   constructor() {
     this.register('buffSingle', ['sheet', 'components', 'buffs', 'buff-single', 'buff-single.hbs']);
 
+    this.register('buffGroup83', [
+      'sheet',
+      'components',
+      'buffs',
+      'buff-group',
+      'impl',
+      'buff-group-83',
+      'buff-group-83.hbs',
+    ]);
+
     this.register('buffGroup102', [
       'sheet',
       'components',
