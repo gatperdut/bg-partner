@@ -1,6 +1,10 @@
-export type EaTable = Record<number, string>;
+export type EaTab = typeof eaTab;
 
-export const eaTable: EaTable = {
+export type EaKey = keyof EaTab;
+
+export type EaValue = EaTab[keyof EaTab];
+
+export const eaTab = {
   0: 'None',
   1: 'Statue',
   2: 'Companion',
@@ -21,4 +25,4 @@ export const eaTable: EaTable = {
   202: 'EVILBUTBLUE',
   254: 'Charmed PC',
   255: 'Enemy',
-};
+} as const;

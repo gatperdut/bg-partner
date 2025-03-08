@@ -1,5 +1,5 @@
 import { ComponentsRecord } from '../../components/components';
-import { EaTable } from '../../tables/ea';
+import { EaTab } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
 import { Buffs } from './components/buffs/buffs/buffs';
 import './sheet.scss';
@@ -23,7 +23,7 @@ export type SheetAPIClose = (id: number) => void;
 // sheet.update
 export type SheetAPIUpdateParams = {
   spriteView: SpriteView;
-  eaTable: EaTable;
+  eaTab: EaTab;
   raceTable: RaceTable;
 };
 
@@ -68,8 +68,7 @@ class SheetRenderer {
   private update(params: SheetAPIUpdateParams): void {
     document.getElementById('name').innerHTML = params.spriteView.basic.name;
 
-    document.getElementById('enemyAlly').title =
-      params.eaTable[params.spriteView.profile.enemyAlly];
+    document.getElementById('enemyAlly').title = params.eaTab[params.spriteView.profile.enemyAlly];
 
     document.getElementById('hp').innerHTML = params.spriteView.basic.hp.toString();
 

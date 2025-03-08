@@ -1,7 +1,8 @@
 import { handlers } from '../handlers';
+import { EaKey } from '../tables/ea';
 
 export class Profile {
-  public enemyAlly: number;
+  public enemyAlly: EaKey;
 
   public race: number;
 
@@ -10,7 +11,7 @@ export class Profile {
   }
 
   public run(): void {
-    this.enemyAlly = handlers.memread.memReadNumber(this.base + BigInt(0x38), 'BYTE');
+    this.enemyAlly = handlers.memread.memReadNumber(this.base + BigInt(0x38), 'BYTE') as EaKey;
 
     this.race = handlers.memread.memReadNumber(this.base + BigInt(0x30 + 0xa), 'BYTE');
   }

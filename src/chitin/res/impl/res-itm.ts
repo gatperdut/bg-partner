@@ -18,11 +18,11 @@ export class ResItm extends Res {
     const extHeadersOff: number = this.file.readUint32LE(0x64);
 
     for (let i: number = 0; i < extHeadersCount; i++) {
-      const attackType: number = this.file.readUInt8(extHeadersOff + 0x0);
+      const attackType: number = this.file.readUInt8(extHeadersOff + 56 * i + 0x0);
 
       if (attackType === 2) {
         this.proValues.push(
-          proTab[this.file.readUInt16LE(extHeadersOff + 0x2a + 56 * i) as ProKey]
+          proTab[this.file.readUInt16LE(extHeadersOff + 56 * i + 0x2a) as ProKey]
         );
       }
     }

@@ -1,7 +1,7 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import { handlers } from '../../handlers';
 import { Sprite } from '../../sprite/sprite';
-import { eaTable } from '../../tables/ea';
+import { eaTab } from '../../tables/ea';
 import { raceTable } from '../../tables/race';
 import { SheetAPIUpdateParams } from './renderer';
 import { spriteView } from './sprite-view';
@@ -90,7 +90,7 @@ export class Sheet {
 
     const params: SheetAPIUpdateParams = {
       spriteView: spriteView(this.sprite),
-      eaTable: eaTable,
+      eaTab: eaTab,
       raceTable: raceTable,
     };
 
