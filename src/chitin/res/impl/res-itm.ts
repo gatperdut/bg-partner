@@ -1,12 +1,12 @@
 import { Bif } from '../../../chitin/bif';
-import { proTable, ProTableKey, ProTableValue } from '../../../tables/pro';
+import { ProKey, proTab, ProValue } from '../../../tables/pro';
 import { readBufferString } from '../../../utils';
 import { Res } from './res';
 
 export class ResItm extends Res {
   public bam: string;
 
-  public pro: ProTableValue;
+  public proValues: ProValue[] = [];
 
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('ITM', buffer, bifs);
@@ -15,13 +15,15 @@ export class ResItm extends Res {
 
     const extHeadersCount: number = this.file.readUint16LE(0x68);
 
-    if (extHeadersCount > 0) {
-      const extHeadersOff: number = this.file.readUint32LE(0x64);
+    const extHeadersOff: number = this.file.readUint32LE(0x64);
 
+    for (let i: number = 0; i < extHeadersCount; i++) {
       const attackType: number = this.file.readUInt8(extHeadersOff + 0x0);
 
       if (attackType === 2) {
-        this.pro = proTable[this.file.readUInt16LE(extHeadersOff + 0x2a) as ProTableKey];
+        this.proValues.push(
+          proTab[this.file.readUInt16LE(extHeadersOff + 0x2a + 56 * i) as ProKey]
+        );
       }
     }
   }

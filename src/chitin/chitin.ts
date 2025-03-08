@@ -1,9 +1,12 @@
 import fs from 'fs';
+import _ from 'lodash-es';
 import path from 'path';
 import { handlers } from '../handlers';
+import { ProValue, proValues } from '../tables/pro';
 import { Resext, resextTable } from '../tables/resext';
 import { Bif } from './bif';
 import { Res } from './res/impl/res';
+import { ResItm } from './res/impl/res-itm';
 import { ResFactory } from './res/res-factory';
 
 export class Chitin {
@@ -12,6 +15,8 @@ export class Chitin {
   public ress: Partial<Record<Resext, Record<string, Res>>> = {};
 
   private resFactory: ResFactory = new ResFactory();
+
+  public proValue2Itms: Record<ProValue, ResItm[]> = {} as Record<ProValue, ResItm[]>;
 
   constructor() {
     const chitin: Buffer = fs.readFileSync(path.join(handlers.config.obj.path, 'chitin.key'));
@@ -51,5 +56,21 @@ export class Chitin {
 
       this.ress[ext][res.name] = res;
     }
+
+    this.proValue2ItmSetup();
+  }
+
+  private proValue2ItmSetup(): void {
+    _.each(proValues, (proValue: ProValue): void => {
+      this.proValue2Itms[proValue] = [];
+
+      _.each(_.values(this.ress.ITM), (resItm: ResItm): void => {
+        if (_.includes(resItm.proValues, proValue)) {
+          if (!_.includes(this.proValue2Itms[proValue], resItm)) {
+            this.proValue2Itms[proValue].push(resItm);
+          }
+        }
+      });
+    });
   }
 }

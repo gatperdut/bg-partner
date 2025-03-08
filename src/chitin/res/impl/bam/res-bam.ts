@@ -6,6 +6,10 @@ import { Res } from '../res';
 import { Palette } from './palette';
 
 export class ResBam extends Res {
+  private signature: string;
+
+  private v: string;
+
   private imageBuffer: Buffer;
 
   private size: Electron.Size = {
@@ -26,12 +30,12 @@ export class ResBam extends Res {
   }
 
   private decide(bam: Buffer): Promise<Buffer> {
-    const signature: string = readBufferString(bam, 0x0, 4).trim();
+    this.signature = readBufferString(bam, 0x0, 4).trim();
 
-    const v: string = readBufferString(bam, 0x4, 4).trim();
+    this.v = readBufferString(bam, 0x4, 4).trim();
 
-    if (v === 'V1') {
-      if (signature === 'BAM') {
+    if (this.v === 'V1') {
+      if (this.signature === 'BAM') {
         return this.v1Bam(bam);
       } else {
         return this.v1BamC(bam);

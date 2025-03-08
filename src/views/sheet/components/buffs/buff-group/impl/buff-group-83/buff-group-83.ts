@@ -1,5 +1,6 @@
 import Handlebars from 'handlebars';
 import _ from 'lodash-es';
+import { ResItm } from '../../../../../../../chitin/res/impl/res-itm';
 import { ComponentsRecord } from '../../../../../../../components/components';
 import { Eff83 } from '../../../../../../../sprite/effs/impl/eff-83';
 import { SheetAPIUpdateParams } from '../../../../../renderer';
@@ -17,12 +18,30 @@ export class BuffGroup83 extends BuffGroup {
 
     const eff: Eff83 = this.effs[0];
 
+    const proImages: string[] = _.flatten(
+      _.map(this.effs, (eff: Eff83): string[] => eff.proImages)
+    );
+
+    const proNames = _.map(
+      _.flatten(_.map(this.effs, (eff: Eff83): ResItm[] => eff.proItms)),
+      (a) => a.name
+    );
+
+    console.log(
+      _.map(
+        _.flatten(_.map(this.effs, (eff: Eff83): ResItm[] => eff.proItms)),
+        (proItm: ResItm) => proItm.bam
+      )
+    );
+
     this.html = compiled({
-      id: eff.id,
-      image: eff.image,
-      duration: Math.round((eff.duration - params.spriteView.basic.time) / 15),
-      projImages: _.map(this.effs, (eff: Eff83): string => eff.projImage),
-      projImage: _.map(this.effs, (eff: Eff83): string => eff.projImage)[0],
+      items: _.map(proImages, (proImage: string, index: number) => ({
+        id: eff.id,
+        image: eff.image,
+        duration: Math.round((eff.duration - params.spriteView.basic.time) / 15),
+        proImage: proImage,
+        name: proNames[index],
+      })),
     });
   }
 }

@@ -1,10 +1,10 @@
-export type ProTable = typeof proTable;
+export type ProTab = typeof proTab;
 
-export type ProTableKey = keyof ProTable;
+export type ProKey = keyof ProTab;
 
-export type ProTableValue = ProTable[keyof ProTable];
+export type ProValue = ProTab[keyof ProTab];
 
-export const proTable = {
+export const proTab = {
   0x1: 'ARROW',
   0x2: 'ARROWEX',
   0x3: 'ARROWFLM',
@@ -259,3 +259,5 @@ export const proTable = {
   344: 'RANGE07',
   345: 'RANGE10',
 } as const;
+
+export const proValues: ProValue[] = Object.values(proTab);
