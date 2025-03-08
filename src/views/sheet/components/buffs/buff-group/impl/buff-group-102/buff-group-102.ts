@@ -1,7 +1,7 @@
 import Handlebars from 'handlebars';
 import _ from 'lodash-es';
 import { ComponentsRecord } from '../../../../../../../components/components';
-import { Eff } from '../../../../../../../sprite/effs/eff';
+import { Eff } from '../../../../../../../sprite/effs/impl/eff';
 import { SheetAPIUpdateParams } from '../../../../../../../views/sheet/renderer';
 import { BuffGroup } from '../../buff-group';
 

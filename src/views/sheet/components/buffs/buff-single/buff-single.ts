@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../components/components';
-import { Eff } from '../../../../../sprite/effs/eff';
+import { Eff } from '../../../../../sprite/effs/impl/eff';
 import { SheetAPIUpdateParams } from '../../../renderer';
 
 export class BuffSingle {

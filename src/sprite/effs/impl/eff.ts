@@ -1,13 +1,13 @@
 import _ from 'lodash-es';
-import { ResBam } from '../../chitin/res/impl/bam/res-bam';
-import { ResItm } from '../../chitin/res/impl/res-itm';
-import { ResSpl } from '../../chitin/res/impl/res-spl';
-import { handlers } from '../../handlers';
-import { linux } from '../../index';
-import { effTable } from '../../tables/eff';
-import { Effs, EffSource } from './effs';
+import { ResBam } from '../../../chitin/res/impl/bam/res-bam';
+import { ResItm } from '../../../chitin/res/impl/res-itm';
+import { ResSpl } from '../../../chitin/res/impl/res-spl';
+import { handlers } from '../../../handlers';
+import { linux } from '../../../index';
+import { effTable } from '../../../tables/eff';
+import { Effs, EffSource } from '../effs';
 
-export class Eff {
+export abstract class Eff {
   // Memory fields
   public school: number;
 
@@ -40,7 +40,7 @@ export class Eff {
 
   public grouped: boolean;
 
-  constructor(public id: number, private base: bigint, public source: EffSource) {
+  constructor(public id: number, protected base: bigint, public source: EffSource) {
     this.school = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x44), 'UINT32');
 
     this.secondaryType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0xc8), 'INT32');

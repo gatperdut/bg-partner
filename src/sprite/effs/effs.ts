@@ -1,6 +1,7 @@
 import _ from 'lodash-es';
 import { handlers } from '../../handlers';
-import { Eff } from './eff';
+import { EffFactory } from './eff-factory';
+import { Eff } from './impl/eff';
 
 export const EffTypes = ['buffs', 'imms', 'profs', 'statmods', 'states', 'maybe'] as const;
 
@@ -69,7 +70,7 @@ export class Effs {
         continue;
       }
 
-      const eff: Eff = new Eff(id, effPtr, source);
+      const eff: Eff = EffFactory.create(id, effPtr, source);
 
       let added: boolean = false;
 

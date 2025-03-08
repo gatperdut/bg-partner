@@ -1,5 +1,6 @@
 import { ComponentsRecord } from '../../../../../components/components';
-import { Eff } from '../../../../../sprite/effs/eff';
+import { Eff } from '../../../../../sprite/effs/impl/eff';
+import { Eff83 } from '../../../../../sprite/effs/impl/eff-83';
 import { SheetAPIUpdateParams } from '../../../../../views/sheet/renderer';
 import { BuffGroup } from '../buff-group/buff-group';
 import { BuffGroup102 } from '../buff-group/impl/buff-group-102/buff-group-102';
@@ -15,7 +16,7 @@ export class BuffGroupFactory {
   ): BuffGroup {
     switch (id) {
       case 83:
-        return new BuffGroup83(components, params, effs);
+        return new BuffGroup83(components, params, effs as Eff83[]);
       case 102:
         return new BuffGroup102(components, params, effs);
       default:
