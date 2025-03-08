@@ -1,9 +1,12 @@
 import fs from 'fs';
+import _ from 'lodash-es';
 import path from 'path';
 import { handlers } from '../handlers';
 import { Resext, resextTable } from '../tables/resext';
 import { Bif } from './bif';
 import { Res } from './res/impl/res';
+import { ResItm } from './res/impl/res-itm';
+import { ResPro } from './res/impl/res-pro';
 import { ResFactory } from './res/res-factory';
 
 export class Chitin {
@@ -50,6 +53,28 @@ export class Chitin {
       }
 
       this.ress[ext][res.name] = res;
+    }
+
+    this.linkPro2Itm();
+  }
+
+  private linkPro2Itm(): void {
+    const resProKeys: string[] = _.keys(this.ress.PRO);
+
+    const resItmKeys: string[] = _.keys(this.ress.ITM);
+
+    for (let pro: number = 0; pro < resProKeys.length; pro++) {
+      const resPro: ResPro = this.ress.PRO[resProKeys[pro]] as ResPro;
+
+      for (let itm: number = 0; itm < resItmKeys.length; itm++) {
+        const resItm: ResItm = this.ress.ITM[resItmKeys[itm]] as ResItm;
+
+        if (resItm.pro === resPro.name) {
+          resPro.resItm = resItm;
+
+          break;
+        }
+      }
     }
   }
 }

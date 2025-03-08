@@ -15,7 +15,7 @@ export class Eff83 extends Eff {
     const tab = projTable;
 
     const projBam: ResBam = handlers.chitin.ress.BAM[
-      (handlers.chitin.ress.PRO[projTable[this.param2].toLowerCase()] as ResPro)?.bam
+      (handlers.chitin.ress.PRO[projTable[this.param2].toLowerCase()] as ResPro)?.resItm?.bam
     ] as ResBam;
 
     projBam?.image().then((buf: Buffer): void => {

@@ -1,11 +1,14 @@
 import { Bif } from '../../../chitin/bif';
 import { readBufferString } from '../../../utils';
 import { Res } from './res';
+import { ResItm } from './res-itm';
 
 export class ResPro extends Res {
   public projType: number;
 
   public bam: string;
+
+  public resItm: ResItm;
 
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('PRO', buffer, bifs);
