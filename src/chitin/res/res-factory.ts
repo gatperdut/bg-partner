@@ -3,7 +3,6 @@ import { Bif } from '../bif';
 import { ResBam } from './impl/bam/res-bam';
 import { Res } from './impl/res';
 import { ResItm } from './impl/res-itm';
-import { ResPro } from './impl/res-pro';
 import { ResSpl } from './impl/res-spl';
 
 export class ResFactory {
@@ -11,8 +10,6 @@ export class ResFactory {
     switch (ext) {
       case 'ITM':
         return new ResItm(buffer, bifs);
-      case 'PRO':
-        return new ResPro(buffer, bifs);
       case 'SPL':
         return new ResSpl(buffer, bifs);
       case 'BAM':

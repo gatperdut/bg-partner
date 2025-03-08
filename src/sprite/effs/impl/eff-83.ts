@@ -1,7 +1,8 @@
+import _ from 'lodash-es';
 import { ResBam } from '../../../chitin/res/impl/bam/res-bam';
-import { ResPro } from '../../../chitin/res/impl/res-pro';
+import { ResItm } from '../../../chitin/res/impl/res-itm';
 import { handlers } from '../../../handlers';
-import { projTable } from '../../../tables/proj';
+import { proTable, ProTableKey } from '../../../tables/pro';
 import { EffSource } from '../effs';
 import { Eff } from './eff';
 
@@ -12,13 +13,23 @@ export class Eff83 extends Eff {
     super(id, base, source);
 
     const hand = handlers;
-    const tab = projTable;
+    const tab = proTable;
 
-    const projBam: ResBam = handlers.chitin.ress.BAM[
-      (handlers.chitin.ress.PRO[projTable[this.param2].toLowerCase()] as ResPro)?.resItm?.bam
+    const proItmKey = _.find(_.keys(handlers.chitin.ress.ITM), (resKey: string): boolean => {
+      return (
+        (handlers.chitin.ress.ITM[resKey] as ResItm).pro === proTable[this.param2 as ProTableKey]
+      );
+    });
+
+    if (!proItmKey) {
+      return;
+    }
+
+    const proBam: ResBam = handlers.chitin.ress.BAM[
+      (handlers.chitin.ress.ITM[proItmKey] as ResItm)?.bam
     ] as ResBam;
 
-    projBam?.image().then((buf: Buffer): void => {
+    proBam?.image().then((buf: Buffer): void => {
       this.projImage = buf.toString('base64');
     });
   }

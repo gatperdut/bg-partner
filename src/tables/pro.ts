@@ -1,6 +1,10 @@
-export type ProjTable = Record<number, string>;
+export type ProTable = typeof proTable;
 
-export const projTable: ProjTable = {
+export type ProTableKey = keyof ProTable;
+
+export type ProTableValue = ProTable[keyof ProTable];
+
+export const proTable = {
   0x1: 'ARROW',
   0x2: 'ARROWEX',
   0x3: 'ARROWFLM',
@@ -254,4 +258,4 @@ export const projTable: ProjTable = {
   343: 'RANGE05',
   344: 'RANGE07',
   345: 'RANGE10',
-};
+} as const;

@@ -10,9 +10,7 @@ export class Res {
   constructor(public resext: Resext, buffer: Buffer, bifs: Bif[]) {
     this.name = readBufferString(buffer, 0x0, 8).trim().toLowerCase();
 
-    const locator: Uint32Array = new Uint32Array(1);
-
-    locator[0] = buffer.readUInt32LE(0xa);
+    const locator: Uint32Array = new Uint32Array([buffer.readUInt32LE(0xa)]);
 
     const bif: Bif = bifs[(locator[0] >> 20) & 0xfff];
 
