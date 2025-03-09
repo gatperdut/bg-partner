@@ -33,11 +33,15 @@ export type SheetAPIUpdateMethod = (params: SheetAPIUpdateParams) => void;
 
 export type SheetAPIUpdate = (data: SheetAPIUpdateMethod) => void;
 
+// sheet.updated
+export type SheetAPIUpdated = () => void;
+
 export type SheetAPI = {
   setup: SheetAPISetup;
   move: SheetAPIMove;
-  update: SheetAPIUpdate;
   close: SheetAPIClose;
+  update: SheetAPIUpdate;
+  updated: SheetAPIUpdated;
 };
 
 declare global {
@@ -52,8 +56,6 @@ class SheetRenderer {
   private components: ComponentsRecord;
 
   private dragging: boolean = false;
-
-  private updatable: boolean = true;
 
   constructor() {
     window.sheetAPI.setup((params: SheetAPISetupParams): void => {
@@ -70,10 +72,6 @@ class SheetRenderer {
   }
 
   private update(params: SheetAPIUpdateParams): void {
-    if (!this.updatable) {
-      return;
-    }
-
     document.getElementById('name').innerHTML = params.spriteView.basic.name;
 
     document.getElementById('enemyAlly').title = params.eaTab[params.spriteView.profile.enemyAlly];
@@ -102,11 +100,11 @@ class SheetRenderer {
 
     tippy('[data-tippy-content]', {
       allowHTML: true,
-      // trigger: 'click',
+      interactive: true,
       theme: 'material',
     });
 
-    this.updatable = false;
+    window.sheetAPI.updated();
   }
 
   private setEventListeners(): void {

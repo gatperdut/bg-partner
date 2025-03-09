@@ -14,14 +14,26 @@ export class Entity {
     this.loaded = !this.sprite.invalid();
   }
 
+  public get windowValid(): boolean {
+    return this.sheet?.window && !this.sheet.window.isDestroyed() && this.sheet.window.isVisible();
+  }
+
   public update(): void {
     this.sprite.basic.run();
 
-    if (this.sheet?.window && !this.sheet.window.isDestroyed() && this.sheet.window.isVisible()) {
+    if (this.windowValid && this.sheet.updatable) {
       this.sprite.details();
 
       this.sheet.update();
     }
+  }
+
+  public updateAllow(): void {
+    if (!this.windowValid) {
+      return;
+    }
+
+    this.sheet.updatable = true;
   }
 
   public pointMatch(pointScreen: Electron.Point): boolean {

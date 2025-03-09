@@ -2,6 +2,7 @@
 @use './spacing' as spacing;
 @use './font';
 @use './general';
+@use './heartbeat';
 
 @include fxl.class-selectors(false);
 

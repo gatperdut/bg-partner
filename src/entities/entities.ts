@@ -61,6 +61,20 @@ export class Entities {
     entity?.sheetToggle();
   }
 
+  public sheetCloseAll(): void {
+    _.each(_.values(this.entities), (entity: Entity): void => {
+      if (entity.windowValid) {
+        entity.sheetToggle();
+      }
+    });
+  }
+
+  public updateAllow(): void {
+    _.each(_.values(this.entities), (entity: Entity): void => {
+      entity.updateAllow();
+    });
+  }
+
   public focusChanged(focused: boolean): void {
     _.each(_.values(this.entities), (entity: Entity): void => {
       entity.focusChanged(focused);

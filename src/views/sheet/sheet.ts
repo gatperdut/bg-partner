@@ -17,6 +17,8 @@ export class Sheet {
 
   public window: BrowserWindow;
 
+  public updatable: boolean = true;
+
   constructor(private sprite: Sprite) {
     this.windowCreate();
 
@@ -76,6 +78,10 @@ export class Sheet {
         );
       }
     );
+
+    ipcMain.on('sheet.updated', (): void => {
+      this.updatable = false;
+    });
   }
 
   public update(): void {

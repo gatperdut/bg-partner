@@ -5,6 +5,7 @@ import {
   SheetAPISetup,
   SheetAPISetupMethod,
   SheetAPIUpdate,
+  SheetAPIUpdated,
   SheetAPIUpdateMethod,
 } from './renderer';
 
@@ -16,6 +17,8 @@ export type SheetAPIBridge = {
   close: SheetAPIClose;
 
   update: (callback: SheetAPIUpdate) => Electron.IpcRenderer;
+
+  updated: SheetAPIUpdated;
 };
 
 const sheetAPIBridge: SheetAPIBridge = {
@@ -36,6 +39,9 @@ const sheetAPIBridge: SheetAPIBridge = {
       'sheet.update',
       (_event: Electron.IpcRendererEvent, value: SheetAPIUpdateMethod): void => callback(value)
     );
+  },
+  updated: (): void => {
+    ipcRenderer.send('sheet.updated');
   },
 };
 

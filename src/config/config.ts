@@ -20,6 +20,10 @@ export type ConfigObj = {
   accelBorderless: string;
 
   accelSheet: string;
+
+  accelUpdate: string;
+
+  accelCloseAll: string;
 };
 
 export type ConfigObjKey = keyof ConfigObj;
@@ -46,6 +50,8 @@ export class Config {
     ms: Joi.number().integer().min(100),
     accelBorderless: Joi.string().pattern(this.accelPattern).min(1),
     accelSheet: Joi.string().pattern(this.accelPattern).min(1),
+    accelUpdate: Joi.string().pattern(this.accelPattern).min(1),
+    accelCloseAll: Joi.string().pattern(this.accelPattern).min(1),
   });
 
   private default: ConfigObj = {
@@ -56,6 +62,8 @@ export class Config {
     ms: 300,
     accelBorderless: 'CommandOrControl+Q',
     accelSheet: 'CommandOrControl+A',
+    accelUpdate: 'CommandOrControl+Z',
+    accelCloseAll: 'CommandOrControl+X',
   };
 
   public obj: ConfigObj;
