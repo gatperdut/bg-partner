@@ -27,6 +27,17 @@ export class Components {
       'buff-group-83.hbs',
     ]);
 
+    this.register('buffGroup83Pros', [
+      'sheet',
+      'components',
+      'buffs',
+      'buff-group',
+      'impl',
+      'buff-group-83',
+      'tooltips',
+      'pros.hbs',
+    ]);
+
     this.register('buffGroup102', [
       'sheet',
       'components',

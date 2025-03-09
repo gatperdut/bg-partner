@@ -6,14 +6,14 @@ import { ProKey, proTab } from '../../../tables/pro';
 import { EffSource } from '../effs';
 import { Eff } from './eff';
 
-export type Eff83Entry = {
+export type Eff83Pro = {
   pro: ResItm;
 
   image: string;
 };
 
 export class Eff83 extends Eff {
-  public entries: Eff83Entry[] = [];
+  public pros: Eff83Pro[] = [];
 
   constructor(public id: number, protected base: bigint, public source: EffSource) {
     super(id, base, source);
@@ -27,12 +27,12 @@ export class Eff83 extends Eff {
           return;
         }
 
-        const eff83Pro: Eff83Entry = {
+        const eff83Pro: Eff83Pro = {
           pro: proItm,
           image: proBam.image,
         };
 
-        this.entries.push(eff83Pro);
+        this.pros.push(eff83Pro);
       }
     );
   }

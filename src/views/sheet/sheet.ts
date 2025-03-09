@@ -17,9 +17,6 @@ export class Sheet {
 
   public window: BrowserWindow;
 
-  // TODO drop this.
-  public updatable: boolean = true;
-
   constructor(private sprite: Sprite) {
     this.windowCreate();
 
@@ -77,17 +74,11 @@ export class Sheet {
           this.window.getPosition()[0] + movement.x,
           this.window.getPosition()[1] + movement.y
         );
-
-        this.updatable = false;
       }
     );
   }
 
   public update(): void {
-    if (!this.updatable) {
-      return;
-    }
-
     const params: SheetAPIUpdateParams = {
       spriteView: spriteView(this.sprite),
       eaTab: eaTab,

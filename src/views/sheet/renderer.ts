@@ -1,3 +1,5 @@
+import tippy from 'tippy.js';
+import 'tippy.js/themes/material.css';
 import { ComponentsRecord } from '../../components/components';
 import { EaTab } from '../../tables/ea';
 import { RaceTable } from '../../tables/race';
@@ -51,6 +53,8 @@ class SheetRenderer {
 
   private dragging: boolean = false;
 
+  private updatable: boolean = true;
+
   constructor() {
     window.sheetAPI.setup((params: SheetAPISetupParams): void => {
       this.components = params.components;
@@ -66,6 +70,10 @@ class SheetRenderer {
   }
 
   private update(params: SheetAPIUpdateParams): void {
+    if (!this.updatable) {
+      return;
+    }
+
     document.getElementById('name').innerHTML = params.spriteView.basic.name;
 
     document.getElementById('enemyAlly').title = params.eaTab[params.spriteView.profile.enemyAlly];
@@ -91,6 +99,14 @@ class SheetRenderer {
     // document.getElementById('savesGroup').innerHTML = new SavesGroup(this.components, params).html;
 
     document.getElementById('buffs').innerHTML = new Buffs(this.components, params).html;
+
+    tippy('[data-tippy-content]', {
+      allowHTML: true,
+      // trigger: 'click',
+      theme: 'material',
+    });
+
+    this.updatable = false;
   }
 
   private setEventListeners(): void {
