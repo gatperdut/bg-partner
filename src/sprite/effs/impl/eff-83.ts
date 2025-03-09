@@ -6,28 +6,41 @@ import { ProKey, proTab } from '../../../tables/pro';
 import { EffSource } from '../effs';
 import { Eff } from './eff';
 
-export class Eff83 extends Eff {
-  public proImages: string[] = [];
+export type Eff83Entry = {
+  pro: ResItm;
 
-  public proItms: ResItm[];
+  image: string;
+};
+
+export class Eff83 extends Eff {
+  public entries: Eff83Entry[] = [];
 
   constructor(public id: number, protected base: bigint, public source: EffSource) {
     super(id, base, source);
 
-    const hand = handlers;
+    _.each(
+      handlers.chitin.proValue2Itms[proTab[(this.param2 + 1) as ProKey]],
+      (proItm: ResItm): void => {
+        const proBam: ResBam = handlers.chitin.ress.BAM[proItm.bam] as ResBam;
 
-    const tab = proTab;
+        if (!proBam) {
+          return;
+        }
 
-    this.proItms = handlers.chitin.proValue2Itms[proTab[(this.param2 + 1) as ProKey]];
+        const eff83Pro: Eff83Entry = {
+          pro: proItm,
+          image: null,
+        };
 
-    const proBams: ResBam[] = _.compact(
-      _.map(this.proItms, (proItm: ResItm) => handlers.chitin.ress.BAM[proItm.bam] as ResBam)
+        proBam.image().then((buf: Buffer): void => {
+          if (!buf) {
+            console.log('IMAGE WITHOUT BUFFER');
+          }
+          eff83Pro.image = buf.toString('base64');
+        });
+
+        this.entries.push(eff83Pro);
+      }
     );
-
-    _.each(proBams, (proBam: ResBam): void => {
-      proBam.image().then((buf: Buffer): void => {
-        this.proImages.push(buf.toString('base64'));
-      });
-    });
   }
 }
