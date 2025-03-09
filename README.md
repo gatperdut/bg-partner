@@ -161,4 +161,4 @@ gdb -p $(pgrep -n bash)
 
 - do the callbacks need `${id}`?
 
-- detect game pause?
+- detect game pause? (CTimerWorld)
