@@ -54,7 +54,7 @@ export class Chitin {
         this.ress[ext] = {};
       }
 
-      this.ress[ext][res.name] = res;
+      this.ress[ext][res.code] = res;
     }
 
     this.proValue2ItmSetup();

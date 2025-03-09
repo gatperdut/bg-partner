@@ -19,15 +19,16 @@ export class BuffGroup83 extends BuffGroup {
       _.map(this.effs, (eff: Eff83): Eff83Entry[] => eff.entries)
     );
 
-    console.log(_.map(entries, (entry: Eff83Entry): string => entry.pro.name));
+    console.log(_.map(entries, (entry: Eff83Entry): string => entry.pro.code));
 
     this.html = compiled({
-      entries: _.map(entries, (entry: Eff83Entry, index: number) => ({
+      entries: _.map(entries, (entry: Eff83Entry) => ({
         id: this.effs[0].id,
         image: entry.image,
         duration: Math.round((this.effs[0].duration - params.spriteView.basic.time) / 15),
         proImage: entry.image,
-        name: entry.pro.name,
+        code: entry.pro.code,
+        name: entry.pro.nameStrref,
       })),
     });
   }

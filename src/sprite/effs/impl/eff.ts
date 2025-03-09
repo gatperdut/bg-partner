@@ -102,7 +102,7 @@ export abstract class Eff {
 
     if (!resBam) {
       resBam = handlers.chitin.ress.BAM[
-        (handlers.chitin.ress.ITM[this.resSource] as ResItm)?.bam
+        (handlers.chitin.ress.ITM[this.resSource] as ResItm)?.bamCode
       ] as ResBam;
     }
 

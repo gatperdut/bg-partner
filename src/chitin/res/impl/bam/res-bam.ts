@@ -54,9 +54,21 @@ export class ResBam extends Res {
   private v1Bam(bam: Buffer): void {
     const framesOffset: number = bam.readUint32LE(0xc);
 
-    this.size.width = bam.readUint16LE(framesOffset + 0x0);
+    const frames: number = bam.readUint16LE(0x8);
 
-    this.size.height = bam.readUint16LE(framesOffset + 0x2);
+    const lookupOffset: number = bam.readUint32LE(0x14);
+
+    const cyclesOffset: number = framesOffset + frames * 12;
+
+    const lookupIndex: number = bam.readUint16LE(cyclesOffset + 0x2);
+
+    const frameIndex: number = bam.readUint16LE(lookupOffset + lookupIndex * 2);
+
+    const frameOffset: number = framesOffset + frameIndex * 12;
+
+    this.size.width = bam.readUint16LE(frameOffset + 0x0);
+
+    this.size.height = bam.readUint16LE(frameOffset + 0x2);
 
     if (!this.size.width || !this.size.height) {
       this.valid = false;
@@ -66,7 +78,7 @@ export class ResBam extends Res {
 
     const palette: Palette = new Palette(bam, 0x10);
 
-    const meta: Int32Array = new Int32Array([bam.readInt32LE(framesOffset + 0x8)]);
+    const meta: Int32Array = new Int32Array([bam.readInt32LE(frameOffset + 0x8)]);
 
     const dataOffset: number = meta[0] & 0x7fffffff;
 
@@ -88,7 +100,7 @@ export class ResBam extends Res {
       this.raw[i + 2] = paletteValue[0];
       this.raw[i + 1] = paletteValue[1];
       this.raw[i + 0] = paletteValue[2];
-      this.raw[i + 3] = paletteValue[3];
+      this.raw[i + 3] = paletteIdx === palette.rleIdx ? paletteValue[3] : 0xff;
     }
 
     return this.svg();
@@ -108,7 +120,7 @@ export class ResBam extends Res {
 
       let repeats: number = 0;
 
-      if (paletteIdx === palette.rleIndex) {
+      if (paletteIdx === palette.rleIdx) {
         repeats = pxData.readUint8(pxIdx + 1);
 
         pxIdx++;
@@ -118,7 +130,7 @@ export class ResBam extends Res {
         this.raw[written + 2] = paletteValue[0];
         this.raw[written + 1] = paletteValue[1];
         this.raw[written + 0] = paletteValue[2];
-        this.raw[written + 3] = paletteValue[3];
+        this.raw[written + 3] = paletteIdx === palette.rleIdx ? paletteValue[3] : 0xff;
 
         written += 4;
       }

@@ -21,7 +21,7 @@ export class Eff83 extends Eff {
     _.each(
       handlers.chitin.proValue2Itms[proTab[(this.param2 + 1) as ProKey]],
       (proItm: ResItm): void => {
-        const proBam: ResBam = handlers.chitin.ress.BAM[proItm.bam] as ResBam;
+        const proBam: ResBam = handlers.chitin.ress.BAM[proItm.bamCode] as ResBam;
 
         if (!proBam?.image) {
           return;

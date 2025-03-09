@@ -3,14 +3,14 @@ import { Resext } from '../../../tables/resext';
 import { readBufferString } from '../../../utils';
 
 export class Res {
-  public name: string;
+  public code: string;
 
   public file: Buffer;
 
   public valid: boolean = true;
 
   constructor(public resext: Resext, buffer: Buffer, bifs: Bif[]) {
-    this.name = readBufferString(buffer, 0x0, 8).trim().toLowerCase();
+    this.code = readBufferString(buffer, 0x0, 8).trim().toLowerCase();
 
     const locator: Uint32Array = new Uint32Array([buffer.readUInt32LE(0xa)]);
 
