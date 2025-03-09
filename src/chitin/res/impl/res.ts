@@ -7,6 +7,8 @@ export class Res {
 
   public file: Buffer;
 
+  public valid: boolean = true;
+
   constructor(public resext: Resext, buffer: Buffer, bifs: Bif[]) {
     this.name = readBufferString(buffer, 0x0, 8).trim().toLowerCase();
 

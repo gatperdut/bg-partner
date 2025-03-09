@@ -1,4 +1,4 @@
-import sharp from 'sharp';
+import { Canvas, CanvasRenderingContext2D, createCanvas, ImageData } from 'canvas';
 import zlib from 'zlib';
 import { readBufferString } from '../../../../utils';
 import { Bif } from '../../../bif';
@@ -10,7 +10,9 @@ export class ResBam extends Res {
 
   private v: string;
 
-  private imageBuffer: Buffer;
+  private raw: Uint8ClampedArray;
+
+  private _image: string;
 
   private size: Electron.Size = {
     width: null,
@@ -21,15 +23,19 @@ export class ResBam extends Res {
     super('BAM', buffer, bifs);
   }
 
-  public image(): Promise<Buffer> {
-    if (this.imageBuffer) {
-      return Promise.resolve(this.imageBuffer);
+  public get image(): string {
+    if (!this._image) {
+      this.decide(this.file);
     }
 
-    return this.decide(this.file);
+    if (!this.valid) {
+      return null;
+    }
+
+    return this._image;
   }
 
-  private decide(bam: Buffer): Promise<Buffer> {
+  private decide(bam: Buffer): void {
     this.signature = readBufferString(bam, 0x0, 4).trim();
 
     this.v = readBufferString(bam, 0x4, 4).trim();
@@ -45,22 +51,22 @@ export class ResBam extends Res {
     }
   }
 
-  private v1Bam(bam: Buffer): Promise<Buffer> {
+  private v1Bam(bam: Buffer): void {
     const framesOffset: number = bam.readUint32LE(0xc);
-
-    const palette: Palette = new Palette(bam, 0x10);
 
     this.size.width = bam.readUint16LE(framesOffset + 0x0);
 
     this.size.height = bam.readUint16LE(framesOffset + 0x2);
 
     if (!this.size.width || !this.size.height) {
+      this.valid = false;
+
       return;
     }
 
-    const meta: Int32Array = new Int32Array(1);
+    const palette: Palette = new Palette(bam, 0x10);
 
-    meta[0] = bam.readInt32LE(framesOffset + 0x8);
+    const meta: Int32Array = new Int32Array([bam.readInt32LE(framesOffset + 0x8)]);
 
     const dataOffset: number = meta[0] & 0x7fffffff;
 
@@ -68,34 +74,34 @@ export class ResBam extends Res {
 
     const data: Buffer = bam.subarray(dataOffset, bam.length);
 
-    return rle ? this.v1BamRle(data, palette) : this.v1BamNoRle(data, palette);
+    rle ? this.v1BamRle(data, palette) : this.v1BamNoRle(data, palette);
   }
 
-  private v1BamNoRle(pxData: Buffer, palette: Palette): Promise<Buffer> {
-    const image: Buffer = Buffer.alloc(this.size.width * this.size.height * 4);
+  private v1BamNoRle(pxData: Buffer, palette: Palette): void {
+    this.raw = new Uint8ClampedArray(this.size.width * this.size.height * 4);
 
     for (let i: number = 0; i < this.size.width * this.size.height; i++) {
       const paletteIdx: number = pxData.readUint8(i);
 
       const paletteValue: number[] = palette.values[paletteIdx];
 
-      image.writeUInt8(paletteValue[0], i + 2);
-      image.writeUInt8(paletteValue[1], i + 1);
-      image.writeUInt8(paletteValue[2], i + 0);
-      image.writeUInt8(paletteValue[3], i + 3);
+      this.raw[i + 2] = paletteValue[0];
+      this.raw[i + 1] = paletteValue[1];
+      this.raw[i + 0] = paletteValue[2];
+      this.raw[i + 3] = paletteValue[3];
     }
 
-    return this.svg(image);
+    return this.svg();
   }
 
-  private v1BamRle(pxData: Buffer, palette: Palette): Promise<Buffer> {
-    const image: Buffer = Buffer.alloc(this.size.width * this.size.height * 4);
+  private v1BamRle(pxData: Buffer, palette: Palette): void {
+    this.raw = new Uint8ClampedArray(this.size.width * this.size.height * 4);
 
     let pxIdx: number = 0;
 
     let written: number = 0;
 
-    while (written < image.length) {
+    while (written < this.raw.length) {
       const paletteIdx: number = pxData.readUint8(pxIdx);
 
       const paletteValue: number[] = palette.values[paletteIdx];
@@ -109,10 +115,10 @@ export class ResBam extends Res {
       }
 
       for (let i: number = 0; i <= repeats; i++) {
-        image.writeUInt8(paletteValue[0], written + 2);
-        image.writeUInt8(paletteValue[1], written + 1);
-        image.writeUInt8(paletteValue[2], written + 0);
-        image.writeUInt8(paletteValue[3], written + 3);
+        this.raw[written + 2] = paletteValue[0];
+        this.raw[written + 1] = paletteValue[1];
+        this.raw[written + 0] = paletteValue[2];
+        this.raw[written + 3] = paletteValue[3];
 
         written += 4;
       }
@@ -120,23 +126,22 @@ export class ResBam extends Res {
       pxIdx++;
     }
 
-    return this.svg(image);
+    this.svg();
   }
 
-  private svg(image: Buffer): Promise<Buffer> {
-    return <Promise<Buffer>>sharp(image, {
-      raw: { width: this.size.width, height: this.size.height, channels: 4 },
-    })
-      .toFormat('png')
-      .toBuffer()
-      .then((buffer: Buffer): Buffer => {
-        this.imageBuffer = buffer;
+  private svg(): void {
+    const canvas: Canvas = createCanvas(this.size.width, this.size.height);
 
-        return buffer;
-      });
+    const ctx: CanvasRenderingContext2D = canvas.getContext('2d');
+
+    const imageData: ImageData = new ImageData(this.raw, this.size.width, this.size.height);
+
+    ctx.putImageData(imageData, 0, 0);
+
+    this._image = canvas.toBuffer('image/png').toString('base64');
   }
 
-  private v1BamC(buffer: Buffer): Promise<Buffer> {
+  private v1BamC(buffer: Buffer): void {
     const data: Buffer = buffer.subarray(0xc, buffer.length);
 
     const subBam: Buffer = zlib.inflateSync(data);
@@ -144,7 +149,7 @@ export class ResBam extends Res {
     return this.decide(subBam);
   }
 
-  private v2(buffer: Buffer): Promise<Buffer> {
-    return Promise.resolve(null);
+  private v2(buffer: Buffer): void {
+    this.valid = false;
   }
 }

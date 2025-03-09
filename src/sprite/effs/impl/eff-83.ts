@@ -23,21 +23,14 @@ export class Eff83 extends Eff {
       (proItm: ResItm): void => {
         const proBam: ResBam = handlers.chitin.ress.BAM[proItm.bam] as ResBam;
 
-        if (!proBam) {
+        if (!proBam?.image) {
           return;
         }
 
         const eff83Pro: Eff83Entry = {
           pro: proItm,
-          image: null,
+          image: proBam.image,
         };
-
-        proBam.image().then((buf: Buffer): void => {
-          if (!buf) {
-            console.log('IMAGE WITHOUT BUFFER');
-          }
-          eff83Pro.image = buf.toString('base64');
-        });
 
         this.entries.push(eff83Pro);
       }

@@ -82,9 +82,7 @@ export abstract class Eff {
       return;
     }
 
-    resBam.image().then((imageBuf: Buffer): void => {
-      this.image = imageBuf.toString('base64');
-    });
+    this.image = resBam.image;
   }
 
   public summary(): void {
