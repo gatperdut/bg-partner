@@ -158,3 +158,7 @@ gdb -p $(pgrep -n bash)
 - sheets in windows become gradually bigger when draging them?!
 
 - consider LE/BE in resread?
+
+- do the callbacks need `${id}`?
+
+- detect game pause?

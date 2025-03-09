@@ -1,6 +1,10 @@
-export type RaceTable = Record<number, string>;
+export type RaceTab = typeof raceTab;
 
-export const raceTable: RaceTable = {
+export type RaceKey = keyof RaceTab;
+
+export type RaceValue = RaceTab[keyof RaceTab];
+
+export const raceTab = {
   1: 'Human',
   2: 'Elf',
   3: 'Half-elf',
@@ -108,4 +112,4 @@ export const raceTable: RaceTable = {
   214: 'Magical chainmail armor',
   215: 'Magical plate armor',
   255: 'No race',
-};
+} as const;

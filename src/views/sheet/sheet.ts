@@ -1,9 +1,7 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import { handlers } from '../../handlers';
 import { Sprite } from '../../sprite/sprite';
-import { eaTab } from '../../tables/ea';
-import { raceTable } from '../../tables/race';
-import { SheetAPIUpdateParams } from './renderer';
+import { SheetAPIRunningParams, SheetAPIUpdateParams } from './renderer';
 import { spriteView } from './sprite-view';
 
 declare const SHEET_PRELOAD_WEBPACK_ENTRY: string;
@@ -17,13 +15,13 @@ export class Sheet {
 
   public window: BrowserWindow;
 
-  public updatable: boolean = true;
+  public running: boolean = true;
 
   constructor(private sprite: Sprite) {
     this.windowCreate();
 
     // Opening devtools causes harmless (?) error: "Request Autofill.enable failed".
-    this.window.webContents.openDevTools({ mode: 'detach' });
+    // this.window.webContents.openDevTools({ mode: 'detach' });
 
     handlers.window.setForeground();
 
@@ -80,18 +78,26 @@ export class Sheet {
     );
 
     ipcMain.on('sheet.updated', (): void => {
-      this.updatable = false;
+      this.running = false;
     });
   }
 
   public update(): void {
     const params: SheetAPIUpdateParams = {
       spriteView: spriteView(this.sprite),
-      eaTab: eaTab,
-      raceTable: raceTable,
     };
 
     this.window.webContents.send('sheet.update', params);
+  }
+
+  public runningToggle(): void {
+    this.running = !this.running;
+
+    const params: SheetAPIRunningParams = {
+      running: this.running,
+    };
+
+    this.window.webContents.send('sheet.running', params);
   }
 
   private position(): Electron.Point {

@@ -21,19 +21,17 @@ export class Entity {
   public update(): void {
     this.sprite.basic.run();
 
-    if (this.windowValid && this.sheet.updatable) {
+    if (this.windowValid && this.sheet?.running) {
       this.sprite.details();
 
       this.sheet.update();
     }
   }
 
-  public updateAllow(): void {
-    if (!this.windowValid) {
-      return;
+  public runningToggle(): void {
+    if (this.windowValid) {
+      this.sheet?.runningToggle();
     }
-
-    this.sheet.updatable = true;
   }
 
   public pointMatch(pointScreen: Electron.Point): boolean {

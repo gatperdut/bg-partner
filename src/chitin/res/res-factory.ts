@@ -1,4 +1,4 @@
-import { Resext } from '../../tables/resext';
+import { ResextValue } from '../../tables/resext';
 import { Bif } from '../bif';
 import { ResBam } from './impl/bam/res-bam';
 import { Res } from './impl/res';
@@ -6,7 +6,7 @@ import { ResItm } from './impl/res-itm';
 import { ResSpl } from './impl/res-spl';
 
 export class ResFactory {
-  public create(ext: Resext, buffer: Buffer, bifs: Bif[]): Res {
+  public create(ext: ResextValue, buffer: Buffer, bifs: Bif[]): Res {
     switch (ext) {
       case 'ITM':
         return new ResItm(buffer, bifs);

@@ -1,6 +1,10 @@
-export type MschoolTable = Record<number, string>;
+export type SchoolTab = typeof schoolTab;
 
-export const mschoolTable: MschoolTable = {
+export type SchoolKey = keyof SchoolTab;
+
+export type SchoolValue = SchoolTab[keyof SchoolTab];
+
+export const schoolTab = {
   0: 'No school',
   1: 'Abjuration',
   2: 'Conjuration',
@@ -11,4 +15,4 @@ export const mschoolTable: MschoolTable = {
   7: 'Necromancy',
   8: 'Transmutation',
   9: 'General school',
-};
+} as const;

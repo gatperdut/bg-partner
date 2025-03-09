@@ -2,10 +2,11 @@ import { contextBridge, ipcRenderer } from 'electron';
 import {
   SheetAPIClose,
   SheetAPIMove,
+  SheetAPIRunning,
+  SheetAPIRunningMethod,
   SheetAPISetup,
   SheetAPISetupMethod,
   SheetAPIUpdate,
-  SheetAPIUpdated,
   SheetAPIUpdateMethod,
 } from './renderer';
 
@@ -18,7 +19,7 @@ export type SheetAPIBridge = {
 
   update: (callback: SheetAPIUpdate) => Electron.IpcRenderer;
 
-  updated: SheetAPIUpdated;
+  running: (callback: SheetAPIRunning) => Electron.IpcRenderer;
 };
 
 const sheetAPIBridge: SheetAPIBridge = {
@@ -40,8 +41,11 @@ const sheetAPIBridge: SheetAPIBridge = {
       (_event: Electron.IpcRendererEvent, value: SheetAPIUpdateMethod): void => callback(value)
     );
   },
-  updated: (): void => {
-    ipcRenderer.send('sheet.updated');
+  running: (callback: SheetAPIRunning): Electron.IpcRenderer => {
+    return ipcRenderer.on(
+      'sheet.running',
+      (_event: Electron.IpcRendererEvent, value: SheetAPIRunningMethod): void => callback(value)
+    );
   },
 };
 

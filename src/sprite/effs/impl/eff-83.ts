@@ -15,8 +15,8 @@ export type Eff83Pro = {
 export class Eff83 extends Eff {
   public pros: Eff83Pro[] = [];
 
-  constructor(public id: number, protected base: bigint, public source: EffSource) {
-    super(id, base, source);
+  constructor(protected base: bigint, public source: EffSource) {
+    super(83, base, source);
 
     _.each(
       handlers.chitin.proValue2Itms[proTab[(this.param2 + 1) as ProKey]],

@@ -1,59 +1,10 @@
-export const Resexts = [
-  'ERR',
-  'BMP',
-  'MVE',
-  'WAV',
-  'WFX',
-  'PLT',
-  'TGA',
-  'BAM',
-  'WED',
-  'CHU',
-  'TIS',
-  'MOS',
-  'ITM',
-  'SPL',
-  'BCS',
-  'IDS',
-  'CRE',
-  'ARE',
-  'DLG',
-  '2DA',
-  'GAM',
-  'STO',
-  'WMP',
-  'EFF',
-  'BS',
-  'CHR',
-  'VVC',
-  'VEF',
-  'PRO',
-  'BIO',
-  'WBM',
-  'FNT',
-  'GUI',
-  'SQL',
-  'PVR',
-  'GLS',
-  'TOT',
-  'TOH',
-  'MEN',
-  'LUA',
-  'TTF',
-  'PNG',
-  'BAH',
-  'INI',
-  'SRC',
-  'MAZ',
-  'MUS',
-  'ACM',
-] as const;
+export type ResextTab = typeof resextTab;
 
-export type Resext = (typeof Resexts)[number];
+export type ResextKey = keyof ResextTab;
 
-export type ResextTable = Record<number, Resext>;
+export type ResextValue = ResextTab[keyof ResextTab];
 
-export const resextTable: ResextTable = {
+export const resextTab = {
   0: 'ERR',
   1: 'BMP',
   2: 'MVE',
@@ -102,4 +53,4 @@ export const resextTable: ResextTable = {
   2052: 'MAZ',
   4094: 'MUS',
   4095: 'ACM',
-};
+} as const;

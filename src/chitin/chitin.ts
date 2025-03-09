@@ -3,7 +3,7 @@ import _ from 'lodash-es';
 import path from 'path';
 import { handlers } from '../handlers';
 import { ProValue, proValues } from '../tables/pro';
-import { Resext, resextTable } from '../tables/resext';
+import { ResextKey, resextTab, ResextValue } from '../tables/resext';
 import { Bif } from './bif';
 import { Res } from './res/impl/res';
 import { ResItm } from './res/impl/res-itm';
@@ -12,7 +12,7 @@ import { ResFactory } from './res/res-factory';
 export class Chitin {
   public bifs: Bif[] = [];
 
-  public ress: Partial<Record<Resext, Record<string, Res>>> = {};
+  public ress: Partial<Record<ResextValue, Record<string, Res>>> = {};
 
   private resFactory: ResFactory = new ResFactory();
 
@@ -40,7 +40,7 @@ export class Chitin {
     for (let i: number = 0; i < resCount; i++) {
       const resOffset: number = ressOffset + i * 14;
 
-      const ext: Resext = resextTable[chitin.readInt16LE(resOffset + 0x8)];
+      const ext: ResextValue = resextTab[chitin.readInt16LE(resOffset + 0x8) as ResextKey];
 
       const resBuffer: Buffer = chitin.subarray(resOffset, resOffset + 14);
 

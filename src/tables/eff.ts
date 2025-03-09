@@ -1,6 +1,10 @@
-export type EffTable = Record<number, string>;
+export type EffTab = typeof effTab;
 
-export const effTable: EffTable = {
+export type EffKey = keyof EffTab;
+
+export type EffValue = EffTab[keyof EffTab];
+
+export const effTab = {
   0: 'Stat_AC_vs_Damage_Type_Modifier',
   1: 'Stat_Attacks_Per_Round_Modifier',
   2: 'Cure_Sleep',
@@ -350,4 +354,4 @@ export const effTable: EffTable = {
   365: 'Make_unselectable',
   366: 'Spell_Apply_Spell_On_Move',
   367: 'Minimum_base_stats',
-};
+} as const;

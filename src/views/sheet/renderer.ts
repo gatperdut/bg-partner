@@ -1,8 +1,7 @@
-import tippy from 'tippy.js';
+import _ from 'lodash-es';
+import tippy, { Instance } from 'tippy.js';
 import 'tippy.js/themes/material.css';
 import { ComponentsRecord } from '../../components/components';
-import { EaTab } from '../../tables/ea';
-import { RaceTable } from '../../tables/race';
 import { Buffs } from './components/buffs/buffs/buffs';
 import './sheet.scss';
 import { SpriteView } from './sprite-view';
@@ -25,23 +24,25 @@ export type SheetAPIClose = (id: number) => void;
 // sheet.update
 export type SheetAPIUpdateParams = {
   spriteView: SpriteView;
-  eaTab: EaTab;
-  raceTable: RaceTable;
 };
 
 export type SheetAPIUpdateMethod = (params: SheetAPIUpdateParams) => void;
 
 export type SheetAPIUpdate = (data: SheetAPIUpdateMethod) => void;
 
-// sheet.updated
-export type SheetAPIUpdated = () => void;
+// sheet.running
+export type SheetAPIRunningParams = { running: boolean };
+
+export type SheetAPIRunningMethod = (params: SheetAPIRunningParams) => void;
+
+export type SheetAPIRunning = (data: SheetAPIRunningMethod) => void;
 
 export type SheetAPI = {
   setup: SheetAPISetup;
   move: SheetAPIMove;
   close: SheetAPIClose;
   update: SheetAPIUpdate;
-  updated: SheetAPIUpdated;
+  running: SheetAPIRunning;
 };
 
 declare global {
@@ -57,6 +58,8 @@ class SheetRenderer {
 
   private dragging: boolean = false;
 
+  private tippyInstances: Instance[] = [];
+
   constructor() {
     window.sheetAPI.setup((params: SheetAPISetupParams): void => {
       this.components = params.components;
@@ -68,19 +71,23 @@ class SheetRenderer {
       this.components && this.update(params);
     });
 
+    window.sheetAPI.running((params: SheetAPIRunningParams): void => {
+      this.running(params.running);
+    });
+
     this.setEventListeners();
   }
 
   private update(params: SheetAPIUpdateParams): void {
     document.getElementById('name').innerHTML = params.spriteView.basic.name;
 
-    document.getElementById('enemyAlly').title = params.eaTab[params.spriteView.profile.enemyAlly];
+    document.getElementById('enemyAlly').title = params.spriteView.profile.enemyAlly;
 
     document.getElementById('hp').innerHTML = params.spriteView.basic.hp.toString();
 
     document.getElementById('hpMax').innerHTML = params.spriteView.derived.hpMax.toString();
 
-    document.getElementById('race').innerHTML = params.raceTable[params.spriteView.profile.race];
+    document.getElementById('race').innerHTML = params.spriteView.profile.race;
 
     document.getElementById('base').innerHTML = `0x${params.spriteView.base.toString(16)}`;
 
@@ -97,14 +104,22 @@ class SheetRenderer {
     // document.getElementById('savesGroup').innerHTML = new SavesGroup(this.components, params).html;
 
     document.getElementById('buffs').innerHTML = new Buffs(this.components, params).html;
+  }
 
-    tippy('[data-tippy-content]', {
-      allowHTML: true,
-      interactive: true,
-      theme: 'material',
-    });
+  private running(running: boolean): void {
+    if (running) {
+      this.tippyDetach();
 
-    window.sheetAPI.updated();
+      document.body.classList.add('running');
+
+      document.getElementById('running').innerHTML = '▶️';
+    } else {
+      this.tippyAttach();
+
+      document.body.classList.remove('running');
+
+      document.getElementById('running').innerHTML = '⏸️';
+    }
   }
 
   private setEventListeners(): void {
@@ -137,6 +152,22 @@ class SheetRenderer {
 
       window.sheetAPI.move(this.spriteView.basic.id, movement);
     });
+  }
+
+  private tippyAttach(): void {
+    tippy('[data-tippy-content]', {
+      allowHTML: true,
+      interactive: true,
+      theme: 'material',
+    });
+  }
+
+  private tippyDetach(): void {
+    _.each(this.tippyInstances, (instance: Instance): void => {
+      instance.destroy();
+    });
+
+    this.tippyInstances.length = 0;
   }
 }
 

@@ -69,9 +69,9 @@ export class Entities {
     });
   }
 
-  public updateAllow(): void {
+  public runningToggle(): void {
     _.each(_.values(this.entities), (entity: Entity): void => {
-      entity.updateAllow();
+      entity.runningToggle();
     });
   }
 

@@ -1,5 +1,6 @@
 import _ from 'lodash-es';
 import { handlers } from '../../handlers';
+import { EffKey } from '../../tables/eff';
 import { EffFactory } from './eff-factory';
 import { Eff } from './impl/eff';
 
@@ -21,7 +22,7 @@ export class Effs {
     maybe: [],
   };
 
-  public groups: Record<EffType, number[]> = {
+  public groups: Record<EffType, EffKey[]> = {
     buffs: [],
     imms: [100, 101, 206, 293, 308, 310, 318, 324, 367, 208],
     profs: [233],
@@ -30,7 +31,7 @@ export class Effs {
     maybe: [106],
   };
 
-  public static effsIgnored: number[] = [
+  public static effsIgnored: EffKey[] = [
     7, 8, 9, 14, 41, 42, 50, 51, 52, 53, 59, 65, 66, 84, 85, 90, 91, 92, 103, 114, 135, 138, 139,
     140, 141, 142, 153, 154, 155, 156, 158, 169, 170, 174, 177, 184, 186, 187, 215, 240, 265, 267,
     271, 275, 276, 277, 282, 283, 287, 290, 291, 293, 295, 296, 309, 313, 315, 327, 330, 336,
@@ -62,7 +63,10 @@ export class Effs {
     for (let i: number = 0; i < count; i++) {
       const effPtr: bigint = handlers.memread.memReadBigint(nodePtr + BigInt(0x10), 'ADDR');
 
-      const id: number = handlers.memread.memReadNumber(effPtr + BigInt(0x8 + 0x8), 'UINT32');
+      const id: EffKey = handlers.memread.memReadNumber(
+        effPtr + BigInt(0x8 + 0x8),
+        'UINT32'
+      ) as EffKey;
 
       nodePtr = handlers.memread.memReadBigint(nodePtr, 'ADDR');
 
