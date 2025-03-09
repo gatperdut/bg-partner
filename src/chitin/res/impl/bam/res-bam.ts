@@ -28,10 +28,6 @@ export class ResBam extends Res {
       this.decide(this.file);
     }
 
-    if (!this.valid) {
-      return null;
-    }
-
     return this._image;
   }
 
@@ -71,8 +67,6 @@ export class ResBam extends Res {
     this.size.height = bam.readUint16LE(frameOffset + 0x2);
 
     if (!this.size.width || !this.size.height) {
-      this.valid = false;
-
       return;
     }
 
@@ -162,6 +156,6 @@ export class ResBam extends Res {
   }
 
   private v2(buffer: Buffer): void {
-    this.valid = false;
+    console.log('BAM V2 to be implemented.');
   }
 }

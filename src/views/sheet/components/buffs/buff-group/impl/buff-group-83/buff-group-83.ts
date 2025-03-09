@@ -28,7 +28,7 @@ export class BuffGroup83 extends BuffGroup {
         duration: Math.round((this.effs[0].duration - params.spriteView.basic.time) / 15),
         proImage: entry.image,
         code: entry.pro.code,
-        name: entry.pro.nameStrref,
+        name: entry.pro.name,
       })),
     });
   }

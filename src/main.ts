@@ -11,6 +11,7 @@ import { SyscallsLinux } from './syscalls/linux/syscalls-linux';
 import { SyscallsWin32 } from './syscalls/win32/syscalls-win32';
 
 import { Chitin } from './chitin/chitin';
+import { Tlk } from './chitin/res/impl/res-tlk';
 import { Components } from './components/components';
 import { Config } from './config/config';
 import { config, handlers } from './handlers';
@@ -25,6 +26,8 @@ export class Main {
     handlers.reqs = linux ? new ReqsLinux() : new ReqsWin32();
 
     handlers.config = new Config();
+
+    handlers.tlk = new Tlk();
 
     handlers.chitin = new Chitin();
 

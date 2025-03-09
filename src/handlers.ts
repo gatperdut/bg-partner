@@ -1,4 +1,5 @@
 import { Chitin } from './chitin/chitin';
+import { Tlk } from './chitin/res/impl/res-tlk';
 import { Components } from './components/components';
 import { Config } from './config/config';
 import { Entities } from './entities/entities';
@@ -25,6 +26,7 @@ import { WindowWin32 } from './window/window-win32';
 export type Handlers = {
   reqs: Reqs;
   config: Config;
+  tlk: Tlk;
   chitin: Chitin;
   syscalls: Syscalls;
   memread: Memread;
@@ -39,6 +41,7 @@ export type Handlers = {
 export const handlers: Handlers = {
   reqs: null,
   config: null,
+  tlk: null,
   chitin: null,
   syscalls: null,
   memread: null,

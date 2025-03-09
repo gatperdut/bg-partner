@@ -1,12 +1,13 @@
 import { Bif } from '../../../chitin/bif';
+import { handlers } from '../../../handlers';
 import { ProKey, proTab, ProValue } from '../../../tables/pro';
 import { readBufferString } from '../../../utils';
 import { Res } from './res';
 
 export class ResItm extends Res {
-  public nameStrref: number;
+  public name: string;
 
-  public descStrref: number;
+  public desc: string;
 
   public bamCode: string;
 
@@ -15,9 +16,9 @@ export class ResItm extends Res {
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('ITM', buffer, bifs);
 
-    this.nameStrref = this.file.readUint16LE(0xc);
+    this.name = handlers.tlk.tlks[this.file.readUint16LE(0xc)];
 
-    this.descStrref = this.file.readUint16LE(0x54);
+    this.desc = handlers.tlk.tlks[this.file.readUint16LE(0x54)];
 
     this.bamCode = readBufferString(this.file, 0x3a, 8).toLowerCase();
 
