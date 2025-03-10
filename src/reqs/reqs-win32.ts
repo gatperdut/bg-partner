@@ -1,20 +1,17 @@
-import { ReqsOs, ReqsOsObj } from './reqs';
-
-export type ReqsWin32Obj = ReqsOsObj & {
+export type ReqsWin32Obj = {
   // Empty
 };
 
-export class ReqsWin32 extends ReqsOs {
+export class ReqsWin32 {
   public obj: ReqsWin32Obj = {
     path: null,
   };
 
   public run(): void {
-    // path
-    this.obj.path = this.pathCheck();
+    // Empty
   }
 
   public valid(): boolean {
-    return this.obj.path;
+    return true;
   }
 }

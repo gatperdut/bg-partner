@@ -21,16 +21,10 @@ export class Entity {
   public update(): void {
     this.sprite.basic.run();
 
-    if (this.windowValid && this.sheet?.running) {
+    if (this.windowValid) {
       this.sprite.details();
 
       this.sheet.update();
-    }
-  }
-
-  public runningToggle(): void {
-    if (this.windowValid) {
-      this.sheet?.runningToggle();
     }
   }
 

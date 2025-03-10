@@ -10,8 +10,6 @@ export class Basic {
 
   public gameAreaAddr: bigint;
 
-  public time: number;
-
   public infGameAddr: bigint;
 
   public hp: number;
@@ -28,8 +26,6 @@ export class Basic {
 
   public resref: string;
 
-  public active: number;
-
   constructor(private base: bigint) {
     this.run();
   }
@@ -40,10 +36,6 @@ export class Basic {
     this.gameAreaAddr = handlers.memread.memReadBigint(this.base + BigInt(0x18), 'ADDR');
 
     this.infGameAddr = handlers.memread.memReadBigint(this.gameAreaAddr + BigInt(0x228), 'ADDR');
-
-    this.time = handlers.memread.memReadNumber(this.infGameAddr + BigInt(0x3fa0), 'UINT32');
-
-    this.active = handlers.memread.memReadNumber(this.infGameAddr + BigInt(0x3fa0 + 0x4), 'UINT8');
 
     this.hp = handlers.memread.memReadNumber(this.base + BigInt(0x560 + 0x1c), 'INT16');
 

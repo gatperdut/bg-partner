@@ -20,16 +20,10 @@ export abstract class ShortcutsOS {
     handlers.window.focusedLast && this.borderless();
   };
 
-  private accelRunning: () => void = (): void => {
-    handlers.window.focusedLast && this.runningToggle();
-  };
-
   private register(): void {
     globalShortcut.register(config().obj.accelSheet, this.accelSheet);
 
     globalShortcut.register(config().obj.accelBorderless, this.accelBorderless);
-
-    globalShortcut.register(config().obj.accelRunning, this.accelRunning);
 
     globalShortcut.register(config().obj.accelCloseAll, this.accelCloseAll);
   }
@@ -52,10 +46,6 @@ export abstract class ShortcutsOS {
 
   protected borderless(): void {
     // Empty
-  }
-
-  private runningToggle(): void {
-    handlers.entities.runningToggle();
   }
 
   private accelCloseAll(): void {

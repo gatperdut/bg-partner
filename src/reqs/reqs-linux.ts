@@ -1,8 +1,8 @@
 import { execSync } from 'child_process';
 import { devnull } from '../const/const-linux';
-import { ReqsOs, ReqsOsObj } from './reqs';
+import { ReqsOs } from './reqs';
 
-export type ReqsLinuxObj = ReqsOsObj & {
+export type ReqsLinuxObj = {
   aslr: boolean;
 
   ptrace: boolean;
@@ -10,14 +10,11 @@ export type ReqsLinuxObj = ReqsOsObj & {
 
 export class ReqsLinux extends ReqsOs {
   public obj: ReqsLinuxObj = {
-    path: null,
     aslr: null,
     ptrace: null,
   };
 
   public run(): void {
-    this.obj.path = this.pathCheck();
-
     let ptraceOut: string;
 
     let aslrOut: string;
@@ -39,6 +36,6 @@ export class ReqsLinux extends ReqsOs {
   }
 
   public valid(): boolean {
-    return this.obj.path && this.obj.aslr && this.obj.ptrace;
+    return this.obj.aslr && this.obj.ptrace;
   }
 }

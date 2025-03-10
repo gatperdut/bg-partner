@@ -11,7 +11,7 @@ export class BuffSingle {
 
     this.html = compiled({
       eff: eff,
-      duration: Math.round((eff.duration - params.spriteView.basic.time) / 15),
+      duration: Math.round((eff.duration - params.timetracker.time) / 15),
     });
   }
 }

@@ -1,4 +1,4 @@
-import { app } from 'electron';
+import { app, dialog } from 'electron';
 import * as fs from 'fs';
 import Joi, { ObjectSchema, ValidationError, ValidationErrorItem } from 'joi';
 import _ from 'lodash-es';
@@ -20,8 +20,6 @@ export type ConfigObj = {
   accelBorderless: string;
 
   accelSheet: string;
-
-  accelRunning: string;
 
   accelCloseAll: string;
 };
@@ -50,7 +48,6 @@ export class Config {
     ms: Joi.number().integer().min(100),
     accelBorderless: Joi.string().pattern(this.accelPattern).min(1),
     accelSheet: Joi.string().pattern(this.accelPattern).min(1),
-    accelRunning: Joi.string().pattern(this.accelPattern).min(1),
     accelCloseAll: Joi.string().pattern(this.accelPattern).min(1),
   });
 
@@ -62,14 +59,19 @@ export class Config {
     ms: 300,
     accelBorderless: 'CommandOrControl+Q',
     accelSheet: 'CommandOrControl+A',
-    accelRunning: 'CommandOrControl+Z',
     accelCloseAll: 'CommandOrControl+X',
   };
 
   public obj: ConfigObj;
 
+  public quitting: boolean;
+
   constructor() {
     const configObj: ConfigObj = this.fileread();
+
+    if (this.quitting) {
+      return;
+    }
 
     const errors: ValidationError = this.schema.validate(configObj).error;
 
@@ -88,6 +90,17 @@ export class Config {
     this.filewrite(this.obj);
 
     console.log(this.stringify(this.obj));
+
+    if (!fs.existsSync(path.join(this.obj.path, 'lang', this.obj.locale, 'dialog.tlk'))) {
+      this.quit(
+        'Cannot find dialog.tlk',
+        'Check your configuration fields "path" and "locale", then try again.'
+      );
+    }
+
+    if (!fs.existsSync(path.join(this.obj.path, 'chitin.key'))) {
+      this.quit('Cannot find dialog.tlk', 'Check your configuration field "path", then try again.');
+    }
   }
 
   private defaultField<K extends ConfigObjKey>(configObj: ConfigObj, field: K) {
@@ -110,9 +123,14 @@ export class Config {
     const filePath: string = this.filePath;
 
     if (!fs.existsSync(filePath)) {
-      console.log('Configuration file not found. Will create one with defaults.');
+      console.log('Configuration file not found. Will create one with defaults and quit.');
 
       this.filewrite(this.default);
+
+      this.quit(
+        'bg-partner.json created',
+        'Configuration file created, will quit now. Edit and relaunch.'
+      );
 
       return this.default;
     }
@@ -131,5 +149,20 @@ export class Config {
 
   private stringify(configObj: ConfigObj): string {
     return JSON.stringify(configObj, null, 2);
+  }
+
+  private quit(title: string, message: string): void {
+    dialog
+      .showMessageBox({
+        type: 'none',
+        title: title,
+        message: message,
+        buttons: ['OK'],
+      })
+      .then((): void => {
+        app.quit();
+      });
+
+    this.quitting = true;
   }
 }

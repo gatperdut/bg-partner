@@ -22,7 +22,15 @@ export type SheetAPIMove = (id: number, movement: Electron.Point) => void;
 export type SheetAPIClose = (id: number) => void;
 
 // sheet.update
+export type SheetAPIUpdateParamsTimetracker = {
+  time: number;
+
+  running: boolean;
+};
+
 export type SheetAPIUpdateParams = {
+  timetracker: SheetAPIUpdateParamsTimetracker;
+
   spriteView: SpriteView;
 };
 
@@ -30,19 +38,11 @@ export type SheetAPIUpdateMethod = (params: SheetAPIUpdateParams) => void;
 
 export type SheetAPIUpdate = (data: SheetAPIUpdateMethod) => void;
 
-// sheet.running
-export type SheetAPIRunningParams = { running: boolean };
-
-export type SheetAPIRunningMethod = (params: SheetAPIRunningParams) => void;
-
-export type SheetAPIRunning = (data: SheetAPIRunningMethod) => void;
-
 export type SheetAPI = {
   setup: SheetAPISetup;
   move: SheetAPIMove;
   close: SheetAPIClose;
   update: SheetAPIUpdate;
-  running: SheetAPIRunning;
 };
 
 declare global {
@@ -69,10 +69,6 @@ class SheetRenderer {
       this.spriteView = params.spriteView;
 
       this.components && this.update(params);
-    });
-
-    window.sheetAPI.running((params: SheetAPIRunningParams): void => {
-      this.running(params.running);
     });
 
     this.setEventListeners();
@@ -104,10 +100,8 @@ class SheetRenderer {
     // document.getElementById('savesGroup').innerHTML = new SavesGroup(this.components, params).html;
 
     document.getElementById('buffs').innerHTML = new Buffs(this.components, params).html;
-  }
 
-  private running(running: boolean): void {
-    if (running) {
+    if (params.timetracker.running) {
       this.tippyDetach();
 
       document.body.classList.add('running');

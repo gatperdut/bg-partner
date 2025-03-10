@@ -17,15 +17,20 @@ import { Config } from './config/config';
 import { config, handlers } from './handlers';
 import { ReqsLinux } from './reqs/reqs-linux';
 import { ReqsWin32 } from './reqs/reqs-win32';
+import { Timetracker } from './time/timetracker';
 import { Control } from './views/control/control';
 import { WindowLinux } from './window/window-linux';
 import { WindowWin32 } from './window/window-win32';
 
 export class Main {
   constructor() {
-    handlers.reqs = linux ? new ReqsLinux() : new ReqsWin32();
-
     handlers.config = new Config();
+
+    if (handlers.config.quitting) {
+      return;
+    }
+
+    handlers.reqs = linux ? new ReqsLinux() : new ReqsWin32();
 
     handlers.tlk = new Tlk();
 
@@ -46,9 +51,15 @@ export class Main {
     handlers.control = new Control();
 
     handlers.components = new Components();
+
+    handlers.timetracker = new Timetracker();
   }
 
   public run(): void {
+    if (handlers.config.quitting) {
+      return;
+    }
+
     setInterval(this.loop.bind(this), config().obj.ms);
   }
 

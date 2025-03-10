@@ -1,7 +1,7 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import { handlers } from '../../handlers';
 import { Sprite } from '../../sprite/sprite';
-import { SheetAPIRunningParams, SheetAPIUpdateParams } from './renderer';
+import { SheetAPIUpdateParams } from './renderer';
 import { spriteView } from './sprite-view';
 
 declare const SHEET_PRELOAD_WEBPACK_ENTRY: string;
@@ -14,8 +14,6 @@ export class Sheet {
   private height: number = 700;
 
   public window: BrowserWindow;
-
-  public running: boolean = true;
 
   constructor(private sprite: Sprite) {
     this.windowCreate();
@@ -76,28 +74,18 @@ export class Sheet {
         );
       }
     );
-
-    ipcMain.on('sheet.updated', (): void => {
-      this.running = false;
-    });
   }
 
   public update(): void {
     const params: SheetAPIUpdateParams = {
+      timetracker: {
+        time: handlers.timetracker.time,
+        running: handlers.timetracker.running,
+      },
       spriteView: spriteView(this.sprite),
     };
 
     this.window.webContents.send('sheet.update', params);
-  }
-
-  public runningToggle(): void {
-    this.running = !this.running;
-
-    const params: SheetAPIRunningParams = {
-      running: this.running,
-    };
-
-    this.window.webContents.send('sheet.running', params);
   }
 
   private position(): Electron.Point {

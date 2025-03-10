@@ -20,7 +20,7 @@ export class BuffGroup83 extends BuffGroup {
     this.html = compiled({
       id: this.effs[0].id,
       image: this.effs[0].image,
-      duration: Math.round((this.effs[0].duration - params.spriteView.basic.time) / 15),
+      duration: Math.round((this.effs[0].duration - params.timetracker.time) / 15),
       pros: Handlebars.compile(this.components.buffGroup83Pros)({
         pros: pros,
       }),

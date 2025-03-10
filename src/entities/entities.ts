@@ -1,12 +1,9 @@
 import _ from 'lodash';
 import { handlers } from '../handlers';
 import { Entity } from './entity';
-import { Timekeeper } from './timekeeper';
 
 export class Entities {
   private entities: Record<number, Entity> = {};
-
-  private timekeeper: Timekeeper = new Timekeeper();
 
   public run(): void {
     const entities: Entity[] = _.filter(
@@ -17,10 +14,9 @@ export class Entities {
       (entity: Entity): boolean => entity.loaded
     );
 
-    this.timekeeper.push(entities[0]);
+    handlers.timetracker.push(entities[0]);
 
-    if (this.timekeeper.reloaded) {
-      console.log('reload');
+    if (handlers.timetracker.reloaded) {
       this.entitiesReplace(entities);
 
       return;
@@ -90,12 +86,6 @@ export class Entities {
       if (entity.windowValid) {
         entity.sheetToggle();
       }
-    });
-  }
-
-  public runningToggle(): void {
-    _.each(_.values(this.entities), (entity: Entity): void => {
-      entity.runningToggle();
     });
   }
 

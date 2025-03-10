@@ -2,11 +2,11 @@
 
 BGPartner (Baldur's Gate Partner) is a Linux/Windows (64 and 32 bits respectively) companion tool for the Enhanced Editions v2.6.6 of Baldur's Gate and Baldur's Gate II: Shadows of Amn. It produces overlays on user-selected creatures detailing their stats and active effects.
 
-It's a [Node.js](https://nodejs.org) + [Electron](https://www.electronjs.org)/[Forge](https://www.electronforge.io) + [Koffi](https://koffi.dev) + [Handlebars](https://handlebarsjs.com) project.
+It is a [Node.js](https://nodejs.org) + [Electron](https://www.electronjs.org)/[Forge](https://www.electronforge.io) + [Koffi](https://koffi.dev) + [Handlebars](https://handlebarsjs.com) + [Tippy.js](https://atomiks.github.io/tippyjs) project.
 
 ## Acknowledgments
 
-Though implemented from scratch, this project draws heavily from [BG2RadarOverlay](https://github.com/tapahob/BG2RadarOverlay) and makes extensive use of [EEEx's documentation](https://eeex-docs.readthedocs.io).
+Though implemented from scratch, this project draws heavily from [BG2RadarOverlay](https://github.com/tapahob/BG2RadarOverlay) and makes extensive use of [EEEx's documentation](https://eeex-docs.readthedocs.io) and the [IESDP](https://gibberlings3.github.io/iesdp).
 
 ## Quickstart
 
@@ -85,7 +85,7 @@ Once BGPartner launches successfully, you will see this window:
 
 The upper line will display "❌ Process not found." if no running instance of a game could be found.
 
-The next 2 lines are Linux-Only and will indicate if the configuration steps from above were successful. If they were not, they will display "❌ ASLR is enabled." and "❌ ptrace_scope is enabled." respectively.
+The next 2 lines are Linux-only and will indicate if the configuration steps from above were successful. If they were not, they will display "❌ ASLR is enabled." and "❌ ptrace_scope is enabled." respectively.
 
 Next up is the configuration in use. This will closely resemble your `bg-partner.json`, though individual keys may have reverted to the defaults if the provided value was invalid. The JSON object might have been replaced in its entirety, too, if, for example, you provided an invalid JSON. So make sure to double-check.
 
@@ -161,4 +161,6 @@ gdb -p $(pgrep -n bash)
 
 - do the callbacks need `${id}`?
 
-- detect game pause? (CTimerWorld)
+- does the approach of a single timer (from the first loaded entity) do funky stuff with timestop?s
+
+- shutdown immediately when run for the first time and no config.json in present, after creating it.

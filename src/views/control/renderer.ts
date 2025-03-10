@@ -52,10 +52,6 @@ class ControlRenderer {
   }
 
   private reqs(linux: boolean, reqsObj: ReqsObj): void {
-    document.getElementById('reqs-path').textContent = reqsObj.path
-      ? '✅ Path looks valid.'
-      : '❌ Path looks invalid.';
-
     if (linux) {
       document.getElementById('reqs-aslr').textContent = (reqsObj as ReqsLinuxObj).aslr
         ? '✅ ASLR is disabled.'

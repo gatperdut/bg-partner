@@ -20,7 +20,7 @@ export class BuffGroup102 extends BuffGroup {
     this.html = compiled({
       id: eff.id,
       image: eff.image,
-      duration: Math.round((eff.duration - params.spriteView.basic.time) / 15),
+      duration: Math.round((eff.duration - params.timetracker.time) / 15),
       max: Math.max(..._.map(this.effs, (eff: Eff): number => eff.param1)),
     });
   }
