@@ -1,9 +1,12 @@
 import _ from 'lodash';
 import { handlers } from '../handlers';
 import { Entity } from './entity';
+import { Timekeeper } from './timekeeper';
 
 export class Entities {
   private entities: Record<number, Entity> = {};
+
+  private timekeeper: Timekeeper = new Timekeeper();
 
   public run(): void {
     const entities: Entity[] = _.filter(
@@ -14,12 +17,33 @@ export class Entities {
       (entity: Entity): boolean => entity.loaded
     );
 
+    this.timekeeper.push(entities[0]);
+
+    if (this.timekeeper.reloaded) {
+      console.log('reload');
+      this.entitiesReplace(entities);
+
+      return;
+    }
+
     this.entitiesRemove(entities);
 
     this.entitiesInsert(entities);
 
     _.each(_.values(this.entities), (entity: Entity): void => {
       entity.update();
+    });
+  }
+
+  private entitiesReplace(entities: Entity[]): void {
+    _.each(_.values(this.entities), (entity: Entity): void => {
+      entity.teardown();
+    });
+
+    this.entities = {};
+
+    _.each(entities, (entity: Entity): void => {
+      this.entities[entity.sprite.basic.id] = entity;
     });
   }
 
