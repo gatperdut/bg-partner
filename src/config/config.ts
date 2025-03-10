@@ -96,6 +96,8 @@ export class Config {
         'Cannot find dialog.tlk',
         'Check your configuration fields "path" and "locale", then try again.'
       );
+
+      return;
     }
 
     if (!fs.existsSync(path.join(this.obj.path, 'chitin.key'))) {

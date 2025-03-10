@@ -60,21 +60,56 @@ class SheetRenderer {
 
   private tippyInstances: Instance[] = [];
 
+  private runningPrevious: boolean = null;
+
   constructor() {
     window.sheetAPI.setup((params: SheetAPISetupParams): void => {
       this.components = params.components;
     });
 
     window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
-      this.spriteView = params.spriteView;
-
-      this.components && this.update(params);
+      this.update(params);
     });
 
     this.setEventListeners();
   }
 
   private update(params: SheetAPIUpdateParams): void {
+    this.spriteView = params.spriteView;
+
+    if (!this.components) {
+      return;
+    }
+
+    if (_.isNull(this.runningPrevious)) {
+      this.updateView(params);
+
+      this.updateRunning(params.timetracker.running);
+      if (!params.timetracker.running) {
+        this.tippyAttach();
+      }
+    } else {
+      if (params.timetracker.running) {
+        this.updateView(params);
+
+        if (!this.runningPrevious) {
+          this.tippyDetach();
+
+          this.updateRunning(true);
+        }
+      } else {
+        if (this.runningPrevious) {
+          this.tippyAttach();
+
+          this.updateRunning(false);
+        }
+      }
+    }
+
+    this.runningPrevious = params.timetracker.running;
+  }
+
+  private updateView(params: SheetAPIUpdateParams): void {
     document.getElementById('name').innerHTML = params.spriteView.basic.name;
 
     document.getElementById('enemyAlly').title = params.spriteView.profile.enemyAlly;
@@ -100,20 +135,34 @@ class SheetRenderer {
     // document.getElementById('savesGroup').innerHTML = new SavesGroup(this.components, params).html;
 
     document.getElementById('buffs').innerHTML = new Buffs(this.components, params).html;
+  }
 
-    if (params.timetracker.running) {
-      this.tippyDetach();
-
+  private updateRunning(running: boolean) {
+    if (running) {
       document.body.classList.add('running');
 
       document.getElementById('running').innerHTML = '▶️';
     } else {
-      this.tippyAttach();
-
       document.body.classList.remove('running');
 
       document.getElementById('running').innerHTML = '⏸️';
     }
+  }
+
+  private tippyAttach(): void {
+    this.tippyInstances = tippy('[data-tippy-content]', {
+      allowHTML: true,
+      interactive: true,
+      theme: 'material',
+    });
+  }
+
+  private tippyDetach(): void {
+    _.each(this.tippyInstances, (instance: Instance): void => {
+      instance.destroy();
+    });
+
+    this.tippyInstances.length = 0;
   }
 
   private setEventListeners(): void {
@@ -146,22 +195,6 @@ class SheetRenderer {
 
       window.sheetAPI.move(this.spriteView.basic.id, movement);
     });
-  }
-
-  private tippyAttach(): void {
-    tippy('[data-tippy-content]', {
-      allowHTML: true,
-      interactive: true,
-      theme: 'material',
-    });
-  }
-
-  private tippyDetach(): void {
-    _.each(this.tippyInstances, (instance: Instance): void => {
-      instance.destroy();
-    });
-
-    this.tippyInstances.length = 0;
   }
 }
 

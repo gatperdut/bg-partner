@@ -28,7 +28,7 @@ export class Effs {
     profs: [233],
     statmods: [33, 34, 35, 36, 37, 189, 166, 173],
     states: [328],
-    maybe: [106],
+    maybe: [106, 360],
   };
 
   public static effsIgnored: EffKey[] = [
