@@ -1,8 +1,11 @@
 import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
 import { SheetAPIUpdateParams } from '../../../renderer';
+import { Buff, BuffData } from '../buffs/buff';
 
-export abstract class BuffGroup {
+export type BuffGroupData = BuffData;
+
+export abstract class BuffGroup extends Buff {
   public html: string;
 
   constructor(
@@ -10,6 +13,6 @@ export abstract class BuffGroup {
     protected params: SheetAPIUpdateParams,
     protected effs: Eff[]
   ) {
-    // Empty
+    super(effs[0], params.timetracker.time);
   }
 }

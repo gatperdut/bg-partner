@@ -2,17 +2,22 @@ import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
 import { SheetAPIUpdateParams } from '../../../renderer';
+import { Buff, BuffData } from '../buffs/buff';
 
-export class BuffSingle {
+export type BuffSingleData = BuffData;
+
+export class BuffSingle extends Buff {
   public html: string;
 
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, eff: Eff) {
+    super(eff, params.timetracker.time);
+
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffSingle);
 
-    this.html = compiled({
-      eff: eff,
-      duration: Math.round((eff.duration - params.timetracker.time) / 15),
-      valign: Math.floor((32 - eff.resImage.size.height) / 2),
-    });
+    const buffSingleData: BuffSingleData = {
+      ...this.buffData,
+    };
+
+    this.html = compiled(buffSingleData);
   }
 }

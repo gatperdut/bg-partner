@@ -3,7 +3,11 @@ import _ from 'lodash-es';
 import { ComponentsRecord } from '../../../../../../../components/components';
 import { Eff } from '../../../../../../../sprite/effs/impl/eff';
 import { SheetAPIUpdateParams } from '../../../../../../../views/sheet/renderer';
-import { BuffGroup } from '../../buff-group';
+import { BuffGroup, BuffGroupData } from '../../buff-group';
+
+export type BuffGroup102Data = BuffGroupData & {
+  max: number;
+};
 
 export class BuffGroup102 extends BuffGroup {
   constructor(
@@ -15,11 +19,11 @@ export class BuffGroup102 extends BuffGroup {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.buffGroup102);
 
-    this.html = compiled({
-      eff: this.effs[0],
-      duration: Math.round((this.effs[0].duration - params.timetracker.time) / 15),
-      valign: Math.floor((32 - this.effs[0].resImage.size.height) / 2),
+    const buffGroup102Data: BuffGroup102Data = {
+      ...this.buffData,
       max: Math.max(..._.map(this.effs, (eff: Eff): number => eff.param1)),
-    });
+    };
+
+    this.html = compiled(buffGroup102Data);
   }
 }
