@@ -5,7 +5,7 @@ import { ResSpl } from '../../../chitin/res/impl/res-spl';
 import { handlers } from '../../../handlers';
 import { EffKey, effTab } from '../../../tables/eff';
 import { SchoolKey, schoolTab, SchoolValue } from '../../../tables/school';
-import { EffImage } from '../eff-image';
+import { Image } from '../eff-image';
 import { Effs, EffSource } from '../effs';
 
 export abstract class Eff {
@@ -37,7 +37,7 @@ export abstract class Eff {
   public durationType: number;
 
   // Custom fields
-  public image: EffImage;
+  public image: Image;
 
   public grouped: boolean;
 
@@ -81,7 +81,7 @@ export abstract class Eff {
       return;
     }
 
-    this.image = new EffImage(resBam.image, resBam.size);
+    this.image = new Image(resBam.image, resBam.size);
   }
 
   public summary(): void {

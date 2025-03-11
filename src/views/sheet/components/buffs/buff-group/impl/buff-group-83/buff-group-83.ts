@@ -15,7 +15,10 @@ export class BuffGroup83 extends BuffGroup {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.buffGroup83);
 
-    const pros: Eff83Pro[] = _.flatten(_.map(this.effs, (eff: Eff83): Eff83Pro[] => eff.pros));
+    const pros: Eff83Pro[] = _.uniqBy(
+      _.flatten(_.map(this.effs, (eff: Eff83): Eff83Pro[] => eff.pros)),
+      (eff83Pro: Eff83Pro): string => eff83Pro.pro.code
+    );
 
     this.html = compiled({
       key: this.effs[0].key,

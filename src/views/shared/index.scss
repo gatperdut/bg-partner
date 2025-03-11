@@ -1,8 +1,9 @@
-@use 'css-fx-layout' as fxl;
-@use './spacing' as spacing;
 @use './font';
 @use './general';
 @use './heartbeat';
+@use './spacing' as spacing;
+@use 'css-fx-layout' as fxl;
+@use './tippy';
 
 @include fxl.class-selectors(false);
 

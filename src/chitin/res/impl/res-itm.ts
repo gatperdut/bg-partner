@@ -1,5 +1,6 @@
 import { Bif } from '../../../chitin/bif';
 import { handlers } from '../../../handlers';
+import { Image } from '../../../sprite/effs/eff-image';
 import { ProKey, proTab, ProValue } from '../../../tables/pro';
 import { readBufferString } from '../../../utils';
 import { Res } from './res';
@@ -8,6 +9,8 @@ export class ResItm extends Res {
   public name: string;
 
   public desc: string;
+
+  public image: Image;
 
   public bamCode: string;
 

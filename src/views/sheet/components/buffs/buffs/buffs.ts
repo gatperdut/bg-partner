@@ -2,6 +2,7 @@ import Handlebars from 'handlebars';
 import _ from 'lodash-es';
 import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
+import { EffKey } from '../../../../../tables/eff';
 import { SheetAPIUpdateParams } from '../../../renderer';
 import { BuffSingle } from '../buff-single/buff-single';
 import { BuffGroupFactory } from './buff-group-factory';
@@ -17,7 +18,7 @@ export class Buffs {
 
     const buffsGroupsById: Record<number, Eff[]> = _.groupBy(
       _.filter(this.params.spriteView.effs.effs.buffs, (eff: Eff): boolean => eff.grouped),
-      'id'
+      (eff: Eff): EffKey => eff.key
     );
 
     const buffsGroups: string[] = _.map(

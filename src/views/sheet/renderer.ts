@@ -1,6 +1,5 @@
 import _ from 'lodash-es';
 import tippy, { Instance } from 'tippy.js';
-import 'tippy.js/themes/material.css';
 import { ComponentsRecord } from '../../components/components';
 import { Buffs } from './components/buffs/buffs/buffs';
 import './sheet.scss';
@@ -153,7 +152,6 @@ class SheetRenderer {
     this.tippyInstances = tippy('[data-tippy-content]', {
       allowHTML: true,
       interactive: true,
-      theme: 'material',
       trigger: 'click',
       appendTo: document.body,
     });

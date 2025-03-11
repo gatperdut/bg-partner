@@ -75,8 +75,6 @@ export class ResBam extends Res {
 
     this.center.y = bam.readUint16LE(frameOffset + 0x6);
 
-    console.log(this.code, this.center.x, this.center.y);
-
     if (!this.size.width || !this.size.height) {
       return;
     }
