@@ -96,7 +96,7 @@ export abstract class Eff {
 
   private get resBam(): ResBam {
     let resBam: ResBam = handlers.chitin.ress.BAM[
-      (handlers.chitin.ress.SPL[this.resSource] as ResSpl)?.bam
+      (handlers.chitin.ress.SPL[this.resSource] as ResSpl)?.bamCode
     ] as ResBam;
 
     if (!resBam) {
