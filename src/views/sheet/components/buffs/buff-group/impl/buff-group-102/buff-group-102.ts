@@ -15,12 +15,11 @@ export class BuffGroup102 extends BuffGroup {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.buffGroup102);
 
-    const eff: Eff = this.effs[0];
-
     this.html = compiled({
-      id: eff.id,
-      image: eff.image,
-      duration: Math.round((eff.duration - params.timetracker.time) / 15),
+      id: this.effs[0].id,
+      image: this.effs[0].image.base64,
+      duration: Math.round((this.effs[0].duration - params.timetracker.time) / 15),
+      valign: Math.floor((32 - this.effs[0].image.size.height) / 2),
       max: Math.max(..._.map(this.effs, (eff: Eff): number => eff.param1)),
     });
   }

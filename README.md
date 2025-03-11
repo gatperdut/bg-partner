@@ -142,7 +142,9 @@ In a newly opened regular shell do `(Get-Process Baldur).Id` and then, with the 
 But it will suck. TODO.
 
 ### gdb for files
+
 You can also use gdb to examine binary files like `.biff`, but it needs a dummy process, and you must allocate enough memory for the file. For example, the following will print `66 'B'	73 'I'	70 'F'	70 'F'` if executed from the game's `data` folder:
+
 ```
 bash&
 gdb -p $(pgrep -n bash)
@@ -164,3 +166,5 @@ gdb -p $(pgrep -n bash)
 - does the approach of a single timer (from the first loaded entity) do funky stuff with timestop?s
 
 - shutdown immediately when run for the first time and no config.json in present, after creating it.
+
+- create a Buff class that encompasses buffSingle and buffGroup. For BuffGroup, extract common parameters (duration, valign, etc).

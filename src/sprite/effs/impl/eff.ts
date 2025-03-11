@@ -3,9 +3,9 @@ import { ResBam } from '../../../chitin/res/impl/bam/res-bam';
 import { ResItm } from '../../../chitin/res/impl/res-itm';
 import { ResSpl } from '../../../chitin/res/impl/res-spl';
 import { handlers } from '../../../handlers';
-import { linux } from '../../../index';
 import { EffKey, effTab } from '../../../tables/eff';
 import { SchoolKey, schoolTab, SchoolValue } from '../../../tables/school';
+import { EffImage } from '../eff-image';
 import { Effs, EffSource } from '../effs';
 
 export abstract class Eff {
@@ -37,7 +37,7 @@ export abstract class Eff {
   public durationType: number;
 
   // Custom fields
-  public image: string;
+  public image: EffImage;
 
   public grouped: boolean;
 
@@ -57,10 +57,7 @@ export abstract class Eff {
 
     this.param1 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x14), 'INT32');
 
-    this.param2 = handlers.memread.memReadNumber(
-      base + BigInt(0x8 + (linux ? 0x18 : 0x58)),
-      'INT32'
-    );
+    this.param2 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x18), 'INT32'); // Should be + 0x58?
 
     this.param3 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x5c), 'INT32');
 
@@ -84,7 +81,7 @@ export abstract class Eff {
       return;
     }
 
-    this.image = resBam.image;
+    this.image = new EffImage(resBam.image, resBam.size);
   }
 
   public summary(): void {

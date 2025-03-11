@@ -19,8 +19,9 @@ export class BuffGroup83 extends BuffGroup {
 
     this.html = compiled({
       id: this.effs[0].id,
-      image: this.effs[0].image,
+      image: this.effs[0].image.base64,
       duration: Math.round((this.effs[0].duration - params.timetracker.time) / 15),
+      valign: Math.floor((32 - this.effs[0].image.size.height) / 2),
       pros: Handlebars.compile(this.components.buffGroup83Pros)({
         pros: pros,
       }),

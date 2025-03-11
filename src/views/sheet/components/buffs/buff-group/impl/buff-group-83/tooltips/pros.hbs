@@ -1,5 +1,7 @@
-{{#each pros}}
-  <div class="buff-wrapper fx-layout-column fx-align--start-x fx-align--x-center">
-    <img title="{{pro.name}}" draggable="false" src="data:image/png;base64,{{image}}" />
-  </div>
-{{/each}}
+<div class="fx-layout-row fx-align--space-between-x fx-align--x-center fx-layout-wrap">
+  {{#each pros}}
+    <div class="buff-wrapper fx-layout-column fx-align--start-x fx-align--x-center">
+      <img title="{{pro.name}}" draggable="false" src="data:image/png;base64,{{image}}" />
+    </div>
+  {{/each}}
+</div>

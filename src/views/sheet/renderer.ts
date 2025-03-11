@@ -154,6 +154,8 @@ class SheetRenderer {
       allowHTML: true,
       interactive: true,
       theme: 'material',
+      trigger: 'click',
+      appendTo: document.body,
     });
   }
 

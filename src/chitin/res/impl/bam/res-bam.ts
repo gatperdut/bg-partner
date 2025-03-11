@@ -14,9 +14,14 @@ export class ResBam extends Res {
 
   private _image: string;
 
-  private size: Electron.Size = {
+  public size: Electron.Size = {
     width: null,
     height: null,
+  };
+
+  public center: Electron.Point = {
+    x: null,
+    y: null,
   };
 
   constructor(buffer: Buffer, bifs: Bif[]) {
@@ -65,6 +70,12 @@ export class ResBam extends Res {
     this.size.width = bam.readUint16LE(frameOffset + 0x0);
 
     this.size.height = bam.readUint16LE(frameOffset + 0x2);
+
+    this.center.x = bam.readUint16LE(frameOffset + 0x4);
+
+    this.center.y = bam.readUint16LE(frameOffset + 0x6);
+
+    console.log(this.code, this.center.x, this.center.y);
 
     if (!this.size.width || !this.size.height) {
       return;
