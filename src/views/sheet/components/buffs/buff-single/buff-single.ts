@@ -10,7 +10,7 @@ export class BuffSingle extends Buff {
   public html: string;
 
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, eff: Eff) {
-    super(eff, params.timetracker.time);
+    super(components, eff, params.timetracker.time);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffSingle);
 

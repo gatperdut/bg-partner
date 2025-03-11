@@ -35,6 +35,8 @@ export abstract class Eff {
 
   public durationType: number;
 
+  public casterLevel: number;
+
   // Custom fields
   public resImage: ResImage;
 
@@ -67,6 +69,8 @@ export abstract class Eff {
     this.duration = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x20), 'INT32');
 
     this.durationType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x1c), 'INT32');
+
+    this.casterLevel = handlers.memread.memReadNumber(base + BigInt(0x8 + 0xc0), 'INT32');
 
     this.resImageSet();
 

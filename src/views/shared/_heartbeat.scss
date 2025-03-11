@@ -26,6 +26,4 @@
 
 body:not(.running) .heartbeat {
   animation: heartbeat 2.5s infinite;
-
-  cursor: pointer;
 }

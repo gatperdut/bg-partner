@@ -13,6 +13,6 @@ export abstract class BuffGroup extends Buff {
     protected params: SheetAPIUpdateParams,
     protected effs: Eff[]
   ) {
-    super(effs[0], params.timetracker.time);
+    super(components, effs[0], params.timetracker.time);
   }
 }

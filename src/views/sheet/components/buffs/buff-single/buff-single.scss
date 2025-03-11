@@ -4,11 +4,22 @@
   position: relative;
 }
 
+.item-wrapper {
+  color: black;
+  height: 50px;
+}
+
 .duration {
   color: black;
 }
 
-.item-wrapper {
-  color: black;
-  height: 50px;
+/////////
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.caster-level {
+  position: absolute;
+  left: -10px;
 }
