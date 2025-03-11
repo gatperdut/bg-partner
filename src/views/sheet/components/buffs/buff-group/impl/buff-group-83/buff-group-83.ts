@@ -1,7 +1,8 @@
 import Handlebars from 'handlebars';
 import _ from 'lodash-es';
+import { ResItm } from '../../../../../../../chitin/res/impl/res-itm';
 import { ComponentsRecord } from '../../../../../../../components/components';
-import { Eff83, Eff83Pro } from '../../../../../../../sprite/effs/impl/eff-83';
+import { Eff83 } from '../../../../../../../sprite/effs/impl/eff-83';
 import { SheetAPIUpdateParams } from '../../../../../renderer';
 import { BuffGroup } from '../../buff-group';
 
@@ -15,9 +16,9 @@ export class BuffGroup83 extends BuffGroup {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.buffGroup83);
 
-    const pros: Eff83Pro[] = _.uniqBy(
-      _.flatten(_.map(this.effs, (eff: Eff83): Eff83Pro[] => eff.pros)),
-      (eff83Pro: Eff83Pro): string => eff83Pro.pro.code
+    const proItms: ResItm[] = _.uniqBy(
+      _.flatten(_.map(this.effs, (eff: Eff83): ResItm[] => eff.proItms)),
+      (proItm: ResItm): string => proItm.code
     );
 
     this.html = compiled({
@@ -25,8 +26,8 @@ export class BuffGroup83 extends BuffGroup {
       image: this.effs[0].resImage.base64,
       duration: Math.round((this.effs[0].duration - params.timetracker.time) / 15),
       valign: Math.floor((32 - this.effs[0].resImage.size.height) / 2),
-      pros: Handlebars.compile(this.components.buffGroup83Pros)({
-        pros: pros,
+      proItms: Handlebars.compile(this.components.buffGroup83Pros)({
+        proItms: proItms,
       }),
     });
   }
