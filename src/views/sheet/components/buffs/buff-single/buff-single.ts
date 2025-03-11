@@ -12,7 +12,7 @@ export class BuffSingle {
     this.html = compiled({
       eff: eff,
       duration: Math.round((eff.duration - params.timetracker.time) / 15),
-      valign: Math.floor((32 - eff.image.size.height) / 2),
+      valign: Math.floor((32 - eff.resImage.size.height) / 2),
     });
   }
 }

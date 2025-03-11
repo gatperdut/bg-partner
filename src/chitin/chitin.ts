@@ -56,8 +56,18 @@ export class Chitin {
 
       this.ress[ext][res.code] = res;
     }
+  }
+
+  public setup(): void {
+    this.itmsImage();
 
     this.proValue2ItmSetup();
+  }
+
+  private itmsImage(): void {
+    _.each(_.values(this.ress.ITM), (resItm: ResItm): void => {
+      resItm.imageSet();
+    });
   }
 
   private proValue2ItmSetup(): void {

@@ -36,6 +36,8 @@ export class Main {
 
     handlers.chitin = new Chitin();
 
+    handlers.chitin.setup();
+
     handlers.syscalls = linux ? new SyscallsLinux() : new SyscallsWin32();
 
     handlers.memread = linux ? new MemreadLinux() : new MemreadWin32();

@@ -1,8 +1,9 @@
 import { Bif } from '../../../chitin/bif';
 import { handlers } from '../../../handlers';
-import { Image } from '../../../sprite/effs/eff-image';
 import { ProKey, proTab, ProValue } from '../../../tables/pro';
 import { readBufferString } from '../../../utils';
+import { ResImage } from '../res-image';
+import { ResBam } from './bam/res-bam';
 import { Res } from './res';
 
 export class ResItm extends Res {
@@ -10,7 +11,7 @@ export class ResItm extends Res {
 
   public desc: string;
 
-  public image: Image;
+  public resImage: ResImage;
 
   public bamCode: string;
 
@@ -44,5 +45,19 @@ export class ResItm extends Res {
         );
       }
     }
+  }
+
+  public imageSet(): void {
+    const resBam: ResBam = this.resBam();
+
+    if (!resBam) {
+      return;
+    }
+
+    this.resImage = new ResImage(resBam.image, resBam.size);
+  }
+
+  private resBam(): ResBam {
+    return handlers.chitin.ress.BAM[this.bamCode] as ResBam;
   }
 }

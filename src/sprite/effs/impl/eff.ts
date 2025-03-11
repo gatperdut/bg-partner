@@ -2,10 +2,10 @@ import _ from 'lodash-es';
 import { ResBam } from '../../../chitin/res/impl/bam/res-bam';
 import { ResItm } from '../../../chitin/res/impl/res-itm';
 import { ResSpl } from '../../../chitin/res/impl/res-spl';
+import { ResImage } from '../../../chitin/res/res-image';
 import { handlers } from '../../../handlers';
 import { EffKey, effTab } from '../../../tables/eff';
 import { SchoolKey, schoolTab, SchoolValue } from '../../../tables/school';
-import { Image } from '../eff-image';
 import { Effs, EffSource } from '../effs';
 
 export abstract class Eff {
@@ -37,7 +37,7 @@ export abstract class Eff {
   public durationType: number;
 
   // Custom fields
-  public image: Image;
+  public resImage: ResImage;
 
   public grouped: boolean;
 
@@ -81,7 +81,7 @@ export abstract class Eff {
       return;
     }
 
-    this.image = new Image(resBam.image, resBam.size);
+    this.resImage = new ResImage(resBam.image, resBam.size);
   }
 
   public summary(): void {
