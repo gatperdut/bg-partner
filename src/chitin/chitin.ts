@@ -7,6 +7,7 @@ import { ResextKey, resextTab, ResextValue } from '../tables/resext';
 import { Bif } from './bif';
 import { Res } from './res/impl/res';
 import { ResItm } from './res/impl/res-itm';
+import { ResSpl } from './res/impl/res-spl';
 import { ResFactory } from './res/res-factory';
 
 export class Chitin {
@@ -61,12 +62,20 @@ export class Chitin {
   public setup(): void {
     this.itmsImage();
 
+    this.splsImage();
+
     this.proValue2ItmSetup();
   }
 
   private itmsImage(): void {
     _.each(_.values(this.ress.ITM), (resItm: ResItm): void => {
-      resItm.imageSet();
+      resItm.resImageSet();
+    });
+  }
+
+  private splsImage(): void {
+    _.each(_.values(this.ress.SPL), (resSpl: ResSpl): void => {
+      resSpl.resImageSet();
     });
   }
 

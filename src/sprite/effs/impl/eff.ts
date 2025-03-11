@@ -1,5 +1,4 @@
 import _ from 'lodash-es';
-import { ResBam } from '../../../chitin/res/impl/bam/res-bam';
 import { ResItm } from '../../../chitin/res/impl/res-itm';
 import { ResSpl } from '../../../chitin/res/impl/res-spl';
 import { ResImage } from '../../../chitin/res/res-image';
@@ -69,19 +68,31 @@ export abstract class Eff {
 
     this.durationType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x1c), 'INT32');
 
-    this.imageSet();
+    this.resImageSet();
 
     this.grouped = _.includes(Effs.effsGrouped, this.key);
   }
 
-  private imageSet(): void {
-    const resBam: ResBam = this.resBam;
-
-    if (!resBam) {
+  private resImageSet(): void {
+    if (!this.resSource) {
       return;
     }
 
-    this.resImage = new ResImage(resBam.image, resBam.size);
+    this.resImage = (
+      _.find(
+        handlers.chitin.ress.SPL,
+        (resSpl: ResSpl): boolean => resSpl.code === this.resSource
+      ) as ResSpl
+    )?.resImage;
+
+    if (!this.resImage) {
+      this.resImage = (
+        _.find(
+          handlers.chitin.ress.ITM,
+          (resItm: ResItm): boolean => resItm.code === this.resSource
+        ) as ResItm
+      )?.resImage;
+    }
   }
 
   public summary(): void {
@@ -92,19 +103,5 @@ export abstract class Eff {
         this.resSource
       } durType:${this.durationType}`
     );
-  }
-
-  private get resBam(): ResBam {
-    let resBam: ResBam = handlers.chitin.ress.BAM[
-      (handlers.chitin.ress.SPL[this.resSource] as ResSpl)?.bamCode
-    ] as ResBam;
-
-    if (!resBam) {
-      resBam = handlers.chitin.ress.BAM[
-        (handlers.chitin.ress.ITM[this.resSource] as ResItm)?.bamCode
-      ] as ResBam;
-    }
-
-    return resBam;
   }
 }

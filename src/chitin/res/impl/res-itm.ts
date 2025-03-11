@@ -3,7 +3,6 @@ import { handlers } from '../../../handlers';
 import { ProKey, proTab, ProValue } from '../../../tables/pro';
 import { readBufferString } from '../../../utils';
 import { ResImage } from '../res-image';
-import { ResBam } from './bam/res-bam';
 import { Res } from './res';
 
 export class ResItm extends Res {
@@ -13,7 +12,7 @@ export class ResItm extends Res {
 
   public resImage: ResImage;
 
-  public bamCode: string;
+  private bamCode: string;
 
   public proValues: ProValue[] = [];
 
@@ -47,17 +46,17 @@ export class ResItm extends Res {
     }
   }
 
-  public imageSet(): void {
-    const resBam: ResBam = this.resBam();
-
-    if (!resBam) {
+  public resImageSet(): void {
+    if (!this.bamCode) {
       return;
     }
 
-    this.resImage = new ResImage(resBam.image, resBam.size);
-  }
+    const resImage: ResImage = new ResImage(this.bamCode);
 
-  private resBam(): ResBam {
-    return handlers.chitin.ress.BAM[this.bamCode] as ResBam;
+    if (!resImage.loaded) {
+      return;
+    }
+
+    this.resImage = resImage;
   }
 }
