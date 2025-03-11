@@ -1,3 +1,4 @@
+import { handlers } from '../handlers';
 import { Sprite } from '../sprite/sprite';
 import { Sheet } from '../views/sheet/sheet';
 
@@ -7,6 +8,8 @@ export class Entity {
   private sheet: Sheet;
 
   public sprite: Sprite;
+
+  public updatedOnce: boolean = false;
 
   constructor(private gameObjectPtr: bigint) {
     this.sprite = new Sprite(this.gameObjectPtr);
@@ -22,7 +25,11 @@ export class Entity {
     this.sprite.basic.run();
 
     if (this.windowValid) {
-      this.sprite.details();
+      if (handlers.timetracker.running || !this.updatedOnce) {
+        this.sprite.details();
+
+        this.updatedOnce = true;
+      }
 
       this.sheet.update();
     }
