@@ -16,7 +16,7 @@ export class BuffGroup102 extends BuffGroup {
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.buffGroup102);
 
     this.html = compiled({
-      id: this.effs[0].id,
+      key: this.effs[0].key,
       image: this.effs[0].image.base64,
       duration: Math.round((this.effs[0].duration - params.timetracker.time) / 15),
       valign: Math.floor((32 - this.effs[0].image.size.height) / 2),

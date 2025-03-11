@@ -41,7 +41,7 @@ export abstract class Eff {
 
   public grouped: boolean;
 
-  constructor(public id: EffKey, protected base: bigint, public source: EffSource) {
+  constructor(public key: EffKey, protected base: bigint, public source: EffSource) {
     this.school =
       schoolTab[handlers.memread.memReadNumber(base + BigInt(0x8 + 0x44), 'UINT32') as SchoolKey];
 
@@ -71,7 +71,7 @@ export abstract class Eff {
 
     this.imageSet();
 
-    this.grouped = _.includes(Effs.effsGrouped, this.id);
+    this.grouped = _.includes(Effs.effsGrouped, this.key);
   }
 
   private imageSet(): void {
@@ -86,7 +86,7 @@ export abstract class Eff {
 
   public summary(): void {
     console.log(
-      `${this.id} ${effTab[this.id]} 1:${this.param1} 2:${this.param2} 3:${this.param3} 4:${
+      `${this.key} ${effTab[this.key]} 1:${this.param1} 2:${this.param2} 3:${this.param3} 4:${
         this.param4
       } 5:${this.param5} res:${this.res} res2:${this.res2} res3:${this.res3} source:${
         this.resSource
