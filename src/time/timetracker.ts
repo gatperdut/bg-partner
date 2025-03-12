@@ -1,8 +1,11 @@
+import _ from 'lodash-es';
 import { Entity } from '../entities/entity';
 import { handlers } from '../handlers';
 
 export class Timetracker {
-  private times: number[] = [0, 0];
+  private size: number = 4;
+
+  private times: number[] = new Array(this.size).fill(0);
 
   public time: number;
 
@@ -25,10 +28,19 @@ export class Timetracker {
 
     this.times.shift();
 
-    this.times.push();
+    this.times.push(this.time);
+  }
+
+  public clear(): void {
+    for (let i: number = 0; i < this.size; i++) {
+      this.times[i] = 0;
+    }
   }
 
   public get reloaded(): boolean {
-    return this.times[0] > this.times[1];
+    return !!_.find(
+      this.times.slice(0, this.size - 1),
+      (time: number): boolean => time > this.times[this.size - 1]
+    );
   }
 }

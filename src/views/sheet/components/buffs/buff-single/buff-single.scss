@@ -1,7 +1,16 @@
 .buff-wrapper {
   color: black;
+  width: 32px;
+  max-width: 32px;
   height: 32px;
+  max-height: 32px;
+  border: 1px solid black;
+  padding: 15px;
   position: relative;
+
+  img {
+    position: relative;
+  }
 }
 
 .item-wrapper {
@@ -11,6 +20,8 @@
 
 .duration {
   color: black;
+  position: absolute;
+  bottom: 0px;
 }
 
 /////////
@@ -21,5 +32,6 @@
 
 .caster-level {
   position: absolute;
-  left: -10px;
+  bottom: 23px;
+  left: 0px;
 }

@@ -17,6 +17,10 @@ export class Entities {
     handlers.timetracker.push(entities[0]);
 
     if (handlers.timetracker.reloaded) {
+      console.log('Reloaded.');
+
+      handlers.timetracker.clear();
+
       this.entitiesReplace(entities);
 
       return;
