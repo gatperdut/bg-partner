@@ -6,8 +6,6 @@ import { Buff, BuffData } from '../buff/buff';
 export type BuffGroupData = BuffData;
 
 export abstract class BuffGroup extends Buff {
-  public html: string;
-
   constructor(
     protected components: ComponentsRecord,
     protected params: SheetAPIUpdateParams,

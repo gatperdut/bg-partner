@@ -1,5 +1,6 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../../components/components';
+import { Component } from '../../../component/component';
 
 export type BuffRightData = {
   value: number;
@@ -7,10 +8,10 @@ export type BuffRightData = {
   tooltip: string;
 };
 
-export class BuffRight {
-  public html: string;
-
+export class BuffRight extends Component {
   constructor(components: ComponentsRecord, value: number, tooltip: string) {
+    super();
+
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffRight);
 
     const buffRightData: BuffRightData = {

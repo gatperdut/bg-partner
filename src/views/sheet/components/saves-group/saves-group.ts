@@ -1,12 +1,13 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../components/components';
 import { SheetAPIUpdateParams } from '../../renderer';
+import { Component } from '../component/component';
 import { Saves } from '../saves/saves';
 
-export class SavesGroup {
-  public html: string;
-
+export class SavesGroup extends Component {
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams) {
+    super();
+
     const saves: Saves = new Saves(components, params, params.spriteView.derived);
 
     const savesBonus: Saves = new Saves(components, params, params.spriteView.derivedBonus);

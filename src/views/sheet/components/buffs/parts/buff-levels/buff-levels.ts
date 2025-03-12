@@ -1,6 +1,7 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../../components/components';
 import { Eff } from '../../../../../../sprite/effs/impl/eff';
+import { Component } from '../../../component/component';
 
 export type BuffLevelsData = {
   casterLevel: number;
@@ -8,10 +9,10 @@ export type BuffLevelsData = {
   spellLevel: number;
 };
 
-export class BuffLevels {
-  public html: string;
-
+export class BuffLevels extends Component {
   constructor(components: ComponentsRecord, eff: Eff) {
+    super();
+
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffLevels);
 
     const buffLevelsData: BuffLevelsData = {

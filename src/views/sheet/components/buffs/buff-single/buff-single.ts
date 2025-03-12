@@ -8,8 +8,6 @@ import { BuffImage } from '../parts/buff-image/buff-image';
 export type BuffSingleData = BuffData;
 
 export class BuffSingle extends Buff {
-  public html: string;
-
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, eff: Eff) {
     super(components, eff, params.timetracker.time);
 

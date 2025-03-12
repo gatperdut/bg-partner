@@ -4,13 +4,14 @@ import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
 import { EffKey } from '../../../../../tables/eff';
 import { SheetAPIUpdateParams } from '../../../renderer';
+import { Component } from '../../component/component';
 import { BuffSingle } from '../buff-single/buff-single';
 import { BuffGroupFactory } from './buff-group-factory';
 
-export class Buffs {
-  public html: string;
-
+export class Buffs extends Component {
   constructor(private components: ComponentsRecord, private params: SheetAPIUpdateParams) {
+    super();
+
     const buffsSingle: string[] = _.map(
       _.filter(this.params.spriteView.effs.effs.buffs, (eff: Eff): boolean => !eff.grouped),
       (eff: Eff): string => new BuffSingle(this.components, this.params, eff).html

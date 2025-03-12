@@ -1,12 +1,13 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../components/components';
 import { SheetAPIUpdateParams } from '../../renderer';
+import { Component } from '../component/component';
 import { Resistances } from '../resistances/resistances';
 
-export class ResistancesGroup {
-  public html: string;
-
+export class ResistancesGroup extends Component {
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams) {
+    super();
+
     const resistances: Resistances = new Resistances(components, params, params.spriteView.derived);
 
     const resistancesBonus: Resistances = new Resistances(
