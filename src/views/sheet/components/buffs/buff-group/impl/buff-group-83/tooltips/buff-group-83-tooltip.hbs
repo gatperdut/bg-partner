@@ -1,11 +1,3 @@
-<div class="tooltip m-20">
-  <div class="fx-layout-row fx-align--center-x fx-align--x-center fx-layout-wrap fx-gap--15px">
-    {{#each proItms}}
-      <div class="item-wrapper fx-layout-column fx-align--start-x fx-align--x-center">
-        <img title="{{code}}" draggable="false" src="data:image/png;base64,{{resImage.base64}}" />
-
-        <div class="fs-3">{{name}}</div>
-      </div>
-    {{/each}}
-  </div>
+<div class="fx-layout-column fx-align--start-x fx-align--x-stretch">
+  {{{itemsHtml}}}
 </div>

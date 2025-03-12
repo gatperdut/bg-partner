@@ -1,5 +1,6 @@
 @use '../shared';
 
+// Buffs
 @use 'components/buffs/buff/buff.scss';
 
 @use 'components/buffs/buff-single/buff-single.scss';
@@ -13,3 +14,8 @@
 @use 'components/buffs/parts/buff-right/buff-right.scss';
 
 @use 'components/buffs/buff-group/impl/buff-group-83/tooltips/buff-group-83-tooltip.scss';
+
+// Items
+@use 'components/items/item/item.scss';
+
+@use 'components/items/parts/item-image/item-image.scss';

@@ -1,9 +1,9 @@
 <img
-  class="buff-image {{#if tippyHtml}}heartbeat cursor-pointer{{/if}}"
+  class="item-image {{#if tippyHtml}}heartbeat cursor-pointer{{/if}}"
   {{#if tippyHtml}}
     data-tippy-content="{{tippyHtml}}"
   {{/if}}
   draggable="false"
   src="data:image/png;base64,{{base64}}"
-  style="top: calc(15px + {{valign}}px);"
+  style="top: calc(50% - {{valign}}px);"
 />

@@ -4,9 +4,9 @@ import { Eff } from '../../../../../../sprite/effs/impl/eff';
 import { Component } from '../../../component/component';
 
 export type BuffImageData = {
-  valign: number;
-
   base64: string;
+
+  valign: number;
 
   tippyHtml: string;
 };
@@ -20,8 +20,8 @@ export class BuffImage extends Component {
     const valign: number = Math.floor((32 - eff.resImage.size.height) / 2);
 
     const buffImageData: BuffImageData = {
-      valign: valign,
       base64: eff.resImage.base64,
+      valign: valign,
       tippyHtml: tippyHtml,
     };
 

@@ -3,13 +3,14 @@ import _ from 'lodash-es';
 import { ResItm } from '../../../../../../../../chitin/res/impl/res-itm';
 import { ComponentsRecord } from '../../../../../../../../components/components';
 import { Eff83 } from '../../../../../../../../sprite/effs/impl/eff-83';
+import { Items } from '../../../../../../../../views/sheet/components/items/items/items';
 import {
   Tooltip,
   TooltipData,
 } from '../../../../../../../../views/sheet/components/tooltips/tooltip';
 
 export type BuffGroup83TooltipData = TooltipData & {
-  proItms: ResItm[];
+  itemsHtml: string;
 };
 
 export class BuffGroup83Tooltip extends Tooltip {
@@ -26,7 +27,7 @@ export class BuffGroup83Tooltip extends Tooltip {
     );
 
     const buffGroup83TooltipData: BuffGroup83TooltipData = {
-      proItms: proItms,
+      itemsHtml: new Items(components, proItms).html,
     };
 
     this.html = compiled(buffGroup83TooltipData);

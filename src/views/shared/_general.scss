@@ -1,6 +1,5 @@
 html {
   height: 100%;
-  padding: 5px;
   font-family: 'Modesto', sans-serif;
   font-weight: bold;
   background: url('../../assets/images/background.jpg');
@@ -12,6 +11,6 @@ html {
 body {
   overflow: hidden;
   margin: 0;
-  padding: 5px;
+  padding: 10px;
   height: calc(100% - 25px);
 }

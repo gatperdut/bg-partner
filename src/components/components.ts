@@ -96,6 +96,19 @@ export class Components {
 
     this.register('buffs', ['sheet', 'components', 'buffs', 'buffs', 'buffs.hbs']);
 
+    this.register('items', ['sheet', 'components', 'items', 'items', 'items.hbs']);
+
+    this.register('item', ['sheet', 'components', 'items', 'item', 'item.hbs']);
+
+    this.register('itemImage', [
+      'sheet',
+      'components',
+      'items',
+      'parts',
+      'item-image',
+      'item-image.hbs',
+    ]);
+
     this.register('abilities', ['sheet', 'components', 'abilities', 'abilities.hbs']);
 
     this.register('abilitiesGroup', [
