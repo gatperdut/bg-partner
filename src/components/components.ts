@@ -15,15 +15,6 @@ export class Components {
 
   // TODO can this be automatized?
   constructor() {
-    this.register('buffLevels', [
-      'sheet',
-      'components',
-      'buffs',
-      'parts',
-      'buff-levels',
-      'buff-levels.hbs',
-    ]);
-
     this.register('buffDuration', [
       'sheet',
       'components',
@@ -31,6 +22,24 @@ export class Components {
       'parts',
       'buff-duration',
       'buff-duration.hbs',
+    ]);
+
+    this.register('buffImage', [
+      'sheet',
+      'components',
+      'buffs',
+      'parts',
+      'buff-image',
+      'buff-image.hbs',
+    ]);
+
+    this.register('buffLevels', [
+      'sheet',
+      'components',
+      'buffs',
+      'parts',
+      'buff-levels',
+      'buff-levels.hbs',
     ]);
 
     this.register('buffSingle', ['sheet', 'components', 'buffs', 'buff-single', 'buff-single.hbs']);
