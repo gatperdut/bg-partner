@@ -2,7 +2,7 @@ import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
 import { SheetAPIUpdateParams } from '../../../renderer';
-import { Buff, BuffData } from '../buffs/buff';
+import { Buff, BuffData } from '../buff/buff';
 import { BuffImage } from '../parts/buff-image/buff-image';
 
 export type BuffSingleData = BuffData;

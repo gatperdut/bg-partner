@@ -24,7 +24,7 @@ export class Buff {
     this.buffData = {
       eff: eff,
       valign: valign,
-      levelsHtml: new BuffLevels(components, valign, eff).html,
+      levelsHtml: new BuffLevels(components, eff).html,
       imageHtml: null,
       durationHtml: new BuffDuration(components, eff, time).html,
     };

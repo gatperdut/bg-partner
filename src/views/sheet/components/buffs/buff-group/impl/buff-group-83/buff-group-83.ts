@@ -24,7 +24,7 @@ export class BuffGroup83 extends BuffGroup {
       (proItm: ResItm): string => proItm.code
     );
 
-    const proItmsWrap: string = Handlebars.compile(this.components.buffGroup83ProItms)({
+    const proItmsWrap: string = Handlebars.compile(this.components.buffGroup83Tooltip)({
       proItms: proItms,
     });
 

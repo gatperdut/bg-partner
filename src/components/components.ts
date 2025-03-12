@@ -42,6 +42,15 @@ export class Components {
       'buff-levels.hbs',
     ]);
 
+    this.register('buffRight', [
+      'sheet',
+      'components',
+      'buffs',
+      'parts',
+      'buff-right',
+      'buff-right.hbs',
+    ]);
+
     this.register('buffSingle', ['sheet', 'components', 'buffs', 'buff-single', 'buff-single.hbs']);
 
     this.register('buffGroup83', [
@@ -54,7 +63,7 @@ export class Components {
       'buff-group-83.hbs',
     ]);
 
-    this.register('buffGroup83ProItms', [
+    this.register('buffGroup83Tooltip', [
       'sheet',
       'components',
       'buffs',
@@ -62,7 +71,7 @@ export class Components {
       'impl',
       'buff-group-83',
       'tooltips',
-      'buff-group-83-pro-itms.hbs',
+      'buff-group-83-tooltip.hbs',
     ]);
 
     this.register('buffGroup102', [

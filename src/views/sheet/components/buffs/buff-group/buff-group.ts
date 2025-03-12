@@ -1,7 +1,7 @@
 import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
 import { SheetAPIUpdateParams } from '../../../renderer';
-import { Buff, BuffData } from '../buffs/buff';
+import { Buff, BuffData } from '../buff/buff';
 
 export type BuffGroupData = BuffData;
 
