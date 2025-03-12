@@ -1,10 +1,11 @@
-<div
-  class="buff-wrapper fx-layout-column fx-align--start-x fx-align--x-center"
-  style="top: {{valign}}px;"
->
-  <img draggable="false" src="data:image/png;base64,{{eff.resImage.base64}}" />
+<div class="buff-wrapper fx-layout-column fx-align--start-x fx-align--x-center">
+  <img
+    draggable="false"
+    src="data:image/png;base64,{{eff.resImage.base64}}"
+    style="top: {{valign}}px;"
+  />
 
-  <div class="duration fs-3" style="margin-top: {{valign}}px;">{{duration}}</div>
+  {{{durationHtml}}}
 
-  <div class="max-level">{{max}}</div>
+  {{{levelsHtml}}}
 </div>

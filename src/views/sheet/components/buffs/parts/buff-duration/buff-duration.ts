@@ -1,20 +1,20 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../../components/components';
+import { Eff } from '../../../../../../sprite/effs/impl/eff';
 
 export type BuffDurationData = {
-  valign: number;
-
   duration: number;
 };
 
 export class BuffDuration {
   public html: string;
 
-  constructor(components: ComponentsRecord, valign: number, duration: number) {
+  constructor(components: ComponentsRecord, eff: Eff, time: number) {
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffDuration);
 
+    const duration: number = Math.round((eff.duration - time) / 15);
+
     const buffDurationData: BuffDurationData = {
-      valign: valign,
       duration: duration,
     };
 

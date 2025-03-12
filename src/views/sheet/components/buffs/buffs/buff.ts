@@ -1,16 +1,14 @@
 import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
-import { BuffCasterLevel } from '../parts/buff-caster-level/buff-caster-level';
 import { BuffDuration } from '../parts/buff-duration/buff-duration';
+import { BuffLevels } from '../parts/buff-levels/buff-levels';
 
 export type BuffData = {
   eff: Eff;
 
-  duration: number;
-
   valign: number;
 
-  casterLevelHtml: string;
+  levelsHtml: string;
 
   durationHtml: string;
 };
@@ -21,14 +19,11 @@ export class Buff {
   constructor(components: ComponentsRecord, eff: Eff, time: number) {
     const valign: number = Math.floor((32 - eff.resImage.size.height) / 2);
 
-    const duration: number = Math.round((eff.duration - time) / 15);
-    // TODO remove duration
     this.buffData = {
       eff: eff,
       valign: valign,
-      duration: duration,
-      casterLevelHtml: new BuffCasterLevel(components, valign, eff.casterLevel).html,
-      durationHtml: new BuffDuration(components, valign, duration).html,
+      levelsHtml: new BuffLevels(components, valign, eff.casterLevel, eff.spellLevel).html,
+      durationHtml: new BuffDuration(components, eff, time).html,
     };
   }
 }

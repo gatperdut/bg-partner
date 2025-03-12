@@ -37,6 +37,8 @@ export abstract class Eff {
 
   public casterLevel: number;
 
+  public spellLevel: number;
+
   // Custom fields
   public resImage: ResImage;
 
@@ -71,6 +73,8 @@ export abstract class Eff {
     this.durationType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x1c), 'INT32');
 
     this.casterLevel = handlers.memread.memReadNumber(base + BigInt(0x8 + 0xc0), 'INT32');
+
+    this.spellLevel = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x10), 'INT32');
 
     this.resImageSet();
 

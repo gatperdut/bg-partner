@@ -1,13 +1,13 @@
-<div
-  class="buff-wrapper fx-layout-column fx-align--start-x fx-align--x-center"
-  style="top: {{valign}}px;"
->
+<div class="buff-wrapper fx-layout-column fx-align--start-x fx-align--x-center">
   <img
     class="heartbeat cursor-pointer"
     draggable="false"
     src="data:image/png;base64,{{eff.resImage.base64}}"
+    style="top: {{valign}}px;"
     data-tippy-content="{{proItmsWrap}}"
   />
 
-  <div class="duration fs-3" style="margin-top: {{valign}}px;">{{duration}}</div>
+  {{{durationHtml}}}
+
+  {{{levelsHtml}}}
 </div>

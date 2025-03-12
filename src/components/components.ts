@@ -15,13 +15,13 @@ export class Components {
 
   // TODO can this be automatized?
   constructor() {
-    this.register('buffCasterLevel', [
+    this.register('buffLevels', [
       'sheet',
       'components',
       'buffs',
       'parts',
-      'buff-caster-level',
-      'buff-caster-level.hbs',
+      'buff-levels',
+      'buff-levels.hbs',
     ]);
 
     this.register('buffDuration', [
