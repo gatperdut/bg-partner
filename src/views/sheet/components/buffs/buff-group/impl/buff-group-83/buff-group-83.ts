@@ -4,11 +4,10 @@ import { ResItm } from '../../../../../../../chitin/res/impl/res-itm';
 import { ComponentsRecord } from '../../../../../../../components/components';
 import { Eff83 } from '../../../../../../../sprite/effs/impl/eff-83';
 import { SheetAPIUpdateParams } from '../../../../../renderer';
+import { BuffImage } from '../../../parts/buff-image/buff-image';
 import { BuffGroup, BuffGroupData } from '../../buff-group';
 
-export type BuffGroup83Data = BuffGroupData & {
-  proItmsWrap: string;
-};
+export type BuffGroup83Data = BuffGroupData;
 
 export class BuffGroup83 extends BuffGroup {
   constructor(
@@ -25,11 +24,13 @@ export class BuffGroup83 extends BuffGroup {
       (proItm: ResItm): string => proItm.code
     );
 
+    const proItmsWrap: string = Handlebars.compile(this.components.buffGroup83ProItms)({
+      proItms: proItms,
+    });
+
     const buffGroup83Data: BuffGroup83Data = {
       ...this.buffData,
-      proItmsWrap: Handlebars.compile(this.components.buffGroup83ProItms)({
-        proItms: proItms,
-      }),
+      imageHtml: new BuffImage(components, effs[0], proItmsWrap).html,
     };
 
     this.html = compiled(buffGroup83Data);

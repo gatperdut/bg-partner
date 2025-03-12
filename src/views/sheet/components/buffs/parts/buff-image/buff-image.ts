@@ -6,12 +6,14 @@ export type BuffImageData = {
   valign: number;
 
   base64: string;
+
+  tippyHtml: string;
 };
 
 export class BuffImage {
   public html: string;
 
-  constructor(components: ComponentsRecord, eff: Eff) {
+  constructor(components: ComponentsRecord, eff: Eff, tippyHtml: string) {
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffImage);
 
     const valign: number = Math.floor((32 - eff.resImage.size.height) / 2);
@@ -19,6 +21,7 @@ export class BuffImage {
     const buffImageData: BuffImageData = {
       valign: valign,
       base64: eff.resImage.base64,
+      tippyHtml: tippyHtml,
     };
 
     this.html = compiled(buffImageData);

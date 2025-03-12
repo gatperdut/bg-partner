@@ -1,1 +1,10 @@
-<img draggable="false" src="data:image/png;base64,{{base64}}" style="top: {{valign}}px;" />
+<img
+  {{#if tippyHtml}}
+    class="heartbeat cursor-pointer"
+    data-tippy-content="{{tippyHtml}}"
+  {{/if}}
+  draggable="false"
+  src="data:image/png;base64,{{base64}}"
+  style="top: {{valign}}px;"
+  
+/>

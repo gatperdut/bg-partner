@@ -1,7 +1,6 @@
 import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
 import { BuffDuration } from '../parts/buff-duration/buff-duration';
-import { BuffImage } from '../parts/buff-image/buff-image';
 import { BuffLevels } from '../parts/buff-levels/buff-levels';
 
 export type BuffData = {
@@ -26,7 +25,7 @@ export class Buff {
       eff: eff,
       valign: valign,
       levelsHtml: new BuffLevels(components, valign, eff).html,
-      imageHtml: new BuffImage(components, eff).html,
+      imageHtml: null,
       durationHtml: new BuffDuration(components, eff, time).html,
     };
   }
