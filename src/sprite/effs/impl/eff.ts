@@ -1,4 +1,5 @@
 import _ from 'lodash-es';
+import { Res } from '../../../chitin/res/impl/res';
 import { ResItm } from '../../../chitin/res/impl/res-itm';
 import { ResSpl } from '../../../chitin/res/impl/res-spl';
 import { ResImage } from '../../../chitin/res/res-image';
@@ -8,9 +9,9 @@ import { resextValueSubset } from '../../../tables/resext';
 import { SchoolKey, schoolTab, SchoolValue } from '../../../tables/school';
 import { Effs, EffSource } from '../effs';
 
-const Ressrcs = resextValueSubset(['ITM', 'SPL'] as const);
+const RessrcTypes = resextValueSubset(['ITM', 'SPL'] as const);
 
-export type Ressrc = (typeof Ressrcs)[number];
+export type RessrcType = (typeof RessrcTypes)[number];
 
 export abstract class Eff {
   // Memory fields
@@ -23,8 +24,6 @@ export abstract class Eff {
   public res2: string;
 
   public res3: string;
-
-  public resSource: string;
 
   public param1: number;
 
@@ -45,6 +44,10 @@ export abstract class Eff {
   public spellLevel: number;
 
   // Custom fields
+  public ressrcType: RessrcType;
+
+  public ressrc: ResItm | ResSpl;
+
   public resImage: ResImage;
 
   public grouped: boolean;
@@ -61,11 +64,9 @@ export abstract class Eff {
 
     this.res3 = handlers.memread.memReadString(base + BigInt(0x8 + 0x70));
 
-    this.resSource = handlers.memread.memReadString(base + BigInt(0x8 + 0x8c)).toLowerCase();
-
     this.param1 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x14), 'INT32');
 
-    this.param2 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x18), 'INT32'); // Should be + 0x58?
+    this.param2 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x18), 'INT32'); // EEEx says + 0x58?
 
     this.param3 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x5c), 'INT32');
 
@@ -81,31 +82,42 @@ export abstract class Eff {
 
     this.spellLevel = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x10), 'INT32');
 
-    this.resImageSet();
+    this.ressrcSetup(handlers.memread.memReadString(base + BigInt(0x8 + 0x8c)).toLowerCase());
+
+    this.resImageSetup();
 
     this.grouped = _.includes(Effs.effsGrouped, this.key);
   }
 
-  private resImageSet(): void {
-    if (!this.resSource) {
+  private ressrcSetup(ressrcStrref: string): void {
+    if (!ressrcStrref) {
       return;
     }
 
-    this.resImage = (
-      _.find(
-        handlers.chitin.ress.SPL,
-        (resSpl: ResSpl): boolean => resSpl.code === this.resSource
-      ) as ResSpl
-    )?.resImage;
+    for (let i: number = 0; i < RessrcTypes.length; i++) {
+      const ressrcType: RessrcType = RessrcTypes[i];
 
-    if (!this.resImage) {
-      this.resImage = (
-        _.find(
-          handlers.chitin.ress.ITM,
-          (resItm: ResItm): boolean => resItm.code === this.resSource
-        ) as ResItm
-      )?.resImage;
+      const ressrc: Res = _.find(
+        handlers.chitin.ress[ressrcType],
+        (res: Res): boolean => res.code === ressrcStrref
+      );
+
+      if (ressrc) {
+        this.ressrcType = ressrcType;
+
+        this.ressrc = ressrc as ResSpl | ResItm;
+
+        break;
+      }
     }
+  }
+
+  private resImageSetup(): void {
+    if (!this.ressrc) {
+      return;
+    }
+
+    this.resImage = this.ressrc.resImage;
   }
 
   public summary(): void {
@@ -113,7 +125,7 @@ export abstract class Eff {
       `${this.key} ${effTab[this.key]} 1:${this.param1} 2:${this.param2} 3:${this.param3} 4:${
         this.param4
       } 5:${this.param5} res:${this.res} res2:${this.res2} res3:${this.res3} source:${
-        this.resSource
+        this.ressrc?.code
       } durType:${this.durationType}`
     );
   }
