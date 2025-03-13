@@ -10,9 +10,9 @@ export class ResItm extends Res {
 
   public desc: string;
 
-  public resImage: ResImage;
-
   private bamCode: string;
+
+  public resImage: ResImage;
 
   public proValues: ProValue[] = [];
 

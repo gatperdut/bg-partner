@@ -4,8 +4,13 @@ import { ResSpl } from '../../../chitin/res/impl/res-spl';
 import { ResImage } from '../../../chitin/res/res-image';
 import { handlers } from '../../../handlers';
 import { EffKey, effTab } from '../../../tables/eff';
+import { resextValueSubset } from '../../../tables/resext';
 import { SchoolKey, schoolTab, SchoolValue } from '../../../tables/school';
 import { Effs, EffSource } from '../effs';
+
+const Ressrcs = resextValueSubset(['ITM', 'SPL'] as const);
+
+export type Ressrc = (typeof Ressrcs)[number];
 
 export abstract class Eff {
   // Memory fields

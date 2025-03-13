@@ -4,6 +4,8 @@ export type ResextKey = keyof ResextTab;
 
 export type ResextValue = ResextTab[keyof ResextTab];
 
+export const resextValueSubset = <T extends readonly ResextValue[]>(subset: T) => subset;
+
 export const resextTab = {
   0: 'ERR',
   1: 'BMP',

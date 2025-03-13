@@ -8,6 +8,8 @@ export type ItemImageData = {
 
   valign: number;
 
+  name: string;
+
   tippyHtml: string;
 };
 
@@ -20,6 +22,7 @@ export class ItemImage extends Component {
     const itemImageData: ItemImageData = {
       base64: resItm.resImage.base64,
       valign: Math.round(resItm.resImage.size.height / 2),
+      name: resItm.name,
       tippyHtml: tippyHtml,
     };
 
