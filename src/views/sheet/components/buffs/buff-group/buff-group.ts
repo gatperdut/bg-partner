@@ -9,7 +9,7 @@ export abstract class BuffGroup extends Buff {
   protected buffGroupData: BuffGroupData;
 
   constructor(
-    protected components: ComponentsRecord,
+    components: ComponentsRecord,
     protected params: SheetAPIUpdateParams,
     protected effs: Eff[]
   ) {

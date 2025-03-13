@@ -13,7 +13,7 @@ export type BuffDurationData = ComponentData & {
 
 export class BuffDuration extends Component {
   constructor(components: ComponentsRecord, eff: Eff, time: number) {
-    super();
+    super(components);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffDuration);
 

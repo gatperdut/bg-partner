@@ -6,7 +6,7 @@ import { Saves } from '../saves/saves';
 
 export class SavesGroup extends Component {
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams) {
-    super();
+    super(components);
 
     const saves: Saves = new Saves(components, params, params.spriteView.derived);
 

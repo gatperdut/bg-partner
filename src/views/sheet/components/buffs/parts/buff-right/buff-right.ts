@@ -8,7 +8,7 @@ export type BuffRightData = ComponentData & {
 
 export class BuffRight extends Component {
   constructor(components: ComponentsRecord, value: number, title: string) {
-    super();
+    super(components);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffRight);
 

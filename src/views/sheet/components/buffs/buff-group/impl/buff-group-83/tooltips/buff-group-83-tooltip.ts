@@ -14,8 +14,8 @@ export type BuffGroup83TooltipData = TooltipData & {
 };
 
 export class BuffGroup83Tooltip extends Tooltip {
-  constructor(protected components: ComponentsRecord, protected effs: Eff83[]) {
-    super();
+  constructor(components: ComponentsRecord, protected effs: Eff83[]) {
+    super(components);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
       this.components.buffGroup83Tooltip

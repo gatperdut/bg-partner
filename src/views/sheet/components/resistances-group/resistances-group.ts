@@ -6,7 +6,7 @@ import { Resistances } from '../resistances/resistances';
 
 export class ResistancesGroup extends Component {
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams) {
-    super();
+    super(components);
 
     const resistances: Resistances = new Resistances(components, params, params.spriteView.derived);
 

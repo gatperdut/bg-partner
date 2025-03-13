@@ -15,7 +15,7 @@ export class BuffGroup102 extends BuffGroup {
   protected buffGroup102Data: BuffGroup102Data;
 
   constructor(
-    protected components: ComponentsRecord,
+    components: ComponentsRecord,
     protected params: SheetAPIUpdateParams,
     protected effs: Eff[]
   ) {

@@ -6,7 +6,7 @@ import { BuffGroup } from '../../buff-group';
 
 export class BuffGroupStub extends BuffGroup {
   constructor(
-    protected components: ComponentsRecord,
+    components: ComponentsRecord,
     protected params: SheetAPIUpdateParams,
     protected effs: Eff[]
   ) {

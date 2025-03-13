@@ -1,3 +1,4 @@
+import { ComponentsRecord } from '../../../../components/components';
 import { Component } from '../component/component';
 
 export type TooltipData = {
@@ -5,7 +6,7 @@ export type TooltipData = {
 };
 
 export class Tooltip extends Component {
-  constructor() {
-    super();
+  constructor(components: ComponentsRecord) {
+    super(components);
   }
 }

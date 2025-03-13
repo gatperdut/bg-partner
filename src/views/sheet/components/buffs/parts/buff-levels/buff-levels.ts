@@ -11,7 +11,7 @@ export type BuffLevelsData = ComponentData & {
 
 export class BuffLevels extends Component {
   constructor(components: ComponentsRecord, eff: Eff) {
-    super();
+    super(components);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffLevels);
 

@@ -10,7 +10,7 @@ export class Saves extends Component {
     params: SheetAPIUpdateParams,
     derivedView: DerivedView
   ) {
-    super();
+    super(components);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.abilities);
 

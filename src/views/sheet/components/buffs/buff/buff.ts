@@ -20,7 +20,7 @@ export class Buff extends Component {
   protected buffData: BuffData;
 
   constructor(components: ComponentsRecord, eff: Eff, time: number) {
-    super();
+    super(components);
 
     this.buffData = {
       ...this.componentData,

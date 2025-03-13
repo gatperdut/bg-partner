@@ -14,8 +14,8 @@ export type BuffsData = ComponentData & {
 };
 
 export class Buffs extends Component {
-  constructor(private components: ComponentsRecord, private params: SheetAPIUpdateParams) {
-    super();
+  constructor(components: ComponentsRecord, private params: SheetAPIUpdateParams) {
+    super(components);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffs);
 

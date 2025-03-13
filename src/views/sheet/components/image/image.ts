@@ -15,7 +15,7 @@ export type ImageData = ComponentData & {
 
 export class Image extends Component {
   constructor(components: ComponentsRecord, resImage: ResImage, title: string, tippyHtml: string) {
-    super();
+    super(components);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.image);
 

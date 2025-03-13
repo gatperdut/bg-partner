@@ -10,8 +10,8 @@ export type ItemsData = ComponentData & {
 };
 
 export class Items extends Component {
-  constructor(protected components: ComponentsRecord, resItms: ResItm[]) {
-    super();
+  constructor(components: ComponentsRecord, resItms: ResItm[]) {
+    super(components);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.items);
 

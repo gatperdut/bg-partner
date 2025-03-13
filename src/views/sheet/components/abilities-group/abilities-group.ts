@@ -6,7 +6,7 @@ import { Component } from '../component/component';
 
 export class AbilitiesGroup extends Component {
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams) {
-    super();
+    super(components);
 
     const abilities: Abilities = new Abilities(components, params, params.spriteView.derived);
 

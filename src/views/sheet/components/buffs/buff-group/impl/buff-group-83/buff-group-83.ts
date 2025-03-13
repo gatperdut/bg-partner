@@ -12,7 +12,7 @@ export class BuffGroup83 extends BuffGroup {
   protected buffGroup83Data: BuffGroup83Data;
 
   constructor(
-    protected components: ComponentsRecord,
+    components: ComponentsRecord,
     protected params: SheetAPIUpdateParams,
     protected effs: Eff83[]
   ) {
