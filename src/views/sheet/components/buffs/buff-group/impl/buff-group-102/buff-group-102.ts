@@ -15,7 +15,13 @@ export class BuffGroup102 extends BuffGroup {
   protected buffGroup102Data: BuffGroup102Data;
 
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, effs: Eff[]) {
-    super(components, params, effs);
+    super(
+      components,
+      effs[0].duration,
+      effs[0].casterLevel,
+      effs[0].spellLevel,
+      params.timetracker.time
+    );
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffGroup102);
 
