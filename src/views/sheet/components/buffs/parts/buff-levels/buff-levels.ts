@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import { ComponentsRecord } from '../../../../../../components/components';
+import { sheetdata } from '../../../../../../views/sheet/sheetdata';
 import { Component, ComponentData } from '../../../component/component';
 
 export type BuffLevelsData = ComponentData & {
@@ -11,10 +11,12 @@ export type BuffLevelsData = ComponentData & {
 export class BuffLevels extends Component {
   protected buffLevelsData: BuffLevelsData;
 
-  constructor(components: ComponentsRecord, casterLevel: number, spellLevel: number) {
+  constructor(casterLevel: number, spellLevel: number) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffLevels);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
+      sheetdata.components.buffLevels
+    );
 
     this.buffLevelsData = {
       ...this.componentData,

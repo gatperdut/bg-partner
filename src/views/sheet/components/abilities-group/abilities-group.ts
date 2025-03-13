@@ -1,6 +1,5 @@
 import Handlebars from 'handlebars';
-import { ComponentsRecord } from '../../../../components/components';
-import { SheetAPIUpdateParams } from '../../renderer';
+import { sheetdata } from '../../sheetdata';
 import { Abilities } from '../abilities/abilities';
 import { Component, ComponentData } from '../component/component';
 
@@ -15,42 +14,41 @@ export type AbilitiesGroupData = ComponentData & {
 export class AbilitiesGroup extends Component {
   protected abilitiesGroupData: AbilitiesGroupData;
 
-  constructor(components: ComponentsRecord, params: SheetAPIUpdateParams) {
+  constructor() {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.abilitiesGroup);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
+      sheetdata.components.abilitiesGroup
+    );
 
     this.abilitiesGroupData = {
       ...this.componentData,
       abilitiesHtml: new Abilities(
-        components,
-        params.spriteView.derived.str,
-        params.spriteView.derived.strExc,
-        params.spriteView.derived.dex,
-        params.spriteView.derived.con,
-        params.spriteView.derived.int,
-        params.spriteView.derived.wis,
-        params.spriteView.derived.cha
+        sheetdata.params.spriteView.derived.str,
+        sheetdata.params.spriteView.derived.strExc,
+        sheetdata.params.spriteView.derived.dex,
+        sheetdata.params.spriteView.derived.con,
+        sheetdata.params.spriteView.derived.int,
+        sheetdata.params.spriteView.derived.wis,
+        sheetdata.params.spriteView.derived.cha
       ).html,
       abilitiesBonusHtml: new Abilities(
-        components,
-        params.spriteView.derived.str,
-        params.spriteView.derivedBonus.strExc,
-        params.spriteView.derivedBonus.dex,
-        params.spriteView.derivedBonus.con,
-        params.spriteView.derivedBonus.int,
-        params.spriteView.derivedBonus.wis,
-        params.spriteView.derivedBonus.cha
+        sheetdata.params.spriteView.derived.str,
+        sheetdata.params.spriteView.derivedBonus.strExc,
+        sheetdata.params.spriteView.derivedBonus.dex,
+        sheetdata.params.spriteView.derivedBonus.con,
+        sheetdata.params.spriteView.derivedBonus.int,
+        sheetdata.params.spriteView.derivedBonus.wis,
+        sheetdata.params.spriteView.derivedBonus.cha
       ).html,
       abilitiesTempHtml: new Abilities(
-        components,
-        params.spriteView.derived.str,
-        params.spriteView.derivedTemp.strExc,
-        params.spriteView.derivedTemp.dex,
-        params.spriteView.derivedTemp.con,
-        params.spriteView.derivedTemp.int,
-        params.spriteView.derivedTemp.wis,
-        params.spriteView.derivedTemp.cha
+        sheetdata.params.spriteView.derived.str,
+        sheetdata.params.spriteView.derivedTemp.strExc,
+        sheetdata.params.spriteView.derivedTemp.dex,
+        sheetdata.params.spriteView.derivedTemp.con,
+        sheetdata.params.spriteView.derivedTemp.int,
+        sheetdata.params.spriteView.derivedTemp.wis,
+        sheetdata.params.spriteView.derivedTemp.cha
       ).html,
     };
 

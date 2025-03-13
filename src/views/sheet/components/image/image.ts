@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 import { ResImage } from '../../../../chitin/res/res-image';
-import { ComponentsRecord } from '../../../../components/components';
+import { sheetdata } from '../../sheetdata';
 import { Component, ComponentData } from '../component/component';
 
 export type ImageData = ComponentData & {
@@ -16,10 +16,10 @@ export type ImageData = ComponentData & {
 export class Image extends Component {
   private imageData: ImageData;
 
-  constructor(components: ComponentsRecord, resImage: ResImage, title: string, tippyHtml: string) {
+  constructor(resImage: ResImage, title: string, tippyHtml: string) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.image);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.components.image);
 
     this.imageData = {
       ...this.componentData,

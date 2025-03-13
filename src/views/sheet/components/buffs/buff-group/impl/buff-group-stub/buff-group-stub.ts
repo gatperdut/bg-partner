@@ -1,14 +1,15 @@
 import Handlebars from 'handlebars';
-import { ComponentsRecord } from '../../../../../../../components/components';
 import { Eff } from '../../../../../../../sprite/effs/impl/eff';
-import { SheetAPIUpdateParams } from '../../../../../renderer';
+import { sheetdata } from '../../../../../../../views/sheet/sheetdata';
 import { BuffGroup } from '../../buff-group';
 
 export class BuffGroupStub extends BuffGroup {
-  constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, effs: Eff[]) {
-    super(components, params, effs);
+  constructor(effs: Eff[]) {
+    super(effs[0].duration, effs[0].casterLevel, effs[0].spellLevel);
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffGroupStub);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
+      sheetdata.components.buffGroupStub
+    );
 
     this.html = compiled({});
   }

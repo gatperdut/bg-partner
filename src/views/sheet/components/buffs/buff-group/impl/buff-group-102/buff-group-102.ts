@@ -1,9 +1,8 @@
 import Handlebars from 'handlebars';
 import _ from 'lodash-es';
-import { ComponentsRecord } from '../../../../../../../components/components';
 import { Eff } from '../../../../../../../sprite/effs/impl/eff';
 import { Image } from '../../../../../../../views/sheet/components/image/image';
-import { SheetAPIUpdateParams } from '../../../../../../../views/sheet/renderer';
+import { sheetdata } from '../../../../../../../views/sheet/sheetdata';
 import { BuffRight } from '../../../parts/buff-right/buff-right';
 import { BuffGroup, BuffGroupData } from '../../buff-group';
 
@@ -14,23 +13,19 @@ export type BuffGroup102Data = BuffGroupData & {
 export class BuffGroup102 extends BuffGroup {
   protected buffGroup102Data: BuffGroup102Data;
 
-  constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, effs: Eff[]) {
-    super(
-      components,
-      effs[0].duration,
-      effs[0].casterLevel,
-      effs[0].spellLevel,
-      params.timetracker.time
-    );
+  constructor(effs: Eff[]) {
+    super(effs[0].duration, effs[0].casterLevel, effs[0].spellLevel);
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffGroup102);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
+      sheetdata.components.buffGroup102
+    );
 
     const max: number = Math.max(..._.map(effs, (eff: Eff): number => eff.param1));
 
     this.buffGroup102Data = {
       ...this.buffGroupData,
-      imageHtml: new Image(components, effs[0].resImage, effs[0].ressrc.name, null).html,
-      rightHtml: new BuffRight(components, max, 'Maximum level').html,
+      imageHtml: new Image(effs[0].resImage, effs[0].ressrc.name, null).html,
+      rightHtml: new BuffRight(max, 'Maximum level').html,
     };
 
     this.html = compiled(this.buffGroup102Data);

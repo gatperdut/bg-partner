@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import { ComponentsRecord } from '../../../../../src/components/components';
+import { sheetdata } from '../../sheetdata';
 import { Component, ComponentData } from '../component/component';
 
 export type SavesData = ComponentData & {
@@ -14,7 +14,6 @@ export class Saves extends Component {
   protected savesData: SavesData;
 
   constructor(
-    components: ComponentsRecord,
     saveVsDeath: number,
     saveVsWands: number,
     saveVsPoly: number,
@@ -23,7 +22,7 @@ export class Saves extends Component {
   ) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.saves);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.components.saves);
 
     this.savesData = {
       ...this.componentData,

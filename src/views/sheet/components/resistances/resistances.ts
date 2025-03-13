@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import { ComponentsRecord } from '../../../../../src/components/components';
+import { sheetdata } from '../../sheetdata';
 import { Component, ComponentData } from '../component/component';
 
 export type ResistancesData = ComponentData & {
@@ -19,7 +19,6 @@ export class Resistances extends Component {
   protected resistancesData: ResistancesData;
 
   constructor(
-    components: ComponentsRecord,
     resistFire: number,
     resistCold: number,
     resistElectricity: number,
@@ -33,7 +32,9 @@ export class Resistances extends Component {
   ) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.resistances);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
+      sheetdata.components.resistances
+    );
 
     this.resistancesData = {
       ...this.componentData,

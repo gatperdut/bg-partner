@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import { ComponentsRecord } from '../../../../../../components/components';
+import { sheetdata } from '../../../../../../views/sheet/sheetdata';
 import { Component, ComponentData } from '../../../component/component';
 
 export type BuffRightData = ComponentData & {
@@ -9,10 +9,10 @@ export type BuffRightData = ComponentData & {
 export class BuffRight extends Component {
   protected buffRightData: BuffRightData;
 
-  constructor(components: ComponentsRecord, value: number, title: string) {
+  constructor(value: number, title: string) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffRight);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.components.buffRight);
 
     this.buffRightData = {
       ...this.componentData,

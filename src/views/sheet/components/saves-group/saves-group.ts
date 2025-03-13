@@ -1,6 +1,5 @@
 import Handlebars from 'handlebars';
-import { ComponentsRecord } from '../../../../components/components';
-import { SheetAPIUpdateParams } from '../../renderer';
+import { sheetdata } from '../../sheetdata';
 import { Component, ComponentData } from '../component/component';
 import { Saves } from '../saves/saves';
 
@@ -13,36 +12,35 @@ export type SavesGroupData = ComponentData & {
 export class SavesGroup extends Component {
   protected savesGroupData: SavesGroupData;
 
-  constructor(components: ComponentsRecord, params: SheetAPIUpdateParams) {
+  constructor() {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.savesGroup);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
+      sheetdata.components.savesGroup
+    );
 
     this.savesGroupData = {
       ...this.componentData,
       savesHtml: new Saves(
-        components,
-        params.spriteView.derived.saveVsDeath,
-        params.spriteView.derived.saveVsWands,
-        params.spriteView.derived.saveVsPoly,
-        params.spriteView.derived.saveVsBreath,
-        params.spriteView.derived.saveVsSpell
+        sheetdata.params.spriteView.derived.saveVsDeath,
+        sheetdata.params.spriteView.derived.saveVsWands,
+        sheetdata.params.spriteView.derived.saveVsPoly,
+        sheetdata.params.spriteView.derived.saveVsBreath,
+        sheetdata.params.spriteView.derived.saveVsSpell
       ).html,
       savesBonusHtml: new Saves(
-        components,
-        params.spriteView.derivedBonus.saveVsDeath,
-        params.spriteView.derivedBonus.saveVsWands,
-        params.spriteView.derivedBonus.saveVsPoly,
-        params.spriteView.derivedBonus.saveVsBreath,
-        params.spriteView.derivedBonus.saveVsSpell
+        sheetdata.params.spriteView.derivedBonus.saveVsDeath,
+        sheetdata.params.spriteView.derivedBonus.saveVsWands,
+        sheetdata.params.spriteView.derivedBonus.saveVsPoly,
+        sheetdata.params.spriteView.derivedBonus.saveVsBreath,
+        sheetdata.params.spriteView.derivedBonus.saveVsSpell
       ).html,
       savesTempHtml: new Saves(
-        components,
-        params.spriteView.derivedTemp.saveVsDeath,
-        params.spriteView.derivedTemp.saveVsWands,
-        params.spriteView.derivedTemp.saveVsPoly,
-        params.spriteView.derivedTemp.saveVsBreath,
-        params.spriteView.derivedTemp.saveVsSpell
+        sheetdata.params.spriteView.derivedTemp.saveVsDeath,
+        sheetdata.params.spriteView.derivedTemp.saveVsWands,
+        sheetdata.params.spriteView.derivedTemp.saveVsPoly,
+        sheetdata.params.spriteView.derivedTemp.saveVsBreath,
+        sheetdata.params.spriteView.derivedTemp.saveVsSpell
       ).html,
     };
 

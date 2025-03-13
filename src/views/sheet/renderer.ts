@@ -3,6 +3,7 @@ import tippy, { Instance } from 'tippy.js';
 import { ComponentsRecord } from '../../components/components';
 import { Buffs } from './components/buffs/buffs/buffs';
 import './sheet.scss';
+import { sheetdata } from './sheetdata';
 import { SpriteView } from './sprite-view';
 
 // sheet.setup
@@ -51,10 +52,6 @@ declare global {
 }
 
 class SheetRenderer {
-  private spriteView: SpriteView;
-
-  private components: ComponentsRecord;
-
   private dragging: boolean = false;
 
   private tippyInstances: Instance[] = [];
@@ -63,7 +60,7 @@ class SheetRenderer {
 
   constructor() {
     window.sheetAPI.setup((params: SheetAPISetupParams): void => {
-      this.components = params.components;
+      sheetdata.components = params.components;
     });
 
     window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
@@ -74,9 +71,9 @@ class SheetRenderer {
   }
 
   private update(params: SheetAPIUpdateParams): void {
-    this.spriteView = params.spriteView;
+    sheetdata.params = params;
 
-    if (!this.components) {
+    if (!sheetdata.components) {
       return;
     }
 
@@ -121,19 +118,13 @@ class SheetRenderer {
 
     document.getElementById('base').innerHTML = `0x${params.spriteView.base.toString(16)}`;
 
-    // document.getElementById('abilitiesGroup').innerHTML = new AbilitiesGroup(
-    //   this.components,
-    //   params
-    // ).html;
+    // document.getElementById('abilitiesGroup').innerHTML = new AbilitiesGroup().html;
 
-    // document.getElementById('resistancesGroup').innerHTML = new ResistancesGroup(
-    //   this.components,
-    //   params
-    // ).html;
+    // document.getElementById('resistancesGroup').innerHTML = new ResistancesGroup().html;
 
-    // document.getElementById('savesGroup').innerHTML = new SavesGroup(this.components, params).html;
+    // document.getElementById('savesGroup').innerHTML = new SavesGroup().html;
 
-    document.getElementById('buffs').innerHTML = new Buffs(this.components, params).html;
+    document.getElementById('buffs').innerHTML = new Buffs().html;
   }
 
   private updateRunning(running: boolean) {
@@ -170,7 +161,7 @@ class SheetRenderer {
     document.body.addEventListener(
       'contextmenu',
       (): void => {
-        window.sheetAPI.close(this.spriteView.basic.id);
+        window.sheetAPI.close(sheetdata.params.spriteView.basic.id);
       },
       true
     );
@@ -193,7 +184,7 @@ class SheetRenderer {
         y: event.movementY,
       };
 
-      window.sheetAPI.move(this.spriteView.basic.id, movement);
+      window.sheetAPI.move(sheetdata.params.spriteView.basic.id, movement);
     });
   }
 }

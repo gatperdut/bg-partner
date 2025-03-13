@@ -1,7 +1,7 @@
 import Handlebars from 'handlebars';
 import _ from 'lodash-es';
 import { ResItm } from '../../../../../chitin/res/impl/res-itm';
-import { ComponentsRecord } from '../../../../../components/components';
+import { sheetdata } from '../../../../../views/sheet/sheetdata';
 import { Component, ComponentData } from '../../component/component';
 import { Item } from '../item/item';
 
@@ -12,14 +12,14 @@ export type ItemsData = ComponentData & {
 export class Items extends Component {
   protected itemsData: ItemsData;
 
-  constructor(components: ComponentsRecord, resItms: ResItm[]) {
+  constructor(resItms: ResItm[]) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.items);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.components.items);
 
     this.itemsData = {
       ...this.componentData,
-      itemHtmls: _.map(resItms, (resItm: ResItm): string => new Item(components, resItm).html),
+      itemHtmls: _.map(resItms, (resItm: ResItm): string => new Item(resItm).html),
     };
 
     this.html = compiled(this.itemsData);

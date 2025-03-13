@@ -1,4 +1,4 @@
-import { ComponentsRecord } from '../../../../../components/components';
+import { sheetdata } from '../../../../../views/sheet/sheetdata';
 import { Component, ComponentData } from '../../component/component';
 import { BuffDuration } from '../parts/buff-duration/buff-duration';
 import { BuffLevels } from '../parts/buff-levels/buff-levels';
@@ -13,20 +13,14 @@ export type BuffData = ComponentData & {
 export class Buff extends Component {
   protected buffData: BuffData;
 
-  constructor(
-    components: ComponentsRecord,
-    duration: number,
-    casterLevel: number,
-    spellLevel: number,
-    time: number
-  ) {
+  constructor(duration: number, casterLevel: number, spellLevel: number) {
     super();
 
     this.buffData = {
       ...this.componentData,
-      levelsHtml: new BuffLevels(components, casterLevel, spellLevel).html,
+      levelsHtml: new BuffLevels(casterLevel, spellLevel).html,
       imageHtml: null,
-      durationHtml: new BuffDuration(components, duration, time).html,
+      durationHtml: new BuffDuration(duration, sheetdata.params.timetracker.time).html,
       rightHtml: null,
     };
   }

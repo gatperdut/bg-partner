@@ -1,13 +1,13 @@
 import Handlebars from 'handlebars';
 import _ from 'lodash-es';
 import { ResItm } from '../../../../../../../../chitin/res/impl/res-itm';
-import { ComponentsRecord } from '../../../../../../../../components/components';
 import { Eff83 } from '../../../../../../../../sprite/effs/impl/eff-83';
 import { Items } from '../../../../../../../../views/sheet/components/items/items/items';
 import {
   Tooltip,
   TooltipData,
 } from '../../../../../../../../views/sheet/components/tooltips/tooltip';
+import { sheetdata } from '../../../../../../../../views/sheet/sheetdata';
 
 export type BuffGroup83TooltipData = TooltipData & {
   itemsHtml: string;
@@ -16,10 +16,12 @@ export type BuffGroup83TooltipData = TooltipData & {
 export class BuffGroup83Tooltip extends Tooltip {
   protected buffGroup83TooltipData: BuffGroup83TooltipData;
 
-  constructor(components: ComponentsRecord, effs: Eff83[]) {
+  constructor(effs: Eff83[]) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffGroup83Tooltip);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
+      sheetdata.components.buffGroup83Tooltip
+    );
 
     const proItms: ResItm[] = _.uniqBy(
       _.flatten(_.map(effs, (eff: Eff83): ResItm[] => eff.proItms)),
@@ -28,7 +30,7 @@ export class BuffGroup83Tooltip extends Tooltip {
 
     this.buffGroup83TooltipData = {
       ...this.tooltipData,
-      itemsHtml: new Items(components, proItms).html,
+      itemsHtml: new Items(proItms).html,
     };
 
     this.html = compiled(this.buffGroup83TooltipData);

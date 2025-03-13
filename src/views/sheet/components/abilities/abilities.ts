@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import { ComponentsRecord } from '../../../../components/components';
+import { sheetdata } from '../../sheetdata';
 import { Component, ComponentData } from '../component/component';
 
 export type AbilitiesData = ComponentData & {
@@ -22,7 +22,6 @@ export class Abilities extends Component {
   protected abilitiesData: AbilitiesData;
 
   constructor(
-    components: ComponentsRecord,
     str: number,
     strExc: number,
     dex: number,
@@ -33,7 +32,7 @@ export class Abilities extends Component {
   ) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.abilities);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.components.abilities);
 
     this.abilitiesData = {
       ...this.componentData,
