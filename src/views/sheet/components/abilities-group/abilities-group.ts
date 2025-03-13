@@ -24,31 +24,31 @@ export class AbilitiesGroup extends Component {
     this.abilitiesGroupData = {
       ...this.componentData,
       abilitiesHtml: new Abilities(
-        sheetdata.params.spriteView.derived.str,
-        sheetdata.params.spriteView.derived.strExc,
-        sheetdata.params.spriteView.derived.dex,
-        sheetdata.params.spriteView.derived.con,
-        sheetdata.params.spriteView.derived.int,
-        sheetdata.params.spriteView.derived.wis,
-        sheetdata.params.spriteView.derived.cha
+        sheetdata.spriteView.derived.str,
+        sheetdata.spriteView.derived.strExc,
+        sheetdata.spriteView.derived.dex,
+        sheetdata.spriteView.derived.con,
+        sheetdata.spriteView.derived.int,
+        sheetdata.spriteView.derived.wis,
+        sheetdata.spriteView.derived.cha
       ).html,
       abilitiesBonusHtml: new Abilities(
-        sheetdata.params.spriteView.derived.str,
-        sheetdata.params.spriteView.derivedBonus.strExc,
-        sheetdata.params.spriteView.derivedBonus.dex,
-        sheetdata.params.spriteView.derivedBonus.con,
-        sheetdata.params.spriteView.derivedBonus.int,
-        sheetdata.params.spriteView.derivedBonus.wis,
-        sheetdata.params.spriteView.derivedBonus.cha
+        sheetdata.spriteView.derived.str,
+        sheetdata.spriteView.derivedBonus.strExc,
+        sheetdata.spriteView.derivedBonus.dex,
+        sheetdata.spriteView.derivedBonus.con,
+        sheetdata.spriteView.derivedBonus.int,
+        sheetdata.spriteView.derivedBonus.wis,
+        sheetdata.spriteView.derivedBonus.cha
       ).html,
       abilitiesTempHtml: new Abilities(
-        sheetdata.params.spriteView.derived.str,
-        sheetdata.params.spriteView.derivedTemp.strExc,
-        sheetdata.params.spriteView.derivedTemp.dex,
-        sheetdata.params.spriteView.derivedTemp.con,
-        sheetdata.params.spriteView.derivedTemp.int,
-        sheetdata.params.spriteView.derivedTemp.wis,
-        sheetdata.params.spriteView.derivedTemp.cha
+        sheetdata.spriteView.derived.str,
+        sheetdata.spriteView.derivedTemp.strExc,
+        sheetdata.spriteView.derivedTemp.dex,
+        sheetdata.spriteView.derivedTemp.con,
+        sheetdata.spriteView.derivedTemp.int,
+        sheetdata.spriteView.derivedTemp.wis,
+        sheetdata.spriteView.derivedTemp.cha
       ).html,
     };
 

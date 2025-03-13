@@ -20,7 +20,7 @@ export class Buff extends Component {
       ...this.componentData,
       levelsHtml: new BuffLevels(casterLevel, spellLevel).html,
       imageHtml: null,
-      durationHtml: new BuffDuration(duration, sheetdata.params.timetracker.time).html,
+      durationHtml: new BuffDuration(duration, sheetdata.timetracker.time).html,
       rightHtml: null,
     };
   }

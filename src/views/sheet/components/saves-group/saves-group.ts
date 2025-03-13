@@ -22,25 +22,25 @@ export class SavesGroup extends Component {
     this.savesGroupData = {
       ...this.componentData,
       savesHtml: new Saves(
-        sheetdata.params.spriteView.derived.saveVsDeath,
-        sheetdata.params.spriteView.derived.saveVsWands,
-        sheetdata.params.spriteView.derived.saveVsPoly,
-        sheetdata.params.spriteView.derived.saveVsBreath,
-        sheetdata.params.spriteView.derived.saveVsSpell
+        sheetdata.spriteView.derived.saveVsDeath,
+        sheetdata.spriteView.derived.saveVsWands,
+        sheetdata.spriteView.derived.saveVsPoly,
+        sheetdata.spriteView.derived.saveVsBreath,
+        sheetdata.spriteView.derived.saveVsSpell
       ).html,
       savesBonusHtml: new Saves(
-        sheetdata.params.spriteView.derivedBonus.saveVsDeath,
-        sheetdata.params.spriteView.derivedBonus.saveVsWands,
-        sheetdata.params.spriteView.derivedBonus.saveVsPoly,
-        sheetdata.params.spriteView.derivedBonus.saveVsBreath,
-        sheetdata.params.spriteView.derivedBonus.saveVsSpell
+        sheetdata.spriteView.derivedBonus.saveVsDeath,
+        sheetdata.spriteView.derivedBonus.saveVsWands,
+        sheetdata.spriteView.derivedBonus.saveVsPoly,
+        sheetdata.spriteView.derivedBonus.saveVsBreath,
+        sheetdata.spriteView.derivedBonus.saveVsSpell
       ).html,
       savesTempHtml: new Saves(
-        sheetdata.params.spriteView.derivedTemp.saveVsDeath,
-        sheetdata.params.spriteView.derivedTemp.saveVsWands,
-        sheetdata.params.spriteView.derivedTemp.saveVsPoly,
-        sheetdata.params.spriteView.derivedTemp.saveVsBreath,
-        sheetdata.params.spriteView.derivedTemp.saveVsSpell
+        sheetdata.spriteView.derivedTemp.saveVsDeath,
+        sheetdata.spriteView.derivedTemp.saveVsWands,
+        sheetdata.spriteView.derivedTemp.saveVsPoly,
+        sheetdata.spriteView.derivedTemp.saveVsBreath,
+        sheetdata.spriteView.derivedTemp.saveVsSpell
       ).html,
     };
 

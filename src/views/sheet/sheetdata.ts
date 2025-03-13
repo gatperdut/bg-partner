@@ -1,13 +1,17 @@
 import { ComponentsRecord } from '../../components/components';
-import { SheetAPIUpdateParams } from './renderer';
+import { SheetAPIUpdateParamsTimetracker } from './renderer';
+import { SpriteView } from './sprite-view';
 
 export type Sheetdata = {
   components: ComponentsRecord;
 
-  params: SheetAPIUpdateParams;
+  spriteView: SpriteView;
+
+  timetracker: SheetAPIUpdateParamsTimetracker;
 };
 
 export const sheetdata: Sheetdata = {
   components: null,
-  params: null,
+  spriteView: null,
+  timetracker: null,
 };

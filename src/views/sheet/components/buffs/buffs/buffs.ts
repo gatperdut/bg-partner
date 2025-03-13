@@ -19,12 +19,12 @@ export class Buffs extends Component {
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.components.buffs);
 
     const buffsSingleHtml: string[] = _.map(
-      _.filter(sheetdata.params.spriteView.effs.effs.buffs, (eff: Eff): boolean => !eff.grouped),
+      _.filter(sheetdata.spriteView.effs.effs.buffs, (eff: Eff): boolean => !eff.grouped),
       (eff: Eff): string => BuffFactory.single(eff).html
     );
 
     const buffsGroupsById: Record<number, Eff[]> = _.groupBy(
-      _.filter(sheetdata.params.spriteView.effs.effs.buffs, (eff: Eff): boolean => eff.grouped),
+      _.filter(sheetdata.spriteView.effs.effs.buffs, (eff: Eff): boolean => eff.grouped),
       (eff: Eff): EffKey => eff.key
     );
 

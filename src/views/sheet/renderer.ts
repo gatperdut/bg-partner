@@ -71,7 +71,9 @@ class SheetRenderer {
   }
 
   private update(params: SheetAPIUpdateParams): void {
-    sheetdata.params = params;
+    sheetdata.spriteView = params.spriteView;
+
+    sheetdata.timetracker = params.timetracker;
 
     if (!sheetdata.components) {
       return;
@@ -161,7 +163,7 @@ class SheetRenderer {
     document.body.addEventListener(
       'contextmenu',
       (): void => {
-        window.sheetAPI.close(sheetdata.params.spriteView.basic.id);
+        window.sheetAPI.close(sheetdata.spriteView.basic.id);
       },
       true
     );
@@ -184,7 +186,7 @@ class SheetRenderer {
         y: event.movementY,
       };
 
-      window.sheetAPI.move(sheetdata.params.spriteView.basic.id, movement);
+      window.sheetAPI.move(sheetdata.spriteView.basic.id, movement);
     });
   }
 }
