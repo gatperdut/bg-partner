@@ -8,11 +8,13 @@ export type BuffImageData = {
 
   valign: number;
 
+  title: string;
+
   tippyHtml: string;
 };
 
 export class BuffImage extends Component {
-  constructor(components: ComponentsRecord, eff: Eff, tippyHtml: string) {
+  constructor(components: ComponentsRecord, eff: Eff, title: string, tippyHtml: string) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffImage);
@@ -22,6 +24,7 @@ export class BuffImage extends Component {
     const buffImageData: BuffImageData = {
       base64: eff.resImage.base64,
       valign: valign,
+      title: title,
       tippyHtml: tippyHtml,
     };
 

@@ -15,7 +15,7 @@ export class Item extends Component {
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.item);
 
     const itemsData: ItemData = {
-      imageHtml: new ItemImage(components, resItm, null).html,
+      imageHtml: new ItemImage(components, resItm, resItm.name, null).html,
     };
 
     this.html = compiled(itemsData);

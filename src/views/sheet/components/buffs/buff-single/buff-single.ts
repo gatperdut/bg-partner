@@ -15,7 +15,7 @@ export class BuffSingle extends Buff {
 
     const buffSingleData: BuffSingleData = {
       ...this.buffData,
-      imageHtml: new BuffImage(components, eff, null).html,
+      imageHtml: new BuffImage(components, eff, eff.ressrc.name, null).html,
     };
 
     this.html = compiled(buffSingleData);

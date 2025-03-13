@@ -8,13 +8,13 @@ export type ItemImageData = {
 
   valign: number;
 
-  name: string;
+  title: string;
 
   tippyHtml: string;
 };
 
 export class ItemImage extends Component {
-  constructor(components: ComponentsRecord, resItm: ResItm, tippyHtml: string) {
+  constructor(components: ComponentsRecord, resItm: ResItm, title: string, tippyHtml: string) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.itemImage);
@@ -22,7 +22,7 @@ export class ItemImage extends Component {
     const itemImageData: ItemImageData = {
       base64: resItm.resImage.base64,
       valign: Math.round(resItm.resImage.size.height / 2),
-      name: resItm.name,
+      title: title,
       tippyHtml: tippyHtml,
     };
 

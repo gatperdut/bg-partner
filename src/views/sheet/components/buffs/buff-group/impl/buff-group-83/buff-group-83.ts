@@ -22,7 +22,7 @@ export class BuffGroup83 extends BuffGroup {
 
     const buffGroup83Data: BuffGroup83Data = {
       ...this.buffData,
-      imageHtml: new BuffImage(components, effs[0], tooltip).html,
+      imageHtml: new BuffImage(components, effs[0], effs[0].ressrc.name, tooltip).html,
     };
 
     this.html = compiled(buffGroup83Data);

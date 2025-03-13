@@ -25,7 +25,7 @@ export class BuffGroup102 extends BuffGroup {
 
     const buffGroup102Data: BuffGroup102Data = {
       ...this.buffData,
-      imageHtml: new BuffImage(components, effs[0], null).html,
+      imageHtml: new BuffImage(components, effs[0], effs[0].ressrc.name, null).html,
       rightHtml: new BuffRight(components, max, 'Maximum level').html,
     };
 
