@@ -10,9 +10,9 @@ export type ItemData = ComponentData & {
 
 export class Item extends Component {
   constructor(components: ComponentsRecord, resItm: ResItm) {
-    super(components);
+    super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.item);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.item);
 
     const itemsData: ItemData = {
       title: null,

@@ -14,22 +14,23 @@ export type BuffGroup83TooltipData = TooltipData & {
 };
 
 export class BuffGroup83Tooltip extends Tooltip {
-  constructor(components: ComponentsRecord, protected effs: Eff83[]) {
-    super(components);
+  protected buffGroup83TooltipData: BuffGroup83TooltipData;
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      this.components.buffGroup83Tooltip
-    );
+  constructor(components: ComponentsRecord, effs: Eff83[]) {
+    super();
+
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffGroup83Tooltip);
 
     const proItms: ResItm[] = _.uniqBy(
-      _.flatten(_.map(this.effs, (eff: Eff83): ResItm[] => eff.proItms)),
+      _.flatten(_.map(effs, (eff: Eff83): ResItm[] => eff.proItms)),
       (proItm: ResItm): string => proItm.code
     );
 
-    const buffGroup83TooltipData: BuffGroup83TooltipData = {
+    this.buffGroup83TooltipData = {
+      ...this.tooltipData,
       itemsHtml: new Items(components, proItms).html,
     };
 
-    this.html = compiled(buffGroup83TooltipData);
+    this.html = compiled(this.buffGroup83TooltipData);
   }
 }

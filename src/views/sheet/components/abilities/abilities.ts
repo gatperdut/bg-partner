@@ -1,19 +1,51 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../components/components';
-import { SheetAPIUpdateParams } from '../../renderer';
-import { DerivedView } from '../../sprite-view';
-import { Component } from '../component/component';
+import { Component, ComponentData } from '../component/component';
+
+export type AbilitiesData = ComponentData & {
+  str: number;
+
+  strExc: number;
+
+  dex: number;
+
+  con: number;
+
+  int: number;
+
+  wis: number;
+
+  cha: number;
+};
 
 export class Abilities extends Component {
+  protected abilitiesData: AbilitiesData;
+
   constructor(
     components: ComponentsRecord,
-    params: SheetAPIUpdateParams,
-    derivedView: DerivedView
+    str: number,
+    strExc: number,
+    dex: number,
+    con: number,
+    int: number,
+    wis: number,
+    cha: number
   ) {
-    super(components);
+    super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.abilities);
 
-    this.html = compiled(derivedView);
+    this.abilitiesData = {
+      ...this.componentData,
+      str: str,
+      strExc: strExc,
+      dex: dex,
+      con: con,
+      int: int,
+      wis: wis,
+      cha: cha,
+    };
+
+    this.html = compiled(this.abilitiesData);
   }
 }

@@ -11,9 +11,9 @@ export type ItemsData = ComponentData & {
 
 export class Items extends Component {
   constructor(components: ComponentsRecord, resItms: ResItm[]) {
-    super(components);
+    super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.items);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.items);
 
     const itemHtmls: string[] = _.map(
       resItms,

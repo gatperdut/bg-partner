@@ -1,6 +1,5 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../../components/components';
-import { Eff } from '../../../../../../sprite/effs/impl/eff';
 import { Component, ComponentData } from '../../../component/component';
 
 export type BuffLevelsData = ComponentData & {
@@ -10,17 +9,19 @@ export type BuffLevelsData = ComponentData & {
 };
 
 export class BuffLevels extends Component {
-  constructor(components: ComponentsRecord, eff: Eff) {
-    super(components);
+  protected buffLevelsData: BuffLevelsData;
+
+  constructor(components: ComponentsRecord, casterLevel: number, spellLevel: number) {
+    super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffLevels);
 
-    const buffLevelsData: BuffLevelsData = {
-      title: null,
-      casterLevel: eff.casterLevel,
-      spellLevel: eff.spellLevel,
+    this.buffLevelsData = {
+      ...this.componentData,
+      casterLevel: casterLevel,
+      spellLevel: spellLevel,
     };
 
-    this.html = compiled(buffLevelsData);
+    this.html = compiled(this.buffLevelsData);
   }
 }

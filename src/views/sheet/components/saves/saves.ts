@@ -1,19 +1,39 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../src/components/components';
-import { SheetAPIUpdateParams } from '../../renderer';
-import { DerivedView } from '../../sprite-view';
-import { Component } from '../component/component';
+import { Component, ComponentData } from '../component/component';
+
+export type SavesData = ComponentData & {
+  saveVsDeath: number;
+  saveVsWands: number;
+  saveVsPoly: number;
+  saveVsBreath: number;
+  saveVsSpell: number;
+};
 
 export class Saves extends Component {
+  protected savesData: SavesData;
+
   constructor(
     components: ComponentsRecord,
-    params: SheetAPIUpdateParams,
-    derivedView: DerivedView
+    saveVsDeath: number,
+    saveVsWands: number,
+    saveVsPoly: number,
+    saveVsBreath: number,
+    saveVsSpell: number
   ) {
-    super(components);
+    super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.abilities);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.saves);
 
-    this.html = compiled(derivedView);
+    this.savesData = {
+      ...this.componentData,
+      saveVsDeath: saveVsDeath,
+      saveVsWands: saveVsWands,
+      saveVsPoly: saveVsPoly,
+      saveVsBreath: saveVsBreath,
+      saveVsSpell: saveVsSpell,
+    };
+
+    this.html = compiled(this.savesData);
   }
 }

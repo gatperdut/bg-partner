@@ -1,5 +1,3 @@
-import { ComponentsRecord } from '../../../../components/components';
-
 export type ComponentData = {
   title: string;
 };
@@ -9,7 +7,7 @@ export class Component {
 
   protected componentData: ComponentData;
 
-  constructor(protected components: ComponentsRecord) {
+  constructor() {
     this.componentData = {
       title: null,
     };

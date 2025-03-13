@@ -1,12 +1,15 @@
-import { ComponentsRecord } from '../../../../components/components';
-import { Component } from '../component/component';
+import { Component, ComponentData } from '../component/component';
 
-export type TooltipData = {
-  // Empty
-};
+export type TooltipData = ComponentData;
 
 export class Tooltip extends Component {
-  constructor(components: ComponentsRecord) {
-    super(components);
+  protected tooltipData: TooltipData;
+
+  constructor() {
+    super();
+
+    this.tooltipData = {
+      ...this.componentData,
+    };
   }
 }

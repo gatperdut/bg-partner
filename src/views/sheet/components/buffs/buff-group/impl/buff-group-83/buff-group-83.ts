@@ -14,7 +14,7 @@ export class BuffGroup83 extends BuffGroup {
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, effs: Eff83[]) {
     super(components, params, effs);
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.buffGroup83);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffGroup83);
 
     const tooltip: string = new BuffGroup83Tooltip(components, effs).html;
 

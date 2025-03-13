@@ -9,7 +9,13 @@ export abstract class BuffGroup extends Buff {
   protected buffGroupData: BuffGroupData;
 
   constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, effs: Eff[]) {
-    super(components, effs[0], params.timetracker.time);
+    super(
+      components,
+      effs[0].duration,
+      effs[0].casterLevel,
+      effs[0].spellLevel,
+      params.timetracker.time
+    );
 
     this.buffGroupData = {
       ...this.buffData,
