@@ -5,8 +5,7 @@ import { Eff } from '../../../../../sprite/effs/impl/eff';
 import { EffKey } from '../../../../../tables/eff';
 import { SheetAPIUpdateParams } from '../../../renderer';
 import { Component, ComponentData } from '../../component/component';
-import { BuffSingle } from '../buff-single/buff-single';
-import { BuffGroupFactory } from './buff-group-factory';
+import { BuffFactory } from './buff-factory';
 
 export type BuffsData = ComponentData & {
   buffsSingle: string[];
@@ -22,7 +21,7 @@ export class Buffs extends Component {
 
     const buffsSingle: string[] = _.map(
       _.filter(this.params.spriteView.effs.effs.buffs, (eff: Eff): boolean => !eff.grouped),
-      (eff: Eff): string => new BuffSingle(this.components, this.params, eff).html
+      (eff: Eff): string => BuffFactory.single(this.components, this.params, eff).html
     );
 
     const buffsGroupsById: Record<number, Eff[]> = _.groupBy(
@@ -33,7 +32,7 @@ export class Buffs extends Component {
     const buffsGroups: string[] = _.map(
       _.keys(buffsGroupsById).map(Number),
       (id: number): string =>
-        BuffGroupFactory.create(id, this.components, this.params, buffsGroupsById[id]).html
+        BuffFactory.group(this.components, this.params, buffsGroupsById[id]).html
     );
 
     const buffsData: BuffsData = {

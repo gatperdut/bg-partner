@@ -6,11 +6,17 @@ import { Buff, BuffData } from '../buff/buff';
 export type BuffGroupData = BuffData;
 
 export abstract class BuffGroup extends Buff {
+  protected buffGroupData: BuffGroupData;
+
   constructor(
     protected components: ComponentsRecord,
     protected params: SheetAPIUpdateParams,
     protected effs: Eff[]
   ) {
     super(components, effs[0], params.timetracker.time);
+
+    this.buffGroupData = {
+      ...this.buffData,
+    };
   }
 }

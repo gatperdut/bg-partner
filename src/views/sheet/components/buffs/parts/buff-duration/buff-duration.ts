@@ -1,10 +1,14 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../../components/components';
 import { Eff } from '../../../../../../sprite/effs/impl/eff';
+import { EffKey } from '../../../../../../tables/eff';
 import { Component, ComponentData } from '../../../component/component';
 
 export type BuffDurationData = ComponentData & {
   duration: number;
+
+  // TODO drop
+  key: EffKey;
 };
 
 export class BuffDuration extends Component {
@@ -18,6 +22,7 @@ export class BuffDuration extends Component {
     const buffDurationData: BuffDurationData = {
       title: 'Duration',
       duration: duration,
+      key: eff.key,
     };
 
     this.html = compiled(buffDurationData);

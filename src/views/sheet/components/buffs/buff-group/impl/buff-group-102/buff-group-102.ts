@@ -12,6 +12,8 @@ export type BuffGroup102Data = BuffGroupData & {
 };
 
 export class BuffGroup102 extends BuffGroup {
+  protected buffGroup102Data: BuffGroup102Data;
+
   constructor(
     protected components: ComponentsRecord,
     protected params: SheetAPIUpdateParams,
@@ -23,12 +25,12 @@ export class BuffGroup102 extends BuffGroup {
 
     const max: number = Math.max(..._.map(this.effs, (eff: Eff): number => eff.param1));
 
-    const buffGroup102Data: BuffGroup102Data = {
-      ...this.buffData,
+    this.buffGroup102Data = {
+      ...this.buffGroupData,
       imageHtml: new Image(components, effs[0].resImage, effs[0].ressrc.name, null).html,
       rightHtml: new BuffRight(components, max, 'Maximum level').html,
     };
 
-    this.html = compiled(buffGroup102Data);
+    this.html = compiled(this.buffGroup102Data);
   }
 }

@@ -12,6 +12,8 @@ export type BuffData = ComponentData & {
   imageHtml: string;
 
   durationHtml: string;
+
+  rightHtml: string;
 };
 
 export class Buff extends Component {
@@ -21,11 +23,12 @@ export class Buff extends Component {
     super();
 
     this.buffData = {
-      title: null,
+      ...this.componentData,
       eff: eff,
       levelsHtml: new BuffLevels(components, eff).html,
       imageHtml: null,
       durationHtml: new BuffDuration(components, eff, time).html,
+      rightHtml: null,
     };
   }
 }

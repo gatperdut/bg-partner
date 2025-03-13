@@ -9,6 +9,8 @@ import { BuffGroup83Tooltip } from './tooltips/buff-group-83-tooltip';
 export type BuffGroup83Data = BuffGroupData;
 
 export class BuffGroup83 extends BuffGroup {
+  protected buffGroup83Data: BuffGroup83Data;
+
   constructor(
     protected components: ComponentsRecord,
     protected params: SheetAPIUpdateParams,
@@ -20,11 +22,11 @@ export class BuffGroup83 extends BuffGroup {
 
     const tooltip: string = new BuffGroup83Tooltip(components, effs).html;
 
-    const buffGroup83Data: BuffGroup83Data = {
-      ...this.buffData,
+    this.buffGroup83Data = {
+      ...this.buffGroupData,
       imageHtml: new Image(components, effs[0].resImage, effs[0].ressrc.name, tooltip).html,
     };
 
-    this.html = compiled(buffGroup83Data);
+    this.html = compiled(this.buffGroup83Data);
   }
 }

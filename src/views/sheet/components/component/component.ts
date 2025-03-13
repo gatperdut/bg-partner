@@ -5,7 +5,11 @@ export type ComponentData = {
 export class Component {
   public html: string;
 
+  protected componentData: ComponentData;
+
   constructor() {
-    // Empty
+    this.componentData = {
+      title: null,
+    };
   }
 }
