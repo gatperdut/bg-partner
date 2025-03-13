@@ -14,16 +14,12 @@ export type BuffGroup102Data = BuffGroupData & {
 export class BuffGroup102 extends BuffGroup {
   protected buffGroup102Data: BuffGroup102Data;
 
-  constructor(
-    components: ComponentsRecord,
-    protected params: SheetAPIUpdateParams,
-    protected effs: Eff[]
-  ) {
+  constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, effs: Eff[]) {
     super(components, params, effs);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.buffGroup102);
 
-    const max: number = Math.max(..._.map(this.effs, (eff: Eff): number => eff.param1));
+    const max: number = Math.max(..._.map(effs, (eff: Eff): number => eff.param1));
 
     this.buffGroup102Data = {
       ...this.buffGroupData,

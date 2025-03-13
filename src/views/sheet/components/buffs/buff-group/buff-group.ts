@@ -8,11 +8,7 @@ export type BuffGroupData = BuffData;
 export abstract class BuffGroup extends Buff {
   protected buffGroupData: BuffGroupData;
 
-  constructor(
-    components: ComponentsRecord,
-    protected params: SheetAPIUpdateParams,
-    protected effs: Eff[]
-  ) {
+  constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, effs: Eff[]) {
     super(components, effs[0], params.timetracker.time);
 
     this.buffGroupData = {

@@ -11,11 +11,7 @@ export type BuffGroup83Data = BuffGroupData;
 export class BuffGroup83 extends BuffGroup {
   protected buffGroup83Data: BuffGroup83Data;
 
-  constructor(
-    components: ComponentsRecord,
-    protected params: SheetAPIUpdateParams,
-    protected effs: Eff83[]
-  ) {
+  constructor(components: ComponentsRecord, params: SheetAPIUpdateParams, effs: Eff83[]) {
     super(components, params, effs);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(this.components.buffGroup83);
