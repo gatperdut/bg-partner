@@ -9,16 +9,18 @@ export type ItemData = ComponentData & {
 };
 
 export class Item extends Component {
+  protected itemData: ItemData;
+
   constructor(components: ComponentsRecord, resItm: ResItm) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.item);
 
-    const itemsData: ItemData = {
-      title: null,
+    this.itemData = {
+      ...this.componentData,
       imageHtml: new Image(components, resItm.resImage, resItm.name, null).html,
     };
 
-    this.html = compiled(itemsData);
+    this.html = compiled(this.itemData);
   }
 }

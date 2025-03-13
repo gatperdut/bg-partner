@@ -10,21 +10,18 @@ export type ItemsData = ComponentData & {
 };
 
 export class Items extends Component {
+  protected itemsData: ItemsData;
+
   constructor(components: ComponentsRecord, resItms: ResItm[]) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.items);
 
-    const itemHtmls: string[] = _.map(
-      resItms,
-      (resItm: ResItm): string => new Item(components, resItm).html
-    );
-
-    const itemsData: ItemsData = {
-      title: null,
-      itemHtmls: itemHtmls,
+    this.itemsData = {
+      ...this.componentData,
+      itemHtmls: _.map(resItms, (resItm: ResItm): string => new Item(components, resItm).html),
     };
 
-    this.html = compiled(itemsData);
+    this.html = compiled(this.itemsData);
   }
 }

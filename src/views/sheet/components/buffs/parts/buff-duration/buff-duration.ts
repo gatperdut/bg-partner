@@ -15,6 +15,7 @@ export class BuffDuration extends Component {
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffDuration);
 
     this.buffDurationData = {
+      ...this.componentData,
       title: 'Duration',
       duration: Math.round((duration - time) / 15),
     };

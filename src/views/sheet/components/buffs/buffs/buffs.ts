@@ -35,7 +35,7 @@ export class Buffs extends Component {
     );
 
     const buffsData: BuffsData = {
-      title: null,
+      ...this.componentData,
       buffsSingleHtml: buffsSingleHtml,
       buffsGroupHtml: buffsGroupHtml,
     };

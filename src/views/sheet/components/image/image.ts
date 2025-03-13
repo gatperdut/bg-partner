@@ -14,23 +14,22 @@ export type ImageData = ComponentData & {
 };
 
 export class Image extends Component {
+  private imageData: ImageData;
+
   constructor(components: ComponentsRecord, resImage: ResImage, title: string, tippyHtml: string) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.image);
 
-    const halign: number = Math.floor(resImage.size.width / 2);
-
-    const valign: number = Math.floor(resImage.size.height / 2);
-
-    const imageData: ImageData = {
-      base64: resImage.base64,
-      halign: halign,
-      valign: valign,
+    this.imageData = {
+      ...this.componentData,
       title: title,
+      base64: resImage.base64,
+      halign: Math.floor(resImage.size.width / 2),
+      valign: Math.floor(resImage.size.height / 2),
       tippyHtml: tippyHtml,
     };
 
-    this.html = compiled(imageData);
+    this.html = compiled(this.imageData);
   }
 }

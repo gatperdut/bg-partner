@@ -7,16 +7,19 @@ export type BuffRightData = ComponentData & {
 };
 
 export class BuffRight extends Component {
+  protected buffRightData: BuffRightData;
+
   constructor(components: ComponentsRecord, value: number, title: string) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffRight);
 
-    const buffRightData: BuffRightData = {
+    this.buffRightData = {
+      ...this.componentData,
       value: value,
       title: title,
     };
 
-    this.html = compiled(buffRightData);
+    this.html = compiled(this.buffRightData);
   }
 }
