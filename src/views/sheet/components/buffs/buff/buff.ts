@@ -7,8 +7,6 @@ import { BuffLevels } from '../parts/buff-levels/buff-levels';
 export type BuffData = ComponentData & {
   eff: Eff;
 
-  valign: number;
-
   levelsHtml: string;
 
   imageHtml: string;
@@ -22,12 +20,9 @@ export class Buff extends Component {
   constructor(components: ComponentsRecord, eff: Eff, time: number) {
     super();
 
-    const valign: number = Math.floor((32 - eff.resImage.size.height) / 2);
-
     this.buffData = {
       title: null,
       eff: eff,
-      valign: valign,
       levelsHtml: new BuffLevels(components, eff).html,
       imageHtml: null,
       durationHtml: new BuffDuration(components, eff, time).html,

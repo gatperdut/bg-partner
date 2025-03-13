@@ -1,8 +1,8 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../../../components/components';
 import { Eff83 } from '../../../../../../../sprite/effs/impl/eff-83';
+import { Image } from '../../../../../../../views/sheet/components/image/image';
 import { SheetAPIUpdateParams } from '../../../../../renderer';
-import { BuffImage } from '../../../parts/buff-image/buff-image';
 import { BuffGroup, BuffGroupData } from '../../buff-group';
 import { BuffGroup83Tooltip } from './tooltips/buff-group-83-tooltip';
 
@@ -22,7 +22,7 @@ export class BuffGroup83 extends BuffGroup {
 
     const buffGroup83Data: BuffGroup83Data = {
       ...this.buffData,
-      imageHtml: new BuffImage(components, effs[0], effs[0].ressrc.name, tooltip).html,
+      imageHtml: new Image(components, effs[0].resImage, effs[0].ressrc.name, tooltip).html,
     };
 
     this.html = compiled(buffGroup83Data);

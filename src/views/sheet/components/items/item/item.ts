@@ -2,7 +2,7 @@ import Handlebars from 'handlebars';
 import { ResItm } from '../../../../../chitin/res/impl/res-itm';
 import { ComponentsRecord } from '../../.././../../components/components';
 import { Component, ComponentData } from '../../component/component';
-import { ItemImage } from '../parts/item-image/item-image';
+import { Image } from '../../image/image';
 
 export type ItemData = ComponentData & {
   imageHtml: string;
@@ -16,7 +16,7 @@ export class Item extends Component {
 
     const itemsData: ItemData = {
       title: null,
-      imageHtml: new ItemImage(components, resItm, resItm.name, null).html,
+      imageHtml: new Image(components, resItm.resImage, resItm.name, null).html,
     };
 
     this.html = compiled(itemsData);

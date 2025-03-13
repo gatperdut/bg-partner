@@ -1,9 +1,9 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
+import { Image } from '../../../../../views/sheet/components/image/image';
 import { SheetAPIUpdateParams } from '../../../renderer';
 import { Buff, BuffData } from '../buff/buff';
-import { BuffImage } from '../parts/buff-image/buff-image';
 
 export type BuffSingleData = BuffData;
 
@@ -15,7 +15,7 @@ export class BuffSingle extends Buff {
 
     const buffSingleData: BuffSingleData = {
       ...this.buffData,
-      imageHtml: new BuffImage(components, eff, eff.ressrc.name, null).html,
+      imageHtml: new Image(components, eff.resImage, eff.ressrc.name, null).html,
     };
 
     this.html = compiled(buffSingleData);
