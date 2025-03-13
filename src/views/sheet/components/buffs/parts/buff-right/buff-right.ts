@@ -1,22 +1,20 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../../components/components';
-import { Component } from '../../../component/component';
+import { Component, ComponentData } from '../../../component/component';
 
-export type BuffRightData = {
+export type BuffRightData = ComponentData & {
   value: number;
-
-  tooltip: string;
 };
 
 export class BuffRight extends Component {
-  constructor(components: ComponentsRecord, value: number, tooltip: string) {
+  constructor(components: ComponentsRecord, value: number, title: string) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffRight);
 
     const buffRightData: BuffRightData = {
       value: value,
-      tooltip: tooltip,
+      title: title,
     };
 
     this.html = compiled(buffRightData);

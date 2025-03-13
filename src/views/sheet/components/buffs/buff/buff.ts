@@ -1,10 +1,10 @@
 import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
-import { Component } from '../../component/component';
+import { Component, ComponentData } from '../../component/component';
 import { BuffDuration } from '../parts/buff-duration/buff-duration';
 import { BuffLevels } from '../parts/buff-levels/buff-levels';
 
-export type BuffData = {
+export type BuffData = ComponentData & {
   eff: Eff;
 
   valign: number;
@@ -25,6 +25,7 @@ export class Buff extends Component {
     const valign: number = Math.floor((32 - eff.resImage.size.height) / 2);
 
     this.buffData = {
+      title: null,
       eff: eff,
       valign: valign,
       levelsHtml: new BuffLevels(components, eff).html,

@@ -4,13 +4,21 @@ import { ComponentsRecord } from '../../../../../components/components';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
 import { EffKey } from '../../../../../tables/eff';
 import { SheetAPIUpdateParams } from '../../../renderer';
-import { Component } from '../../component/component';
+import { Component, ComponentData } from '../../component/component';
 import { BuffSingle } from '../buff-single/buff-single';
 import { BuffGroupFactory } from './buff-group-factory';
+
+export type BuffsData = ComponentData & {
+  buffsSingle: string[];
+
+  buffsGroups: string[];
+};
 
 export class Buffs extends Component {
   constructor(private components: ComponentsRecord, private params: SheetAPIUpdateParams) {
     super();
+
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffs);
 
     const buffsSingle: string[] = _.map(
       _.filter(this.params.spriteView.effs.effs.buffs, (eff: Eff): boolean => !eff.grouped),
@@ -28,11 +36,12 @@ export class Buffs extends Component {
         BuffGroupFactory.create(id, this.components, this.params, buffsGroupsById[id]).html
     );
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(components.buffs);
-
-    this.html = compiled({
+    const buffsData: BuffsData = {
+      title: null,
       buffsSingle: buffsSingle,
       buffsGroups: buffsGroups,
-    });
+    };
+
+    this.html = compiled(buffsData);
   }
 }

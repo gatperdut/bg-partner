@@ -1,14 +1,12 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../../components/components';
 import { Eff } from '../../../../../../sprite/effs/impl/eff';
-import { Component } from '../../../component/component';
+import { Component, ComponentData } from '../../../component/component';
 
-export type BuffImageData = {
+export type BuffImageData = ComponentData & {
   base64: string;
 
   valign: number;
-
-  title: string;
 
   tippyHtml: string;
 };

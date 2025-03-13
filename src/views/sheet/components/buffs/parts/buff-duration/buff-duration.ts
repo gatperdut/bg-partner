@@ -1,9 +1,9 @@
 import Handlebars from 'handlebars';
 import { ComponentsRecord } from '../../../../../../components/components';
 import { Eff } from '../../../../../../sprite/effs/impl/eff';
-import { Component } from '../../../component/component';
+import { Component, ComponentData } from '../../../component/component';
 
-export type BuffDurationData = {
+export type BuffDurationData = ComponentData & {
   duration: number;
 };
 
@@ -16,6 +16,7 @@ export class BuffDuration extends Component {
     const duration: number = Math.round((eff.duration - time) / 15);
 
     const buffDurationData: BuffDurationData = {
+      title: 'Duration',
       duration: duration,
     };
 

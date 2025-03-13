@@ -1,14 +1,12 @@
 import Handlebars from 'handlebars';
 import { ResItm } from '../../../../../../chitin/res/impl/res-itm';
 import { ComponentsRecord } from '../../../../../../components/components';
-import { Component } from '../../../component/component';
+import { Component, ComponentData } from '../../../component/component';
 
-export type ItemImageData = {
+export type ItemImageData = ComponentData & {
   base64: string;
 
   valign: number;
-
-  title: string;
 
   tippyHtml: string;
 };
