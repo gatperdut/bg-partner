@@ -1,7 +1,7 @@
 import { config, handlers } from '@handlers';
 import { WindowLinux } from '@window/window-linux';
 import { WindowWin32 } from '@window/window-win32';
-import Electron from 'electron';
+import * as Electron from 'electron';
 import * as _ from 'lodash-es';
 
 export type Window = WindowLinux | WindowWin32;

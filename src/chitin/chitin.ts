@@ -6,9 +6,9 @@ import { ResFactory } from '@chitin/res/res-factory';
 import { handlers } from '@handlers';
 import { ProValue, proValues } from '@tables/pro';
 import { ResextKey, ResextValue, resextTab } from '@tables/resext';
-import fs from 'fs';
+import * as fs from 'fs';
 import * as _ from 'lodash-es';
-import path from 'path';
+import * as path from 'path';
 
 export class Chitin {
   public bifs: Bif[] = [];

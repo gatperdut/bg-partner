@@ -3,7 +3,7 @@ import { Eff83 } from '@sprite/effs/impl/eff-83';
 import { Items } from '@views/sheet/components/items/items/items';
 import { Tooltip, TooltipData } from '@views/sheet/components/tooltips/tooltip';
 import { sheetdata } from '@views/sheet/sheetdata';
-import Handlebars from 'handlebars';
+import * as Handlebars from 'handlebars';
 import * as _ from 'lodash-es';
 
 export type BuffGroup83TooltipData = TooltipData & {

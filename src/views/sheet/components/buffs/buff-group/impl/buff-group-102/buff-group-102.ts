@@ -3,7 +3,7 @@ import { BuffGroup, BuffGroupData } from '@views/sheet/components/buffs/buff-gro
 import { BuffRight } from '@views/sheet/components/buffs/parts/buff-right/buff-right';
 import { Image } from '@views/sheet/components/image/image';
 import { sheetdata } from '@views/sheet/sheetdata';
-import Handlebars from 'handlebars';
+import * as Handlebars from 'handlebars';
 import * as _ from 'lodash-es';
 
 export type BuffGroup102Data = BuffGroupData & {

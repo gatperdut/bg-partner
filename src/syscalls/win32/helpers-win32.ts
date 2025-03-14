@@ -5,7 +5,7 @@ import { Kernel32 } from '@syscalls/win32/libs/kernel32';
 import { User32 } from '@syscalls/win32/libs/user32';
 import { StructsWin32 } from '@syscalls/win32/structs-win32';
 import { MODULEENTRY32, POINT, PROCESSENTRY32, RECT } from '@syscalls/win32/types-win32';
-import koffi from 'koffi';
+import * as koffi from 'koffi';
 
 export class HelpersWin32 {
   constructor(

@@ -1,6 +1,6 @@
 import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
-import Handlebars from 'handlebars';
+import * as Handlebars from 'handlebars';
 
 export type SavesData = ComponentData & {
   saveVsDeath: number;

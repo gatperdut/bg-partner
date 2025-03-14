@@ -3,7 +3,7 @@ import { BuffGroup, BuffGroupData } from '@views/sheet/components/buffs/buff-gro
 import { BuffGroup83Tooltip } from '@views/sheet/components/buffs/buff-group/impl/buff-group-83/tooltips/buff-group-83-tooltip';
 import { Image } from '@views/sheet/components/image/image';
 import { sheetdata } from '@views/sheet/sheetdata';
-import Handlebars from 'handlebars';
+import * as Handlebars from 'handlebars';
 
 export type BuffGroup83Data = BuffGroupData;
 

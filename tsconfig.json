@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ESNext",
     "allowJs": false,
-    "module": "commonjs",
+    "module": "ESNext",
     "skipLibCheck": true,
-    "esModuleInterop": true,
     "noImplicitAny": true,
     "sourceMap": true,
     "baseUrl": ".",

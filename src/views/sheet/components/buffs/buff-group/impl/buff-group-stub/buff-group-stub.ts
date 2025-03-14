@@ -1,7 +1,7 @@
 import { Eff } from '@sprite/effs/impl/eff';
 import { BuffGroup } from '@views/sheet/components/buffs/buff-group/buff-group';
 import { sheetdata } from '@views/sheet/sheetdata';
-import Handlebars from 'handlebars';
+import * as Handlebars from 'handlebars';
 
 export class BuffGroupStub extends BuffGroup {
   constructor(effs: Eff[]) {

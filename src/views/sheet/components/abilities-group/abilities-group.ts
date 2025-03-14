@@ -1,7 +1,7 @@
 import { Abilities } from '@views/sheet/components/abilities/abilities';
 import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
-import Handlebars from 'handlebars';
+import * as Handlebars from 'handlebars';
 
 export type AbilitiesGroupData = ComponentData & {
   abilitiesHtml: string;

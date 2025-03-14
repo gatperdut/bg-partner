@@ -1,24 +1,28 @@
 import { STDCALL } from '@const/const-win32';
 import { KoffiPrimitivePtrs, KoffiPrimitives } from '@syscalls/primitives';
 import { StructsWin32 } from '@syscalls/win32/structs-win32';
-import koffi, { IKoffiLib } from 'koffi';
+import * as koffi from 'koffi';
 
 export class Dwmapi {
+  public dwmapi: koffi.IKoffiLib = koffi.load('dwmapi.dll');
+
+  public DwmGetWindowAttribute: koffi.KoffiFunction;
+
   constructor(private structsWin32: StructsWin32) {
-    // Empty
+    this.DwmGetWindowAttribute_Setup();
   }
 
-  public dwmapi: IKoffiLib = koffi.load('dwmapi.dll');
-
-  public DwmGetWindowAttribute: koffi.KoffiFunction = this.dwmapi.func(
-    STDCALL,
-    'DwmGetWindowAttribute',
-    KoffiPrimitives.LONG,
-    [
-      KoffiPrimitivePtrs.VOID,
+  private DwmGetWindowAttribute_Setup(): void {
+    this.DwmGetWindowAttribute = this.dwmapi.func(
+      STDCALL,
+      'DwmGetWindowAttribute',
       KoffiPrimitives.LONG,
-      koffi.out(this.structsWin32.RECTPTR),
-      KoffiPrimitives.LONG,
-    ]
-  );
+      [
+        KoffiPrimitivePtrs.VOID,
+        KoffiPrimitives.LONG,
+        koffi.out(this.structsWin32.RECTPTR),
+        KoffiPrimitives.LONG,
+      ]
+    );
+  }
 }

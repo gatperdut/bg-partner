@@ -2,7 +2,7 @@ import { ResItm } from '@chitin/res/impl/res-itm';
 import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { Item } from '@views/sheet/components/items/item/item';
 import { sheetdata } from '@views/sheet/sheetdata';
-import Handlebars from 'handlebars';
+import * as Handlebars from 'handlebars';
 import * as _ from 'lodash-es';
 
 export type ItemsData = ComponentData & {

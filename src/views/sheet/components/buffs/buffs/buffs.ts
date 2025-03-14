@@ -3,7 +3,7 @@ import { EffKey } from '@tables/eff';
 import { BuffFactory } from '@views/sheet/components/buffs/buffs/buff-factory';
 import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
-import Handlebars from 'handlebars';
+import * as Handlebars from 'handlebars';
 import * as _ from 'lodash-es';
 
 export type BuffsData = ComponentData & {

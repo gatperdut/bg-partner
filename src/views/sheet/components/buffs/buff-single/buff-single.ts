@@ -2,7 +2,7 @@ import { Eff } from '@sprite/effs/impl/eff';
 import { Buff, BuffData } from '@views/sheet/components/buffs/buff/buff';
 import { Image } from '@views/sheet/components/image/image';
 import { sheetdata } from '@views/sheet/sheetdata';
-import Handlebars from 'handlebars';
+import * as Handlebars from 'handlebars';
 
 export type BuffSingleData = BuffData;
 

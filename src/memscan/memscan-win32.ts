@@ -10,7 +10,7 @@ import { MemscanOs, TargetProcess } from '@memscan/memscan';
 import { VOIDPTR } from '@syscalls/primitives';
 import { MODULEENTRY32, PROCESSENTRY32 } from '@syscalls/win32/types-win32';
 import { joinASCII } from '@utils';
-import koffi from 'koffi';
+import * as koffi from 'koffi';
 
 export class MemscanWin32 extends MemscanOs {
   constructor() {

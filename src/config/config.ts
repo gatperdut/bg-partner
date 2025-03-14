@@ -1,9 +1,9 @@
 import { linux } from '@index';
 import { app, dialog } from 'electron';
 import * as fs from 'fs';
-import Joi, { ObjectSchema, ValidationError, ValidationErrorItem } from 'joi';
+import * as Joi from 'joi';
 import * as _ from 'lodash-es';
-import os from 'os';
+import * as os from 'os';
 import * as path from 'path';
 
 export type ConfigObj = {
@@ -38,7 +38,7 @@ export class Config {
   private accelPattern: RegExp =
     /^(?:(?:CommandOrControl|CmdOrCtrl|Control|Ctrl|Alt|AltGr|Shift|Super))\+[A-Za-z0-9]+$/;
 
-  private schema: ObjectSchema<ConfigObj> = Joi.object<ConfigObj>({
+  private schema: Joi.ObjectSchema<ConfigObj> = Joi.object<ConfigObj>({
     exe: Joi.string().pattern(this.exePattern).min(1),
     path: Joi.string()
       .pattern(linux ? this.pathPatternLinux : this.pathPatternWin32)
@@ -73,10 +73,10 @@ export class Config {
       return;
     }
 
-    const errors: ValidationError = this.schema.validate(configObj).error;
+    const errors: Joi.ValidationError = this.schema.validate(configObj).error;
 
     if (errors) {
-      _.each(errors.details, (error: ValidationErrorItem): void => {
+      _.each(errors.details, (error: Joi.ValidationErrorItem): void => {
         const field: ConfigObjKey = error.path[0] as ConfigObjKey;
 
         console.log(`Configuration file "${field}" is invalid. Will revert to default.`);
