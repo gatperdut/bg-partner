@@ -15,11 +15,11 @@ import { SyscallsLinux } from '@syscalls/linux/syscalls-linux';
 import { SyscallsWin32 } from '@syscalls/win32/syscalls-win32';
 import { Timetracker } from '@time/timetracker';
 import { Control } from '@views/control/control';
+import { Hbsreg } from '@views/shared/comphbs';
 import { WindowLinux } from '@window/window-linux';
 import { WindowWin32 } from '@window/window-win32';
 import os from 'os';
 import 'source-map-support/register';
-import { Components } from 'src/components/components';
 
 export class Main {
   constructor() {
@@ -53,7 +53,7 @@ export class Main {
 
     handlers.control = new Control();
 
-    handlers.components = new Components();
+    handlers.hbsreg = new Hbsreg();
 
     handlers.timetracker = new Timetracker();
   }

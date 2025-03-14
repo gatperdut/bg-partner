@@ -1,5 +1,5 @@
+import { Component, ComponentData } from '@views/shared/component/component';
 import { Abilities } from '@views/sheet/components/abilities/abilities';
-import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 
@@ -17,9 +17,7 @@ export class AbilitiesGroup extends Component {
   constructor() {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.abilitiesGroup,
-    );
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.abilitiesGroup);
 
     this.abilitiesGroupData = {
       ...this.componentData,

@@ -16,9 +16,7 @@ export class BuffGroup102 extends BuffGroup {
   constructor(effs: Eff[]) {
     super(effs[0].duration, effs[0].casterLevel, effs[0].spellLevel);
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.buffGroup102,
-    );
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffGroup102);
 
     const max: number = Math.max(..._.map(effs, (eff: Eff): number => eff.param1));
 

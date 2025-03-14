@@ -1,4 +1,5 @@
 import { config, handlers, reqsLinux } from '@handlers';
+import { ControlAPISetupParams } from '@views/control/renderer';
 import { app, BrowserWindow, ipcMain, IpcMainEvent } from 'electron';
 import path from 'path';
 
@@ -47,11 +48,13 @@ export class Control {
     this.window.removeMenu();
 
     this.window.loadURL(CONTROL_WEBPACK_ENTRY).then((): void => {
-      this.window.webContents.send('control.setup', {
+      const params: ControlAPISetupParams = {
         linux: handlers.linux,
         reqsObj: reqsLinux().obj,
         configObj: config().obj,
-      });
+      };
+
+      this.window.webContents.send('control.setup', params);
     });
 
     this.window.once('closed', (): void => {

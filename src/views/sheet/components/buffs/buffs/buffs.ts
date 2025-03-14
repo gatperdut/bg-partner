@@ -1,7 +1,7 @@
 import { Eff } from '@sprite/effs/impl/eff';
 import { EffKey } from '@tables/eff';
+import { Component, ComponentData } from '@views/shared/component/component';
 import { BuffFactory } from '@views/sheet/components/buffs/buffs/buff-factory';
-import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 import _ from 'lodash';
@@ -16,7 +16,7 @@ export class Buffs extends Component {
   constructor() {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.components.buffs);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffs);
 
     const buffsSingleHtml: string[] = _.map(
       _.filter(sheetdata.spriteView.effs.effs.buffs, (eff: Eff): boolean => !eff.grouped),

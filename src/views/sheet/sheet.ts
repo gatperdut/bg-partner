@@ -1,7 +1,7 @@
 import { handlers } from '@handlers';
 import { Sprite } from '@sprite/sprite';
-import { SheetAPIUpdateParams } from '@views/sheet/renderer';
-import { spriteView } from '@views/sheet/sprite-view';
+import { spriteView } from '@views/shared/stripped';
+import { SheetAPISetupParams, SheetAPIUpdateParams } from '@views/sheet/renderer';
 import { BrowserWindow, ipcMain } from 'electron';
 
 declare const SHEET_PRELOAD_WEBPACK_ENTRY: string;
@@ -54,9 +54,11 @@ export class Sheet {
     this.window.setAlwaysOnTop(true, 'screen-saver');
 
     this.window.loadURL(SHEET_WEBPACK_ENTRY).then((): void => {
-      this.window.webContents.send('sheet.setup', {
-        components: handlers.components.components,
-      });
+      const params: SheetAPISetupParams = {
+        hbs: handlers.hbsreg.hbss.sheet,
+      };
+
+      this.window.webContents.send('sheet.setup', params);
     });
   }
 
@@ -70,9 +72,9 @@ export class Sheet {
       (_event: Electron.IpcMainEvent, movement: Electron.Point): void => {
         this.window.setPosition(
           this.window.getPosition()[0] + movement.x,
-          this.window.getPosition()[1] + movement.y
+          this.window.getPosition()[1] + movement.y,
         );
-      }
+      },
     );
   }
 
@@ -131,13 +133,13 @@ export class Sheet {
 
     if (sheetPercentTopOverflow < 0) {
       const sheetTopOverflow: number = Math.round(
-        sheetPercentTopOverflow * handlers.window.display.height
+        sheetPercentTopOverflow * handlers.window.display.height,
       );
 
       sheetScreen.y = spriteScreen.y - sheetHalfHeight - sheetTopOverflow;
     } else if (sheetPercentBottomOverflow > 0) {
       const sheetBottomOverflow: number = Math.round(
-        sheetPercentBottomOverflow * handlers.window.display.height
+        sheetPercentBottomOverflow * handlers.window.display.height,
       );
 
       sheetScreen.y = spriteScreen.y - sheetHalfHeight - sheetBottomOverflow;

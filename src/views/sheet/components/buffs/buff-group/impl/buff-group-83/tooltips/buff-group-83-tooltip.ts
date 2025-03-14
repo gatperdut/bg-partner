@@ -17,7 +17,7 @@ export class BuffGroup83Tooltip extends Tooltip {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.buffGroup83Tooltip,
+      sheetdata.hbs.buffGroup83Tooltip,
     );
 
     const proItms: ResItm[] = _.uniqBy(

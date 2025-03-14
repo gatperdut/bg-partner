@@ -12,9 +12,7 @@ export class BuffSingle159 extends BuffSingle {
   constructor(eff: Eff) {
     super(eff);
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.buffSingle159,
-    );
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffSingle159);
 
     this.buffSingle159Data = {
       ...this.buffSingleData,

@@ -1,4 +1,4 @@
-import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { Component, ComponentData } from '@views/shared/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 
@@ -12,7 +12,7 @@ export class BuffRight extends Component {
   constructor(value: number, title: string) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.components.buffRight);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffRight);
 
     this.buffRightData = {
       ...this.componentData,

@@ -1,4 +1,4 @@
-import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { Component, ComponentData } from '@views/shared/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 
@@ -12,9 +12,7 @@ export class BuffDuration extends Component {
   constructor(duration: number, time: number) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.buffDuration,
-    );
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffDuration);
 
     this.buffDurationData = {
       ...this.componentData,

@@ -1,6 +1,6 @@
 import { Sprite } from '@sprite/sprite';
 
-type Stripped<T> = Pick<
+export type Stripped<T> = Pick<
   T,
   {
     [K in keyof T]: T[K] extends Function ? never : K;

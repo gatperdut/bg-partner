@@ -1,4 +1,4 @@
-import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { Component, ComponentData } from '@views/shared/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 
@@ -32,9 +32,7 @@ export class Resistances extends Component {
   ) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.resistances,
-    );
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.resistances);
 
     this.resistancesData = {
       ...this.componentData,

@@ -1,5 +1,5 @@
 import { ResItm } from '@chitin/res/impl/res-itm';
-import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { Component, ComponentData } from '@views/shared/component/component';
 import { Image } from '@views/sheet/components/image/image';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
@@ -14,7 +14,7 @@ export class Item extends Component {
   constructor(resItm: ResItm) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.components.item);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.item);
 
     this.itemData = {
       ...this.componentData,

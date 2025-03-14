@@ -1,5 +1,5 @@
 import { ResImage } from '@chitin/res/res-image';
-import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { Component, ComponentData } from '@views/shared/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 
@@ -19,7 +19,7 @@ export class Image extends Component {
   constructor(resImage: ResImage, title: string, tippyHtml: string) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.components.image);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.image);
 
     this.imageData = {
       ...this.componentData,

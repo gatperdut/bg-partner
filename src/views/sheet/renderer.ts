@@ -1,14 +1,14 @@
+import { Hbs } from '@views/shared/comphbs';
+import { SpriteView } from '@views/shared/stripped';
 import { Buffs } from '@views/sheet/components/buffs/buffs/buffs';
 import '@views/sheet/sheet.scss';
 import { sheetdata } from '@views/sheet/sheetdata';
-import { SpriteView } from '@views/sheet/sprite-view';
 import _ from 'lodash';
-import { ComponentsRecord } from 'src/components/components';
 import tippy, { Instance } from 'tippy.js';
 
 // sheet.setup
 export type SheetAPISetupParams = {
-  components: ComponentsRecord;
+  hbs: Hbs;
 };
 
 export type SheetAPISetupMethod = (params: SheetAPISetupParams) => void;
@@ -60,7 +60,7 @@ class SheetRenderer {
 
   constructor() {
     window.sheetAPI.setup((params: SheetAPISetupParams): void => {
-      sheetdata.components = params.components;
+      sheetdata.hbs = params.hbs;
     });
 
     window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
@@ -75,7 +75,7 @@ class SheetRenderer {
 
     sheetdata.timetracker = params.timetracker;
 
-    if (!sheetdata.components) {
+    if (!sheetdata.hbs) {
       return;
     }
 

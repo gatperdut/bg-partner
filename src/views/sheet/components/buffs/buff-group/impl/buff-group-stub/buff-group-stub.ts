@@ -7,9 +7,7 @@ export class BuffGroupStub extends BuffGroup {
   constructor(effs: Eff[]) {
     super(effs[0].duration, effs[0].casterLevel, effs[0].spellLevel);
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.buffGroupStub,
-    );
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffGroupStub);
 
     this.html = compiled({});
   }

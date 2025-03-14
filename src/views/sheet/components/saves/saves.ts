@@ -1,4 +1,4 @@
-import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { Component, ComponentData } from '@views/shared/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 
@@ -22,7 +22,7 @@ export class Saves extends Component {
   ) {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.components.saves);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.saves);
 
     this.savesData = {
       ...this.componentData,

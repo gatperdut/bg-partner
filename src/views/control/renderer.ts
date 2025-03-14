@@ -51,6 +51,18 @@ class ControlRenderer {
     });
   }
 
+  private updateAlive(alive: boolean): void {
+    if (this.alivePrev === alive) {
+      return;
+    }
+
+    document.getElementById('alive').textContent = alive
+      ? '✅ Process found.'
+      : '❌ Process not found.';
+
+    this.alivePrev = alive;
+  }
+
   private reqs(linux: boolean, reqsObj: ReqsObj): void {
     if (linux) {
       document.getElementById('reqs-aslr').textContent = (reqsObj as ReqsLinuxObj).aslr
@@ -65,18 +77,6 @@ class ControlRenderer {
         ? '✅ apparmor restriction is disabled.'
         : '❌ apparmor restriction is enabled.';
     }
-  }
-
-  private updateAlive(alive: boolean): void {
-    if (this.alivePrev === alive) {
-      return;
-    }
-
-    document.getElementById('alive').textContent = alive
-      ? '✅ Process found.'
-      : '❌ Process not found.';
-
-    this.alivePrev = alive;
   }
 
   private updateConfig(configObj: ConfigObj): void {
