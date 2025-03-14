@@ -1,4 +1,4 @@
-import { Hbs } from '@views/shared/comphbs';
+import { Hbs } from '@views/shared/hbsreg';
 import { SpriteView } from '@views/shared/stripped';
 import { SheetAPIUpdateParamsTimetracker } from '@views/sheet/renderer';
 

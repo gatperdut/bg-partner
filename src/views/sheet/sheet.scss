@@ -1,22 +1,3 @@
 @use '../shared/css';
 
-// Parts
-@use 'components/image/image.scss';
-
-// Buffs
-@use 'components/buffs/buff/buff.scss';
-
-@use 'components/buffs/buff-single/buff-single.scss';
-
-// Buffs: parts
-@use 'components/buffs/parts/buff-duration/buff-duration.scss';
-
-@use 'components/buffs/parts/buff-levels/buff-levels.scss';
-
-@use 'components/buffs/parts/buff-right/buff-right.scss';
-
-// Buffs: by code
-@use 'components/buffs/buff-group/impl/buff-group-83/tooltips/buff-group-83-tooltip.scss';
-
-// Items
-@use 'components/items/item/item.scss';
+@use 'components';

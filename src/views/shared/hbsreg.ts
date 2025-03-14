@@ -14,14 +14,14 @@ export class Hbsreg {
   }
 
   private hbs(subdirs: string[]): Hbs {
-    const filesRecord: Record<string, string[]> = {};
+    const files: Record<string, string[]> = {};
 
-    this.from(filesRecord, __dirname, __dirname, subdirs);
+    this.from(files, __dirname, __dirname, subdirs);
 
     const hbs: Hbs = {};
 
-    _.each(_.keys(filesRecord), (filename: string): void => {
-      hbs[filename] = fs.readFileSync(path.join(__dirname, ...filesRecord[filename]), 'utf-8');
+    _.each(_.keys(files), (filename: string): void => {
+      hbs[filename] = fs.readFileSync(path.join(__dirname, ...files[filename]), 'utf-8');
     });
 
     return hbs;

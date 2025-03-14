@@ -1,10 +1,10 @@
-@use './font';
-@use './general';
-@use './heartbeat';
-@use './pointer';
-@use './spacing' as spacing;
 @use 'css-fx-layout' as fxl;
-@use './tippy';
+@use 'font';
+@use 'general';
+@use 'heartbeat';
+@use 'pointer';
+@use 'spacing' as spacing;
+@use 'tippy';
 
 @include fxl.class-selectors(false);
 

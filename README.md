@@ -165,7 +165,3 @@ gdb -p $(pgrep -n bash)
 - do the callbacks need `${id}`?
 
 - does the approach of a single timer (from the first loaded entity) do funky stuff with timestop?s
-
-- shutdown immediately when run for the first time and no config.json in present, after creating it.
-
-- create a Buff class that encompasses buffSingle and buffGroup. For BuffGroup, extract common parameters (duration, valign, etc).
