@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import { ResItm } from '../../../../../chitin/res/impl/res-itm';
 import { sheetdata } from '../../../../../views/sheet/sheetdata';
 import { Component, ComponentData } from '../../component/component';

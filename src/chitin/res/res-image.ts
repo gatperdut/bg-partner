@@ -15,7 +15,7 @@ export class ResImage {
       return;
     }
 
-    this.base64 = resBam.image;
+    this.base64 = resBam.base64;
 
     this.size = resBam.size;
 

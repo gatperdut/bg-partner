@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import { devnull } from '../const/const-linux';
 import { handlers } from '../handlers';
 import { WindowOs } from './window';

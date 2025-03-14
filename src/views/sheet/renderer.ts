@@ -1,4 +1,4 @@
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import tippy, { Instance } from 'tippy.js';
 import { ComponentsRecord } from '../../components/components';
 import { Buffs } from './components/buffs/buffs/buffs';

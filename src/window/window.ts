@@ -1,5 +1,5 @@
 import Electron from 'electron';
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import { config, handlers } from '../handlers';
 import { WindowLinux } from './window-linux';
 import { WindowWin32 } from './window-win32';

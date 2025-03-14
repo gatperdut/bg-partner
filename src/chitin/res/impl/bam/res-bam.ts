@@ -1,4 +1,4 @@
-import { Canvas, CanvasRenderingContext2D, createCanvas, ImageData } from 'canvas';
+import { PNG } from 'pngjs';
 import zlib from 'zlib';
 import { readBufferString } from '../../../../utils';
 import { Bif } from '../../../bif';
@@ -10,30 +10,25 @@ export class ResBam extends Res {
 
   private v: string;
 
-  private raw: Uint8ClampedArray;
+  private png: PNG;
 
-  private _image: string;
+  private _base64: string;
 
   public size: Electron.Size = {
     width: null,
     height: null,
   };
 
-  public center: Electron.Point = {
-    x: null,
-    y: null,
-  };
-
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('BAM', buffer, bifs);
   }
 
-  public get image(): string {
-    if (!this._image) {
+  public get base64(): string {
+    if (!this._base64) {
       this.decide(this.file);
     }
 
-    return this._image;
+    return this._base64;
   }
 
   private decide(bam: Buffer): void {
@@ -71,9 +66,7 @@ export class ResBam extends Res {
 
     this.size.height = bam.readUint16LE(frameOffset + 0x2);
 
-    this.center.x = bam.readUint16LE(frameOffset + 0x4);
-
-    this.center.y = bam.readUint16LE(frameOffset + 0x6);
+    this.png = new PNG({ width: this.size.width, height: this.size.height });
 
     if (!this.size.width || !this.size.height) {
       return;
@@ -93,30 +86,26 @@ export class ResBam extends Res {
   }
 
   private v1BamNoRle(pxData: Buffer, palette: Palette): void {
-    this.raw = new Uint8ClampedArray(this.size.width * this.size.height * 4);
-
     for (let i: number = 0; i < this.size.width * this.size.height; i++) {
       const paletteIdx: number = pxData.readUint8(i);
 
       const paletteValue: number[] = palette.values[paletteIdx];
 
-      this.raw[i + 2] = paletteValue[0];
-      this.raw[i + 1] = paletteValue[1];
-      this.raw[i + 0] = paletteValue[2];
-      this.raw[i + 3] = paletteIdx === palette.rleIdx ? paletteValue[3] : 0xff;
+      this.png.data[i + 2] = paletteValue[0];
+      this.png.data[i + 1] = paletteValue[1];
+      this.png.data[i + 0] = paletteValue[2];
+      this.png.data[i + 3] = paletteIdx === palette.rleIdx ? paletteValue[3] : 0xff;
     }
 
     return this.svg();
   }
 
   private v1BamRle(pxData: Buffer, palette: Palette): void {
-    this.raw = new Uint8ClampedArray(this.size.width * this.size.height * 4);
-
     let pxIdx: number = 0;
 
     let written: number = 0;
 
-    while (written < this.raw.length) {
+    while (written < this.png.data.length) {
       const paletteIdx: number = pxData.readUint8(pxIdx);
 
       const paletteValue: number[] = palette.values[paletteIdx];
@@ -130,10 +119,10 @@ export class ResBam extends Res {
       }
 
       for (let i: number = 0; i <= repeats; i++) {
-        this.raw[written + 2] = paletteValue[0];
-        this.raw[written + 1] = paletteValue[1];
-        this.raw[written + 0] = paletteValue[2];
-        this.raw[written + 3] = paletteIdx === palette.rleIdx ? paletteValue[3] : 0xff;
+        this.png.data[written + 2] = paletteValue[0];
+        this.png.data[written + 1] = paletteValue[1];
+        this.png.data[written + 0] = paletteValue[2];
+        this.png.data[written + 3] = paletteIdx === palette.rleIdx ? paletteValue[3] : 0xff;
 
         written += 4;
       }
@@ -145,15 +134,7 @@ export class ResBam extends Res {
   }
 
   private svg(): void {
-    const canvas: Canvas = createCanvas(this.size.width, this.size.height);
-
-    const ctx: CanvasRenderingContext2D = canvas.getContext('2d');
-
-    const imageData: ImageData = new ImageData(this.raw, this.size.width, this.size.height);
-
-    ctx.putImageData(imageData, 0, 0);
-
-    this._image = canvas.toBuffer('image/png').toString('base64');
+    this._base64 = PNG.sync.write(this.png).toString('base64');
   }
 
   private v1BamC(buffer: Buffer): void {

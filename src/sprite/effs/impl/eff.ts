@@ -1,4 +1,4 @@
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import { Res } from '../../../chitin/res/impl/res';
 import { ResItm } from '../../../chitin/res/impl/res-itm';
 import { ResSpl } from '../../../chitin/res/impl/res-spl';

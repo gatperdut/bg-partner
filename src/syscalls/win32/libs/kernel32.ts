@@ -1,5 +1,5 @@
 import koffi, { IKoffiLib, KoffiFunction } from 'koffi';
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import { STDCALL } from '../../../const/const-win32';
 import { KoffiPrimitivePtrs, KoffiPrimitives, Primitive, Primitives } from '../../primitives';
 import { StructsWin32 } from '../structs-win32';

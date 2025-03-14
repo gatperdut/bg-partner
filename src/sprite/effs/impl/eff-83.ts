@@ -1,4 +1,4 @@
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import { ResItm } from '../../../chitin/res/impl/res-itm';
 import { handlers } from '../../../handlers';
 import { ProKey, proTab } from '../../../tables/pro';

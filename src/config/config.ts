@@ -1,7 +1,7 @@
 import { app, dialog } from 'electron';
 import * as fs from 'fs';
 import Joi, { ObjectSchema, ValidationError, ValidationErrorItem } from 'joi';
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import os from 'os';
 import * as path from 'path';
 import { linux } from '../index';

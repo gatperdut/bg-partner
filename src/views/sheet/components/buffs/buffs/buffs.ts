@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import { Eff } from '../../../../../sprite/effs/impl/eff';
 import { EffKey } from '../../../../../tables/eff';
 import { sheetdata } from '../../../../../views/sheet/sheetdata';

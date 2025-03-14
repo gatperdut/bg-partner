@@ -60,6 +60,10 @@ class ControlRenderer {
       document.getElementById('reqs-ptrace').textContent = (reqsObj as ReqsLinuxObj).ptrace
         ? '✅ ptrace_scope is disabled.'
         : '❌ ptrace_scope is enabled.';
+
+      document.getElementById('reqs-apparmor').textContent = (reqsObj as ReqsLinuxObj).ptrace
+        ? '✅ apparmor restriction is disabled.'
+        : '❌ apparmor restriction is enabled.';
     }
   }
 

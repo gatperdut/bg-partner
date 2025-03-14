@@ -1,5 +1,5 @@
 import fs from 'fs';
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import path from 'path';
 import { handlers } from '../handlers';
 import { ProValue, proValues } from '../tables/pro';

@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import { ResItm } from '../../../../../../../../chitin/res/impl/res-itm';
 import { Eff83 } from '../../../../../../../../sprite/effs/impl/eff-83';
 import { Items } from '../../../../../../../../views/sheet/components/items/items/items';

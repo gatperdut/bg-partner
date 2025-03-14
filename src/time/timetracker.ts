@@ -1,4 +1,4 @@
-import _ from 'lodash-es';
+import * as _ from 'lodash-es';
 import { Entity } from '../entities/entity';
 import { handlers } from '../handlers';
 
