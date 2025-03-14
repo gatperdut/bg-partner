@@ -1,6 +1,6 @@
 import { Entity } from '@entities/entity';
 import { handlers } from '@handlers';
-import * as _ from 'lodash-es';
+import _ from 'lodash';
 
 export class Timetracker {
   private size: number = 4;
@@ -18,12 +18,12 @@ export class Timetracker {
 
     this.time = handlers.memread.memReadNumber(
       entity.sprite.basic.infGameAddr + BigInt(0x3fa0),
-      'UINT32'
+      'UINT32',
     );
 
     this.running = !!handlers.memread.memReadNumber(
       entity.sprite.basic.infGameAddr + BigInt(0x3fa0 + 0x4),
-      'UINT8'
+      'UINT8',
     );
 
     this.times.shift();
@@ -40,7 +40,7 @@ export class Timetracker {
   public get reloaded(): boolean {
     return !!_.find(
       this.times.slice(0, this.size - 1),
-      (time: number): boolean => time > this.times[this.size - 1]
+      (time: number): boolean => time > this.times[this.size - 1],
     );
   }
 }

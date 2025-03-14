@@ -1,5 +1,5 @@
 import koffi, { IKoffiCType } from 'koffi';
-import * as _ from 'lodash-es';
+import _ from 'lodash';
 
 export const Primitives = [
   'VOID',

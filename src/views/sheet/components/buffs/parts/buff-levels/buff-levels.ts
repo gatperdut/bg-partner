@@ -1,6 +1,6 @@
 import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
-import * as Handlebars from 'handlebars';
+import Handlebars from 'handlebars';
 
 export type BuffLevelsData = ComponentData & {
   casterLevel: number;
@@ -15,7 +15,7 @@ export class BuffLevels extends Component {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.buffLevels
+      sheetdata.components.buffLevels,
     );
 
     this.buffLevelsData = {

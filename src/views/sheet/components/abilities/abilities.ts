@@ -1,6 +1,6 @@
 import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
-import * as Handlebars from 'handlebars';
+import Handlebars from 'handlebars';
 
 export type AbilitiesData = ComponentData & {
   str: number;
@@ -28,7 +28,7 @@ export class Abilities extends Component {
     con: number,
     int: number,
     wis: number,
-    cha: number
+    cha: number,
   ) {
     super();
 

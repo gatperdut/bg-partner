@@ -1,6 +1,6 @@
 import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
-import * as Handlebars from 'handlebars';
+import Handlebars from 'handlebars';
 
 export type SavesData = ComponentData & {
   saveVsDeath: number;
@@ -18,7 +18,7 @@ export class Saves extends Component {
     saveVsWands: number,
     saveVsPoly: number,
     saveVsBreath: number,
-    saveVsSpell: number
+    saveVsSpell: number,
   ) {
     super();
 

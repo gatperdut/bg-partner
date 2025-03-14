@@ -1,7 +1,7 @@
 import { handlers } from '@handlers';
 import { readBufferString } from '@utils';
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
 
 export type Tlks = Record<number, string>;
 
@@ -10,7 +10,7 @@ export class Tlk {
 
   constructor() {
     const file: Buffer = fs.readFileSync(
-      path.join(handlers.config.obj.path, 'lang', handlers.config.obj.locale, 'dialog.tlk')
+      path.join(handlers.config.obj.path, 'lang', handlers.config.obj.locale, 'dialog.tlk'),
     );
 
     const strsCount: number = file.readUint32LE(0xa);

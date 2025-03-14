@@ -2,7 +2,7 @@ import { config, handlers } from '@handlers';
 import { WindowLinux } from '@window/window-linux';
 import { WindowWin32 } from '@window/window-win32';
 import * as Electron from 'electron';
-import * as _ from 'lodash-es';
+import _ from 'lodash';
 
 export type Window = WindowLinux | WindowWin32;
 
@@ -47,7 +47,7 @@ export abstract class WindowOs {
     console.log(
       `${_.isNull(index) ? 'Primary display' : `Display #${index}`}: ${display.width}x${
         display.height
-      }, offset (${display.x}, ${display.y}).`
+      }, offset (${display.x}, ${display.y}).`,
     );
   }
 

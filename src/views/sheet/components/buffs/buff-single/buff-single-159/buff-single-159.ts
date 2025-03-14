@@ -2,7 +2,7 @@ import { Eff } from '@sprite/effs/impl/eff';
 import { BuffSingle, BuffSingleData } from '@views/sheet/components/buffs/buff-single/buff-single';
 import { BuffRight } from '@views/sheet/components/buffs/parts/buff-right/buff-right';
 import { sheetdata } from '@views/sheet/sheetdata';
-import * as Handlebars from 'handlebars';
+import Handlebars from 'handlebars';
 
 export type BuffSingle159Data = BuffSingleData;
 
@@ -13,7 +13,7 @@ export class BuffSingle159 extends BuffSingle {
     super(eff);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.buffSingle159
+      sheetdata.components.buffSingle159,
     );
 
     this.buffSingle159Data = {

@@ -3,7 +3,7 @@ import { KoffiPrimitivePtrs, KoffiPrimitives, Primitive, Primitives } from '@sys
 import { StructsWin32 } from '@syscalls/win32/structs-win32';
 import { ReadProcessMemoryFn } from '@syscalls/win32/types-win32';
 import koffi, { IKoffiLib, KoffiFunction } from 'koffi';
-import * as _ from 'lodash-es';
+import _ from 'lodash';
 
 export class Kernel32 {
   private kernel32: IKoffiLib = koffi.load('kernel32.dll');
@@ -70,34 +70,34 @@ export class Kernel32 {
     STDCALL,
     'OpenProcess',
     KoffiPrimitivePtrs.VOID,
-    [KoffiPrimitives.UINT32, KoffiPrimitives.BOOL, KoffiPrimitives.UINT32]
+    [KoffiPrimitives.UINT32, KoffiPrimitives.BOOL, KoffiPrimitives.UINT32],
   );
 
   public GetLastError: KoffiFunction = this.kernel32.func(
     STDCALL,
     'GetLastError',
     KoffiPrimitives.UINT32,
-    []
+    [],
   );
 
   public GetExitCodeProcess: KoffiFunction = this.kernel32.func(
     STDCALL,
     'GetExitCodeProcess',
     KoffiPrimitives.BOOL,
-    [KoffiPrimitivePtrs.VOID, koffi.out(KoffiPrimitivePtrs.LONG)]
+    [KoffiPrimitivePtrs.VOID, koffi.out(KoffiPrimitivePtrs.LONG)],
   );
 
   public CreateToolhelp32Snapshot: KoffiFunction = this.kernel32.func(
     STDCALL,
     'CreateToolhelp32Snapshot',
     KoffiPrimitivePtrs.VOID,
-    [KoffiPrimitives.UINT32, KoffiPrimitives.DWORD]
+    [KoffiPrimitives.UINT32, KoffiPrimitives.DWORD],
   );
 
   public CloseHandle: KoffiFunction = this.kernel32.func(
     STDCALL,
     'CloseHandle',
     KoffiPrimitives.BOOL,
-    [KoffiPrimitivePtrs.VOID]
+    [KoffiPrimitivePtrs.VOID],
   );
 }

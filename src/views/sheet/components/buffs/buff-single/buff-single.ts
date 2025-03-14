@@ -2,7 +2,7 @@ import { Eff } from '@sprite/effs/impl/eff';
 import { Buff, BuffData } from '@views/sheet/components/buffs/buff/buff';
 import { Image } from '@views/sheet/components/image/image';
 import { sheetdata } from '@views/sheet/sheetdata';
-import * as Handlebars from 'handlebars';
+import Handlebars from 'handlebars';
 
 export type BuffSingleData = BuffData;
 
@@ -13,7 +13,7 @@ export class BuffSingle extends Buff {
     super(eff.duration, eff.casterLevel, eff.spellLevel);
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.buffSingle
+      sheetdata.components.buffSingle,
     );
 
     this.buffSingleData = {

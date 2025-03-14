@@ -1,6 +1,6 @@
 import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
-import * as Handlebars from 'handlebars';
+import Handlebars from 'handlebars';
 
 export type BuffDurationData = ComponentData & {
   duration: number;
@@ -13,7 +13,7 @@ export class BuffDuration extends Component {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.buffDuration
+      sheetdata.components.buffDuration,
     );
 
     this.buffDurationData = {

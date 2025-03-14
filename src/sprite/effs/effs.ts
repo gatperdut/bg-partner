@@ -2,7 +2,7 @@ import { handlers } from '@handlers';
 import { EffFactory } from '@sprite/effs/eff-factory';
 import { Eff } from '@sprite/effs/impl/eff';
 import { EffKey } from '@tables/eff';
-import * as _ from 'lodash-es';
+import _ from 'lodash';
 
 export const EffTypes = ['buffs', 'imms', 'profs', 'statmods', 'states', 'maybe'] as const;
 
@@ -65,7 +65,7 @@ export class Effs {
 
       const id: EffKey = handlers.memread.memReadNumber(
         effPtr + BigInt(0x8 + 0x8),
-        'UINT32'
+        'UINT32',
       ) as EffKey;
 
       nodePtr = handlers.memread.memReadBigint(nodePtr, 'ADDR');

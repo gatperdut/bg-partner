@@ -3,7 +3,7 @@ import { handlers } from '@handlers';
 import { EffSource } from '@sprite/effs/effs';
 import { Eff } from '@sprite/effs/impl/eff';
 import { ProKey, proTab } from '@tables/pro';
-import * as _ from 'lodash-es';
+import _ from 'lodash';
 
 export class Eff83 extends Eff {
   public proItms: ResItm[];
@@ -15,7 +15,7 @@ export class Eff83 extends Eff {
       handlers.chitin.proValue2Itms[proTab[(this.param2 + 1) as ProKey]],
       (proItm: ResItm): boolean => {
         return !!proItm.resImage;
-      }
+      },
     );
   }
 }

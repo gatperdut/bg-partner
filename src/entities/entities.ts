@@ -1,6 +1,6 @@
 import { Entity } from '@entities/entity';
 import { handlers } from '@handlers';
-import * as _ from 'lodash-es';
+import _ from 'lodash';
 
 export class Entities {
   private entities: Record<number, Entity> = {};
@@ -9,9 +9,9 @@ export class Entities {
     const entities: Entity[] = _.filter(
       _.map(
         handlers.memscan.gameObjectPtrs,
-        (gameObjectPtr: bigint): Entity => new Entity(gameObjectPtr)
+        (gameObjectPtr: bigint): Entity => new Entity(gameObjectPtr),
       ),
-      (entity: Entity): boolean => entity.loaded
+      (entity: Entity): boolean => entity.loaded,
     );
 
     handlers.timetracker.push(entities[0]);
@@ -79,7 +79,7 @@ export class Entities {
 
   public sheetToggle(point: Electron.Point): void {
     const entity: Entity = _.find(_.values(this.entities), (someEntity: Entity): boolean =>
-      someEntity.pointMatch(point)
+      someEntity.pointMatch(point),
     );
 
     entity?.sheetToggle();

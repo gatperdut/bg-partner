@@ -17,7 +17,7 @@ import { Timetracker } from '@time/timetracker';
 import { Control } from '@views/control/control';
 import { WindowLinux } from '@window/window-linux';
 import { WindowWin32 } from '@window/window-win32';
-import * as os from 'os';
+import os from 'os';
 import 'source-map-support/register';
 import { Components } from 'src/components/components';
 

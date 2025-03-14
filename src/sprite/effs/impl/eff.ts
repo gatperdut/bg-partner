@@ -7,7 +7,7 @@ import { EffSource, Effs } from '@sprite/effs/effs';
 import { EffKey, effTab } from '@tables/eff';
 import { resextValueSubset } from '@tables/resext';
 import { SchoolKey, SchoolValue, schoolTab } from '@tables/school';
-import * as _ from 'lodash-es';
+import _ from 'lodash';
 
 const RessrcTypes = resextValueSubset(['ITM', 'SPL'] as const);
 
@@ -99,7 +99,7 @@ export abstract class Eff {
 
       const ressrc: Res = _.find(
         handlers.chitin.ress[ressrcType],
-        (res: Res): boolean => res.code === ressrcStrref
+        (res: Res): boolean => res.code === ressrcStrref,
       );
 
       if (ressrc) {
@@ -126,7 +126,7 @@ export abstract class Eff {
         this.param4
       } 5:${this.param5} res:${this.res} res2:${this.res2} res3:${this.res3} source:${
         this.ressrc?.code
-      } durType:${this.durationType}`
+      } durType:${this.durationType}`,
     );
   }
 }

@@ -2,7 +2,7 @@ import { devnull } from '@const/const-linux';
 import { handlers } from '@handlers';
 import { WindowOs } from '@window/window';
 import { execSync } from 'child_process';
-import * as _ from 'lodash-es';
+import _ from 'lodash';
 
 export class WindowLinux extends WindowOs {
   public init(): void {
@@ -15,13 +15,13 @@ export class WindowLinux extends WindowOs {
     try {
       wmctrlValues = _.map(
         execSync(
-          `wmctrl -lpG | awk '$3 == ${handlers.memscan.pid} {print $1, $4, $5, $6, $7}' ${devnull}`
+          `wmctrl -lpG | awk '$3 == ${handlers.memscan.pid} {print $1, $4, $5, $6, $7}' ${devnull}`,
         )
           .toString()
           .split(' '),
         (field: string, index: number): number => {
           return Number.parseInt(field, index === 0 ? 16 : 10);
-        }
+        },
       );
     } catch (err) {
       return;
@@ -61,9 +61,9 @@ export class WindowLinux extends WindowOs {
       result.x = this.id
         ? Number.parseInt(
             execSync(
-              `xwininfo -id ${this.id} | grep "Relative upper-left X" | awk '{print $4}' ${devnull}`
+              `xwininfo -id ${this.id} | grep "Relative upper-left X" | awk '{print $4}' ${devnull}`,
             ).toString(),
-            10
+            10,
           )
         : 0;
 
@@ -71,9 +71,9 @@ export class WindowLinux extends WindowOs {
         ? wmctrlValues[2] -
           Number.parseInt(
             execSync(
-              `xwininfo -id ${this.id} | grep "Absolute upper-left Y" | awk '{print $4}' ${devnull}`
+              `xwininfo -id ${this.id} | grep "Absolute upper-left Y" | awk '{print $4}' ${devnull}`,
             ).toString(),
-            10
+            10,
           )
         : 0;
     } catch (err) {

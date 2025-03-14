@@ -3,7 +3,7 @@ import { Palette } from '@chitin/res/impl/bam/palette';
 import { Res } from '@chitin/res/impl/res';
 import { readBufferString } from '@utils';
 import { PNG } from 'pngjs';
-import * as zlib from 'zlib';
+import zlib from 'zlib';
 
 export class ResBam extends Res {
   private signature: string;

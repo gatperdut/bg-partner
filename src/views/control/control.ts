@@ -1,6 +1,6 @@
 import { config, handlers, reqsLinux } from '@handlers';
 import { app, BrowserWindow, ipcMain, IpcMainEvent } from 'electron';
-import * as path from 'path';
+import path from 'path';
 
 declare const CONTROL_PRELOAD_WEBPACK_ENTRY: string;
 

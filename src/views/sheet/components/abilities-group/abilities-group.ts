@@ -1,7 +1,7 @@
 import { Abilities } from '@views/sheet/components/abilities/abilities';
 import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { sheetdata } from '@views/sheet/sheetdata';
-import * as Handlebars from 'handlebars';
+import Handlebars from 'handlebars';
 
 export type AbilitiesGroupData = ComponentData & {
   abilitiesHtml: string;
@@ -18,7 +18,7 @@ export class AbilitiesGroup extends Component {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.abilitiesGroup
+      sheetdata.components.abilitiesGroup,
     );
 
     this.abilitiesGroupData = {
@@ -30,7 +30,7 @@ export class AbilitiesGroup extends Component {
         sheetdata.spriteView.derived.con,
         sheetdata.spriteView.derived.int,
         sheetdata.spriteView.derived.wis,
-        sheetdata.spriteView.derived.cha
+        sheetdata.spriteView.derived.cha,
       ).html,
       abilitiesBonusHtml: new Abilities(
         sheetdata.spriteView.derived.str,
@@ -39,7 +39,7 @@ export class AbilitiesGroup extends Component {
         sheetdata.spriteView.derivedBonus.con,
         sheetdata.spriteView.derivedBonus.int,
         sheetdata.spriteView.derivedBonus.wis,
-        sheetdata.spriteView.derivedBonus.cha
+        sheetdata.spriteView.derivedBonus.cha,
       ).html,
       abilitiesTempHtml: new Abilities(
         sheetdata.spriteView.derived.str,
@@ -48,7 +48,7 @@ export class AbilitiesGroup extends Component {
         sheetdata.spriteView.derivedTemp.con,
         sheetdata.spriteView.derivedTemp.int,
         sheetdata.spriteView.derivedTemp.wis,
-        sheetdata.spriteView.derivedTemp.cha
+        sheetdata.spriteView.derivedTemp.cha,
       ).html,
     };
 

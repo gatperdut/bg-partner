@@ -1,10 +1,10 @@
 import { handlers } from '@handlers';
 import { app, dialog } from 'electron';
-import * as fs from 'fs';
-import * as Joi from 'joi';
-import * as _ from 'lodash-es';
-import * as os from 'os';
-import * as path from 'path';
+import fs from 'fs';
+import Joi from 'joi';
+import _ from 'lodash';
+import os from 'os';
+import path from 'path';
 
 export type ConfigObj = {
   exe: string;

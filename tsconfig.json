@@ -3,12 +3,10 @@
     "target": "ESNext",
     "allowJs": false,
     "module": "ESNext",
-    "skipLibCheck": true,
     "noImplicitAny": true,
     "sourceMap": true,
     "baseUrl": ".",
     "esModuleInterop": true,
-    "outDir": "./dist/out-tsc",
     "moduleResolution": "node",
     "paths": {
       "@chitin/*": ["src/chitin/*"],

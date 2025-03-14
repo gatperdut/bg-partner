@@ -1,7 +1,7 @@
 import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { Saves } from '@views/sheet/components/saves/saves';
 import { sheetdata } from '@views/sheet/sheetdata';
-import * as Handlebars from 'handlebars';
+import Handlebars from 'handlebars';
 
 export type SavesGroupData = ComponentData & {
   savesHtml: string;
@@ -16,7 +16,7 @@ export class SavesGroup extends Component {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.savesGroup
+      sheetdata.components.savesGroup,
     );
 
     this.savesGroupData = {
@@ -26,21 +26,21 @@ export class SavesGroup extends Component {
         sheetdata.spriteView.derived.saveVsWands,
         sheetdata.spriteView.derived.saveVsPoly,
         sheetdata.spriteView.derived.saveVsBreath,
-        sheetdata.spriteView.derived.saveVsSpell
+        sheetdata.spriteView.derived.saveVsSpell,
       ).html,
       savesBonusHtml: new Saves(
         sheetdata.spriteView.derivedBonus.saveVsDeath,
         sheetdata.spriteView.derivedBonus.saveVsWands,
         sheetdata.spriteView.derivedBonus.saveVsPoly,
         sheetdata.spriteView.derivedBonus.saveVsBreath,
-        sheetdata.spriteView.derivedBonus.saveVsSpell
+        sheetdata.spriteView.derivedBonus.saveVsSpell,
       ).html,
       savesTempHtml: new Saves(
         sheetdata.spriteView.derivedTemp.saveVsDeath,
         sheetdata.spriteView.derivedTemp.saveVsWands,
         sheetdata.spriteView.derivedTemp.saveVsPoly,
         sheetdata.spriteView.derivedTemp.saveVsBreath,
-        sheetdata.spriteView.derivedTemp.saveVsSpell
+        sheetdata.spriteView.derivedTemp.saveVsSpell,
       ).html,
     };
 

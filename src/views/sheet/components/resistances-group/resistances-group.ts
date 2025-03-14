@@ -1,7 +1,7 @@
 import { Component, ComponentData } from '@views/sheet/components/component/component';
 import { Resistances } from '@views/sheet/components/resistances/resistances';
 import { sheetdata } from '@views/sheet/sheetdata';
-import * as Handlebars from 'handlebars';
+import Handlebars from 'handlebars';
 
 export type ResistancesGroupData = ComponentData & {
   resistancesHtml: string;
@@ -18,7 +18,7 @@ export class ResistancesGroup extends Component {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(
-      sheetdata.components.resistancesGroup
+      sheetdata.components.resistancesGroup,
     );
 
     this.resistancesGroupData = {
@@ -33,7 +33,7 @@ export class ResistancesGroup extends Component {
         sheetdata.spriteView.derived.resistSlashing,
         sheetdata.spriteView.derived.resistCrushing,
         sheetdata.spriteView.derived.resistPiercing,
-        sheetdata.spriteView.derived.resistMissile
+        sheetdata.spriteView.derived.resistMissile,
       ).html,
       resistancesBonusHtml: new Resistances(
         sheetdata.spriteView.derivedBonus.resistFire,
@@ -45,7 +45,7 @@ export class ResistancesGroup extends Component {
         sheetdata.spriteView.derivedBonus.resistSlashing,
         sheetdata.spriteView.derivedBonus.resistCrushing,
         sheetdata.spriteView.derivedBonus.resistPiercing,
-        sheetdata.spriteView.derivedBonus.resistMissile
+        sheetdata.spriteView.derivedBonus.resistMissile,
       ).html,
       resistancesTempHtml: new Resistances(
         sheetdata.spriteView.derivedTemp.resistFire,
@@ -57,7 +57,7 @@ export class ResistancesGroup extends Component {
         sheetdata.spriteView.derivedTemp.resistSlashing,
         sheetdata.spriteView.derivedTemp.resistCrushing,
         sheetdata.spriteView.derivedTemp.resistPiercing,
-        sheetdata.spriteView.derivedTemp.resistMissile
+        sheetdata.spriteView.derivedTemp.resistMissile,
       ).html,
     };
 

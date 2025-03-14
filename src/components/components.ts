@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
 
 export type ComponentsRecord = Record<string, string>;
 
@@ -9,7 +9,7 @@ export class Components {
   private register(name: string, segments: string[]): void {
     this.components[name] = fs.readFileSync(
       path.join(__dirname, ...['views', ...segments]),
-      'utf-8'
+      'utf-8',
     );
   }
 

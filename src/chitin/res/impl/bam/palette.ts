@@ -1,4 +1,4 @@
-import * as _ from 'lodash-es';
+import _ from 'lodash';
 
 export class Palette {
   public values: number[][];
