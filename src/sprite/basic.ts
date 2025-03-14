@@ -1,5 +1,5 @@
 import { handlers } from '@handlers';
-import { linux } from '../index';
+import { linux } from '@index';
 
 export class Basic {
   public type: number;

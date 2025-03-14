@@ -1,4 +1,3 @@
-import { contextBridge, ipcRenderer } from 'electron';
 import {
   SheetAPIClose,
   SheetAPIMove,
@@ -6,7 +5,8 @@ import {
   SheetAPISetupMethod,
   SheetAPIUpdate,
   SheetAPIUpdateMethod,
-} from './renderer';
+} from '@views/sheet/renderer';
+import { contextBridge, ipcRenderer } from 'electron';
 
 export type SheetAPIBridge = {
   setup: (callback: SheetAPISetup) => Electron.IpcRenderer;

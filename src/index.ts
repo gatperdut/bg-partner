@@ -1,7 +1,7 @@
 import { handlers } from '@handlers';
+import { Main } from '@main';
 import { app } from 'electron';
 import os from 'os';
-import { Main } from './main';
 
 declare global {
   interface Window {

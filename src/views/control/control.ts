@@ -1,7 +1,7 @@
 import { config, handlers, reqsLinux } from '@handlers';
+import { linux } from '@index';
 import { app, BrowserWindow, ipcMain, IpcMainEvent } from 'electron';
 import path from 'path';
-import { linux } from '../../index';
 
 declare const CONTROL_PRELOAD_WEBPACK_ENTRY: string;
 

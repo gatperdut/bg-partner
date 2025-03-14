@@ -27,6 +27,8 @@
       "@views/*": ["src/views/*"],
       "@window/*": ["src/window/*"],
       "@handlers": ["src/handlers"],
+      "@index": ["src/index"],
+      "@main": ["src/main"],
       "@utils": ["src/utils"]
     }
   },
