@@ -7,9 +7,9 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "esModuleInterop": true,
     "outDir": "./dist/out-tsc",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
     "paths": {
       "@chitin/*": ["src/chitin/*"],
       "@config/*": ["src/config/*"],
@@ -26,9 +26,9 @@
       "@views/*": ["src/views/*"],
       "@window/*": ["src/window/*"],
       "@handlers": ["src/handlers"],
-      "@index": ["src/index"],
-      "@main": ["src/main"],
-      "@utils": ["src/utils"]
+      "@index": ["src/index.ts"],
+      "@main": ["src/main.ts"],
+      "@utils": ["src/utils.ts"]
     }
   },
   "include": ["src/**/*.ts"]

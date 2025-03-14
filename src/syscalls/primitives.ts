@@ -1,4 +1,4 @@
-import * as koffi from 'koffi';
+import koffi, { IKoffiCType } from 'koffi';
 import * as _ from 'lodash-es';
 
 export const Primitives = [
@@ -35,14 +35,11 @@ const Primitive2CType: Record<Primitive, string> = {
   ADDR: 'uint32',
 };
 
-export const KoffiPrimitives: Record<Primitive, koffi.IKoffiCType> = {} as Record<
-  Primitive,
-  koffi.IKoffiCType
->;
+export const KoffiPrimitives: Record<Primitive, IKoffiCType> = {} as Record<Primitive, IKoffiCType>;
 
-export const KoffiPrimitivePtrs: Record<Primitive, koffi.IKoffiCType> = {} as Record<
+export const KoffiPrimitivePtrs: Record<Primitive, IKoffiCType> = {} as Record<
   Primitive,
-  koffi.IKoffiCType
+  IKoffiCType
 >;
 
 _.each(Primitives, (primitive: Primitive): void => {

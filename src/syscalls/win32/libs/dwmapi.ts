@@ -1,12 +1,12 @@
 import { STDCALL } from '@const/const-win32';
 import { KoffiPrimitivePtrs, KoffiPrimitives } from '@syscalls/primitives';
 import { StructsWin32 } from '@syscalls/win32/structs-win32';
-import * as koffi from 'koffi';
+import koffi, { IKoffiLib, KoffiFunction } from 'koffi';
 
 export class Dwmapi {
-  public dwmapi: koffi.IKoffiLib = koffi.load('dwmapi.dll');
+  public dwmapi: IKoffiLib = koffi.load('dwmapi.dll');
 
-  public DwmGetWindowAttribute: koffi.KoffiFunction;
+  public DwmGetWindowAttribute: KoffiFunction;
 
   constructor(private structsWin32: StructsWin32) {
     this.DwmGetWindowAttribute_Setup();

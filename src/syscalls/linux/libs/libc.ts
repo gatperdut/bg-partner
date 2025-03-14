@@ -1,11 +1,11 @@
 import { StructsLinux } from '@syscalls/linux/structs-linux';
 import { KoffiPrimitives } from '@syscalls/primitives';
-import * as koffi from 'koffi';
+import koffi, { IKoffiLib, KoffiFunction } from 'koffi';
 
 export class Libc {
-  public libc: koffi.IKoffiLib = koffi.load('libc.so.6');
+  public libc: IKoffiLib = koffi.load('libc.so.6');
 
-  public process_vm_readv: koffi.KoffiFunction;
+  public process_vm_readv: KoffiFunction;
 
   constructor(private structsLinux: StructsLinux = null) {
     this.process_vm_readv_Setup();

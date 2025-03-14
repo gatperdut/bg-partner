@@ -3,7 +3,7 @@ import { handlers, syscallsWin32 } from '@handlers';
 import { VOIDPTR } from '@syscalls/primitives';
 import { EnumWindowsCallbackFn, RECT } from '@syscalls/win32/types-win32';
 import { WindowOs } from '@window/window';
-import * as koffi from 'koffi';
+import koffi from 'koffi';
 
 export class WindowWin32 extends WindowOs {
   public handle: VOIDPTR;
