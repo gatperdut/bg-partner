@@ -1,11 +1,11 @@
+import { handlers } from '@handlers';
+import { MemscanWin32 } from '@memscan/memscan-win32';
+import { Primitive, PrimitiveSizesWin32, Value, VOIDPTR } from '@syscalls/primitives';
+import { Kernel32 } from '@syscalls/win32/libs/kernel32';
+import { User32 } from '@syscalls/win32/libs/user32';
+import { StructsWin32 } from '@syscalls/win32/structs-win32';
+import { MODULEENTRY32, POINT, PROCESSENTRY32, RECT } from '@syscalls/win32/types-win32';
 import koffi from 'koffi';
-import { handlers } from '../../handlers';
-import { MemscanWin32 } from '../../memscan/memscan-win32';
-import { Primitive, PrimitiveSizesWin32, Value, VOIDPTR } from '../primitives';
-import { Kernel32 } from './libs/kernel32';
-import { User32 } from './libs/user32';
-import { StructsWin32 } from './structs-win32';
-import { MODULEENTRY32, POINT, PROCESSENTRY32, RECT } from './types-win32';
 
 export class HelpersWin32 {
   constructor(

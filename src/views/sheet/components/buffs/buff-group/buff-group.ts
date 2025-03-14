@@ -1,4 +1,4 @@
-import { Buff, BuffData } from '../buff/buff';
+import { Buff, BuffData } from '@views/sheet/components/buffs/buff/buff';
 
 export type BuffGroupData = BuffData;
 

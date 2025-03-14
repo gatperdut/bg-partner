@@ -1,6 +1,6 @@
+import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
-import { sheetdata } from '../../../../../../views/sheet/sheetdata';
-import { Component, ComponentData } from '../../../component/component';
 
 export type BuffDurationData = ComponentData & {
   duration: number;

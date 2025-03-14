@@ -1,6 +1,6 @@
+import { handlers } from '@handlers';
 import { app } from 'electron';
 import os from 'os';
-import { handlers } from './handlers';
 import { Main } from './main';
 
 declare global {

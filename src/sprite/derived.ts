@@ -1,4 +1,4 @@
-import { handlers } from '../handlers';
+import { handlers } from '@handlers';
 
 export class Derived {
   public hpMax: number;

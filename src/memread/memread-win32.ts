@@ -1,6 +1,6 @@
-import { syscallsWin32 } from '../handlers';
-import { Primitive } from '../syscalls/primitives';
-import { joinASCII } from '../utils';
+import { syscallsWin32 } from '@handlers';
+import { Primitive } from '@syscalls/primitives';
+import { joinASCII } from '@utils';
 
 export class MemreadWin32 {
   public memReadNumber(ptr: bigint, primitive: Exclude<Primitive, 'ADDR'>): number {

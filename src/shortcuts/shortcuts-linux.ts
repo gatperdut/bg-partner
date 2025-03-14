@@ -1,7 +1,7 @@
+import { devnull } from '@const/const-linux';
+import { handlers } from '@handlers';
+import { ShortcutsOS } from '@shortcuts/shortcuts';
 import { execSync } from 'child_process';
-import { devnull } from '../const/const-linux';
-import { handlers } from '../handlers';
-import { ShortcutsOS } from './shortcuts';
 
 export class ShortcutsLinux extends ShortcutsOS {
   constructor() {

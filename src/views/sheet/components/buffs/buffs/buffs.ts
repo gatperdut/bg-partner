@@ -1,10 +1,10 @@
+import { Eff } from '@sprite/effs/impl/eff';
+import { EffKey } from '@tables/eff';
+import { BuffFactory } from '@views/sheet/components/buffs/buffs/buff-factory';
+import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 import * as _ from 'lodash-es';
-import { Eff } from '../../../../../sprite/effs/impl/eff';
-import { EffKey } from '../../../../../tables/eff';
-import { sheetdata } from '../../../../../views/sheet/sheetdata';
-import { Component, ComponentData } from '../../component/component';
-import { BuffFactory } from './buff-factory';
 
 export type BuffsData = ComponentData & {
   buffsSingleHtml: string[];

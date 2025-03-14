@@ -1,7 +1,7 @@
+import { config, handlers } from '@handlers';
+import { ShortcutsLinux } from '@shortcuts/shortcuts-linux';
+import { ShortcutsWin32 } from '@shortcuts/shortcuts-win32';
 import { globalShortcut } from 'electron';
-import { config, handlers } from '../handlers';
-import { ShortcutsLinux } from './shortcuts-linux';
-import { ShortcutsWin32 } from './shortcuts-win32';
 
 export type Shortcuts = ShortcutsLinux | ShortcutsWin32;
 

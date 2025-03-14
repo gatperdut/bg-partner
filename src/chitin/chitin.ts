@@ -1,14 +1,14 @@
+import { Bif } from '@chitin/bif';
+import { Res } from '@chitin/res/impl/res';
+import { ResItm } from '@chitin/res/impl/res-itm';
+import { ResSpl } from '@chitin/res/impl/res-spl';
+import { ResFactory } from '@chitin/res/res-factory';
+import { handlers } from '@handlers';
+import { ProValue, proValues } from '@tables/pro';
+import { ResextKey, ResextValue, resextTab } from '@tables/resext';
 import fs from 'fs';
 import * as _ from 'lodash-es';
 import path from 'path';
-import { handlers } from '../handlers';
-import { ProValue, proValues } from '../tables/pro';
-import { ResextKey, resextTab, ResextValue } from '../tables/resext';
-import { Bif } from './bif';
-import { Res } from './res/impl/res';
-import { ResItm } from './res/impl/res-itm';
-import { ResSpl } from './res/impl/res-spl';
-import { ResFactory } from './res/res-factory';
 
 export class Chitin {
   public bifs: Bif[] = [];

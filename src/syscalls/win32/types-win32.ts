@@ -1,4 +1,4 @@
-import { VOIDPTR } from '../primitives';
+import { VOIDPTR } from '@syscalls/primitives';
 
 export type EnumWindowsCallbackFn = (handle: VOIDPTR, somewindowId: number) => boolean;
 

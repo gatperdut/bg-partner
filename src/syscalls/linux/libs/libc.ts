@@ -1,6 +1,6 @@
+import { StructsLinux } from '@syscalls/linux/structs-linux';
+import { KoffiPrimitives } from '@syscalls/primitives';
 import koffi, { IKoffiLib, KoffiFunction } from 'koffi';
-import { KoffiPrimitives } from '../../primitives';
-import { StructsLinux } from '../structs-linux';
 
 export class Libc {
   constructor(private structsLinux: StructsLinux) {

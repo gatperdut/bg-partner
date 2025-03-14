@@ -1,6 +1,6 @@
-import { HelpersLinux } from './helpers-linux';
-import { Libc } from './libs/libc';
-import { StructsLinux } from './structs-linux';
+import { HelpersLinux } from '@syscalls/linux/helpers-linux';
+import { Libc } from '@syscalls/linux/libs/libc';
+import { StructsLinux } from '@syscalls/linux/structs-linux';
 
 export class SyscallsLinux {
   public structs: StructsLinux = new StructsLinux();

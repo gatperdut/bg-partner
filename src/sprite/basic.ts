@@ -1,4 +1,4 @@
-import { handlers } from '../handlers';
+import { handlers } from '@handlers';
 import { linux } from '../index';
 
 export class Basic {

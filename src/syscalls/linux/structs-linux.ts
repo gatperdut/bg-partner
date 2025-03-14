@@ -1,5 +1,5 @@
+import { KoffiPrimitivePtrs, KoffiPrimitives } from '@syscalls/primitives';
 import koffi, { IKoffiCType } from 'koffi';
-import { KoffiPrimitivePtrs, KoffiPrimitives } from '../primitives';
 
 export class StructsLinux {
   public IOVEC: IKoffiCType = koffi.struct('IOVEC', {

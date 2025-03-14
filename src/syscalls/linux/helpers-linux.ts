@@ -1,6 +1,6 @@
-import { Primitive, PrimitiveSizesLinux, Value } from '../primitives';
-import { Libc } from './libs/libc';
-import { IOVEC } from './types-linux';
+import { Libc } from '@syscalls/linux/libs/libc';
+import { IOVEC } from '@syscalls/linux/types-linux';
+import { Primitive, PrimitiveSizesLinux, Value } from '@syscalls/primitives';
 
 export class HelpersLinux {
   constructor(private syscallsLibc: Libc) {

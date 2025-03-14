@@ -1,13 +1,13 @@
+import { Res } from '@chitin/res/impl/res';
+import { ResItm } from '@chitin/res/impl/res-itm';
+import { ResSpl } from '@chitin/res/impl/res-spl';
+import { ResImage } from '@chitin/res/res-image';
+import { handlers } from '@handlers';
+import { EffSource, Effs } from '@sprite/effs/effs';
+import { EffKey, effTab } from '@tables/eff';
+import { resextValueSubset } from '@tables/resext';
+import { SchoolKey, SchoolValue, schoolTab } from '@tables/school';
 import * as _ from 'lodash-es';
-import { Res } from '../../../chitin/res/impl/res';
-import { ResItm } from '../../../chitin/res/impl/res-itm';
-import { ResSpl } from '../../../chitin/res/impl/res-spl';
-import { ResImage } from '../../../chitin/res/res-image';
-import { handlers } from '../../../handlers';
-import { EffKey, effTab } from '../../../tables/eff';
-import { resextValueSubset } from '../../../tables/resext';
-import { SchoolKey, schoolTab, SchoolValue } from '../../../tables/school';
-import { Effs, EffSource } from '../effs';
 
 const RessrcTypes = resextValueSubset(['ITM', 'SPL'] as const);
 

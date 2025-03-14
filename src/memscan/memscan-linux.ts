@@ -1,7 +1,7 @@
+import { devnull } from '@const/const-linux';
+import { config, handlers } from '@handlers';
+import { MemscanOs } from '@memscan/memscan';
 import { execSync } from 'child_process';
-import { devnull } from '../const/const-linux';
-import { config, handlers } from '../handlers';
-import { MemscanOs } from './memscan';
 
 export class MemscanLinux extends MemscanOs {
   constructor() {

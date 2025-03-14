@@ -1,8 +1,8 @@
+import { handlers } from '@handlers';
+import { Sprite } from '@sprite/sprite';
+import { SheetAPIUpdateParams } from '@views/sheet/renderer';
+import { spriteView } from '@views/sheet/sprite-view';
 import { BrowserWindow, ipcMain } from 'electron';
-import { handlers } from '../../handlers';
-import { Sprite } from '../../sprite/sprite';
-import { SheetAPIUpdateParams } from './renderer';
-import { spriteView } from './sprite-view';
 
 declare const SHEET_PRELOAD_WEBPACK_ENTRY: string;
 

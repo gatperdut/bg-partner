@@ -1,25 +1,25 @@
+import { Chitin } from '@chitin/chitin';
+import { Tlk } from '@chitin/res/impl/res-tlk';
+import { Config } from '@config/config';
+import { Entities } from '@entities/entities';
+import { config, handlers } from '@handlers';
+import { MemreadLinux } from '@memread/memread-linux';
+import { MemreadWin32 } from '@memread/memread-win32';
+import { MemscanLinux } from '@memscan/memscan-linux';
+import { MemscanWin32 } from '@memscan/memscan-win32';
+import { ReqsLinux } from '@reqs/reqs-linux';
+import { ReqsWin32 } from '@reqs/reqs-win32';
+import { ShortcutsLinux } from '@shortcuts/shortcuts-linux';
+import { ShortcutsWin32 } from '@shortcuts/shortcuts-win32';
+import { SyscallsLinux } from '@syscalls/linux/syscalls-linux';
+import { SyscallsWin32 } from '@syscalls/win32/syscalls-win32';
+import { Timetracker } from '@time/timetracker';
+import { Control } from '@views/control/control';
+import { WindowLinux } from '@window/window-linux';
+import { WindowWin32 } from '@window/window-win32';
 import 'source-map-support/register';
-import { Chitin } from './chitin/chitin';
-import { Tlk } from './chitin/res/impl/res-tlk';
-import { Components } from './components/components';
-import { Config } from './config/config';
-import { Entities } from './entities/entities';
-import { config, handlers } from './handlers';
-import { linux } from './index';
-import { MemreadLinux } from './memread/memread-linux';
-import { MemreadWin32 } from './memread/memread-win32';
-import { MemscanLinux } from './memscan/memscan-linux';
-import { MemscanWin32 } from './memscan/memscan-win32';
-import { ReqsLinux } from './reqs/reqs-linux';
-import { ReqsWin32 } from './reqs/reqs-win32';
-import { ShortcutsLinux } from './shortcuts/shortcuts-linux';
-import { ShortcutsWin32 } from './shortcuts/shortcuts-win32';
-import { SyscallsLinux } from './syscalls/linux/syscalls-linux';
-import { SyscallsWin32 } from './syscalls/win32/syscalls-win32';
-import { Timetracker } from './time/timetracker';
-import { Control } from './views/control/control';
-import { WindowLinux } from './window/window-linux';
-import { WindowWin32 } from './window/window-win32';
+import { linux } from 'src';
+import { Components } from 'src/components/components';
 
 export class Main {
   constructor() {

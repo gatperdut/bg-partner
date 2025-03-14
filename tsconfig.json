@@ -25,7 +25,9 @@
       "@tables/*": ["src/tables/*"],
       "@time/*": ["src/time/*"],
       "@views/*": ["src/views/*"],
-      "@window/*": ["src/window/*"]
+      "@window/*": ["src/window/*"],
+      "@handlers": ["src/handlers"],
+      "@utils": ["src/utils"]
     }
   },
   "include": ["src/**/*.ts"]

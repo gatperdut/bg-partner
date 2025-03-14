@@ -1,7 +1,6 @@
-import { handlers, syscallsLinux } from '../handlers';
-import { Primitive } from '../syscalls/primitives';
-
-import { joinASCII } from '../utils';
+import { handlers, syscallsLinux } from '@handlers';
+import { Primitive } from '@syscalls/primitives';
+import { joinASCII } from '@utils';
 
 export class MemreadLinux {
   public memReadNumber(ptr: bigint, primitive: Exclude<Primitive, 'ADDR'>): number {

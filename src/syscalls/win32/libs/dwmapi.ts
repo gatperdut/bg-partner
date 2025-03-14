@@ -1,7 +1,7 @@
+import { STDCALL } from '@const/const-win32';
+import { KoffiPrimitivePtrs, KoffiPrimitives } from '@syscalls/primitives';
+import { StructsWin32 } from '@syscalls/win32/structs-win32';
 import koffi, { IKoffiLib } from 'koffi';
-import { STDCALL } from '../../../const/const-win32';
-import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../primitives';
-import { StructsWin32 } from '../structs-win32';
 
 export class Dwmapi {
   constructor(private structsWin32: StructsWin32) {

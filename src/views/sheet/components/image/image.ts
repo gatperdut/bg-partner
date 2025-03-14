@@ -1,7 +1,7 @@
+import { ResImage } from '@chitin/res/res-image';
+import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
-import { ResImage } from '../../../../chitin/res/res-image';
-import { sheetdata } from '../../sheetdata';
-import { Component, ComponentData } from '../component/component';
 
 export type ImageData = ComponentData & {
   base64: string;

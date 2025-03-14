@@ -1,8 +1,8 @@
+import { ResItm } from '@chitin/res/impl/res-itm';
+import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { Image } from '@views/sheet/components/image/image';
+import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
-import { ResItm } from '../../../../../chitin/res/impl/res-itm';
-import { sheetdata } from '../../../../../views/sheet/sheetdata';
-import { Component, ComponentData } from '../../component/component';
-import { Image } from '../../image/image';
 
 export type ItemData = ComponentData & {
   imageHtml: string;

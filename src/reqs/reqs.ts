@@ -1,5 +1,5 @@
-import { ReqsLinux, ReqsLinuxObj } from './reqs-linux';
-import { ReqsWin32, ReqsWin32Obj } from './reqs-win32';
+import { ReqsLinux, ReqsLinuxObj } from '@reqs/reqs-linux';
+import { ReqsWin32, ReqsWin32Obj } from '@reqs/reqs-win32';
 
 export type Reqs = ReqsLinux | ReqsWin32;
 

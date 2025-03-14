@@ -1,8 +1,8 @@
+import { devnull } from '@const/const-linux';
+import { handlers } from '@handlers';
+import { WindowOs } from '@window/window';
 import { execSync } from 'child_process';
 import * as _ from 'lodash-es';
-import { devnull } from '../const/const-linux';
-import { handlers } from '../handlers';
-import { WindowOs } from './window';
 
 export class WindowLinux extends WindowOs {
   public init(): void {

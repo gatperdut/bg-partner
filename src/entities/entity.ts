@@ -1,6 +1,6 @@
-import { handlers } from '../handlers';
-import { Sprite } from '../sprite/sprite';
-import { Sheet } from '../views/sheet/sheet';
+import { handlers } from '@handlers';
+import { Sprite } from '@sprite/sprite';
+import { Sheet } from '@views/sheet/sheet';
 
 export class Entity {
   public loaded: boolean = false;

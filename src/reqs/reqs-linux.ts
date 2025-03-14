@@ -1,6 +1,6 @@
+import { devnull } from '@const/const-linux';
+import { ReqsOs } from '@reqs/reqs';
 import { execSync } from 'child_process';
-import { devnull } from '../const/const-linux';
-import { ReqsOs } from './reqs';
 
 export type ReqsLinuxObj = {
   aslr: boolean;

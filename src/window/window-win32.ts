@@ -1,9 +1,9 @@
+import { DWMWA_EXTENDED_FRAME_BOUNDS } from '@const/const-win32';
+import { handlers, syscallsWin32 } from '@handlers';
+import { VOIDPTR } from '@syscalls/primitives';
+import { EnumWindowsCallbackFn, RECT } from '@syscalls/win32/types-win32';
+import { WindowOs } from '@window/window';
 import koffi, { IKoffiRegisteredCallback } from 'koffi';
-import { DWMWA_EXTENDED_FRAME_BOUNDS } from '../const/const-win32';
-import { handlers, syscallsWin32 } from '../handlers';
-import { VOIDPTR } from '../syscalls/primitives';
-import { EnumWindowsCallbackFn, RECT } from '../syscalls/win32/types-win32';
-import { WindowOs } from './window';
 
 export class WindowWin32 extends WindowOs {
   public handle: VOIDPTR;

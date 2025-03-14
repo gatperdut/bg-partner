@@ -1,9 +1,9 @@
-import { handlers } from '../handlers';
-import { linux } from '../index';
-import { Basic } from './basic';
-import { Derived } from './derived';
-import { Effs } from './effs/effs';
-import { Profile } from './profile';
+import { handlers } from '@handlers';
+import { Basic } from '@sprite/basic';
+import { Derived } from '@sprite/derived';
+import { Effs } from '@sprite/effs/effs';
+import { Profile } from '@sprite/profile';
+import { linux } from 'src';
 
 export class Sprite {
   public basic: Basic;

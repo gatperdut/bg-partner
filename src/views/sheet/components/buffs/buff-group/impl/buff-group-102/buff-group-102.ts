@@ -1,10 +1,10 @@
+import { Eff } from '@sprite/effs/impl/eff';
+import { BuffGroup, BuffGroupData } from '@views/sheet/components/buffs/buff-group/buff-group';
+import { BuffRight } from '@views/sheet/components/buffs/parts/buff-right/buff-right';
+import { Image } from '@views/sheet/components/image/image';
+import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 import * as _ from 'lodash-es';
-import { Eff } from '../../../../../../../sprite/effs/impl/eff';
-import { Image } from '../../../../../../../views/sheet/components/image/image';
-import { sheetdata } from '../../../../../../../views/sheet/sheetdata';
-import { BuffRight } from '../../../parts/buff-right/buff-right';
-import { BuffGroup, BuffGroupData } from '../../buff-group';
 
 export type BuffGroup102Data = BuffGroupData & {
   rightHtml: string;

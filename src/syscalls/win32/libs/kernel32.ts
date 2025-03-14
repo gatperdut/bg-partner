@@ -1,9 +1,9 @@
+import { STDCALL } from '@const/const-win32';
+import { KoffiPrimitivePtrs, KoffiPrimitives, Primitive, Primitives } from '@syscalls/primitives';
+import { StructsWin32 } from '@syscalls/win32/structs-win32';
+import { ReadProcessMemoryFn } from '@syscalls/win32/types-win32';
 import koffi, { IKoffiLib, KoffiFunction } from 'koffi';
 import * as _ from 'lodash-es';
-import { STDCALL } from '../../../const/const-win32';
-import { KoffiPrimitivePtrs, KoffiPrimitives, Primitive, Primitives } from '../../primitives';
-import { StructsWin32 } from '../structs-win32';
-import { ReadProcessMemoryFn } from '../types-win32';
 
 export class Kernel32 {
   constructor(private structsWin32: StructsWin32) {

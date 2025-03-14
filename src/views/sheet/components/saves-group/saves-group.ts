@@ -1,7 +1,7 @@
+import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { Saves } from '@views/sheet/components/saves/saves';
+import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
-import { sheetdata } from '../../sheetdata';
-import { Component, ComponentData } from '../component/component';
-import { Saves } from '../saves/saves';
 
 export type SavesGroupData = ComponentData & {
   savesHtml: string;

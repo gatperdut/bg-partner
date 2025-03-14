@@ -1,7 +1,7 @@
+import { handlers } from '@handlers';
+import { readBufferString } from '@utils';
 import fs from 'fs';
 import path from 'path';
-import { handlers } from '../../../handlers';
-import { readBufferString } from '../../../utils';
 
 export type Tlks = Record<number, string>;
 

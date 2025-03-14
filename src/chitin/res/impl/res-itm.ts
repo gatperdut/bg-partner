@@ -1,9 +1,9 @@
 import { Bif } from '@chitin/bif';
+import { Res } from '@chitin/res/impl/res';
 import { ResImage } from '@chitin/res/res-image';
 import { ProKey, ProValue, proTab } from '@tables/pro';
+import { readBufferString } from '@utils';
 import { handlers } from 'src/handlers';
-import { readBufferString } from '../../../utils';
-import { Res } from './res';
 
 export class ResItm extends Res {
   public name: string;

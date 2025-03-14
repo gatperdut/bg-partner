@@ -1,9 +1,9 @@
+import { ResItm } from '@chitin/res/impl/res-itm';
+import { handlers } from '@handlers';
+import { EffSource } from '@sprite/effs/effs';
+import { Eff } from '@sprite/effs/impl/eff';
+import { ProKey, proTab } from '@tables/pro';
 import * as _ from 'lodash-es';
-import { ResItm } from '../../../chitin/res/impl/res-itm';
-import { handlers } from '../../../handlers';
-import { ProKey, proTab } from '../../../tables/pro';
-import { EffSource } from '../effs';
-import { Eff } from './eff';
 
 export class Eff83 extends Eff {
   public proItms: ResItm[];

@@ -1,8 +1,8 @@
+import { handlers } from '@handlers';
+import { EffFactory } from '@sprite/effs/eff-factory';
+import { Eff } from '@sprite/effs/impl/eff';
+import { EffKey } from '@tables/eff';
 import * as _ from 'lodash-es';
-import { handlers } from '../../handlers';
-import { EffKey } from '../../tables/eff';
-import { EffFactory } from './eff-factory';
-import { Eff } from './impl/eff';
 
 export const EffTypes = ['buffs', 'imms', 'profs', 'statmods', 'states', 'maybe'] as const;
 

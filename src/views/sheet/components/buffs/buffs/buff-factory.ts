@@ -1,11 +1,11 @@
-import { Eff } from '../../../../../sprite/effs/impl/eff';
-import { Eff83 } from '../../../../../sprite/effs/impl/eff-83';
-import { BuffGroup } from '../buff-group/buff-group';
-import { BuffGroup102 } from '../buff-group/impl/buff-group-102/buff-group-102';
-import { BuffGroup83 } from '../buff-group/impl/buff-group-83/buff-group-83';
-import { BuffGroupStub } from '../buff-group/impl/buff-group-stub/buff-group-stub';
-import { BuffSingle } from '../buff-single/buff-single';
-import { BuffSingle159 } from '../buff-single/buff-single-159/buff-single-159';
+import { Eff } from '@sprite/effs/impl/eff';
+import { Eff83 } from '@sprite/effs/impl/eff-83';
+import { BuffGroup } from '@views/sheet/components/buffs/buff-group/buff-group';
+import { BuffGroup102 } from '@views/sheet/components/buffs/buff-group/impl/buff-group-102/buff-group-102';
+import { BuffGroup83 } from '@views/sheet/components/buffs/buff-group/impl/buff-group-83/buff-group-83';
+import { BuffGroupStub } from '@views/sheet/components/buffs/buff-group/impl/buff-group-stub/buff-group-stub';
+import { BuffSingle } from '@views/sheet/components/buffs/buff-single/buff-single';
+import { BuffSingle159 } from '@views/sheet/components/buffs/buff-single/buff-single-159/buff-single-159';
 
 export class BuffFactory {
   public static group(effs: Eff[]): BuffGroup {

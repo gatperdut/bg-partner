@@ -1,15 +1,9 @@
-import {
-  GWL_STYLE,
-  HWND_TOP,
-  SW_SHOW,
-  SWP_ASYNCWINDOWPOS,
-  WS_MAXIMIZE,
-} from '../const/const-win32';
+import { ShortcutsOS } from '@shortcuts/shortcuts';
+import { POINT } from '@syscalls/win32/types-win32';
+import { WindowWin32 } from '@window/window-win32';
 
-import { handlers, syscallsWin32 } from '../handlers';
-import { POINT } from '../syscalls/win32/types-win32';
-import { WindowWin32 } from '../window/window-win32';
-import { ShortcutsOS } from './shortcuts';
+import { GWL_STYLE, HWND_TOP, SW_SHOW, SWP_ASYNCWINDOWPOS, WS_MAXIMIZE } from '@const/const-win32';
+import { handlers, syscallsWin32 } from '@handlers';
 
 export class ShortcutsWin32 extends ShortcutsOS {
   constructor() {

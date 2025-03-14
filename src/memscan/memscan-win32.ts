@@ -1,16 +1,16 @@
-import koffi from 'koffi';
 import {
   PROCESS_QUERY_LIMITED_INFORMATION,
   PROCESS_VM_READ,
   STILL_ACTIVE,
   TH32CS_SNAPMODULE,
   TH32CS_SNAPPROCESS,
-} from '../const/const-win32';
-import { handlers, syscallsWin32 } from '../handlers';
-import { VOIDPTR } from '../syscalls/primitives';
-import { MODULEENTRY32, PROCESSENTRY32 } from '../syscalls/win32/types-win32';
-import { joinASCII } from '../utils';
-import { MemscanOs, TargetProcess } from './memscan';
+} from '@const/const-win32';
+import { handlers, syscallsWin32 } from '@handlers';
+import { MemscanOs, TargetProcess } from '@memscan/memscan';
+import { VOIDPTR } from '@syscalls/primitives';
+import { MODULEENTRY32, PROCESSENTRY32 } from '@syscalls/win32/types-win32';
+import { joinASCII } from '@utils';
+import koffi from 'koffi';
 
 export class MemscanWin32 extends MemscanOs {
   constructor() {

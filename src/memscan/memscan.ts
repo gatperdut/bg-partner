@@ -1,6 +1,6 @@
-import { VOIDPTR } from '../syscalls/primitives';
-import { MemscanLinux } from './memscan-linux';
-import { MemscanWin32 } from './memscan-win32';
+import { MemscanLinux } from '@memscan/memscan-linux';
+import { MemscanWin32 } from '@memscan/memscan-win32';
+import { VOIDPTR } from '@syscalls/primitives';
 
 export type TargetProcess = VOIDPTR | number;
 

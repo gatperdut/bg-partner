@@ -1,9 +1,9 @@
+import { ResItm } from '@chitin/res/impl/res-itm';
+import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { Item } from '@views/sheet/components/items/item/item';
+import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 import * as _ from 'lodash-es';
-import { ResItm } from '../../../../../chitin/res/impl/res-itm';
-import { sheetdata } from '../../../../../views/sheet/sheetdata';
-import { Component, ComponentData } from '../../component/component';
-import { Item } from '../item/item';
 
 export type ItemsData = ComponentData & {
   itemHtmls: string[];

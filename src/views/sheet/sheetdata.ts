@@ -1,6 +1,6 @@
-import { ComponentsRecord } from '../../components/components';
-import { SheetAPIUpdateParamsTimetracker } from './renderer';
-import { SpriteView } from './sprite-view';
+import { SheetAPIUpdateParamsTimetracker } from '@views/sheet/renderer';
+import { SpriteView } from '@views/sheet/sprite-view';
+import { ComponentsRecord } from 'src/components/components';
 
 export type Sheetdata = {
   components: ComponentsRecord;

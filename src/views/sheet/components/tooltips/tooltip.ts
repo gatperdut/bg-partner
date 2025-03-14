@@ -1,4 +1,4 @@
-import { Component, ComponentData } from '../component/component';
+import { Component, ComponentData } from '@views/sheet/components/component/component';
 
 export type TooltipData = ComponentData;
 

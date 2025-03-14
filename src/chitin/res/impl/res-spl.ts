@@ -1,8 +1,8 @@
-import { Bif } from '../../../chitin/bif';
-import { handlers } from '../../../handlers';
-import { readBufferString } from '../../../utils';
-import { ResImage } from '../res-image';
-import { Res } from './res';
+import { Bif } from '@chitin/bif';
+import { Res } from '@chitin/res/impl/res';
+import { ResImage } from '@chitin/res/res-image';
+import { handlers } from '@handlers';
+import { readBufferString } from '@utils';
 
 export class ResSpl extends Res {
   public name: string;

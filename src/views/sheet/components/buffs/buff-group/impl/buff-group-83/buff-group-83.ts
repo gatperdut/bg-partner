@@ -1,9 +1,9 @@
+import { Eff83 } from '@sprite/effs/impl/eff-83';
+import { BuffGroup, BuffGroupData } from '@views/sheet/components/buffs/buff-group/buff-group';
+import { BuffGroup83Tooltip } from '@views/sheet/components/buffs/buff-group/impl/buff-group-83/tooltips/buff-group-83-tooltip';
+import { Image } from '@views/sheet/components/image/image';
+import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
-import { Eff83 } from '../../../../../../../sprite/effs/impl/eff-83';
-import { Image } from '../../../../../../../views/sheet/components/image/image';
-import { sheetdata } from '../../../../../../../views/sheet/sheetdata';
-import { BuffGroup, BuffGroupData } from '../../buff-group';
-import { BuffGroup83Tooltip } from './tooltips/buff-group-83-tooltip';
 
 export type BuffGroup83Data = BuffGroupData;
 

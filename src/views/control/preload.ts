@@ -1,11 +1,11 @@
-import { contextBridge, ipcRenderer } from 'electron';
 import {
   ControlAPIConfigSet,
   ControlAPISetup,
   ControlAPISetupMethod,
   ControlAPIUpdate,
   ControlAPIUpdateMethod,
-} from './renderer';
+} from '@views/control/renderer';
+import { contextBridge, ipcRenderer } from 'electron';
 
 export type ControlAPIBridge = {
   setup: (callback: ControlAPISetup) => Electron.IpcRenderer;

@@ -1,8 +1,8 @@
-import { HelpersWin32 } from './helpers-win32';
-import { Dwmapi } from './libs/dwmapi';
-import { Kernel32 } from './libs/kernel32';
-import { User32 } from './libs/user32';
-import { StructsWin32 } from './structs-win32';
+import { HelpersWin32 } from '@syscalls/win32/helpers-win32';
+import { Dwmapi } from '@syscalls/win32/libs/dwmapi';
+import { Kernel32 } from '@syscalls/win32/libs/kernel32';
+import { User32 } from '@syscalls/win32/libs/user32';
+import { StructsWin32 } from '@syscalls/win32/structs-win32';
 
 export class SyscallsWin32 {
   public structs: StructsWin32 = new StructsWin32();

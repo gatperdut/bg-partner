@@ -1,5 +1,5 @@
-import { handlers } from '../../handlers';
-import { ResBam } from './impl/bam/res-bam';
+import { ResBam } from '@chitin/res/impl/bam/res-bam';
+import { handlers } from '@handlers';
 
 export class ResImage {
   public base64: string;

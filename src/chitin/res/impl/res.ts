@@ -1,7 +1,6 @@
-import { Bif } from '../../../chitin/bif';
-import { ResextValue } from '../../../tables/resext';
-
-import { readBufferString } from '../../../utils';
+import { Bif } from '@chitin/bif';
+import { ResextValue } from '@tables/resext';
+import { readBufferString } from '@utils';
 
 export class Res {
   public code: string;

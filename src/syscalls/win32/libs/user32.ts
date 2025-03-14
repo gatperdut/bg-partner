@@ -1,8 +1,8 @@
+import { STDCALL } from '@const/const-win32';
+import { KoffiPrimitivePtrs, KoffiPrimitives } from '@syscalls/primitives';
+import { StructsWin32 } from '@syscalls/win32/structs-win32';
+import { EnumWindowsCallbackFn } from '@syscalls/win32/types-win32';
 import koffi, { IKoffiCType, IKoffiLib, IKoffiRegisteredCallback, KoffiFunction } from 'koffi';
-import { STDCALL } from '../../../const/const-win32';
-import { KoffiPrimitivePtrs, KoffiPrimitives } from '../../primitives';
-import { StructsWin32 } from '../structs-win32';
-import { EnumWindowsCallbackFn } from '../types-win32';
 
 export class User32 {
   constructor(private structsWin32: StructsWin32) {

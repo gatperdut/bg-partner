@@ -1,6 +1,6 @@
+import { Entity } from '@entities/entity';
+import { handlers } from '@handlers';
 import * as _ from 'lodash-es';
-import { Entity } from '../entities/entity';
-import { handlers } from '../handlers';
 
 export class Timetracker {
   private size: number = 4;

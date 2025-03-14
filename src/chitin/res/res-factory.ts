@@ -1,9 +1,9 @@
-import { ResextValue } from '../../tables/resext';
-import { Bif } from '../bif';
-import { ResBam } from './impl/bam/res-bam';
-import { Res } from './impl/res';
-import { ResItm } from './impl/res-itm';
-import { ResSpl } from './impl/res-spl';
+import { Bif } from '@chitin/bif';
+import { ResBam } from '@chitin/res/impl/bam/res-bam';
+import { Res } from '@chitin/res/impl/res';
+import { ResItm } from '@chitin/res/impl/res-itm';
+import { ResSpl } from '@chitin/res/impl/res-spl';
+import { ResextValue } from '@tables/resext';
 
 export class ResFactory {
   public create(ext: ResextValue, buffer: Buffer, bifs: Bif[]): Res {

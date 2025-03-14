@@ -26,7 +26,7 @@ export const mainConfig: Configuration = {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json', '.scss'],
     plugins: [
       new TsconfigPathsPlugin({
-        configFile: './tsconfig.json', // Point to your tsconfig.json
+        configFile: './tsconfig.json',
       }),
     ],
   },

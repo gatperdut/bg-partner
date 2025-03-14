@@ -1,10 +1,10 @@
+import { Buffs } from '@views/sheet/components/buffs/buffs/buffs';
+import { sheetdata } from '@views/sheet/sheetdata';
+import { SpriteView } from '@views/sheet/sprite-view';
 import * as _ from 'lodash-es';
+import { ComponentsRecord } from 'src/components/components';
 import tippy, { Instance } from 'tippy.js';
-import { ComponentsRecord } from '../../components/components';
-import { Buffs } from './components/buffs/buffs/buffs';
 import './sheet.scss';
-import { sheetdata } from './sheetdata';
-import { SpriteView } from './sprite-view';
 
 // sheet.setup
 export type SheetAPISetupParams = {

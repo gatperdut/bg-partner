@@ -1,7 +1,7 @@
-import { sheetdata } from '../../../../../views/sheet/sheetdata';
-import { Component, ComponentData } from '../../component/component';
-import { BuffDuration } from '../parts/buff-duration/buff-duration';
-import { BuffLevels } from '../parts/buff-levels/buff-levels';
+import { BuffDuration } from '@views/sheet/components/buffs/parts/buff-duration/buff-duration';
+import { BuffLevels } from '@views/sheet/components/buffs/parts/buff-levels/buff-levels';
+import { Component, ComponentData } from '@views/sheet/components/component/component';
+import { sheetdata } from '@views/sheet/sheetdata';
 
 export type BuffData = ComponentData & {
   levelsHtml: string;
