@@ -3,7 +3,6 @@ import { Basic } from '@sprite/basic';
 import { Derived } from '@sprite/derived';
 import { Effs } from '@sprite/effs/effs';
 import { Profile } from '@sprite/profile';
-import { linux } from 'src';
 
 export class Sprite {
   public basic: Basic;
@@ -25,13 +24,13 @@ export class Sprite {
 
     this.derived = new Derived(base + BigInt(0x1120));
 
-    this.derivedTemp = new Derived(base + BigInt(0x1dc8 - (linux ? 0x8 : 0x0)));
+    this.derivedTemp = new Derived(base + BigInt(0x1dc8 - (handlers.linux ? 0x8 : 0x0)));
 
-    this.derivedBonus = new Derived(base + BigInt(0x2a70 - (linux ? 0x10 : 0x0)));
+    this.derivedBonus = new Derived(base + BigInt(0x2a70 - (handlers.linux ? 0x10 : 0x0)));
 
     this.effs = new Effs(
-      base + BigInt(0x4a00 - (linux ? 0x18 : 0)),
-      base + BigInt(0x49b0 - (linux ? 0x18 : 0))
+      base + BigInt(0x4a00 - (handlers.linux ? 0x18 : 0)),
+      base + BigInt(0x49b0 - (handlers.linux ? 0x18 : 0)),
     );
   }
 
@@ -65,11 +64,11 @@ export class Sprite {
     return {
       x: Math.round(
         handlers.window.window.x +
-          (this.basic.relative.x / this.basic.viewport.width) * handlers.window.window.width
+          (this.basic.relative.x / this.basic.viewport.width) * handlers.window.window.width,
       ),
       y: Math.round(
         handlers.window.window.y +
-          (this.basic.relative.y / this.basic.viewport.height) * handlers.window.window.height
+          (this.basic.relative.y / this.basic.viewport.height) * handlers.window.window.height,
       ),
     };
   }

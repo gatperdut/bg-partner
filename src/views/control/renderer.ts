@@ -1,7 +1,7 @@
+import { ConfigObj } from '@config/config';
 import { ReqsObj } from '@reqs/reqs';
 import { ReqsLinuxObj } from '@reqs/reqs-linux';
-import { ConfigObj } from 'src/config/config';
-import './control.scss';
+import '@views/control/control.scss';
 
 // control.setup
 export type ControlAPISetupParams = { linux: boolean; reqsObj: ReqsObj; configObj: ConfigObj };

@@ -25,6 +25,7 @@ import { WindowWin32 } from '@window/window-win32';
 import { Components } from 'src/components/components';
 
 export type Handlers = {
+  linux: boolean;
   config: Config;
   reqs: Reqs;
   tlk: Tlk;
@@ -41,6 +42,7 @@ export type Handlers = {
 };
 
 export const handlers: Handlers = {
+  linux: null,
   config: null,
   reqs: null,
   tlk: null,

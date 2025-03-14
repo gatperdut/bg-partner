@@ -1,9 +1,9 @@
 import { Bif } from '@chitin/bif';
 import { Res } from '@chitin/res/impl/res';
 import { ResImage } from '@chitin/res/res-image';
+import { handlers } from '@handlers';
 import { ProKey, ProValue, proTab } from '@tables/pro';
 import { readBufferString } from '@utils';
-import { handlers } from 'src/handlers';
 
 export class ResItm extends Res {
   public name: string;
@@ -40,7 +40,7 @@ export class ResItm extends Res {
 
       if (attackType === 2) {
         this.proValues.push(
-          proTab[this.file.readUInt16LE(extHeadersOff + 56 * i + 0x2a) as ProKey]
+          proTab[this.file.readUInt16LE(extHeadersOff + 56 * i + 0x2a) as ProKey],
         );
       }
     }

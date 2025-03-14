@@ -17,19 +17,21 @@ import { Timetracker } from '@time/timetracker';
 import { Control } from '@views/control/control';
 import { WindowLinux } from '@window/window-linux';
 import { WindowWin32 } from '@window/window-win32';
+import * as os from 'os';
 import 'source-map-support/register';
-import { linux } from 'src';
 import { Components } from 'src/components/components';
 
 export class Main {
   constructor() {
+    handlers.linux = os.platform() === 'linux';
+
     handlers.config = new Config();
 
     if (handlers.config.quitting) {
       return;
     }
 
-    handlers.reqs = linux ? new ReqsLinux() : new ReqsWin32();
+    handlers.reqs = handlers.linux ? new ReqsLinux() : new ReqsWin32();
 
     handlers.tlk = new Tlk();
 
@@ -37,17 +39,17 @@ export class Main {
 
     handlers.chitin.setup();
 
-    handlers.syscalls = linux ? new SyscallsLinux() : new SyscallsWin32();
+    handlers.syscalls = handlers.linux ? new SyscallsLinux() : new SyscallsWin32();
 
-    handlers.memread = linux ? new MemreadLinux() : new MemreadWin32();
+    handlers.memread = handlers.linux ? new MemreadLinux() : new MemreadWin32();
 
-    handlers.memscan = linux ? new MemscanLinux() : new MemscanWin32();
+    handlers.memscan = handlers.linux ? new MemscanLinux() : new MemscanWin32();
 
-    handlers.window = linux ? new WindowLinux() : new WindowWin32();
+    handlers.window = handlers.linux ? new WindowLinux() : new WindowWin32();
 
     handlers.entities = new Entities();
 
-    handlers.shortcuts = linux ? new ShortcutsLinux() : new ShortcutsWin32();
+    handlers.shortcuts = handlers.linux ? new ShortcutsLinux() : new ShortcutsWin32();
 
     handlers.control = new Control();
 
@@ -65,7 +67,7 @@ export class Main {
   }
 
   private loop(): void {
-    if (linux) {
+    if (handlers.linux) {
       handlers.reqs.run();
     }
 

@@ -26,7 +26,6 @@
       "@views/*": ["src/views/*"],
       "@window/*": ["src/window/*"],
       "@handlers": ["src/handlers"],
-      "@index": ["src/index.ts"],
       "@main": ["src/main.ts"],
       "@utils": ["src/utils.ts"]
     }

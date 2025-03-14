@@ -1,5 +1,4 @@
 import { handlers } from '@handlers';
-import { linux } from '@index';
 
 export class Basic {
   public type: number;
@@ -47,39 +46,39 @@ export class Basic {
 
     this.pos.x = handlers.memread.memReadNumber(
       this.base + BigInt(0xc),
-      linux ? 'UINT16' : 'UINT32'
+      handlers.linux ? 'UINT16' : 'UINT32',
     );
 
     this.pos.y = handlers.memread.memReadNumber(
       this.base + BigInt(0x10),
-      linux ? 'UINT16' : 'UINT32'
+      handlers.linux ? 'UINT16' : 'UINT32',
     );
 
     const nameAddr: bigint = handlers.memread.memReadBigint(
-      this.base + BigInt(0x3928 - (linux ? 0x18 : 0x0)),
-      'ADDR'
+      this.base + BigInt(0x3928 - (handlers.linux ? 0x18 : 0x0)),
+      'ADDR',
     );
 
     this.name = handlers.memread.memReadString(BigInt(nameAddr));
 
     this.viewport.width = handlers.memread.memReadNumber(
       this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8),
-      linux ? 'INT16' : 'INT32'
+      handlers.linux ? 'INT16' : 'INT32',
     );
 
     this.viewport.height = handlers.memread.memReadNumber(
       this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8 + 0x4),
-      linux ? 'INT16' : 'INT32'
+      handlers.linux ? 'INT16' : 'INT32',
     );
 
     this.scroll.x = handlers.memread.memReadNumber(
       this.gameAreaAddr + BigInt(0x5c8 + 0xc0),
-      'INT32'
+      'INT32',
     );
 
     this.scroll.y = handlers.memread.memReadNumber(
       this.gameAreaAddr + BigInt(0x5c8 + 0xc0 + 0x4),
-      'INT32'
+      'INT32',
     );
 
     this.relative.x = this.pos.x - this.scroll.x;

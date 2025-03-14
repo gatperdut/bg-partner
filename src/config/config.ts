@@ -1,4 +1,4 @@
-import { linux } from '@index';
+import { handlers } from '@handlers';
 import { app, dialog } from 'electron';
 import * as fs from 'fs';
 import * as Joi from 'joi';
@@ -41,7 +41,7 @@ export class Config {
   private schema: Joi.ObjectSchema<ConfigObj> = Joi.object<ConfigObj>({
     exe: Joi.string().pattern(this.exePattern).min(1),
     path: Joi.string()
-      .pattern(linux ? this.pathPatternLinux : this.pathPatternWin32)
+      .pattern(handlers.linux ? this.pathPatternLinux : this.pathPatternWin32)
       .min(1),
     locale: Joi.string().pattern(this.localePattern).min(5).max(5),
     display: Joi.number().integer().min(0).allow(null),
@@ -52,7 +52,7 @@ export class Config {
   });
 
   private default: ConfigObj = {
-    exe: linux ? 'BaldursGateII' : 'Baldur.exe',
+    exe: handlers.linux ? 'BaldursGateII' : 'Baldur.exe',
     path: null,
     locale: 'en_US',
     display: null,
@@ -94,7 +94,7 @@ export class Config {
     if (!fs.existsSync(path.join(this.obj.path, 'lang', this.obj.locale, 'dialog.tlk'))) {
       this.quit(
         'Cannot find dialog.tlk',
-        'Check your configuration fields "path" and "locale", then try again.'
+        'Check your configuration fields "path" and "locale", then try again.',
       );
 
       return;
@@ -131,7 +131,7 @@ export class Config {
 
       this.quit(
         'bg-partner.json created',
-        'Configuration file created, will quit now. Edit and relaunch.'
+        'Configuration file created, will quit now. Edit and relaunch.',
       );
 
       return this.default;

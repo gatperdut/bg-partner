@@ -1,5 +1,4 @@
 import { config, handlers, reqsLinux } from '@handlers';
-import { linux } from '@index';
 import { app, BrowserWindow, ipcMain, IpcMainEvent } from 'electron';
 import * as path from 'path';
 
@@ -25,7 +24,9 @@ export class Control {
     this.window = new BrowserWindow({
       x: Math.round(handlers.window.display.width / 2 - this.width / 2),
       y: Math.round(handlers.window.display.height / 2 - this.height / 2),
-      icon: linux ? null : path.join(app.getAppPath(), 'src', 'assets', 'icons', '256x256.ico'),
+      icon: handlers.linux
+        ? null
+        : path.join(app.getAppPath(), 'src', 'assets', 'icons', '256x256.ico'),
       width: this.width,
       height: this.height,
       minWidth: this.width,
@@ -47,7 +48,7 @@ export class Control {
 
     this.window.loadURL(CONTROL_WEBPACK_ENTRY).then((): void => {
       this.window.webContents.send('control.setup', {
-        linux: linux,
+        linux: handlers.linux,
         reqsObj: reqsLinux().obj,
         configObj: config().obj,
       });
@@ -57,7 +58,7 @@ export class Control {
       app.quit();
     });
 
-    ipcMain.once('control.configSet', (event: IpcMainEvent, height: number): void => {
+    ipcMain.once('control.configSet', (_event: IpcMainEvent, height: number): void => {
       this.window.setBounds({ height: height + 70 });
     });
   }
@@ -65,7 +66,7 @@ export class Control {
   public run(): void {
     !this.window.isDestroyed() &&
       this.window?.webContents.send('control.update', {
-        linux: linux,
+        linux: handlers.linux,
         alive: handlers.memscan.alive,
         reqsObj: reqsLinux().obj,
       });
