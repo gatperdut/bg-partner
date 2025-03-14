@@ -5,10 +5,27 @@ import type { Configuration } from 'webpack';
 import { plugins } from './webpack.plugins';
 import { rules } from './webpack.rules';
 
+rules.push(
+  {
+    test: /native_modules[/\\].+\.node$/,
+    use: 'node-loader',
+  },
+  {
+    test: /[/\\]node_modules[/\\].+\.(m?js|node)$/,
+    parser: { amd: false },
+    use: {
+      loader: '@vercel/webpack-asset-relocator-loader',
+      options: {
+        outputAssetBase: 'native_modules',
+      },
+    },
+  },
+);
+
 export const mainConfig: Configuration = {
   entry: './src/index.ts',
   module: {
-    rules,
+    rules: rules,
   },
   plugins: [
     ...plugins,
@@ -23,7 +40,7 @@ export const mainConfig: Configuration = {
     }),
   ],
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json', '.scss'],
+    extensions: ['.js', '.ts'],
     plugins: [
       new TsconfigPathsPlugin({
         configFile: './tsconfig.json',
