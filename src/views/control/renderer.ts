@@ -1,4 +1,4 @@
-import { ConfigObj } from '../../config/config';
+import { ConfigObj } from 'src/config/config';
 import { ReqsObj } from '../../reqs/reqs';
 import { ReqsLinuxObj } from '../../reqs/reqs-linux';
 import './control.scss';

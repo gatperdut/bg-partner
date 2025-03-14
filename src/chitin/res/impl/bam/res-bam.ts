@@ -1,9 +1,9 @@
+import { Bif } from '@chitin/bif';
+import { Palette } from '@chitin/res/impl/bam/palette';
+import { Res } from '@chitin/res/impl/res';
 import { PNG } from 'pngjs';
 import zlib from 'zlib';
 import { readBufferString } from '../../../../utils';
-import { Bif } from '../../../bif';
-import { Res } from '../res';
-import { Palette } from './palette';
 
 export class ResBam extends Res {
   private signature: string;

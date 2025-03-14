@@ -8,11 +8,24 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "outDir": "dist",
+    "outDir": "./dist/out-tsc",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "paths": {
-      "*": ["node_modules/*"]
+      "@chitin/*": ["src/chitin/*"],
+      "@config/*": ["src/config/*"],
+      "@const/*": ["src/const/*"],
+      "@entities/*": ["src/entities/*"],
+      "@memread/*": ["src/memread/*"],
+      "@memscan/*": ["src/memscan/*"],
+      "@reqs/*": ["src/reqs/*"],
+      "@shortcuts/*": ["src/shortcuts/*"],
+      "@sprite/*": ["src/sprite/*"],
+      "@syscalls/*": ["src/syscalls/*"],
+      "@tables/*": ["src/tables/*"],
+      "@time/*": ["src/time/*"],
+      "@views/*": ["src/views/*"],
+      "@window/*": ["src/window/*"]
     }
   },
   "include": ["src/**/*.ts"]

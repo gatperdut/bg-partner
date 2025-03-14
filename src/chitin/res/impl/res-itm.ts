@@ -1,8 +1,8 @@
-import { Bif } from '../../../chitin/bif';
-import { handlers } from '../../../handlers';
-import { ProKey, proTab, ProValue } from '../../../tables/pro';
+import { Bif } from '@chitin/bif';
+import { ResImage } from '@chitin/res/res-image';
+import { ProKey, ProValue, proTab } from '@tables/pro';
+import { handlers } from 'src/handlers';
 import { readBufferString } from '../../../utils';
-import { ResImage } from '../res-image';
 import { Res } from './res';
 
 export class ResItm extends Res {
