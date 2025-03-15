@@ -97,6 +97,8 @@ export class ResBam extends Res {
       this.png.data[i + 3] = paletteIdx === palette.rleIdx ? paletteValue[3] : 0xff;
     }
 
+    this.crop();
+
     return this.svg();
   }
 
@@ -130,7 +132,63 @@ export class ResBam extends Res {
       pxIdx++;
     }
 
+    this.crop();
+
     this.svg();
+  }
+
+  private crop(): void {
+    let top: number = this.size.height;
+
+    let bottom: number = 0;
+
+    let left: number = this.size.width;
+
+    let right: number = 0;
+
+    for (let h: number = 0; h < this.size.height; h++) {
+      for (let w: number = 0; w < this.size.width; w++) {
+        const idx: number = (this.size.width * h + w) * 4;
+
+        const alpha: number = this.png.data[idx + 3];
+
+        if (alpha > 0) {
+          top = Math.min(top, h);
+          bottom = Math.max(bottom, h);
+          left = Math.min(left, w);
+          right = Math.max(right, w);
+        }
+      }
+    }
+
+    const cropped: Electron.Size = {
+      width: right - left + 1,
+      height: bottom - top + 1,
+    };
+
+    if (this.size.width === cropped.width && this.size.height === cropped.height) {
+      return;
+    }
+
+    const data: Uint8Array = new Uint8Array(cropped.width * cropped.height * 4);
+
+    for (let h: number = top; h <= bottom; h++) {
+      for (let w: number = left; w <= right; w++) {
+        const originalIdx: number = (this.size.width * h + w) * 4;
+
+        const newIdx: number = ((h - top) * cropped.width + (w - left)) * 4;
+
+        data.set(this.png.data.slice(originalIdx, originalIdx + 4), newIdx);
+      }
+    }
+
+    this.png = new PNG({ width: cropped.width, height: cropped.height });
+
+    this.png.data = Buffer.from(data);
+
+    this.size.width = cropped.width;
+
+    this.size.height = cropped.height;
   }
 
   private svg(): void {

@@ -6,6 +6,10 @@ import Handlebars from 'handlebars';
 export type ImageData = ComponentData & {
   base64: string;
 
+  width: number;
+
+  height: number;
+
   halign: number;
 
   valign: number;
@@ -21,12 +25,18 @@ export class Image extends Component {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.image);
 
+    const height: number = Math.min(resImage.size.height, 35);
+
+    const width: number = Math.floor(resImage.size.width * (height / resImage.size.height));
+
     this.imageData = {
       ...this.componentData,
       title: title,
       base64: resImage.base64,
-      halign: Math.floor(resImage.size.width / 2),
-      valign: Math.floor(resImage.size.height / 2),
+      width: width,
+      height: height,
+      halign: Math.floor(width / 2),
+      valign: Math.floor(height / 2),
       tippyHtml: tippyHtml,
     };
 
