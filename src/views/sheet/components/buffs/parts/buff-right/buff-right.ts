@@ -3,13 +3,13 @@ import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 
 export type BuffRightData = ComponentData & {
-  value: number;
+  value: string;
 };
 
 export class BuffRight extends Component {
   protected buffRightData: BuffRightData;
 
-  constructor(value: number, title: string) {
+  constructor(value: string, title: string) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffRight);

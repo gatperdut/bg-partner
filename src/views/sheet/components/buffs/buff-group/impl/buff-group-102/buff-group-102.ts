@@ -30,7 +30,7 @@ export class BuffGroup102 extends BuffGroup {
     this.buffGroup102Data = {
       ...this.buffGroupData,
       imageHtml: new Image(effs[0].resImage, effs[0].ressrc.name, null).html,
-      rightHtml: new BuffRight(max, 'Maximum level').html,
+      rightHtml: new BuffRight(max.toString(), 'Maximum level').html,
     };
 
     this.html = compiled(this.buffGroup102Data);

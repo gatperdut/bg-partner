@@ -4,7 +4,7 @@ import { ResItm } from '@chitin/res/impl/res-itm';
 import { ResSpl } from '@chitin/res/impl/res-spl';
 import { ResFactory } from '@chitin/res/res-factory';
 import { handlers } from '@handlers';
-import { ProValue, proValues } from '@tables/pro';
+import { ProValue, ProValues } from '@tables/pro';
 import { ResextKey, ResextValue, resextTab } from '@tables/resext';
 import fs from 'fs';
 import _ from 'lodash';
@@ -80,7 +80,7 @@ export class Chitin {
   }
 
   private proValue2ItmSetup(): void {
-    _.each(proValues, (proValue: ProValue): void => {
+    _.each(ProValues, (proValue: ProValue): void => {
       this.proValue2Itms[proValue] = [];
 
       _.each(_.values(this.ress.ITM), (resItm: ResItm): void => {

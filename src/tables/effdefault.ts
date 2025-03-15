@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { EffKey } from './eff';
 
 export type EffdefaultTab = typeof effdefaultTab;
@@ -13,3 +14,7 @@ export const effdefaultTab: Partial<Record<EffKey, string>> = {
   69: 'spwi310',
   98: 'sppr711',
 } as const;
+
+export const EffdefaultKeys = _.keys(effdefaultTab);
+
+export const EffdefaultValues = _.values(effdefaultTab);

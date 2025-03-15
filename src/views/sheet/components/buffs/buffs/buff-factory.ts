@@ -6,6 +6,7 @@ import { BuffGroup83 } from '@views/sheet/components/buffs/buff-group/impl/buff-
 import { BuffGroupStub } from '@views/sheet/components/buffs/buff-group/impl/buff-group-stub/buff-group-stub';
 import { BuffSingle } from '@views/sheet/components/buffs/buff-single/buff-single';
 import { BuffSingle159 } from '@views/sheet/components/buffs/buff-single/buff-single-159/buff-single-159';
+import { BuffGroup0 } from '../buff-group/impl/buff-group-0/buff-group-0';
 import { BuffItem } from '../buff-item/buff-item';
 
 export class BuffFactory {
@@ -20,6 +21,8 @@ export class BuffFactory {
 
   public static group(effs: Eff[]): BuffGroup {
     switch (effs[0].key) {
+      case 0:
+        return new BuffGroup0(effs);
       case 83:
         return new BuffGroup83(effs as Eff83[]);
       case 102:

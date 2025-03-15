@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export type MsectypeTable = Record<number, string>;
 
 export const msectypeTable: MsectypeTable = {
@@ -16,3 +18,7 @@ export const msectypeTable: MsectypeTable = {
   12: 'Combination',
   13: 'Non-combat',
 };
+
+export const MsectypeKeys = _.keys(msectypeTable);
+
+export const MsectypeValues = _.values(msectypeTable);

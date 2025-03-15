@@ -103,8 +103,6 @@ export abstract class Eff {
 
     this.ressrcSetup(handlers.memread.memReadString(base + BigInt(0x8 + 0x8c)).toLowerCase());
 
-    this.resImageSetup();
-
     this.grouped = _.includes(Effs.effsGrouped, this.key);
 
     // TODO drop this.
@@ -133,11 +131,17 @@ export abstract class Eff {
           case 'SPL':
             this.ressrc = ressrc as ResSpl;
 
+            this.resImage = this.ressrc.resImage;
+
             break;
           case 'ITM':
             this.ressrc = this.ressrcDefault(ressrc);
 
             this.ressrcParent = ressrc as ResItm;
+
+            this.resImage = this.resImageDefault();
+
+            this.resImageParent = this.ressrcParent.resImage;
 
             break;
         }
@@ -157,25 +161,6 @@ export abstract class Eff {
     }
 
     return res as ResSpl;
-  }
-
-  private resImageSetup(): void {
-    if (!this.ressrc) {
-      return;
-    }
-
-    switch (this.ressrcType) {
-      case 'SPL':
-        this.resImage = this.ressrc.resImage;
-
-        break;
-      case 'ITM':
-        this.resImage = this.resImageDefault();
-
-        this.resImageParent = this.ressrcParent.resImage;
-
-        break;
-    }
   }
 
   private resImageDefault(): ResImage {

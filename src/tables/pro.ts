@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export type ProTab = typeof proTab;
 
 export type ProKey = keyof ProTab;
@@ -260,4 +262,6 @@ export const proTab = {
   345: 'RANGE10',
 } as const;
 
-export const proValues: ProValue[] = Object.values(proTab);
+export const ProKeys = _.keys(proTab);
+
+export const ProValues = _.values(proTab);

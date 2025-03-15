@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export type EffTab = typeof effTab;
 
 export type EffKey = keyof EffTab;
@@ -355,3 +357,7 @@ export const effTab = {
   366: 'Spell_Apply_Spell_On_Move',
   367: 'Minimum_base_stats',
 } as const;
+
+export const EffKeys = _.keys(effTab);
+
+export const EffValues = _.values(effTab);

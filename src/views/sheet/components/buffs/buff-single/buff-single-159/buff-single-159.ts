@@ -16,7 +16,7 @@ export class BuffSingle159 extends BuffSingle {
 
     this.buffSingle159Data = {
       ...this.buffSingleData,
-      rightHtml: new BuffRight(eff.param1, 'Number of images left.').html,
+      rightHtml: new BuffRight(eff.param1.toString(), 'Number of images left.').html,
     };
 
     this.html = compiled(this.buffSingle159Data);

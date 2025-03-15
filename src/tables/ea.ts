@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export type EaTab = typeof eaTab;
 
 export type EaKey = keyof EaTab;
@@ -26,3 +28,7 @@ export const eaTab = {
   254: 'Charmed PC',
   255: 'Enemy',
 } as const;
+
+export const EaKeys = _.keys(eaTab);
+
+export const EaValues = _.values(eaTab);

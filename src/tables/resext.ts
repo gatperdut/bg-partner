@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export type ResextTab = typeof resextTab;
 
 export type ResextKey = keyof ResextTab;
@@ -56,3 +58,7 @@ export const resextTab = {
   4094: 'MUS',
   4095: 'ACM',
 } as const;
+
+export const ResextKeys = _.keys(resextTab);
+
+export const ResextValues = _.values(resextTab);

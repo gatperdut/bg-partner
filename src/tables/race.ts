@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export type RaceTab = typeof raceTab;
 
 export type RaceKey = keyof RaceTab;
@@ -113,3 +115,7 @@ export const raceTab = {
   215: 'Magical plate armor',
   255: 'No race',
 } as const;
+
+export const RaceKeys = _.keys(raceTab);
+
+export const RaceValues = _.values(raceTab);
