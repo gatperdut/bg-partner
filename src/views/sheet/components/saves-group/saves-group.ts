@@ -1,4 +1,4 @@
-import { Component, ComponentData } from '@views/shared/component/component';
+import { Component, ComponentData } from '@views/shared/component';
 import { Saves } from '@views/sheet/components/saves/saves';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';

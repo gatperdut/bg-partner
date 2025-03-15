@@ -1,6 +1,6 @@
 import { Eff } from '@sprite/effs/impl/eff';
 import { EffKey } from '@tables/eff';
-import { Component, ComponentData } from '@views/shared/component/component';
+import { Component, ComponentData } from '@views/shared/component';
 import { BuffFactory } from '@views/sheet/components/buffs/buffs/buff-factory';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';

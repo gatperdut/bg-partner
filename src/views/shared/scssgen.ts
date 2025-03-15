@@ -32,7 +32,7 @@ const from = (output: string[], root: string, dir: string): void => {
       return;
     }
 
-    const relative: string = path.relative(path.join(root), full);
+    const relative: string = path.relative(path.join(root), full).replace(/\\/g, '/');
 
     output.push(`@use '${relative.slice(0, -5)}';`);
   });

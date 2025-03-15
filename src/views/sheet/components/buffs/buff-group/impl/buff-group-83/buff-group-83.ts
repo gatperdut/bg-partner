@@ -11,7 +11,13 @@ export class BuffGroup83 extends BuffGroup {
   protected buffGroup83Data: BuffGroup83Data;
 
   constructor(effs: Eff83[]) {
-    super(effs[0].duration, effs[0].casterLevel, effs[0].spellLevel);
+    super(
+      effs[0].duration,
+      effs[0].casterLevel,
+      effs[0].spellLevel,
+      effs[0].school,
+      effs[0].schoolShort,
+    );
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffGroup83);
 

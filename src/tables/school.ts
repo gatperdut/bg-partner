@@ -16,3 +16,20 @@ export const schoolTab = {
   8: 'Transmutation',
   9: 'General school',
 } as const;
+
+export type SchoolShortTab = typeof schoolShortTab;
+
+export type SchoolShortValue = SchoolShortTab[keyof SchoolShortTab];
+
+export const schoolShortTab = {
+  0: 'NONE',
+  1: 'ABJ',
+  2: 'CON',
+  3: 'DIV',
+  4: 'ENC',
+  5: 'ILL',
+  6: 'INV',
+  7: 'NEC',
+  8: 'TRA',
+  9: 'GEN',
+} as const;

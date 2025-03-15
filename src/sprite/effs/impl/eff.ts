@@ -6,7 +6,13 @@ import { handlers } from '@handlers';
 import { EffSource, Effs } from '@sprite/effs/effs';
 import { EffKey, effTab } from '@tables/eff';
 import { resextValueSubset } from '@tables/resext';
-import { SchoolKey, SchoolValue, schoolTab } from '@tables/school';
+import {
+  SchoolKey,
+  SchoolShortValue,
+  SchoolValue,
+  schoolShortTab,
+  schoolTab,
+} from '@tables/school';
 import _ from 'lodash';
 
 const RessrcTypes = resextValueSubset(['ITM', 'SPL'] as const);
@@ -44,6 +50,8 @@ export abstract class Eff {
   public spellLevel: number;
 
   // Custom fields
+  public schoolShort: SchoolShortValue;
+
   public ressrcType: RessrcType;
 
   public ressrc: ResItm | ResSpl;
@@ -53,8 +61,14 @@ export abstract class Eff {
   public grouped: boolean;
 
   constructor(public key: EffKey, protected base: bigint, public source: EffSource) {
-    this.school =
-      schoolTab[handlers.memread.memReadNumber(base + BigInt(0x8 + 0x44), 'UINT32') as SchoolKey];
+    const schoolKey: SchoolKey = handlers.memread.memReadNumber(
+      base + BigInt(0x8 + 0x44),
+      'UINT32',
+    ) as SchoolKey;
+
+    this.school = schoolTab[schoolKey];
+
+    this.schoolShort = schoolShortTab[schoolKey];
 
     this.secondaryType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0xc8), 'INT32');
 

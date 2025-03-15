@@ -1,5 +1,5 @@
 import { ResItm } from '@chitin/res/impl/res-itm';
-import { Component, ComponentData } from '@views/shared/component/component';
+import { Component, ComponentData } from '@views/shared/component';
 import { Image } from '@views/sheet/components/image/image';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';

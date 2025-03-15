@@ -60,7 +60,7 @@ On its first execution BGPartner will create a [JSON](https://www.shapediver.com
 
 - `exe`: the name of the executable. On Windows this is always `Baldur.exe`, and will likely require no change. On Linux it is either `BaldursGate` or `BaldursGateII`, so edit accordingly.
 
-- `path`: the path to the installation folder. Use absolute paths and, on Linux, avoid `~`.
+- `path`: the path to the installation folder. Use absolute paths. On Linux, avoid `~`. On windows, escape `\` with `\\`.
 
 - `locale`: language. Must be one of `de_DE`, `en_US`, `es_ES`, `fr_FR`, `it_IT`, `ko_KR`, `pl_PL`, `ru_RU`, and `zh_CN`.
 
@@ -165,3 +165,5 @@ gdb -p $(pgrep -n bash)
 - do the callbacks need `${id}`?
 
 - does the approach of a single timer (from the first loaded entity) do funky stuff with timestop?s
+
+- package.json: "type": "module" refactor.

@@ -1,4 +1,4 @@
-import { Component, ComponentData } from '@views/shared/component/component';
+import { Component, ComponentData } from '@views/shared/component';
 
 export type TooltipData = ComponentData;
 
