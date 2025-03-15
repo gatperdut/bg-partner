@@ -4,20 +4,25 @@ import Handlebars from 'handlebars';
 
 export type BuffDurationData = ComponentData & {
   duration: number;
+
+  combi: string;
 };
 
 export class BuffDuration extends Component {
   protected buffDurationData: BuffDurationData;
 
-  constructor(duration: number, time: number) {
+  constructor(duration: number, time: number, key: number) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffDuration);
 
+    const durationS: number = Math.round((duration - time) / 15);
+
     this.buffDurationData = {
       ...this.componentData,
       title: 'Duration',
-      duration: Math.round((duration - time) / 15),
+      duration: durationS,
+      combi: `${durationS}_${key}`,
     };
 
     this.html = compiled(this.buffDurationData);

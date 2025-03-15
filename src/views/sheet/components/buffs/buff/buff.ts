@@ -22,6 +22,7 @@ export abstract class Buff extends Component {
     spellLevel: number,
     school: SchoolValue,
     schoolShort: SchoolShortValue,
+    key: number,
   ) {
     super();
 
@@ -29,7 +30,7 @@ export abstract class Buff extends Component {
       ...this.componentData,
       levelsHtml: new BuffLevels(casterLevel, spellLevel).html,
       imageHtml: null,
-      durationHtml: new BuffDuration(duration, sheetdata.timetracker.time).html,
+      durationHtml: new BuffDuration(duration, sheetdata.timetracker.time, key).html,
       rightHtml: null,
       schoolHtml: new BuffSchool(school, schoolShort).html,
     };

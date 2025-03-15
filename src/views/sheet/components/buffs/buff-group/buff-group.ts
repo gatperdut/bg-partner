@@ -12,8 +12,9 @@ export abstract class BuffGroup extends Buff {
     spellLevel: number,
     school: SchoolValue,
     schoolShort: SchoolShortValue,
+    key: number,
   ) {
-    super(duration, casterLevel, spellLevel, school, schoolShort);
+    super(duration, casterLevel, spellLevel, school, schoolShort, key);
 
     this.buffGroupData = {
       ...this.buffData,

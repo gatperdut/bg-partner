@@ -17,6 +17,7 @@ export class BuffItem extends Buff {
       effs[0].spellLevel,
       effs[0].school,
       effs[0].schoolShort,
+      effs[0].key,
     );
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffItem);

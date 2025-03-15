@@ -11,6 +11,7 @@ export class BuffGroupStub extends BuffGroup {
       effs[0].spellLevel,
       effs[0].school,
       effs[0].schoolShort,
+      effs[0].key,
     );
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffGroupStub);
