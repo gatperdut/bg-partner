@@ -1,3 +1,4 @@
+import { DurtypeKey } from '@tables/eff/durtype';
 import { SchoolShortValue, SchoolValue } from '@tables/school';
 import { Component, ComponentData } from '@views/shared/component';
 import { BuffDuration } from '@views/sheet/components/buffs/parts/buff-duration/buff-duration';
@@ -18,6 +19,7 @@ export abstract class Buff extends Component {
 
   constructor(
     duration: number,
+    durtype: DurtypeKey,
     casterLevel: number,
     spellLevel: number,
     school: SchoolValue,
@@ -30,7 +32,7 @@ export abstract class Buff extends Component {
       ...this.componentData,
       levelsHtml: new BuffLevels(casterLevel, spellLevel).html,
       imageHtml: null,
-      durationHtml: new BuffDuration(duration, sheetdata.timetracker.time, key).html,
+      durationHtml: new BuffDuration(duration, durtype, sheetdata.timetracker.time, key).html,
       rightHtml: null,
       schoolHtml: new BuffSchool(school, schoolShort).html,
     };

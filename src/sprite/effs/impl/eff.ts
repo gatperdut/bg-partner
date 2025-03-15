@@ -5,6 +5,7 @@ import { ResImage } from '@chitin/res/res-image';
 import { handlers } from '@handlers';
 import { EffSource, Effs } from '@sprite/effs/effs';
 import { EffKey, effTab } from '@tables/eff';
+import { DurtypeKey } from '@tables/eff/durtype';
 import { effdefaultTab } from '@tables/effdefault';
 import { resextValueSubset } from '@tables/resext';
 import {
@@ -44,7 +45,7 @@ export abstract class Eff {
 
   public duration: number;
 
-  public durationType: number;
+  public durtype: DurtypeKey;
 
   public casterLevel: number;
 
@@ -95,7 +96,7 @@ export abstract class Eff {
 
     this.duration = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x20), 'INT32');
 
-    this.durationType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x1c), 'INT32');
+    this.durtype = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x1c), 'INT32') as DurtypeKey;
 
     this.casterLevel = handlers.memread.memReadNumber(base + BigInt(0x8 + 0xc0), 'INT32');
 
@@ -173,7 +174,7 @@ export abstract class Eff {
         this.param4
       } 5:${this.param5} res:${this.res} res2:${this.res2} res3:${this.res3} source:${
         this.ressrc?.code
-      } durType:${this.durationType}`,
+      } durType:${this.durtype}`,
     );
   }
 }

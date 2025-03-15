@@ -1,3 +1,4 @@
+import { DurtypeKey } from '@tables/eff/durtype';
 import { SchoolShortValue, SchoolValue } from '@tables/school';
 import { Buff, BuffData } from '@views/sheet/components/buffs/buff/buff';
 
@@ -8,13 +9,14 @@ export abstract class BuffGroup extends Buff {
 
   constructor(
     duration: number,
+    durtype: DurtypeKey,
     casterLevel: number,
     spellLevel: number,
     school: SchoolValue,
     schoolShort: SchoolShortValue,
     key: number,
   ) {
-    super(duration, casterLevel, spellLevel, school, schoolShort, key);
+    super(duration, durtype, casterLevel, spellLevel, school, schoolShort, key);
 
     this.buffGroupData = {
       ...this.buffData,

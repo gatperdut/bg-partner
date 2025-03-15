@@ -13,6 +13,7 @@ export class BuffItem extends Buff {
   constructor(effs: Eff[]) {
     super(
       effs[0].duration,
+      effs[0].durtype,
       effs[0].casterLevel,
       effs[0].spellLevel,
       effs[0].school,
