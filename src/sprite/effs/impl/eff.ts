@@ -5,6 +5,7 @@ import { ResImage } from '@chitin/res/res-image';
 import { handlers } from '@handlers';
 import { EffSource, Effs } from '@sprite/effs/effs';
 import { EffKey, effTab } from '@tables/eff';
+import { effdefaultTab } from '@tables/effdefault';
 import { resextValueSubset } from '@tables/resext';
 import {
   SchoolKey,
@@ -147,18 +148,15 @@ export abstract class Eff {
   }
 
   private ressrcDefault(ressrcFallback: Res): ResSpl {
-    switch (this.key) {
-      case 0:
-        return handlers.chitin.ress.SPL['spwi102'] as ResSpl;
-      case 69:
-        return handlers.chitin.ress.SPL['spwi310'] as ResSpl;
-      case 98:
-        return handlers.chitin.ress.SPL['sppr711'] as ResSpl;
-      default:
-        console.error(`ressrcDefault needs to be defined for ${this.key}.`);
+    let res = handlers.chitin.ress.SPL[effdefaultTab[this.key]];
 
-        return ressrcFallback as ResSpl;
+    if (!res) {
+      console.error(`effdefaultTab needs a new entry for ${this.key}.`);
+
+      res = ressrcFallback;
     }
+
+    return res as ResSpl;
   }
 
   private resImageSetup(): void {
