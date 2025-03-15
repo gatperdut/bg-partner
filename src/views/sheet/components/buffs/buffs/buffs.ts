@@ -58,7 +58,7 @@ export class Buffs extends Component {
       (effs: Eff[]): Record<number, Eff[]> => _.groupBy(effs, (eff: Eff): EffKey => eff.key),
     );
 
-    return _.map(_.keys(buffsByCodeByEffKey), (code: string) => {
+    return _.map(_.keys(buffsByCodeByEffKey), (code: string): string[] => {
       return _.map(
         _.keys(buffsByCodeByEffKey[code]).map(Number),
         (effKey: EffKey): string => BuffFactory.group(buffsByCodeByEffKey[code][effKey]).html,
