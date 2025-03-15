@@ -134,7 +134,7 @@ export abstract class Eff {
 
             break;
           case 'ITM':
-            this.ressrc = this.ressrcDefault();
+            this.ressrc = this.ressrcDefault(ressrc);
 
             this.ressrcParent = ressrc as ResItm;
 
@@ -143,6 +143,21 @@ export abstract class Eff {
 
         break;
       }
+    }
+  }
+
+  private ressrcDefault(ressrcFallback: Res): ResSpl {
+    switch (this.key) {
+      case 0:
+        return handlers.chitin.ress.SPL['spwi102'] as ResSpl;
+      case 69:
+        return handlers.chitin.ress.SPL['spwi310'] as ResSpl;
+      case 98:
+        return handlers.chitin.ress.SPL['sppr711'] as ResSpl;
+      default:
+        console.error(`ressrcDefault needs to be defined for ${this.key}.`);
+
+        return ressrcFallback as ResSpl;
     }
   }
 
@@ -165,19 +180,8 @@ export abstract class Eff {
     }
   }
 
-  private ressrcDefault(): ResSpl {
-    switch (this.key) {
-      case 0:
-        return handlers.chitin.ress.SPL['spwi102'] as ResSpl;
-      case 98:
-        return handlers.chitin.ress.SPL['sppr711'] as ResSpl;
-      default:
-        console.error(`ressrcDefault needs to be defined for ${this.key}.`);
-    }
-  }
-
   private resImageDefault(): ResImage {
-    return this.ressrcDefault().resImage;
+    return this.ressrcDefault(this.ressrc).resImage;
   }
 
   public summary(): void {
