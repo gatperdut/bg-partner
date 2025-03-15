@@ -9,7 +9,7 @@ import _ from 'lodash';
 export type BuffsData = ComponentData & {
   buffSinglesHtml: string[];
 
-  buffGroupsHtml: string[];
+  buffGroupsHtml: string[][];
 
   buffItemsHtml: string[];
 };
@@ -22,7 +22,7 @@ export class Buffs extends Component {
 
     const buffSinglesHtml: string[] = this.buffSinglesHtml(buffs, fromItem);
 
-    const buffGroupsHtml: string[] = this.buffGroupsHtml(buffs, fromItem);
+    const buffGroupsHtml: string[][] = this.buffGroupsHtml(buffs, fromItem);
 
     const buffItemsHtml: string[] = this.buffItemsHtml(buffs, fromItem);
 
@@ -46,16 +46,24 @@ export class Buffs extends Component {
     );
   }
 
-  private buffGroupsHtml(buffs: Eff[], fromItem: boolean): string[] {
-    const buffGroupsByKey: Record<number, Eff[]> = _.groupBy(
-      _.filter(buffs, (eff: Eff): boolean => (fromItem || eff.ressrcType === 'SPL') && eff.grouped),
-      (eff: Eff): EffKey => eff.key,
+  private buffGroupsHtml(buffs: Eff[], fromItem: boolean): string[][] {
+    const buffsByCodeByEffKey = _.mapValues(
+      _.groupBy(
+        _.filter(
+          buffs,
+          (eff: Eff): boolean => (fromItem || eff.ressrcType === 'SPL') && eff.grouped,
+        ),
+        (eff: Eff): string => eff.ressrc.code,
+      ),
+      (effs: Eff[]): Record<number, Eff[]> => _.groupBy(effs, (eff: Eff): EffKey => eff.key),
     );
 
-    return _.map(
-      _.keys(buffGroupsByKey).map(Number),
-      (effKey: EffKey): string => BuffFactory.group(buffGroupsByKey[effKey]).html,
-    );
+    return _.map(_.keys(buffsByCodeByEffKey), (code: string) => {
+      return _.map(
+        _.keys(buffsByCodeByEffKey[code]).map(Number),
+        (effKey: EffKey): string => BuffFactory.group(buffsByCodeByEffKey[code][effKey]).html,
+      );
+    });
   }
 
   private buffItemsHtml(buffs: Eff[], fromItem: boolean): string[] {

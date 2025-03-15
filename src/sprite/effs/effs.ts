@@ -38,7 +38,7 @@ export class Effs {
     267, 271, 275, 276, 277, 282, 283, 287, 290, 291, 293, 295, 296, 309, 313, 315, 327, 330, 336,
   ];
 
-  public static effsGrouped: number[] = [83, 102];
+  public static effsGrouped: number[] = [0, 83, 102];
 
   constructor(private baseTimed: bigint, private baseEquipped: bigint) {
     // Empty

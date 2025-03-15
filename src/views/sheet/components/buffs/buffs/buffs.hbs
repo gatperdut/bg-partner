@@ -4,7 +4,9 @@
   {{/each}}
 
   {{#each buffGroupsHtml}}
-    {{{this}}}
+    {{#each this}}
+      {{{this}}}
+    {{/each}}
   {{/each}}
 
   {{#each buffItemsHtml}}

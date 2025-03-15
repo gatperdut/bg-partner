@@ -1,9 +1,14 @@
 import { Eff } from '@sprite/effs/impl/eff';
-import { BuffGroup } from '@views/sheet/components/buffs/buff-group/buff-group';
+import { BuffGroup, BuffGroupData } from '@views/sheet/components/buffs/buff-group/buff-group';
+import { Image } from '@views/sheet/components/image/image';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 
+export type BuffGroupStubData = BuffGroupData;
+
 export class BuffGroupStub extends BuffGroup {
+  protected buffGroupStubData: BuffGroupStubData;
+
   constructor(effs: Eff[]) {
     super(
       effs[0].duration,
@@ -16,6 +21,11 @@ export class BuffGroupStub extends BuffGroup {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffGroupStub);
 
-    this.html = compiled({});
+    this.buffGroupStubData = {
+      ...this.buffGroupData,
+      imageHtml: new Image(effs[0].resImage, effs[0].ressrc.name, null).html,
+    };
+
+    this.html = compiled(this.buffGroupStubData);
   }
 }
