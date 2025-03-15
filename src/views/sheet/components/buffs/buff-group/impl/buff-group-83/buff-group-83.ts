@@ -19,6 +19,7 @@ export class BuffGroup83 extends BuffGroup {
       effs[0].school,
       effs[0].schoolShort,
       effs[0].key,
+      effs[0].name,
     );
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffGroup83);

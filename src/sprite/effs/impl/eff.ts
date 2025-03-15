@@ -4,7 +4,7 @@ import { ResSpl } from '@chitin/res/impl/res-spl';
 import { ResImage } from '@chitin/res/res-image';
 import { handlers } from '@handlers';
 import { EffSource, Effs } from '@sprite/effs/effs';
-import { EffKey, effTab } from '@tables/eff';
+import { EffKey, EffValue, effTab } from '@tables/eff';
 import { DurtypeKey } from '@tables/eff/durtype';
 import { effdefaultTab } from '@tables/effdefault';
 import { resextValueSubset } from '@tables/resext';
@@ -52,6 +52,8 @@ export abstract class Eff {
   public spellLevel: number;
 
   // Custom fields
+  public name: EffValue;
+
   public schoolShort: SchoolShortValue;
 
   public ressrcType: RessrcType;
@@ -67,6 +69,8 @@ export abstract class Eff {
   public grouped: boolean;
 
   constructor(public key: EffKey, protected base: bigint, public source: EffSource) {
+    this.name = effTab[key];
+
     const schoolKey: SchoolKey = handlers.memread.memReadNumber(
       base + BigInt(0x8 + 0x44),
       'UINT32',

@@ -18,6 +18,7 @@ export class BuffSingle extends Buff {
       eff.school,
       eff.schoolShort,
       eff.key,
+      eff.name,
     );
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffSingle);
