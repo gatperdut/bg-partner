@@ -61,7 +61,7 @@ export class Buffs extends Component {
   private buffItemsHtml(buffs: Eff[], fromItem: boolean): string[] {
     const buffItemsByCode: Record<string, Eff[]> = _.groupBy(
       _.filter(buffs, (eff: Eff): boolean => !fromItem && eff.ressrcType === 'ITM'),
-      (eff: Eff): string => eff.ressrc.code,
+      (eff: Eff): string => eff.ressrcParent.code,
     );
 
     return _.map(

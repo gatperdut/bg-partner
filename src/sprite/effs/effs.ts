@@ -8,6 +8,7 @@ export const EffTypes = ['buffs', 'imms', 'profs', 'statmods', 'states', 'maybe'
 
 export type EffType = (typeof EffTypes)[number];
 
+// TODO EffSource(s) can be dropped? Rather equivalent to RessrcType.
 export const EffSources = ['timed', 'equipped'] as const;
 
 export type EffSource = (typeof EffSources)[number];

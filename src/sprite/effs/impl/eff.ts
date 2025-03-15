@@ -56,9 +56,11 @@ export abstract class Eff {
 
   public ressrc: ResItm | ResSpl;
 
+  public ressrcParent: ResItm;
+
   public resImage: ResImage;
 
-  public resItmImage: ResImage;
+  public resImageParent: ResImage;
 
   public grouped: boolean;
 
@@ -126,7 +128,18 @@ export abstract class Eff {
       if (ressrc) {
         this.ressrcType = ressrcType;
 
-        this.ressrc = ressrc as ResSpl | ResItm;
+        switch (this.ressrcType) {
+          case 'SPL':
+            this.ressrc = ressrc as ResSpl;
+
+            break;
+          case 'ITM':
+            this.ressrc = this.ressrcDefault();
+
+            this.ressrcParent = ressrc as ResItm;
+
+            break;
+        }
 
         break;
       }
@@ -141,23 +154,30 @@ export abstract class Eff {
     switch (this.ressrcType) {
       case 'SPL':
         this.resImage = this.ressrc.resImage;
+
         break;
       case 'ITM':
         this.resImage = this.resImageDefault();
 
-        this.resItmImage = this.ressrc.resImage;
+        this.resImageParent = this.ressrcParent.resImage;
+
+        break;
+    }
+  }
+
+  private ressrcDefault(): ResSpl {
+    switch (this.key) {
+      case 0:
+        return handlers.chitin.ress.SPL['spwi102'] as ResSpl;
+      case 98:
+        return handlers.chitin.ress.SPL['sppr711'] as ResSpl;
+      default:
+        console.error(`ressrcDefault needs to be defined for ${this.key}.`);
     }
   }
 
   private resImageDefault(): ResImage {
-    switch (this.key) {
-      case 0:
-        return (handlers.chitin.ress.SPL['spwi102'] as ResSpl).resImage;
-      default:
-        console.error(`resImageDefault needs to be defined for ${this.key}.`);
-
-        return this.ressrc.resImage;
-    }
+    return this.ressrcDefault().resImage;
   }
 
   public summary(): void {

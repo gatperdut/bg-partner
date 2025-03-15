@@ -25,7 +25,7 @@ export class BuffItem extends Buff {
 
     this.buffItemData = {
       ...this.buffData,
-      imageHtml: new Image(effs[0].resItmImage, effs[0].ressrc.name, tooltipHtml).html,
+      imageHtml: new Image(effs[0].resImageParent, effs[0].ressrc.name, tooltipHtml).html,
     };
 
     this.html = compiled(this.buffItemData);
