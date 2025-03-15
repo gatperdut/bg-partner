@@ -2,7 +2,7 @@ import { Component, ComponentData } from '@views/shared/component';
 
 export type TooltipData = ComponentData;
 
-export class Tooltip extends Component {
+export abstract class Tooltip extends Component {
   protected tooltipData: TooltipData;
 
   constructor() {

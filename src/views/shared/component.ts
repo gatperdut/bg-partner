@@ -2,7 +2,7 @@ export type ComponentData = {
   title: string;
 };
 
-export class Component {
+export abstract class Component {
   public html: string;
 
   protected componentData: ComponentData;

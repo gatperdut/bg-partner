@@ -13,7 +13,7 @@ export type BuffData = ComponentData & {
   schoolHtml: string;
 };
 
-export class Buff extends Component {
+export abstract class Buff extends Component {
   protected buffData: BuffData;
 
   constructor(
