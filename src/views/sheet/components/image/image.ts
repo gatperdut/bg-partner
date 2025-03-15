@@ -14,13 +14,13 @@ export type ImageData = ComponentData & {
 
   valign: number;
 
-  tippyHtml: string;
+  tooltipHtml: string;
 };
 
 export class Image extends Component {
   private imageData: ImageData;
 
-  constructor(resImage: ResImage, title: string, tippyHtml: string) {
+  constructor(resImage: ResImage, title: string, tooltipHtml: string) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.image);
@@ -37,7 +37,7 @@ export class Image extends Component {
       height: height,
       halign: Math.floor(width / 2),
       valign: Math.floor(height / 2),
-      tippyHtml: tippyHtml,
+      tooltipHtml: tooltipHtml,
     };
 
     this.html = compiled(this.imageData);

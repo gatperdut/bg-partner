@@ -126,7 +126,10 @@ class SheetRenderer {
 
     // document.getElementById('savesGroup').innerHTML = new SavesGroup().html;
 
-    document.getElementById('buffs').innerHTML = new Buffs().html;
+    document.getElementById('buffs').innerHTML = new Buffs(
+      sheetdata.spriteView.effs.effs.buffs,
+      false,
+    ).html;
   }
 
   private updateRunning(running: boolean) {

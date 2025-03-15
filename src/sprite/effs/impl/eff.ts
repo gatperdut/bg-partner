@@ -58,6 +58,8 @@ export abstract class Eff {
 
   public resImage: ResImage;
 
+  public resItmImage: ResImage;
+
   public grouped: boolean;
 
   constructor(public key: EffKey, protected base: bigint, public source: EffSource) {
@@ -101,6 +103,11 @@ export abstract class Eff {
     this.resImageSetup();
 
     this.grouped = _.includes(Effs.effsGrouped, this.key);
+
+    // TODO drop this.
+    if (this.grouped && this.ressrcType === 'ITM') {
+      console.error(`${key} comes fron item ${this.ressrc.code} and is grouped.`);
+    }
   }
 
   private ressrcSetup(ressrcStrref: string): void {
@@ -131,7 +138,26 @@ export abstract class Eff {
       return;
     }
 
-    this.resImage = this.ressrc.resImage;
+    switch (this.ressrcType) {
+      case 'SPL':
+        this.resImage = this.ressrc.resImage;
+        break;
+      case 'ITM':
+        this.resImage = this.resImageDefault();
+
+        this.resItmImage = this.ressrc.resImage;
+    }
+  }
+
+  private resImageDefault(): ResImage {
+    switch (this.key) {
+      case 0:
+        return (handlers.chitin.ress.SPL['spwi102'] as ResSpl).resImage;
+      default:
+        console.error(`resImageDefault needs to be defined for ${this.key}.`);
+
+        return this.ressrc.resImage;
+    }
   }
 
   public summary(): void {

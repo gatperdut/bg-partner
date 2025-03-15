@@ -7,38 +7,66 @@ import Handlebars from 'handlebars';
 import _ from 'lodash';
 
 export type BuffsData = ComponentData & {
-  buffsSingleHtml: string[];
+  buffSinglesHtml: string[];
 
-  buffsGroupHtml: string[];
+  buffGroupsHtml: string[];
+
+  buffItemsHtml: string[];
 };
 
 export class Buffs extends Component {
-  constructor() {
+  constructor(buffs: Eff[], fromItem: boolean) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffs);
 
-    const buffsSingleHtml: string[] = _.map(
-      _.filter(sheetdata.spriteView.effs.effs.buffs, (eff: Eff): boolean => !eff.grouped),
-      (eff: Eff): string => BuffFactory.single(eff).html,
-    );
+    const buffSinglesHtml: string[] = this.buffSinglesHtml(buffs, fromItem);
 
-    const buffsGroupsById: Record<number, Eff[]> = _.groupBy(
-      _.filter(sheetdata.spriteView.effs.effs.buffs, (eff: Eff): boolean => eff.grouped),
-      (eff: Eff): EffKey => eff.key,
-    );
+    const buffGroupsHtml: string[] = this.buffGroupsHtml(buffs, fromItem);
 
-    const buffsGroupHtml: string[] = _.map(
-      _.keys(buffsGroupsById).map(Number),
-      (id: number): string => BuffFactory.group(buffsGroupsById[id]).html,
-    );
+    const buffItemsHtml: string[] = this.buffItemsHtml(buffs, fromItem);
 
     const buffsData: BuffsData = {
       ...this.componentData,
-      buffsSingleHtml: buffsSingleHtml,
-      buffsGroupHtml: buffsGroupHtml,
+      buffSinglesHtml: buffSinglesHtml,
+      buffGroupsHtml: buffGroupsHtml,
+      buffItemsHtml: buffItemsHtml,
     };
 
     this.html = compiled(buffsData);
+  }
+
+  private buffSinglesHtml(buffs: Eff[], fromItem: boolean): string[] {
+    return _.map(
+      _.filter(
+        buffs,
+        (eff: Eff): boolean => (fromItem || eff.ressrcType === 'SPL') && !eff.grouped,
+      ),
+      (eff: Eff): string => BuffFactory.single(eff).html,
+    );
+  }
+
+  private buffGroupsHtml(buffs: Eff[], fromItem: boolean): string[] {
+    const buffGroupsByKey: Record<number, Eff[]> = _.groupBy(
+      _.filter(buffs, (eff: Eff): boolean => (fromItem || eff.ressrcType === 'SPL') && eff.grouped),
+      (eff: Eff): EffKey => eff.key,
+    );
+
+    return _.map(
+      _.keys(buffGroupsByKey).map(Number),
+      (effKey: EffKey): string => BuffFactory.group(buffGroupsByKey[effKey]).html,
+    );
+  }
+
+  private buffItemsHtml(buffs: Eff[], fromItem: boolean): string[] {
+    const buffItemsByCode: Record<string, Eff[]> = _.groupBy(
+      _.filter(buffs, (eff: Eff): boolean => !fromItem && eff.ressrcType === 'ITM'),
+      (eff: Eff): string => eff.ressrc.code,
+    );
+
+    return _.map(
+      _.keys(buffItemsByCode),
+      (code: string): string => BuffFactory.item(buffItemsByCode[code]).html,
+    );
   }
 }
