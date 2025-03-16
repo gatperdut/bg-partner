@@ -39,7 +39,7 @@ export class Effs {
     309, 313, 315, 327, 330, 336,
   ];
 
-  public static effsGrouped: number[] = [0, 83, 102];
+  public static effsGrouped: number[] = [0, 83, 102, 200, 201, 259];
 
   public static effsSqueezes: number[][] = [[248, 249]];
 
