@@ -11,7 +11,7 @@ export type BuffSingle232TooltipData = TooltipData & {
 export class BuffSingle232Tooltip extends Tooltip {
   protected buffSingle232TooltipData: BuffSingle232TooltipData;
 
-  constructor(resSpl: ResSpl) {
+  constructor(resSpls: ResSpl[]) {
     super();
 
     const s = sheetdata;
@@ -22,7 +22,7 @@ export class BuffSingle232Tooltip extends Tooltip {
 
     this.buffSingle232TooltipData = {
       ...this.tooltipData,
-      spellsHtml: new Spells([resSpl]).html,
+      spellsHtml: new Spells(resSpls).html,
     };
 
     this.html = compiled(this.buffSingle232TooltipData);

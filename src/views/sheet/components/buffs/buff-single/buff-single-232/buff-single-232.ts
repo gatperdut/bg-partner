@@ -20,7 +20,7 @@ export class BuffSingle232 extends BuffSingle {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffSingle232);
 
-    const tooltipHtml: string = new BuffSingle232Tooltip(eff.resSpl).html;
+    const tooltipHtml: string = new BuffSingle232Tooltip(eff.resSpls).html;
 
     const rightHtml: string = new BuffRight(
       '⚙️',
