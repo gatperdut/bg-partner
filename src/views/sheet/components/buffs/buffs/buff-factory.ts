@@ -6,12 +6,15 @@ import { BuffGroup83 } from '@views/sheet/components/buffs/buff-group/impl/buff-
 import { BuffGroupStub } from '@views/sheet/components/buffs/buff-group/impl/buff-group-stub/buff-group-stub';
 import { BuffSingle } from '@views/sheet/components/buffs/buff-single/buff-single';
 import { BuffSingle159 } from '@views/sheet/components/buffs/buff-single/buff-single-159/buff-single-159';
+import { BuffSingle30 } from '@views/sheet/components/buffs/buff-single/buff-single-30/buff-single-30';
 import { BuffGroup0 } from '../buff-group/impl/buff-group-0/buff-group-0';
 import { BuffItem } from '../buff-item/buff-item';
 
 export class BuffFactory {
   public static single(eff: Eff): BuffSingle {
     switch (eff.key) {
+      case 30:
+        return new BuffSingle30(eff);
       case 159:
         return new BuffSingle159(eff);
       default:
