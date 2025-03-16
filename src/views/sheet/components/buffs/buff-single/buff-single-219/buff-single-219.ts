@@ -1,5 +1,5 @@
 import { Eff } from '@sprite/effs/impl/eff';
-import { idsTab } from '@tables/ids';
+import { idsTab } from '@tables/ids/ids';
 import { BuffSingle, BuffSingleData } from '@views/sheet/components/buffs/buff-single/buff-single';
 import { BuffRight } from '@views/sheet/components/buffs/parts/buff-right/buff-right';
 import { sheetdata } from '@views/sheet/sheetdata';

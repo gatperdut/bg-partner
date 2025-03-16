@@ -1,6 +1,6 @@
 import { handlers } from '@handlers';
-import { EaKey, eaTab, EaValue } from '@tables/ea';
-import { RaceKey, raceTab, RaceValue } from '@tables/race';
+import { EaKey, eaTab, EaValue } from '@tables/ids/ea';
+import { RaceKey, raceTab, RaceValue } from '@tables/ids/race';
 
 export class Profile {
   public enemyAlly: EaValue;

@@ -1,11 +1,11 @@
-import { AlignKey, alignTab, AlignValue } from '@tables/align';
-import { ClassKey, classTab, ClassValue } from '@tables/class';
-import { EaKey, eaTab, EaValue } from '@tables/ea';
-import { GenderKey, genderTab, GenderValue } from '@tables/gender';
-import { GeneralKey, generalTab, GeneralValue } from '@tables/general';
-import { KitKey, kitTab, KitValue } from '@tables/kit';
-import { RaceKey, raceTab, RaceValue } from '@tables/race';
-import { SpecificKey, specificTab, SpecificValue } from '@tables/specific';
+import { AlignKey, alignTab, AlignValue } from '@tables/ids/align';
+import { ClassKey, classTab, ClassValue } from '@tables/ids/class';
+import { EaKey, eaTab, EaValue } from '@tables/ids/ea';
+import { GenderKey, genderTab, GenderValue } from '@tables/ids/gender';
+import { GeneralKey, generalTab, GeneralValue } from '@tables/ids/general';
+import { KitKey, kitTab, KitValue } from '@tables/ids/kit';
+import { RaceKey, raceTab, RaceValue } from '@tables/ids/race';
+import { SpecificKey, specificTab, SpecificValue } from '@tables/ids/specific';
 import _ from 'lodash';
 
 export type IdsTab = typeof idsTab;
