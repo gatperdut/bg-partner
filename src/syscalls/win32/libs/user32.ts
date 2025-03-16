@@ -17,39 +17,41 @@ export class User32 {
     STDCALL,
     'enumWindowsCallback',
     KoffiPrimitives.BOOL,
-    [KoffiPrimitivePtrs.VOID, KoffiPrimitives.LONG]
+    [KoffiPrimitivePtrs.VOID, KoffiPrimitives.LONG],
   );
 
   public EnumWindowsCallbackRegister(
-    callback: EnumWindowsCallbackFn
+    callback: EnumWindowsCallbackFn,
   ): koffi.IKoffiRegisteredCallback {
     return koffi.register(callback, koffi.pointer(this.EnumWindowsCallbackProto));
   }
 
-  public EnumWindows: KoffiFunction = this.user32.func(STDCALL, 'EnumWindows', 'bool', [
-    koffi.pointer(this.EnumWindowsCallbackProto),
-    KoffiPrimitives.LONG,
-  ]);
+  public EnumWindows: KoffiFunction = this.user32.func(
+    STDCALL,
+    'EnumWindows',
+    KoffiPrimitives.BOOL,
+    [koffi.pointer(this.EnumWindowsCallbackProto), KoffiPrimitives.LONG],
+  );
 
   public GetForegroundWindow: KoffiFunction = this.user32.func(
     STDCALL,
     'GetForegroundWindow',
     KoffiPrimitivePtrs.VOID,
-    []
+    [],
   );
 
   public SetForegroundWindow: KoffiFunction = this.user32.func(
     STDCALL,
     'SetForegroundWindow',
     KoffiPrimitivePtrs.VOID,
-    [KoffiPrimitivePtrs.VOID]
+    [KoffiPrimitivePtrs.VOID],
   );
 
   public SetWindowLongA: KoffiFunction = this.user32.func(
     STDCALL,
     'SetWindowLongA',
     KoffiPrimitives.LONG,
-    [KoffiPrimitivePtrs.VOID, KoffiPrimitives.INT32, KoffiPrimitives.LONG]
+    [KoffiPrimitivePtrs.VOID, KoffiPrimitives.INT32, KoffiPrimitives.LONG],
   );
 
   public ShowWindow: KoffiFunction = this.user32.func(STDCALL, 'ShowWindow', KoffiPrimitives.BOOL, [
@@ -69,7 +71,7 @@ export class User32 {
       KoffiPrimitives.INT32,
       KoffiPrimitives.INT32,
       KoffiPrimitives.UINT32,
-    ]
+    ],
   );
 
   private GetCursorPos_Setup(): void {
@@ -82,6 +84,6 @@ export class User32 {
     STDCALL,
     'GetWindowThreadProcessId',
     KoffiPrimitives.LONG,
-    [KoffiPrimitivePtrs.VOID, koffi.out(KoffiPrimitivePtrs.LONG)]
+    [KoffiPrimitivePtrs.VOID, koffi.out(KoffiPrimitivePtrs.LONG)],
   );
 }
