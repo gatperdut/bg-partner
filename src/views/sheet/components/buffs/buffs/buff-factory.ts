@@ -1,4 +1,5 @@
 import { Eff } from '@sprite/effs/impl/eff';
+import { Eff232 } from '@sprite/effs/impl/eff-232';
 import { Eff83 } from '@sprite/effs/impl/eff-83';
 import { BuffGroup } from '@views/sheet/components/buffs/buff-group/buff-group';
 import { BuffGroup102 } from '@views/sheet/components/buffs/buff-group/impl/buff-group-102/buff-group-102';
@@ -6,6 +7,7 @@ import { BuffGroup83 } from '@views/sheet/components/buffs/buff-group/impl/buff-
 import { BuffGroupStub } from '@views/sheet/components/buffs/buff-group/impl/buff-group-stub/buff-group-stub';
 import { BuffSingle } from '@views/sheet/components/buffs/buff-single/buff-single';
 import { BuffSingle159 } from '@views/sheet/components/buffs/buff-single/buff-single-159/buff-single-159';
+import { BuffSingle232 } from '@views/sheet/components/buffs/buff-single/buff-single-232/buff-single-232';
 import { BuffSingle30 } from '@views/sheet/components/buffs/buff-single/buff-single-30/buff-single-30';
 import { BuffSingle98 } from '@views/sheet/components/buffs/buff-single/buff-single-98/buff-single-98';
 import { BuffGroup0 } from '../buff-group/impl/buff-group-0/buff-group-0';
@@ -20,6 +22,8 @@ export class BuffFactory {
         return new BuffSingle98(eff);
       case 159:
         return new BuffSingle159(eff);
+      case 232:
+        return new BuffSingle232(eff as Eff232);
       default:
         return new BuffSingle(eff);
     }
@@ -33,6 +37,7 @@ export class BuffFactory {
         return new BuffGroup83(effs as Eff83[]);
       case 102:
         return new BuffGroup102(effs);
+
       default:
         return new BuffGroupStub(effs);
     }

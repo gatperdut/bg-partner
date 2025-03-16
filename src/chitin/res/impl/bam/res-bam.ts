@@ -204,6 +204,6 @@ export class ResBam extends Res {
   }
 
   private v2(buffer: Buffer): void {
-    console.log('BAM V2 to be implemented.');
+    console.log('BAM V2 to be implemented.', this.code);
   }
 }

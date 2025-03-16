@@ -1,9 +1,9 @@
 import { Eff } from '@sprite/effs/impl/eff';
+import { BuffItemTooltip } from '@views/sheet/components/buffs/buff-item/tooltip/buff-item-tooltip';
 import { Buff, BuffData } from '@views/sheet/components/buffs/buff/buff';
 import { Image } from '@views/sheet/components/image/image';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
-import { BuffItemTooltip } from './tooltip/buff-item-tooltip';
 
 export type BuffItemData = BuffData;
 
@@ -28,6 +28,7 @@ export class BuffItem extends Buff {
 
     this.buffItemData = {
       ...this.buffData,
+      levelsHtml: effs[0].source === 'timed' ? this.buffData.levelsHtml : '',
       imageHtml: new Image(effs[0].resImageParent, effs[0].ressrcParent.name, tooltipHtml).html,
     };
 

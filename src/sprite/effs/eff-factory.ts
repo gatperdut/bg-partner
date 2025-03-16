@@ -1,5 +1,6 @@
 import { EffSource } from '@sprite/effs/effs';
 import { Eff } from '@sprite/effs/impl/eff';
+import { Eff232 } from '@sprite/effs/impl/eff-232';
 import { Eff83 } from '@sprite/effs/impl/eff-83';
 import { EffStub } from '@sprite/effs/impl/eff-stub';
 import { EffKey } from '@tables/eff';
@@ -9,6 +10,8 @@ export class EffFactory {
     switch (id) {
       case 83:
         return new Eff83(base, source);
+      case 232:
+        return new Eff232(base, source);
       default:
         return new EffStub(id, base, source);
     }

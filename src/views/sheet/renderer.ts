@@ -1,5 +1,6 @@
 import { Hbs } from '@views/shared/hbsreg';
 import { SpriteView } from '@views/shared/stripped';
+import { AbilitiesGroup } from '@views/sheet/components/abilities-group/abilities-group';
 import { Buffs } from '@views/sheet/components/buffs/buffs/buffs';
 import '@views/sheet/sheet.scss';
 import { sheetdata } from '@views/sheet/sheetdata';
@@ -122,7 +123,7 @@ class SheetRenderer {
 
     document.getElementById('base').innerHTML = `${params.spriteView.basic.id}`;
 
-    // document.getElementById('abilitiesGroup').innerHTML = new AbilitiesGroup().html;
+    document.getElementById('abilitiesGroup').innerHTML = new AbilitiesGroup().html;
 
     // document.getElementById('resistancesGroup').innerHTML = new ResistancesGroup().html;
 
@@ -131,6 +132,7 @@ class SheetRenderer {
     document.getElementById('buffs').innerHTML = new Buffs(
       sheetdata.spriteView.effs.effs.buffs,
       false,
+      true,
     ).html;
   }
 

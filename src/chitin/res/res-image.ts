@@ -9,6 +9,10 @@ export class ResImage {
   public loaded: boolean = false;
 
   constructor(bamCode: string) {
+    if (bamCode.endsWith('c')) {
+      bamCode = bamCode.slice(0, bamCode.length - 1) + 'b';
+    }
+
     const resBam: ResBam = handlers.chitin.ress.BAM[bamCode] as ResBam;
 
     if (!resBam) {

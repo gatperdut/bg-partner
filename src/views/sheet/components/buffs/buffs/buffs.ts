@@ -1,6 +1,8 @@
+import { Effs } from '@sprite/effs/effs';
 import { Eff } from '@sprite/effs/impl/eff';
 import { EffKey } from '@tables/eff';
 import { Component, ComponentData } from '@views/shared/component';
+import { BuffSingle } from '@views/sheet/components/buffs/buff-single/buff-single';
 import { BuffFactory } from '@views/sheet/components/buffs/buffs/buff-factory';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
@@ -15,20 +17,22 @@ export type BuffsData = ComponentData & {
 };
 
 export class Buffs extends Component {
-  constructor(buffs: Eff[], fromItem: boolean) {
+  constructor(buffs: Eff[], fromItem: boolean, groupsAllow: boolean) {
     super();
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffs);
 
-    const buffSinglesHtml: string[] = this.buffSinglesHtml(buffs, fromItem);
+    const buffSqueezes: string[] = this.buffSqueezesHtml(buffs);
 
-    const buffGroupsHtml: string[][] = this.buffGroupsHtml(buffs, fromItem);
+    const buffSinglesHtml: string[] = this.buffSinglesHtml(buffs, fromItem, groupsAllow);
+
+    const buffGroupsHtml: string[][] = this.buffGroupsHtml(buffs, fromItem, groupsAllow);
 
     const buffItemsHtml: string[] = this.buffItemsHtml(buffs, fromItem);
 
     const buffsData: BuffsData = {
       ...this.componentData,
-      buffSinglesHtml: buffSinglesHtml,
+      buffSinglesHtml: [...buffSinglesHtml, ...buffSqueezes],
       buffGroupsHtml: buffGroupsHtml,
       buffItemsHtml: buffItemsHtml,
     };
@@ -36,22 +40,42 @@ export class Buffs extends Component {
     this.html = compiled(buffsData);
   }
 
-  private buffSinglesHtml(buffs: Eff[], fromItem: boolean): string[] {
+  private buffSqueezesHtml(buffs: Eff[]): string[] {
+    const effsSqueezed: Eff[] = _.filter(buffs, (eff: Eff): boolean => eff.squeezed);
+
+    const buffSingles: BuffSingle[] = [];
+
+    _.each(Effs.effsSqueezes, (effsSqueeze: number[]): void => {
+      for (let i: number = 0; i < effsSqueezed.length; i++) {
+        if (_.includes(effsSqueeze, effsSqueezed[i].key)) {
+          buffSingles.push(BuffFactory.single(effsSqueezed[i]));
+
+          break;
+        }
+      }
+    });
+
+    return _.map(buffSingles, (buffSingle: BuffSingle): string => buffSingle.html);
+  }
+
+  private buffSinglesHtml(buffs: Eff[], fromItem: boolean, groupsAllow: boolean): string[] {
     return _.map(
       _.filter(
         buffs,
-        (eff: Eff): boolean => (fromItem || eff.ressrcType === 'SPL') && !eff.grouped,
+        (eff: Eff): boolean =>
+          !eff.squeezed && (fromItem || eff.ressrcType === 'SPL') && (!eff.grouped || !groupsAllow),
       ),
       (eff: Eff): string => BuffFactory.single(eff).html,
     );
   }
 
-  private buffGroupsHtml(buffs: Eff[], fromItem: boolean): string[][] {
+  private buffGroupsHtml(buffs: Eff[], fromItem: boolean, groupsAllow: boolean): string[][] {
     const buffsByCodeByEffKey = _.mapValues(
       _.groupBy(
         _.filter(
           buffs,
-          (eff: Eff): boolean => (fromItem || eff.ressrcType === 'SPL') && eff.grouped,
+          (eff: Eff): boolean =>
+            !eff.squeezed && (fromItem || eff.ressrcType === 'SPL') && eff.grouped && groupsAllow,
         ),
         (eff: Eff): string => eff.ressrc.code,
       ),
@@ -69,7 +93,7 @@ export class Buffs extends Component {
   private buffItemsHtml(buffs: Eff[], fromItem: boolean): string[] {
     const buffItemsByCode: Record<string, Eff[]> = _.groupBy(
       _.filter(buffs, (eff: Eff): boolean => !fromItem && eff.ressrcType === 'ITM'),
-      (eff: Eff): string => eff.ressrcParent.code,
+      (eff: Eff): string => !eff.squeezed && eff.ressrcParent.code,
     );
 
     return _.map(

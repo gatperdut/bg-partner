@@ -68,6 +68,8 @@ export abstract class Eff {
 
   public grouped: boolean;
 
+  public squeezed: boolean;
+
   constructor(public key: EffKey, protected base: bigint, public source: EffSource) {
     this.name = effTab[key];
 
@@ -82,11 +84,11 @@ export abstract class Eff {
 
     this.secondaryType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0xc8), 'INT32');
 
-    this.res = handlers.memread.memReadString(base + BigInt(0x8 + 0x28));
+    this.res = handlers.memread.memReadString(base + BigInt(0x8 + 0x28)).toLowerCase();
 
-    this.res2 = handlers.memread.memReadString(base + BigInt(0x8 + 0x68));
+    this.res2 = handlers.memread.memReadString(base + BigInt(0x8 + 0x68)).toLowerCase();
 
-    this.res3 = handlers.memread.memReadString(base + BigInt(0x8 + 0x70));
+    this.res3 = handlers.memread.memReadString(base + BigInt(0x8 + 0x70)).toLowerCase();
 
     this.param1 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x14), 'INT32');
 
@@ -94,7 +96,7 @@ export abstract class Eff {
 
     this.param3 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x5c), 'INT32');
 
-    this.param4 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x4c), 'INT32'); // EEEx says + 0x60
+    this.param4 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x4c), 'INT32'); // EEEx says + 0x60?
 
     this.param5 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x64), 'INT32');
 
@@ -109,6 +111,8 @@ export abstract class Eff {
     this.ressrcSetup(handlers.memread.memReadString(base + BigInt(0x8 + 0x8c)).toLowerCase());
 
     this.grouped = _.includes(Effs.effsGrouped, this.key);
+
+    this.squeezed = _.includes(_.flatten(Effs.effsSqueezes), this.key);
 
     // TODO drop this.
     if (this.grouped && this.ressrcType === 'ITM') {

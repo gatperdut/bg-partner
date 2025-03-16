@@ -41,6 +41,8 @@ export class Effs {
 
   public static effsGrouped: number[] = [0, 83, 102];
 
+  public static effsSqueezes: number[][] = [[248, 249]];
+
   constructor(private baseTimed: bigint, private baseEquipped: bigint) {
     // Empty
   }

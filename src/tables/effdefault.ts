@@ -13,6 +13,7 @@ export const effdefaultTab: Partial<Record<EffKey, string>> = {
   44: 'spwi214',
   69: 'spwi310',
   98: 'sppr711',
+  159: 'spwi212',
 } as const;
 
 export const EffdefaultKeys = _.keys(effdefaultTab);
