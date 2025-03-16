@@ -91,15 +91,15 @@ export class ResBam extends Res {
 
       const paletteValue: number[] = palette.values[paletteIdx];
 
-      this.png.data[i + 2] = paletteValue[0];
-      this.png.data[i + 1] = paletteValue[1];
-      this.png.data[i + 0] = paletteValue[2];
-      this.png.data[i + 3] = paletteIdx === palette.rleIdx ? paletteValue[3] : 0xff;
+      this.png.data[i * 4 + 2] = paletteValue[0];
+      this.png.data[i * 4 + 1] = paletteValue[1];
+      this.png.data[i * 4 + 0] = paletteValue[2];
+      this.png.data[i * 4 + 3] = paletteIdx === palette.rleIdx ? paletteValue[3] : 0xff;
     }
 
     this.crop();
 
-    return this.svg();
+    this.svg();
   }
 
   private v1BamRle(pxData: Buffer, palette: Palette): void {
