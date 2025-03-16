@@ -7,6 +7,7 @@ import { BuffGroupStub } from '@views/sheet/components/buffs/buff-group/impl/buf
 import { BuffSingle } from '@views/sheet/components/buffs/buff-single/buff-single';
 import { BuffSingle159 } from '@views/sheet/components/buffs/buff-single/buff-single-159/buff-single-159';
 import { BuffSingle30 } from '@views/sheet/components/buffs/buff-single/buff-single-30/buff-single-30';
+import { BuffSingle98 } from '@views/sheet/components/buffs/buff-single/buff-single-98/buff-single-98';
 import { BuffGroup0 } from '../buff-group/impl/buff-group-0/buff-group-0';
 import { BuffItem } from '../buff-item/buff-item';
 
@@ -15,6 +16,8 @@ export class BuffFactory {
     switch (eff.key) {
       case 30:
         return new BuffSingle30(eff);
+      case 98:
+        return new BuffSingle98(eff);
       case 159:
         return new BuffSingle159(eff);
       default:

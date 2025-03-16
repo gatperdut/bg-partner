@@ -118,7 +118,9 @@ class SheetRenderer {
 
     document.getElementById('race').innerHTML = params.spriteView.profile.race;
 
-    document.getElementById('base').innerHTML = `0x${params.spriteView.base.toString(16)}`;
+    // document.getElementById('base').innerHTML = `0x${params.spriteView.base.toString(16)}`;
+
+    document.getElementById('base').innerHTML = `${params.spriteView.basic.id}`;
 
     // document.getElementById('abilitiesGroup').innerHTML = new AbilitiesGroup().html;
 

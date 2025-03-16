@@ -94,7 +94,7 @@ export abstract class Eff {
 
     this.param3 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x5c), 'INT32');
 
-    this.param4 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x60), 'INT32');
+    this.param4 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x4c), 'INT32'); // EEEx says + 0x60
 
     this.param5 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x64), 'INT32');
 
