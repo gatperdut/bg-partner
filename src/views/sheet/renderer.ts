@@ -121,6 +121,10 @@ class SheetRenderer {
 
     document.getElementById('race').innerHTML = params.spriteView.profile.race;
 
+    document.getElementById(
+      'class',
+    ).innerHTML = `${params.spriteView.profile.class} ${params.spriteView.profile.levels[0]} ${params.spriteView.profile.levels[1]} ${params.spriteView.profile.levels[2]}`;
+
     // document.getElementById('base').innerHTML = `0x${params.spriteView.base.toString(16)}`;
 
     document.getElementById('base').innerHTML = `${params.spriteView.basic.id}`;
