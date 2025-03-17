@@ -3,6 +3,7 @@ import { Hbs } from '@views/shared/hbsreg';
 import { SpriteView } from '@views/shared/stripped';
 import { Abilities } from '@views/sheet/components/abilities/abilities';
 import { Buffs } from '@views/sheet/components/buffs/buffs/buffs';
+import { Combat } from '@views/sheet/components/combat/combat';
 import { Header } from '@views/sheet/components/header/header';
 import { Resistances } from '@views/sheet/components/resistances/resistances';
 import { Saves } from '@views/sheet/components/saves/saves';
@@ -117,16 +118,9 @@ class SheetRenderer {
   }
 
   private updateView(): void {
-    document.getElementById('header').innerHTML = new Header(
-      sheetdata.spriteView.profile.enemyAlly,
-      sheetdata.spriteView.basic.name,
-      sheetdata.spriteView.basic.hp,
-      sheetdata.spriteView.derived.hpMax,
-      sheetdata.spriteView.profile.race,
-      sheetdata.spriteView.profile.klass,
-      sheetdata.spriteView.profile.levels,
-      sheetdata.spriteView.profile.alignment,
-    ).html;
+    document.getElementById('header').innerHTML = new Header().html;
+
+    document.getElementById('combat').innerHTML = new Combat().html;
 
     document.getElementById('abilities').innerHTML = new Abilities(
       sheetdata.spriteView.derived.str,

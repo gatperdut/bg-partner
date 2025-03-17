@@ -1,7 +1,17 @@
 import { handlers } from '@handlers';
 
 export class Derived {
+  public state: number;
+
   public hpMax: number;
+
+  public ac: number;
+
+  public thac0: number;
+
+  public apr: number;
+
+  public xp: number;
 
   public str: number;
 
@@ -52,7 +62,17 @@ export class Derived {
   }
 
   public run(): void {
+    this.state = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x0), 'UINT32');
+
     this.hpMax = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x4), 'INT16');
+
+    this.ac = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x6), 'INT16');
+
+    this.thac0 = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x10), 'INT16');
+
+    this.apr = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x12), 'INT16');
+
+    this.xp = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x5c), 'UINT32');
 
     this.str = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x4e), 'INT16');
 

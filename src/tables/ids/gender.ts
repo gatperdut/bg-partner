@@ -12,7 +12,7 @@ export const genderTab = {
   3: 'Other',
   4: 'Neither',
   5: 'Both',
-  6: 'Summoed',
+  6: 'Summoned',
   7: 'Illusionary',
   8: 'Extra',
   9: 'Summoned demon',
