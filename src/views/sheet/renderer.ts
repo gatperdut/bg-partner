@@ -1,7 +1,9 @@
 import { Hbs } from '@views/shared/hbsreg';
 import { SpriteView } from '@views/shared/stripped';
-import { AbilitiesGroup } from '@views/sheet/components/abilities-group/abilities-group';
+import { Abilities } from '@views/sheet/components/abilities/abilities';
 import { Buffs } from '@views/sheet/components/buffs/buffs/buffs';
+import { Resistances } from '@views/sheet/components/resistances/resistances';
+import { Saves } from '@views/sheet/components/saves/saves';
 import '@views/sheet/sheet.scss';
 import { sheetdata } from '@views/sheet/sheetdata';
 import _ from 'lodash';
@@ -123,11 +125,36 @@ class SheetRenderer {
 
     document.getElementById('base').innerHTML = `${params.spriteView.basic.id}`;
 
-    document.getElementById('abilitiesGroup').innerHTML = new AbilitiesGroup().html;
+    document.getElementById('abilities').innerHTML = new Abilities(
+      sheetdata.spriteView.derived.str,
+      sheetdata.spriteView.derived.strExc,
+      sheetdata.spriteView.derived.dex,
+      sheetdata.spriteView.derived.con,
+      sheetdata.spriteView.derived.int,
+      sheetdata.spriteView.derived.wis,
+      sheetdata.spriteView.derived.cha,
+    ).html;
 
-    // document.getElementById('resistancesGroup').innerHTML = new ResistancesGroup().html;
+    document.getElementById('resistances').innerHTML = new Resistances(
+      sheetdata.spriteView.derived.resistFire,
+      sheetdata.spriteView.derived.resistCold,
+      sheetdata.spriteView.derived.resistElectricity,
+      sheetdata.spriteView.derived.resistAcid,
+      sheetdata.spriteView.derived.resistMagic,
+      sheetdata.spriteView.derived.resistPoison,
+      sheetdata.spriteView.derived.resistSlashing,
+      sheetdata.spriteView.derived.resistCrushing,
+      sheetdata.spriteView.derived.resistPiercing,
+      sheetdata.spriteView.derived.resistMissile,
+    ).html;
 
-    // document.getElementById('savesGroup').innerHTML = new SavesGroup().html;
+    document.getElementById('saves').innerHTML = new Saves(
+      sheetdata.spriteView.derived.saveVsDeath,
+      sheetdata.spriteView.derived.saveVsWands,
+      sheetdata.spriteView.derived.saveVsPoly,
+      sheetdata.spriteView.derived.saveVsBreath,
+      sheetdata.spriteView.derived.saveVsSpell,
+    ).html;
 
     document.getElementById('buffs').innerHTML = new Buffs(
       sheetdata.spriteView.effs.effs.buffs,
