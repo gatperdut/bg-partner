@@ -13,7 +13,7 @@ export const raceTab = {
   4: 'Dwarf',
   5: 'Halfling',
   6: 'Gnome',
-  7: 'Halforc',
+  7: 'Half-orc',
   101: 'Ankheg',
   102: 'Basilisk',
   103: 'Bear',
