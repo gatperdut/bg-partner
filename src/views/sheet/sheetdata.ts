@@ -1,9 +1,12 @@
+import { ResImageDefault } from '@chitin/res/image/res-image-default';
 import { Hbs } from '@views/shared/hbsreg';
 import { SpriteView } from '@views/shared/stripped';
 import { SheetAPIUpdateParamsTimetracker } from '@views/sheet/renderer';
 
 export type Sheetdata = {
   hbs: Hbs;
+
+  resImageDefault: ResImageDefault;
 
   spriteView: SpriteView;
 
@@ -12,6 +15,7 @@ export type Sheetdata = {
 
 export const sheetdata: Sheetdata = {
   hbs: null,
+  resImageDefault: null,
   spriteView: null,
   timetracker: null,
 };

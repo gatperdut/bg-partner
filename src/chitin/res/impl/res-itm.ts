@@ -1,6 +1,6 @@
 import { Bif } from '@chitin/bif';
+import { ResImage } from '@chitin/res/image/res-image';
 import { Res } from '@chitin/res/impl/res';
-import { ResImage } from '@chitin/res/res-image';
 import { handlers } from '@handlers';
 import { ProKey, ProValue, proTab } from '@tables/pro';
 import { readBufferString } from '@utils';

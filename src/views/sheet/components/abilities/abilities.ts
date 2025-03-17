@@ -3,9 +3,7 @@ import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 
 export type AbilitiesData = ComponentData & {
-  str: number;
-
-  strExc: number;
+  str: string;
 
   dex: number;
 
@@ -34,10 +32,11 @@ export class Abilities extends Component {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.abilities);
 
+    const strStr: string = str + (strExc ? `/${strExc}` : '');
+
     this.abilitiesData = {
       ...this.componentData,
-      str: str,
-      strExc: strExc,
+      str: strStr,
       dex: dex,
       con: con,
       int: int,

@@ -1,4 +1,5 @@
 import { Bif } from '@chitin/bif';
+import { ResImageDefault } from '@chitin/res/image/res-image-default';
 import { Res } from '@chitin/res/impl/res';
 import { ResItm } from '@chitin/res/impl/res-itm';
 import { ResSpl } from '@chitin/res/impl/res-spl';
@@ -18,6 +19,8 @@ export class Chitin {
   private resFactory: ResFactory = new ResFactory();
 
   public proValue2Itms: Record<ProValue, ResItm[]> = {} as Record<ProValue, ResItm[]>;
+
+  public resImageDefault: ResImageDefault = new ResImageDefault();
 
   constructor() {
     const chitin: Buffer = fs.readFileSync(path.join(handlers.config.obj.path, 'chitin.key'));

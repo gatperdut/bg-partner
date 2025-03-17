@@ -1,7 +1,7 @@
+import { ResImage } from '@chitin/res/image/res-image';
 import { Res } from '@chitin/res/impl/res';
 import { ResItm } from '@chitin/res/impl/res-itm';
 import { ResSpl } from '@chitin/res/impl/res-spl';
-import { ResImage } from '@chitin/res/res-image';
 import { handlers } from '@handlers';
 import { EffSource, Effs } from '@sprite/effs/effs';
 import { EffKey, EffValue, effTab } from '@tables/eff';

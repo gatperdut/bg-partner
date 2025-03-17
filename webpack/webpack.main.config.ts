@@ -36,6 +36,11 @@ export const mainConfig: Configuration = {
           context: path.resolve(__dirname, '../src'),
           to: '[path][name][ext]',
         },
+        {
+          from: 'assets/images/buff-question.png',
+          context: path.resolve(__dirname, '../src'),
+          to: '[path][name][ext]',
+        },
       ],
     }),
   ],

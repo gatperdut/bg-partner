@@ -56,6 +56,7 @@ export class Sheet {
     this.window.loadURL(SHEET_WEBPACK_ENTRY).then((): void => {
       const params: SheetAPISetupParams = {
         hbs: handlers.hbsreg.hbss.sheet,
+        resImageDefault: handlers.chitin.resImageDefault,
       };
 
       this.window.webContents.send('sheet.setup', params);

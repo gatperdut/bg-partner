@@ -1,4 +1,4 @@
-import { ResImage } from '@chitin/res/res-image';
+import { ResImage } from '@chitin/res/image/res-image';
 import { Component, ComponentData } from '@views/shared/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
@@ -25,14 +25,17 @@ export class Image extends Component {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.image);
 
-    const height: number = Math.min(resImage.size.height, 35);
+    const height: number = Math.min((resImage || sheetdata.resImageDefault).size.height, 35);
 
-    const width: number = Math.floor(resImage.size.width * (height / resImage.size.height));
+    const width: number = Math.floor(
+      (resImage || sheetdata.resImageDefault).size.width *
+        (height / (resImage || sheetdata.resImageDefault).size.height),
+    );
 
     this.imageData = {
       ...this.componentData,
       title: title,
-      base64: resImage.base64,
+      base64: (resImage || sheetdata.resImageDefault).base64,
       width: width,
       height: height,
       halign: Math.floor(width / 2),

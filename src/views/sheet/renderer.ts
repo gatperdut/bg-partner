@@ -1,7 +1,9 @@
+import { ResImageDefault } from '@chitin/res/image/res-image-default';
 import { Hbs } from '@views/shared/hbsreg';
 import { SpriteView } from '@views/shared/stripped';
 import { Abilities } from '@views/sheet/components/abilities/abilities';
 import { Buffs } from '@views/sheet/components/buffs/buffs/buffs';
+import { Header } from '@views/sheet/components/header/header';
 import { Resistances } from '@views/sheet/components/resistances/resistances';
 import { Saves } from '@views/sheet/components/saves/saves';
 import '@views/sheet/sheet.scss';
@@ -12,6 +14,8 @@ import tippy, { Instance } from 'tippy.js';
 // sheet.setup
 export type SheetAPISetupParams = {
   hbs: Hbs;
+
+  resImageDefault: ResImageDefault;
 };
 
 export type SheetAPISetupMethod = (params: SheetAPISetupParams) => void;
@@ -64,6 +68,8 @@ class SheetRenderer {
   constructor() {
     window.sheetAPI.setup((params: SheetAPISetupParams): void => {
       sheetdata.hbs = params.hbs;
+
+      sheetdata.resImageDefault = params.resImageDefault;
     });
 
     window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
@@ -83,7 +89,7 @@ class SheetRenderer {
     }
 
     if (_.isNull(this.runningPrevious)) {
-      this.updateView(params);
+      this.updateView();
 
       this.updateRunning(params.timetracker.running);
       if (!params.timetracker.running) {
@@ -91,7 +97,7 @@ class SheetRenderer {
       }
     } else {
       if (params.timetracker.running) {
-        this.updateView(params);
+        this.updateView();
 
         if (!this.runningPrevious) {
           this.tippyDetach();
@@ -110,24 +116,17 @@ class SheetRenderer {
     this.runningPrevious = params.timetracker.running;
   }
 
-  private updateView(params: SheetAPIUpdateParams): void {
-    document.getElementById('name').innerHTML = params.spriteView.basic.name;
-
-    document.getElementById('enemyAlly').title = params.spriteView.profile.enemyAlly;
-
-    document.getElementById('hp').innerHTML = params.spriteView.basic.hp.toString();
-
-    document.getElementById('hpMax').innerHTML = params.spriteView.derived.hpMax.toString();
-
-    document.getElementById('race').innerHTML = params.spriteView.profile.race;
-
-    document.getElementById(
-      'class',
-    ).innerHTML = `${params.spriteView.profile.class} ${params.spriteView.profile.levels[0]} ${params.spriteView.profile.levels[1]} ${params.spriteView.profile.levels[2]}`;
-
-    // document.getElementById('base').innerHTML = `0x${params.spriteView.base.toString(16)}`;
-
-    document.getElementById('base').innerHTML = `${params.spriteView.basic.id}`;
+  private updateView(): void {
+    document.getElementById('header').innerHTML = new Header(
+      sheetdata.spriteView.profile.enemyAlly,
+      sheetdata.spriteView.basic.name,
+      sheetdata.spriteView.basic.hp,
+      sheetdata.spriteView.derived.hpMax,
+      sheetdata.spriteView.profile.race,
+      sheetdata.spriteView.profile.klass,
+      sheetdata.spriteView.profile.levels,
+      sheetdata.spriteView.profile.alignment,
+    ).html;
 
     document.getElementById('abilities').innerHTML = new Abilities(
       sheetdata.spriteView.derived.str,
@@ -170,12 +169,8 @@ class SheetRenderer {
   private updateRunning(running: boolean) {
     if (running) {
       document.body.classList.add('running');
-
-      document.getElementById('running').innerHTML = '▶️';
     } else {
       document.body.classList.remove('running');
-
-      document.getElementById('running').innerHTML = '⏸️';
     }
   }
 
