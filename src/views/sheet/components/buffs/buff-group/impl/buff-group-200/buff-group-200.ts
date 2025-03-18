@@ -34,7 +34,8 @@ export class BuffGroup200 extends BuffGroup {
     this.buffGroup200Data = {
       ...this.buffGroupData,
       imageHtml: new Image(effs[0].resImage, effs[0].ressrc.name, null).html,
-      rightHtml: new BuffRight(`${max.toString()}\n${charges}`, 'Maximum level\nCharges left').html,
+      rightHtml: new BuffRight(`${max.toString()}\n${charges}`, 'Maximum spell level\nCharges left')
+        .html,
     };
 
     this.html = compiled(this.buffGroup200Data);

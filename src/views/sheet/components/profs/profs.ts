@@ -24,6 +24,10 @@ export class Profs extends Component {
 
       const value: WeapprofValue = weapprofTab[key];
 
+      if (!value) {
+        return;
+      }
+
       if (!weapprofs[weapprofTab[key]]) {
         weapprofs[value] = 0;
       }

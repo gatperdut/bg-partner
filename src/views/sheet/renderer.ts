@@ -5,6 +5,7 @@ import { Abilities } from '@views/sheet/components/abilities/abilities';
 import { Buffs } from '@views/sheet/components/buffs/buffs/buffs';
 import { Combat } from '@views/sheet/components/combat/combat';
 import { Header } from '@views/sheet/components/header/header';
+import { Imms } from '@views/sheet/components/imms/imms';
 import { Profs } from '@views/sheet/components/profs/profs';
 import { Resistances } from '@views/sheet/components/resistances/resistances';
 import { Saves } from '@views/sheet/components/saves/saves';
@@ -119,6 +120,12 @@ class SheetRenderer {
   }
 
   private updateView(): void {
+    document.getElementById('buffs').innerHTML = new Buffs(
+      sheetdata.spriteView.effs.effs.buffs,
+      false,
+      true,
+    ).html;
+
     document.getElementById('header').innerHTML = new Header().html;
 
     document.getElementById('combat').innerHTML = new Combat().html;
@@ -131,11 +138,7 @@ class SheetRenderer {
 
     document.getElementById('saves').innerHTML = new Saves().html;
 
-    document.getElementById('buffs').innerHTML = new Buffs(
-      sheetdata.spriteView.effs.effs.buffs,
-      false,
-      true,
-    ).html;
+    document.getElementById('imms').innerHTML = new Imms().html;
   }
 
   private updateRunning(running: boolean) {

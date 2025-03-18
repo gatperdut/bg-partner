@@ -1,12 +1,10 @@
-<div class="border p-3 fx-layout-column fx-align--start-x fx-align--x-stretch">
-  {{#if weapprofs}}
+{{#if weapprofs}}
+  <div class="border p-3 fx-layout-column fx-align--start-x fx-align--x-stretch">
     {{#each weapprofs}}
       <div class="fx-layout-row fx-align--space-between-x fx-align--x-center">
         <div>{{@key}}</div>
         <div>{{this}}</div>
       </div>
     {{/each}}
-  {{else}}
-    No weapon proficiencies
-  {{/if}}
-</div>
+  </div>
+{{/if}}
