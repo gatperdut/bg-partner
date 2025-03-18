@@ -2,7 +2,7 @@ import { handlers } from '@handlers';
 import { Sprite } from '@sprite/sprite';
 import { spriteView } from '@views/shared/stripped';
 import { SheetAPISetupParams, SheetAPIUpdateParams } from '@views/sheet/renderer';
-import { BrowserWindow, ipcMain } from 'electron';
+import { BrowserWindow, ipcMain, IpcMainEvent } from 'electron';
 
 declare const SHEET_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -61,6 +61,14 @@ export class Sheet {
 
       this.window.webContents.send('sheet.setup', params);
     });
+
+    ipcMain.on(
+      `sheet.updated.${this.sprite.basic.id}`,
+      (_event: IpcMainEvent, height: number): void => {
+        this.height = height + 20;
+        this.window.setBounds({ height: height + 20 });
+      },
+    );
   }
 
   private setListeners(): void {
@@ -159,6 +167,8 @@ export class Sheet {
     ipcMain.removeAllListeners(`sheet.close.${this.sprite.basic.id}`);
 
     ipcMain.removeAllListeners(`sheet.move.${this.sprite.basic.id}`);
+
+    ipcMain.removeAllListeners('sheet.updated');
 
     this.window?.destroy();
 

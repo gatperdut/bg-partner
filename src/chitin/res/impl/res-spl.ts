@@ -16,9 +16,9 @@ export class ResSpl extends Res {
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('SPL', buffer, bifs);
 
-    this.name = handlers.tlk.tlks[this.file.readUint16LE(0x8)];
+    this.name = handlers.tlk.tlks[this.file.readUint32LE(0x8)];
 
-    this.desc = handlers.tlk.tlks[this.file.readUint16LE(0x50)];
+    this.desc = handlers.tlk.tlks[this.file.readUint32LE(0x50)];
 
     this.bamCode = readBufferString(this.file, 0x3a, 8).toLowerCase();
   }

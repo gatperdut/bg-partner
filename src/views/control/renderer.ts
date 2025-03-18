@@ -41,7 +41,7 @@ class ControlRenderer {
 
       this.updateConfig(params.configObj);
 
-      window.controlAPI.configSet(document.getElementById('wrapper').clientHeight + 20);
+      window.controlAPI.configSet(document.getElementById('wrapper').clientHeight);
     });
 
     window.controlAPI.update((params: ControlAPIUpdateParams): void => {

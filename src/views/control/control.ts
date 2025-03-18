@@ -62,7 +62,7 @@ export class Control {
     });
 
     ipcMain.once('control.configSet', (_event: IpcMainEvent, height: number): void => {
-      this.window.setBounds({ height: height + 70 });
+      this.window.setBounds({ height: height + 90 });
     });
   }
 

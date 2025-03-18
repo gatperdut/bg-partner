@@ -48,11 +48,15 @@ export type SheetAPIUpdateMethod = (params: SheetAPIUpdateParams) => void;
 
 export type SheetAPIUpdate = (data: SheetAPIUpdateMethod) => void;
 
+// sheet.updated
+export type SheetAPIUpdated = (id: number, height: number) => void;
+
 export type SheetAPI = {
   setup: SheetAPISetup;
   move: SheetAPIMove;
   close: SheetAPIClose;
   update: SheetAPIUpdate;
+  updated: SheetAPIUpdated;
 };
 
 declare global {
@@ -77,6 +81,11 @@ class SheetRenderer {
 
     window.sheetAPI.update((params: SheetAPIUpdateParams): void => {
       this.update(params);
+
+      window.sheetAPI.updated(
+        sheetdata.spriteView.basic.id,
+        document.getElementById('wrapper').clientHeight,
+      );
     });
 
     this.setEventListeners();

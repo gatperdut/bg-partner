@@ -1,13 +1,17 @@
-<div class="border p-3 fx-layout-column fx-align--start-x fx-align--x-stretch">
-  {{#if weapons}}
+{{#if weapons}}
+  <div class="border p-3 fx-layout-column fx-align--start-x fx-align--x-stretch">
     <span>Weapon immunities: {{weapons}}.</span>
-  {{/if}}
+  </div>
+{{/if}}
 
-  {{#if spells}}
-    <span class="break-all fs-3">Spell immunities: {{spells}}.</span>
-  {{/if}}
+{{#if spells}}
+  <div class="border p-3 break-all fs-3 fx-layout-column fx-align--start-x fx-align--x-stretch">
+    <span>Spell immunities: {{spells}}.</span>
+  </div>
+{{/if}}
 
-  {{#if opcodes}}
-    <span class="break-all fs-3">Opcode immunities: {{opcodes}}.</span>
-  {{/if}}
-</div>
+{{#if opcodes}}
+  <div class="border p-3 break-all fs-3 fx-layout-column fx-align--start-x fx-align--x-stretch">
+    <span>Opcode immunities: {{opcodes}}.</span>
+  </div>
+{{/if}}

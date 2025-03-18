@@ -19,9 +19,9 @@ export class ResItm extends Res {
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('ITM', buffer, bifs);
 
-    this.name = handlers.tlk.tlks[this.file.readUint16LE(0xc)];
+    this.name = handlers.tlk.tlks[this.file.readUint32LE(0xc)];
 
-    this.desc = handlers.tlk.tlks[this.file.readUint16LE(0x54)];
+    this.desc = handlers.tlk.tlks[this.file.readUint32LE(0x54)];
 
     this.bamCode = readBufferString(this.file, 0x3a, 8).toLowerCase();
 

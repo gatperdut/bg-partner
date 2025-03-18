@@ -164,7 +164,8 @@ export abstract class Eff {
     let res = handlers.chitin.ress.SPL[effdefaultTab[this.key]];
 
     if (!res) {
-      console.error(`effdefaultTab needs a new entry for ${this.key}.`);
+      // TODO
+      // console.error(`effdefaultTab needs a new entry for ${this.key}.`);
 
       res = ressrcFallback;
     }
