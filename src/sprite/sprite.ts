@@ -12,9 +12,9 @@ export class Sprite {
   // TODO do we need any besides derivedBonus?
   public derived: Derived;
 
-  public derivedBonus: Derived;
+  // public derivedBonus: Derived;
 
-  public derivedTemp: Derived;
+  // public derivedTemp: Derived;
 
   private derivedOffset: bigint;
 
@@ -33,13 +33,13 @@ export class Sprite {
 
     this.basic = new Basic(base);
 
-    this.profile = new Profile(base, this.derivedTempOffset);
+    this.profile = new Profile(base, this.derivedOffset);
 
     this.derived = new Derived(this.derivedOffset);
 
-    this.derivedTemp = new Derived(this.derivedTempOffset);
+    // this.derivedTemp = new Derived(this.derivedTempOffset);
 
-    this.derivedBonus = new Derived(this.derivedBonusOffset);
+    // this.derivedBonus = new Derived(this.derivedBonusOffset);
 
     this.effs = new Effs(
       base + BigInt(0x4a00 - (handlers.linux ? 0x18 : 0)),
@@ -66,9 +66,9 @@ export class Sprite {
 
     this.derived.run();
 
-    this.derivedBonus.run();
+    // this.derivedBonus.run();
 
-    this.derivedTemp.run();
+    // this.derivedTemp.run();
 
     this.effs.run();
   }

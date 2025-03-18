@@ -2,7 +2,7 @@ import { Component, ComponentData } from '@views/shared/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
 
-export type SavesData = ComponentData & {
+export type ProfsData = ComponentData & {
   saveVsDeath: number;
   saveVsWands: number;
   saveVsPoly: number;
@@ -10,15 +10,15 @@ export type SavesData = ComponentData & {
   saveVsSpell: number;
 };
 
-export class Saves extends Component {
-  protected savesData: SavesData;
+export class Profs extends Component {
+  protected profsData: ProfsData;
 
   constructor() {
     super();
 
-    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.saves);
+    const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.profs);
 
-    this.savesData = {
+    this.profsData = {
       ...this.componentData,
       saveVsDeath: sheetdata.spriteView.derived.saveVsDeath,
       saveVsWands: sheetdata.spriteView.derived.saveVsWands,
@@ -27,6 +27,6 @@ export class Saves extends Component {
       saveVsSpell: sheetdata.spriteView.derived.saveVsSpell,
     };
 
-    this.html = compiled(this.savesData);
+    this.html = compiled(this.profsData);
   }
 }

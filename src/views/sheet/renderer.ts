@@ -5,6 +5,7 @@ import { Abilities } from '@views/sheet/components/abilities/abilities';
 import { Buffs } from '@views/sheet/components/buffs/buffs/buffs';
 import { Combat } from '@views/sheet/components/combat/combat';
 import { Header } from '@views/sheet/components/header/header';
+import { Profs } from '@views/sheet/components/profs/profs';
 import { Resistances } from '@views/sheet/components/resistances/resistances';
 import { Saves } from '@views/sheet/components/saves/saves';
 import '@views/sheet/sheet.scss';
@@ -122,36 +123,13 @@ class SheetRenderer {
 
     document.getElementById('combat').innerHTML = new Combat().html;
 
-    document.getElementById('abilities').innerHTML = new Abilities(
-      sheetdata.spriteView.derived.str,
-      sheetdata.spriteView.derived.strExc,
-      sheetdata.spriteView.derived.dex,
-      sheetdata.spriteView.derived.con,
-      sheetdata.spriteView.derived.int,
-      sheetdata.spriteView.derived.wis,
-      sheetdata.spriteView.derived.cha,
-    ).html;
+    document.getElementById('profs').innerHTML = new Profs().html;
 
-    document.getElementById('resistances').innerHTML = new Resistances(
-      sheetdata.spriteView.derived.resistFire,
-      sheetdata.spriteView.derived.resistCold,
-      sheetdata.spriteView.derived.resistElectricity,
-      sheetdata.spriteView.derived.resistAcid,
-      sheetdata.spriteView.derived.resistMagic,
-      sheetdata.spriteView.derived.resistPoison,
-      sheetdata.spriteView.derived.resistSlashing,
-      sheetdata.spriteView.derived.resistCrushing,
-      sheetdata.spriteView.derived.resistPiercing,
-      sheetdata.spriteView.derived.resistMissile,
-    ).html;
+    document.getElementById('abilities').innerHTML = new Abilities().html;
 
-    document.getElementById('saves').innerHTML = new Saves(
-      sheetdata.spriteView.derived.saveVsDeath,
-      sheetdata.spriteView.derived.saveVsWands,
-      sheetdata.spriteView.derived.saveVsPoly,
-      sheetdata.spriteView.derived.saveVsBreath,
-      sheetdata.spriteView.derived.saveVsSpell,
-    ).html;
+    document.getElementById('resistances').innerHTML = new Resistances().html;
+
+    document.getElementById('saves').innerHTML = new Saves().html;
 
     document.getElementById('buffs').innerHTML = new Buffs(
       sheetdata.spriteView.effs.effs.buffs,

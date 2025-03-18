@@ -9,6 +9,10 @@ export class Derived {
 
   public thac0: number;
 
+  public thac0BonusRight: number;
+
+  public thac0BonusLeft: number;
+
   public apr: number;
 
   public xp: number;
@@ -36,6 +40,8 @@ export class Derived {
   public resistAcid: number;
 
   public resistMagic: number;
+
+  public resistMagicDamage: number;
 
   public resistPoison: number;
 
@@ -70,6 +76,10 @@ export class Derived {
 
     this.thac0 = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x10), 'INT16');
 
+    this.thac0BonusRight = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0xe4), 'INT32');
+
+    this.thac0BonusLeft = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0xe8), 'INT32');
+
     this.apr = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x12), 'INT16');
 
     this.xp = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x5c), 'UINT32');
@@ -100,6 +110,11 @@ export class Derived {
     this.resistAcid = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x24), 'INT16');
 
     this.resistMagic = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x26), 'INT16');
+
+    this.resistMagicDamage = handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0xbe),
+      'INT16',
+    );
 
     this.resistPoison = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0xc0), 'INT16');
 

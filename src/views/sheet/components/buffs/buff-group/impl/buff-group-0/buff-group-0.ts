@@ -41,9 +41,9 @@ export class BuffGroup0 extends BuffGroup {
       const key: Eff0TypeKey = eff.param2 as Eff0TypeKey;
 
       if (_.isNull(mods[key])) {
-        mods[key] = eff.param1 * (key === 0 ? -1 : 1);
+        mods[key] = eff.param1 * (key !== 16 ? -1 : 1);
       } else {
-        if (key === 0) {
+        if (key !== 16) {
           mods[key] -= eff.param1;
         } else {
           if (mods[key] > eff.param1) {

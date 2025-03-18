@@ -55,7 +55,9 @@ export class Header extends Component {
   }
 
   private classView(): string {
-    if (sheetdata.spriteView.profile.kit === 'Generalist') {
+    const sd = sheetdata;
+
+    if (!sheetdata.spriteView.profile.kit || sheetdata.spriteView.profile.kit === 'Generalist') {
       return sheetdata.spriteView.profile.klass;
     }
 
