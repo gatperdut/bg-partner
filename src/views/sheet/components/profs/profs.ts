@@ -33,7 +33,7 @@ export class Profs extends Component {
 
     this.profsData = {
       ...this.componentData,
-      weapprofs: weapprofs,
+      weapprofs: Object.keys(weapprofs).length ? weapprofs : null,
     };
 
     this.html = compiled(this.profsData);
