@@ -65,7 +65,12 @@ export class Sheet {
     ipcMain.on(
       `sheet.updated.${this.sprite.basic.id}`,
       (_event: IpcMainEvent, height: number): void => {
+        if (!this.window) {
+          return;
+        }
+
         this.height = height + 20;
+
         this.window.setBounds({ height: height + 20 });
       },
     );

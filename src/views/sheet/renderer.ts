@@ -6,7 +6,6 @@ import { Buffs } from '@views/sheet/components/buffs/buffs/buffs';
 import { Combat } from '@views/sheet/components/combat/combat';
 import { Header } from '@views/sheet/components/header/header';
 import { Imms } from '@views/sheet/components/imms/imms';
-import { Profs } from '@views/sheet/components/profs/profs';
 import { Resistances } from '@views/sheet/components/resistances/resistances';
 import { Saves } from '@views/sheet/components/saves/saves';
 import '@views/sheet/sheet.scss';
@@ -138,8 +137,6 @@ class SheetRenderer {
     document.getElementById('header').innerHTML = new Header().html;
 
     document.getElementById('combat').innerHTML = new Combat().html;
-
-    document.getElementById('profs').innerHTML = new Profs().html;
 
     document.getElementById('abilities').innerHTML = new Abilities().html;
 

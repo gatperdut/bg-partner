@@ -53,13 +53,15 @@ export class BuffGroup0 extends BuffGroup {
       }
     });
 
-    const rightTitle: string = _.map(
-      _.filter(
-        _.keys(mods).map(Number) as Eff0TypeKey[],
-        (key: Eff0TypeKey): boolean => !_.isNull(mods[key]),
-      ),
-      (key: Eff0TypeKey): string => `${eff0TypeTab[key]}: ${mods[key]}`,
-    ).join('\n');
+    const rightTitle: string =
+      'Armor class\n' +
+      _.map(
+        _.filter(
+          _.keys(mods).map(Number) as Eff0TypeKey[],
+          (key: Eff0TypeKey): boolean => !_.isNull(mods[key]),
+        ),
+        (key: Eff0TypeKey): string => `${eff0TypeTab[key]}: ${mods[key]}`,
+      ).join('\n');
 
     this.buffGroup0Data = {
       ...this.buffGroupData,

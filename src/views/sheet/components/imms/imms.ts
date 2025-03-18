@@ -11,6 +11,8 @@ import _ from 'lodash';
 export type ImmsData = ComponentData & {
   weapons: string;
 
+  misc: string;
+
   opcodes: string;
 
   spells: string;
@@ -26,6 +28,8 @@ export class Imms extends Component {
 
     const weapons: string = this.weapons();
 
+    const misc: string = this.misc();
+
     const opcodes: string = this.opcodes();
 
     const spells: string = this.spells();
@@ -33,6 +37,7 @@ export class Imms extends Component {
     this.immsData = {
       ...this.componentData,
       weapons: weapons,
+      misc: misc,
       opcodes: opcodes,
       spells: spells,
     };
@@ -59,10 +64,28 @@ export class Imms extends Component {
     );
 
     if (enchantment > 0) {
-      result.unshift(`+${enchantment} or lower enchantment`);
+      result.unshift(`Immune to +${enchantment} or lower weapons`);
     }
 
     return _.uniq(result).join(', ');
+  }
+
+  private misc(): string {
+    const result: string[] = [];
+
+    if (sheetdata.spriteView.derived.seeInvisible) {
+      result.push('Sees through invisibility.');
+    }
+
+    if (sheetdata.spriteView.derived.backstabImmunity) {
+      result.push('Immune to backstab.');
+    }
+
+    if (sheetdata.spriteView.derived.timestopImmunity) {
+      result.push('Immune to timestop.');
+    }
+
+    return result.join('. ');
   }
 
   private opcodes(): string {
@@ -77,7 +100,7 @@ export class Imms extends Component {
       },
     );
 
-    return _.uniq(result).join(', ');
+    return _.uniq(result).sort().join(', ');
   }
 
   private spells(): string {
@@ -90,6 +113,6 @@ export class Imms extends Component {
       },
     );
 
-    return _.uniq(result).join(', ');
+    return _.uniq(result).sort().join(', ');
   }
 }

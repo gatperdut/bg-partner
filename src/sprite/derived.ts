@@ -63,6 +63,12 @@ export class Derived {
 
   public saveVsSpell: number;
 
+  public seeInvisible: boolean;
+
+  public backstabImmunity: boolean;
+
+  public timestopImmunity: boolean;
+
   constructor(private base: bigint) {
     // Empty
   }
@@ -135,5 +141,17 @@ export class Derived {
     this.saveVsBreath = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x1a), 'INT16');
 
     this.saveVsSpell = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x1c), 'INT16');
+
+    this.seeInvisible = !!handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0xd8), 'INT32');
+
+    this.backstabImmunity = !!handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0x284),
+      'INT32',
+    );
+
+    this.timestopImmunity = !!handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0x2d8),
+      'INT32',
+    );
   }
 }

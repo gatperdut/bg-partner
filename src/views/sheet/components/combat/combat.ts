@@ -1,6 +1,9 @@
+import { Eff } from '@sprite/effs/impl/eff';
+import { WeapprofKey, weapprofTab, WeapprofValue } from '@tables/weapprof';
 import { Component, ComponentData } from '@views/shared/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
+import _ from 'lodash';
 
 export type CombatData = ComponentData & {
   ac: number;
@@ -9,6 +12,7 @@ export type CombatData = ComponentData & {
   thac0BonusLeft: number;
   apr: string;
   xp: number;
+  weapprofs: string;
 };
 
 // TODO If thac0BonusLeft happens to be exactly 0, the offhand thac0 won't be displayed.
@@ -22,6 +26,8 @@ export class Combat extends Component {
 
     const aprView: number = this.aprView();
 
+    const weapprofs: string = this.weapprofs();
+
     this.combatData = {
       ...this.componentData,
       ac: sheetdata.spriteView.derived.ac,
@@ -30,6 +36,7 @@ export class Combat extends Component {
       thac0BonusLeft: sheetdata.spriteView.derived.thac0BonusLeft,
       apr: Number.isInteger(aprView) ? aprView.toString() : `${aprView * 2}/2`,
       xp: sheetdata.spriteView.derived.xp,
+      weapprofs: weapprofs,
     };
 
     this.html = compiled(this.combatData);
@@ -49,5 +56,34 @@ export class Combat extends Component {
     }
 
     return apr;
+  }
+
+  private weapprofs(): string {
+    const result: Partial<Record<WeapprofValue, number>> = {};
+
+    _.each(sheetdata.spriteView.effs.effs.profs, (eff233: Eff): void => {
+      const key: WeapprofKey = eff233.param2 as WeapprofKey;
+
+      const value: WeapprofValue = weapprofTab[key];
+
+      if (!value) {
+        return;
+      }
+
+      if (!result[weapprofTab[key]]) {
+        result[value] = 0;
+      }
+
+      result[value] += eff233.param1;
+    });
+
+    if (!Object.keys(result).length) {
+      return null;
+    }
+
+    return _.map(
+      _.keys(result),
+      (value: WeapprofValue) => `${value}: ${'+'.repeat(result[value])}`,
+    ).join('\n');
   }
 }
