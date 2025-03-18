@@ -1,5 +1,6 @@
 import { Effs } from '@sprite/effs/effs';
 import { Eff } from '@sprite/effs/impl/eff';
+import { Eff206 } from '@sprite/effs/impl/eff-206';
 import { EffKey, effTab } from '@tables/eff';
 import { Eff120TypeKey, eff120TypeTab } from '@tables/eff/eff120type';
 import { Component, ComponentData } from '@views/shared/component';
@@ -11,6 +12,8 @@ export type ImmsData = ComponentData & {
   weapons: string;
 
   opcodes: string;
+
+  spells: string;
 };
 
 export class Imms extends Component {
@@ -25,10 +28,13 @@ export class Imms extends Component {
 
     const opcodes: string = this.opcodes();
 
+    const spells: string = this.spells();
+
     this.immsData = {
       ...this.componentData,
       weapons: weapons,
       opcodes: opcodes,
+      spells: spells,
     };
 
     this.html = compiled(this.immsData);
@@ -71,6 +77,19 @@ export class Imms extends Component {
       },
     );
 
-    return result.join(', ');
+    return _.uniq(result).join(', ');
+  }
+
+  private spells(): string {
+    const result: string[] = [];
+
+    _.each(
+      _.filter(sheetdata.spriteView.effs.effs.imms, (eff: Eff): boolean => eff.key === 206),
+      (eff206: Eff206): void => {
+        result.push(eff206.splName);
+      },
+    );
+
+    return _.uniq(result).join(', ');
   }
 }

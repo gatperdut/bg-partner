@@ -5,6 +5,7 @@
 @use 'heartbeat';
 @use 'pointer';
 @use 'spacing' as spacing;
+@use 'text';
 @use 'tippy';
 
 @include fxl.class-selectors(false);
