@@ -3,8 +3,6 @@ import { ResBam } from '@chitin/res/impl/bam/res-bam';
 import { handlers } from '@handlers';
 
 export class ResImage extends ResImageBase {
-  public loaded: boolean = false;
-
   constructor(bamCode: string) {
     super();
 

@@ -4,11 +4,10 @@ import { Eff } from '@sprite/effs/impl/eff';
 import { EffKey } from '@tables/eff';
 import _ from 'lodash';
 
-export const EffTypes = ['buffs', 'imms', 'profs', 'statmods', 'states', 'maybe'] as const;
+export const EffTypes = ['buffs', 'imms', 'profs'] as const;
 
 export type EffType = (typeof EffTypes)[number];
 
-// TODO EffSource(s) can be dropped? Rather equivalent to RessrcType.
 export const EffSources = ['timed', 'equipped'] as const;
 
 export type EffSource = (typeof EffSources)[number];
@@ -18,30 +17,32 @@ export class Effs {
     buffs: [],
     imms: [],
     profs: [],
-    statmods: [],
-    states: [],
-    maybe: [],
   };
 
   public groups: Record<EffType, EffKey[]> = {
-    buffs: [101, 120, 206],
+    buffs: [0, 101, 102, 120, 206, 259],
     imms: [100, 101, 206, 293, 308, 310, 318, 324, 367, 208, 120],
     profs: [233],
-    statmods: [33, 34, 35, 36, 37, 189, 166, 173],
-    states: [328],
-    maybe: [106, 360],
+    // statmods: [33, 34, 35, 36, 37, 189, 166, 173],
   };
 
   public static effsIgnored: EffKey[] = [
     6, 7, 8, 9, 10, 12, 14, 15, 18, 19, 27, 28, 29, 30, 31, 41, 42, 44, 49, 50, 51, 52, 53, 59, 61,
-    65, 66, 84, 85, 90, 91, 92, 93, 103, 114, 119, 135, 138, 139, 140, 141, 142, 144, 145, 146, 153,
-    154, 155, 156, 158, 169, 170, 174, 177, 184, 186, 187, 208, 215, 240, 265, 267, 271, 275, 276,
-    277, 282, 283, 287, 290, 291, 293, 295, 296, 309, 313, 315, 327, 330, 336,
+    65, 66, 84, 85, 90, 91, 92, 93, 103, 106, 107, 114, 119, 135, 138, 139, 140, 141, 144, 145, 146,
+    154, 155, 156, 158, 169, 170, 173, 174, 177, 184, 186, 187, 208, 215, 240, 265, 267, 271, 275,
+    276, 277, 282, 283, 287, 290, 291, 293, 295, 296, 297, 309, 313, 315, 327, 328, 330, 336, 360,
   ];
 
   public static effsGrouped: number[] = [0, 83, 102, 200, 201, 259];
 
-  public static effsSqueezes: number[][] = [[248, 249], [197], [86, 87, 88, 89], [101, 120, 206]];
+  public static effsSqueezes: number[][] = [
+    [3, 101],
+    [248, 249],
+    [197],
+    [33, 34, 35, 36, 37],
+    [86, 87, 88, 89],
+    [101, 120, 206],
+  ];
 
   constructor(private baseTimed: bigint, private baseEquipped: bigint) {
     // Empty

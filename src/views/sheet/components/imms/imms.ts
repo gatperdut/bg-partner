@@ -64,7 +64,7 @@ export class Imms extends Component {
     );
 
     if (enchantment > 0) {
-      result.unshift(`Immune to +${enchantment} or lower weapons`);
+      result.unshift(`+${enchantment} enchantment or lower`);
     }
 
     return _.uniq(result).join(', ');
@@ -83,6 +83,10 @@ export class Imms extends Component {
 
     if (sheetdata.spriteView.derived.timestopImmunity) {
       result.push('Immune to timestop.');
+    }
+
+    if (sheetdata.spriteView.derived.turnUndeadImmunity) {
+      result.push('Immune to turn undead.');
     }
 
     return result.join('. ');

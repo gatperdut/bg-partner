@@ -12,6 +12,7 @@ export type CombatData = ComponentData & {
   thac0BonusLeft: number;
   apr: string;
   xp: number;
+  luck: number;
   weapprofs: string;
 };
 
@@ -36,6 +37,7 @@ export class Combat extends Component {
       thac0BonusLeft: sheetdata.spriteView.derived.thac0BonusLeft,
       apr: Number.isInteger(aprView) ? aprView.toString() : `${aprView * 2}/2`,
       xp: sheetdata.spriteView.derived.xp,
+      luck: sheetdata.spriteView.derived.luck,
       weapprofs: weapprofs,
     };
 

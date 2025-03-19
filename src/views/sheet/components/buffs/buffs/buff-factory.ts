@@ -10,7 +10,10 @@ import { BuffGroup259 } from '@views/sheet/components/buffs/buff-group/impl/buff
 import { BuffGroup83 } from '@views/sheet/components/buffs/buff-group/impl/buff-group-83/buff-group-83';
 import { BuffGroupStub } from '@views/sheet/components/buffs/buff-group/impl/buff-group-stub/buff-group-stub';
 import { BuffSingle } from '@views/sheet/components/buffs/buff-single/buff-single';
+import { BuffSingle131 } from '@views/sheet/components/buffs/buff-single/buff-single-131/buff-single-131';
+import { BuffSingle137 } from '@views/sheet/components/buffs/buff-single/buff-single-137/buff-single-137';
 import { BuffSingle159 } from '@views/sheet/components/buffs/buff-single/buff-single-159/buff-single-159';
+import { BuffSingle166 } from '@views/sheet/components/buffs/buff-single/buff-single-166/buff-single-166';
 import { BuffSingle218 } from '@views/sheet/components/buffs/buff-single/buff-single-218/buff-single-218';
 import { BuffSingle219 } from '@views/sheet/components/buffs/buff-single/buff-single-219/buff-single-219';
 import { BuffSingle232 } from '@views/sheet/components/buffs/buff-single/buff-single-232/buff-single-232';
@@ -30,8 +33,14 @@ export class BuffFactory {
         return new BuffSingle86(eff);
       case 98:
         return new BuffSingle98(eff);
+      case 131:
+        return new BuffSingle131(eff);
+      case 137:
+        return new BuffSingle137(eff);
       case 159:
         return new BuffSingle159(eff);
+      case 166:
+        return new BuffSingle166(eff);
       case 218:
         return new BuffSingle218(eff);
       case 219:

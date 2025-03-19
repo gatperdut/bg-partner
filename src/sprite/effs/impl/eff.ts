@@ -113,11 +113,6 @@ export abstract class Eff {
     this.grouped = _.includes(Effs.effsGrouped, this.key);
 
     this.squeezed = _.includes(_.flatten(Effs.effsSqueezes), this.key);
-
-    // TODO drop this.
-    if (this.grouped && this.ressrcType === 'ITM') {
-      console.error(`${key} comes fron item ${this.ressrc.code} and is grouped.`);
-    }
   }
 
   private ressrcSetup(ressrcStrref: string): void {
@@ -140,7 +135,7 @@ export abstract class Eff {
           case 'SPL':
             this.ressrc = ressrc as ResSpl;
 
-            this.resImage = this.ressrc.resImage;
+            this.resImage = this.ressrc.resImage || this.resImageDefault();
 
             break;
           case 'ITM':

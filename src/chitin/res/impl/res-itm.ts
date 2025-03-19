@@ -48,13 +48,15 @@ export class ResItm extends Res {
 
   public resImageSet(): void {
     if (!this.bamCode) {
+      this.resImage = handlers.chitin.resImageDefault;
+
       return;
     }
 
-    const resImage: ResImage = new ResImage(this.bamCode);
+    let resImage: ResImage = new ResImage(this.bamCode);
 
     if (!resImage.loaded) {
-      return;
+      resImage = handlers.chitin.resImageDefault;
     }
 
     this.resImage = resImage;

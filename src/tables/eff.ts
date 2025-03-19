@@ -327,7 +327,7 @@ export const effTab = {
   321: 'Effects specified by resource',
   323: 'Turn undead level',
   324: 'Protection immunity to resource and message',
-  325: 'Savesvs all',
+  325: 'Saves vs all',
   326: 'Apply effects list',
   327: 'Icewind visual spell hit plays sound',
   328: 'Set state',

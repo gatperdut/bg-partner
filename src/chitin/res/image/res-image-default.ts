@@ -17,5 +17,7 @@ export class ResImageDefault extends ResImageBase {
       width: png.width,
       height: png.height,
     };
+
+    this.loaded = true;
   }
 }

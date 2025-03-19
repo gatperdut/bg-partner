@@ -17,6 +17,8 @@ export class Derived {
 
   public xp: number;
 
+  public luck: number;
+
   public str: number;
 
   public strExc: number;
@@ -69,6 +71,8 @@ export class Derived {
 
   public timestopImmunity: boolean;
 
+  public turnUndeadImmunity: boolean;
+
   constructor(private base: bigint) {
     // Empty
   }
@@ -89,6 +93,8 @@ export class Derived {
     this.apr = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x12), 'INT16');
 
     this.xp = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x5c), 'UINT32');
+
+    this.luck = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x42), 'INT16');
 
     this.str = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x4e), 'INT16');
 
@@ -151,6 +157,11 @@ export class Derived {
 
     this.timestopImmunity = !!handlers.memread.memReadNumber(
       this.base + BigInt(0x0 + 0x2d8),
+      'INT32',
+    );
+
+    this.turnUndeadImmunity = !!handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0x2b4),
       'INT32',
     );
   }
