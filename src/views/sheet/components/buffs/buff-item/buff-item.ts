@@ -26,6 +26,10 @@ export class BuffItem extends Buff {
 
     const tooltipHtml: string = new BuffItemTooltip(effs).html;
 
+    if (!tooltipHtml) {
+      return;
+    }
+
     this.buffItemData = {
       ...this.buffData,
       levelsHtml: effs[0].source === 'timed' ? this.buffData.levelsHtml : '',

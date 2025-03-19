@@ -45,12 +45,17 @@ export class Buffs extends Component {
 
     const buffSingles: BuffSingle[] = [];
 
+    const base64s: string[] = [];
+
     _.each(Effs.effsSqueezes, (effsSqueeze: number[]): void => {
       for (let i: number = 0; i < effsSqueezed.length; i++) {
-        if (_.includes(effsSqueeze, effsSqueezed[i].key)) {
+        if (
+          _.includes(effsSqueeze, effsSqueezed[i].key) &&
+          !_.includes(base64s, effsSqueezed[i].resImage.base64)
+        ) {
           buffSingles.push(BuffFactory.single(effsSqueezed[i]));
 
-          break;
+          base64s.push(effsSqueezed[i].resImage.base64);
         }
       }
     });

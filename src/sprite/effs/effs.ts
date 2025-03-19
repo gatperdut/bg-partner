@@ -24,7 +24,7 @@ export class Effs {
   };
 
   public groups: Record<EffType, EffKey[]> = {
-    buffs: [],
+    buffs: [101, 120, 206],
     imms: [100, 101, 206, 293, 308, 310, 318, 324, 367, 208, 120],
     profs: [233],
     statmods: [33, 34, 35, 36, 37, 189, 166, 173],
@@ -41,7 +41,7 @@ export class Effs {
 
   public static effsGrouped: number[] = [0, 83, 102, 200, 201, 259];
 
-  public static effsSqueezes: number[][] = [[248, 249], [197], [86, 87, 88, 89]];
+  public static effsSqueezes: number[][] = [[248, 249], [197], [86, 87, 88, 89], [101, 120, 206]];
 
   constructor(private baseTimed: bigint, private baseEquipped: bigint) {
     // Empty
