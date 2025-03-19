@@ -1,5 +1,4 @@
-import { Eff } from '@sprite/effs/impl/eff';
-import { WeapprofKey, weapprofTab, WeapprofValue } from '@tables/weapprof';
+import { WeapprofKey, WeapprofKeys, weapprofTab } from '@tables/weapprof';
 import { Component, ComponentData } from '@views/shared/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
@@ -61,31 +60,14 @@ export class Combat extends Component {
   }
 
   private weapprofs(): string {
-    const result: Partial<Record<WeapprofValue, number>> = {};
+    const result: string[] = [];
 
-    _.each(sheetdata.spriteView.effs.effs.profs, (eff233: Eff): void => {
-      const key: WeapprofKey = eff233.param2 as WeapprofKey;
-
-      const value: WeapprofValue = weapprofTab[key];
-
-      if (!value) {
-        return;
+    _.each(WeapprofKeys, (key: WeapprofKey): void => {
+      if (sheetdata.spriteView.derived.profs[key] > 0) {
+        result.push(`${weapprofTab[key]}: ${'+'.repeat(sheetdata.spriteView.derived.profs[key])}`);
       }
-
-      if (!result[weapprofTab[key]]) {
-        result[value] = 0;
-      }
-
-      result[value] += eff233.param1;
     });
 
-    if (!Object.keys(result).length) {
-      return null;
-    }
-
-    return _.map(
-      _.keys(result),
-      (value: WeapprofValue) => `${value}: ${'+'.repeat(result[value])}`,
-    ).join('\n');
+    return result.join('\n');
   }
 }

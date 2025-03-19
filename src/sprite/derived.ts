@@ -1,4 +1,5 @@
 import { handlers } from '@handlers';
+import { WeapprofKey } from '@tables/weapprof';
 
 export class Derived {
   public state: number;
@@ -72,6 +73,33 @@ export class Derived {
   public timestopImmunity: boolean;
 
   public turnUndeadImmunity: boolean;
+
+  public profs: Record<WeapprofKey, number> = {
+    bastardSword: null,
+    longsword: null,
+    shortsword: null,
+    axe: null,
+    twoHandedSword: null,
+    katana: null,
+    scimitar: null,
+    dagger: null,
+    warhammer: null,
+    spear: null,
+    halberd: null,
+    flail: null,
+    mace: null,
+    quarterstaff: null,
+    crossbow: null,
+    longbow: null,
+    shortbow: null,
+    dart: null,
+    sling: null,
+    club: null,
+    styleTwoHanded: null,
+    styleSwordAndShield: null,
+    styleSingleWeapon: null,
+    styleTwoWeapons: null,
+  };
 
   constructor(private base: bigint) {
     // Empty
@@ -162,6 +190,78 @@ export class Derived {
 
     this.turnUndeadImmunity = !!handlers.memread.memReadNumber(
       this.base + BigInt(0x0 + 0x2b4),
+      'INT32',
+    );
+
+    this.profs.bastardSword = handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0xf8),
+      'INT32',
+    );
+
+    this.profs.longsword = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0xfc), 'INT32');
+
+    this.profs.shortsword = handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0x100),
+      'INT32',
+    );
+
+    this.profs.axe = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x104), 'INT32');
+
+    this.profs.twoHandedSword = handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0x108),
+      'INT32',
+    );
+
+    this.profs.katana = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x10c), 'INT32');
+
+    this.profs.scimitar = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x110), 'INT32');
+
+    this.profs.dagger = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x114), 'INT32');
+
+    this.profs.warhammer = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x118), 'INT32');
+
+    this.profs.spear = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x11c), 'INT32');
+
+    this.profs.halberd = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x120), 'INT32');
+
+    this.profs.flail = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x124), 'INT32');
+
+    this.profs.mace = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x128), 'INT32');
+
+    this.profs.quarterstaff = handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0x12c),
+      'INT32',
+    );
+
+    this.profs.crossbow = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x130), 'INT32');
+
+    this.profs.longbow = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x134), 'INT32');
+
+    this.profs.shortbow = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x138), 'INT32');
+
+    this.profs.dart = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x13c), 'INT32');
+
+    this.profs.sling = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x140), 'INT32');
+
+    this.profs.club = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x160), 'INT32');
+
+    this.profs.styleTwoHanded = handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0x150),
+      'INT32',
+    );
+
+    this.profs.styleSwordAndShield = handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0x154),
+      'INT32',
+    );
+
+    this.profs.styleSingleWeapon = handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0x158),
+      'INT32',
+    );
+
+    this.profs.styleTwoWeapons = handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0x15c),
       'INT32',
     );
   }
