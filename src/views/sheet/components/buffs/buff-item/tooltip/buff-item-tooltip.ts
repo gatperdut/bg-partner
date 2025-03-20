@@ -13,7 +13,7 @@ export type BuffItemTooltipData = TooltipData & {
 export class BuffItemTooltip extends Tooltip {
   protected buffItemTooltipData: BuffItemTooltipData;
 
-  public static effsHidden: EffKey[] = [0, 1, 33, 34, 35, 36, 37, 101, 120, 206];
+  public static effsHidden: EffKey[] = [0, 1, 33, 34, 35, 36, 37, 101, 102, 120, 206];
 
   constructor(effs: Eff[]) {
     super();

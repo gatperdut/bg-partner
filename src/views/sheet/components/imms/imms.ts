@@ -89,6 +89,16 @@ export class Imms extends Component {
       result.push('Immune to turn undead.');
     }
 
+    if (sheetdata.spriteView.derived.hpMin) {
+      result.push('HP cannot be brought down to 0.');
+    }
+
+    if (sheetdata.spriteView.derived.spellLevelImmunity > 0) {
+      result.push(
+        `Immune to spell levels ${sheetdata.spriteView.derived.spellLevelImmunity} and below.`,
+      );
+    }
+
     return result.join('. ');
   }
 

@@ -6,6 +6,8 @@ export class Derived {
 
   public hpMax: number;
 
+  public hpMin: boolean;
+
   public ac: number;
 
   public thac0: number;
@@ -74,6 +76,8 @@ export class Derived {
 
   public turnUndeadImmunity: boolean;
 
+  public spellLevelImmunity: number = 0;
+
   public profs: Record<WeapprofKey, number> = {
     bastardSword: null,
     longsword: null,
@@ -109,6 +113,8 @@ export class Derived {
     this.state = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x0), 'UINT32');
 
     this.hpMax = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x4), 'INT16');
+
+    this.hpMin = !!handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0xe0), 'INT32');
 
     this.ac = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x6), 'INT16');
 
@@ -264,5 +270,18 @@ export class Derived {
       this.base + BigInt(0x0 + 0x15c),
       'INT32',
     );
+
+    for (let i: number = 1; i < 10; i++) {
+      const spellLevelImmunity: number = handlers.memread.memReadNumber(
+        this.base + BigInt(0x0 + 0x398 + i * 4),
+        'INT32',
+      );
+
+      if (!spellLevelImmunity) {
+        break;
+      }
+
+      this.spellLevelImmunity = i;
+    }
   }
 }
