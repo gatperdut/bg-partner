@@ -14,7 +14,7 @@ export class BuffItemTooltip extends Tooltip {
   protected buffItemTooltipData: BuffItemTooltipData;
 
   public static effsHidden: EffKey[] = [
-    0, 1, 27, 28, 29, 30, 31, 33, 34, 35, 36, 37, 86, 87, 88, 89, 101, 102, 120, 142, 189, 206,
+    0, 1, 27, 28, 29, 30, 31, 33, 34, 35, 36, 37, 86, 87, 88, 89, 101, 102, 120, 142, 189, 197, 206,
   ];
 
   constructor(effs: Eff[]) {

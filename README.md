@@ -43,7 +43,7 @@ Once you are ready, go in your terminal to BGPartner's directory and do `./BGPar
 
 ### Configuration
 
-On its first execution BGPartner will create a [JSON](https://www.shapediver.com/blog/json-objects-explained) file called `bg-partner.json` where it stores its configuration, which you can edit. These are the default values:
+On its first execution BGPartner will create a [JSON](https://www.shapediver.com/blog/json-objects-explained) file called `bg-partner.json` where it stores its configuration, then immediately quit. You should review and edit this file before launching again. These are the default values:
 
 ```
   {

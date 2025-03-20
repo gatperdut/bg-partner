@@ -22,6 +22,8 @@ const RessrcTypes = resextValueSubset(['ITM', 'SPL'] as const);
 export type RessrcType = (typeof RessrcTypes)[number];
 
 export abstract class Eff {
+  public loaded: boolean = true;
+
   // Memory fields
   public school: SchoolValue;
 
@@ -117,6 +119,8 @@ export abstract class Eff {
 
   private ressrcSetup(ressrcStrref: string): void {
     if (!ressrcStrref) {
+      this.loaded = false;
+
       return;
     }
 
