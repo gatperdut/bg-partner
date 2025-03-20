@@ -78,6 +78,8 @@ export class Derived {
 
   public spellLevelImmunity: number = 0;
 
+  public castingTimeMod: number;
+
   public profs: Record<WeapprofKey, number> = {
     bastardSword: null,
     longsword: null,
@@ -283,5 +285,7 @@ export class Derived {
 
       this.spellLevelImmunity = i;
     }
+
+    this.castingTimeMod = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0xd0), 'INT16');
   }
 }

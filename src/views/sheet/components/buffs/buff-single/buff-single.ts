@@ -11,7 +11,7 @@ export type BuffSingleData = BuffData;
 export class BuffSingle extends Buff {
   protected buffSingleData: BuffSingleData;
 
-  public static effsHidden: EffKey[] = [33, 101];
+  public static effsHidden: EffKey[] = [33, 34, 35, 36, 37, 101, 133];
 
   constructor(eff: Eff) {
     super(

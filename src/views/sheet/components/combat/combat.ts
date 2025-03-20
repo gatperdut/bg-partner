@@ -68,6 +68,10 @@ export class Combat extends Component {
       }
     });
 
+    if (!result.length) {
+      result.push('No weapon proficiencies');
+    }
+
     return result.join('\n');
   }
 }

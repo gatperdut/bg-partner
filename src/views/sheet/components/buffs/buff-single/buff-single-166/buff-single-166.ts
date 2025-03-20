@@ -16,20 +16,26 @@ export class BuffSingle166 extends BuffSingle {
 
     let title: string;
 
+    let icon: string;
+
     switch (eff.param2) {
       case 0:
         title = 'Cumulative magic resistance %';
 
+        icon = '⬆️';
+
         break;
       case 1:
         title = 'Flat magic resistance %';
+
+        icon = '#️⃣';
 
         break;
     }
 
     this.buffSingle166Data = {
       ...this.buffSingleData,
-      rightHtml: new BuffRight(eff.param1.toString(), title).html,
+      rightHtml: new BuffRight(`${eff.param1.toString()}\n${icon}`, title).html,
     };
 
     this.html = compiled(this.buffSingle166Data);

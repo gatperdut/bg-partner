@@ -10,6 +10,12 @@
   </div>
 {{/if}}
 
+{{#if creatures}}
+  <div class="border p-3 fs-3 fx-layout-column fx-align--start-x fx-align--x-stretch">
+    <span>Cannot be targeted by {{creatures}}.</span>
+  </div>
+{{/if}}
+
 {{#if spells}}
   <div class="border p-3 break-all fs-3 fx-layout-column fx-align--start-x fx-align--x-stretch">
     <span>Spell immunities: {{spells}}.</span>

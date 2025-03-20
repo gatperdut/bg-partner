@@ -3,6 +3,7 @@ import { Eff } from '@sprite/effs/impl/eff';
 import { Eff206 } from '@sprite/effs/impl/eff-206';
 import { EffKey, effTab } from '@tables/eff';
 import { Eff120TypeKey, eff120TypeTab } from '@tables/eff/eff120type';
+import { idsTab } from '@tables/ids/ids';
 import { Component, ComponentData } from '@views/shared/component';
 import { sheetdata } from '@views/sheet/sheetdata';
 import Handlebars from 'handlebars';
@@ -12,6 +13,8 @@ export type ImmsData = ComponentData & {
   weapons: string;
 
   misc: string;
+
+  creatures: string;
 
   opcodes: string;
 
@@ -30,6 +33,8 @@ export class Imms extends Component {
 
     const misc: string = this.misc();
 
+    const creatures: string = this.creatures();
+
     const opcodes: string = this.opcodes();
 
     const spells: string = this.spells();
@@ -38,6 +43,7 @@ export class Imms extends Component {
       ...this.componentData,
       weapons: weapons,
       misc: misc,
+      creatures: creatures,
       opcodes: opcodes,
       spells: spells,
     };
@@ -64,7 +70,7 @@ export class Imms extends Component {
     );
 
     if (enchantment > 0) {
-      result.unshift(`+${enchantment} enchantment or lower`);
+      result.unshift(`+${enchantment} enchantment or lesser`);
     }
 
     return _.uniq(result).join(', ');
@@ -99,7 +105,24 @@ export class Imms extends Component {
       );
     }
 
+    if (sheetdata.spriteView.derived.castingTimeMod > 0) {
+      result.push(`Casting time is modified by ${sheetdata.spriteView.derived.castingTimeMod}.`);
+    }
+
     return result.join('. ');
+  }
+
+  private creatures(): string {
+    const result: string[] = [];
+    _.each(
+      _.filter(sheetdata.spriteView.effs.effs.imms, (eff: Eff): boolean => eff.key === 100),
+      (eff100: Eff): void => {
+        //@ts-ignore
+        result.push(idsTab[eff100.param2][eff100.param1]);
+      },
+    );
+
+    return result.join(', ');
   }
 
   private opcodes(): string {
