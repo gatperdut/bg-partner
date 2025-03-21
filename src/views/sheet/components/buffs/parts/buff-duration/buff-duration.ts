@@ -41,11 +41,13 @@ export class BuffDuration extends Component {
           durationStr.push(rounds + 'R');
         }
 
-        durationStr.push(seconds + 1 + 'S');
+        if (seconds) {
+          durationStr.push(seconds + 'S');
+        }
 
         break;
       default:
-        durationStr.push(durtype + '❓');
+        durationStr.push(durtype + ' ❓');
         break;
     }
 

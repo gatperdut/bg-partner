@@ -14,6 +14,10 @@ export class BuffSingle142 extends BuffSingle {
   constructor(eff: Eff) {
     super(eff);
 
+    if (!this.buffSingleData) {
+      return;
+    }
+
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffSingle142);
 
     if (!_.includes(BuffSingle142.iconsShown, eff.param2)) {

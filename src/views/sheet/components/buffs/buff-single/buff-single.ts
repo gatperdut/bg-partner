@@ -15,7 +15,9 @@ export class BuffSingle extends Buff {
 
   public static effsHiddenIfItm: EffKey[] = [101];
 
-  public static effsHiddenIfNotTimed: EffKey[] = [101];
+  public static effsHiddenUnlessItm: EffKey[] = [166];
+
+  public static effsHiddenUnlessTimed: EffKey[] = [101];
 
   constructor(eff: Eff) {
     super(
@@ -37,7 +39,11 @@ export class BuffSingle extends Buff {
       return;
     }
 
-    if (_.includes(BuffSingle.effsHiddenIfItm, eff.key) && eff.durtype !== 4096) {
+    if (_.includes(BuffSingle.effsHiddenUnlessItm, eff.key) && eff.ressrcType !== 'ITM') {
+      return;
+    }
+
+    if (_.includes(BuffSingle.effsHiddenUnlessTimed, eff.key) && eff.durtype !== 4096) {
       return;
     }
 

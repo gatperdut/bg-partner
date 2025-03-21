@@ -16,6 +16,7 @@ export const effdefaultTab: Partial<Record<EffKey, string>> = {
   69: 'spwi310',
   98: 'sppr711',
   102: 'spwi602',
+  126: 'spwi305',
   131: 'sppr203',
   137: 'sppr203',
   166: 'sppr509',

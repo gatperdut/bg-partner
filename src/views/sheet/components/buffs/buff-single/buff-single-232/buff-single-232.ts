@@ -17,7 +17,9 @@ export class BuffSingle232 extends BuffSingle {
   constructor(eff: Eff232) {
     super(eff);
 
-    const s = sheetdata;
+    if (!this.buffSingleData) {
+      return;
+    }
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffSingle232);
 

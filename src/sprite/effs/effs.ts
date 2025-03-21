@@ -37,7 +37,8 @@ export class Effs {
 
   public static effsSqueezes: number[][] = [
     [3, 101],
-    [20],
+    [20], // Mislead
+    [54, 73, 0], // Tenser's transformation
     [197],
     [33, 34, 35, 36, 37],
     [101, 120, 206],

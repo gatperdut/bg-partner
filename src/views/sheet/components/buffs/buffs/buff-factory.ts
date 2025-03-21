@@ -10,6 +10,7 @@ import { BuffGroup259 } from '@views/sheet/components/buffs/buff-group/impl/buff
 import { BuffGroup83 } from '@views/sheet/components/buffs/buff-group/impl/buff-group-83/buff-group-83';
 import { BuffGroupStub } from '@views/sheet/components/buffs/buff-group/impl/buff-group-stub/buff-group-stub';
 import { BuffSingle } from '@views/sheet/components/buffs/buff-single/buff-single';
+import { BuffSingle0 } from '@views/sheet/components/buffs/buff-single/buff-single-0/buff-single-0';
 import { BuffSingle131 } from '@views/sheet/components/buffs/buff-single/buff-single-131/buff-single-131';
 import { BuffSingle137 } from '@views/sheet/components/buffs/buff-single/buff-single-137/buff-single-137';
 import { BuffSingle159 } from '@views/sheet/components/buffs/buff-single/buff-single-159/buff-single-159';
@@ -27,6 +28,8 @@ import { BuffItem } from '../buff-item/buff-item';
 export class BuffFactory {
   public static single(eff: Eff): BuffSingle {
     switch (eff.key) {
+      case 0:
+        return new BuffSingle0(eff);
       case 30:
         return new BuffSingle30(eff);
       case 86:

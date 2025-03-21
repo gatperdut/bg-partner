@@ -12,6 +12,10 @@ export class BuffSingle86 extends BuffSingle {
   constructor(eff: Eff) {
     super(eff);
 
+    if (!this.buffSingleData) {
+      return;
+    }
+
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffSingle86);
 
     let title: string;

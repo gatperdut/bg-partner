@@ -2,6 +2,7 @@ import { Bif } from '@chitin/bif';
 import { Res } from '@chitin/res/impl/res';
 import { EffKey } from '@tables/eff';
 import { DurtypeKey } from '@tables/eff/durtype';
+import { EffsaveKey, EffsaveKeys, effsaveTab, EffsaveValue } from '@tables/eff/effsave';
 import {
   SchoolKey,
   schoolShortTab,
@@ -9,6 +10,7 @@ import {
   schoolTab,
   SchoolValue,
 } from '@tables/school';
+import _ from 'lodash';
 
 export class ResEff extends Res {
   public key: EffKey;
@@ -25,7 +27,9 @@ export class ResEff extends Res {
 
   public prob2: number;
 
-  public saveType: number;
+  public save: EffsaveValue;
+
+  public bypassMirrorImage: boolean;
 
   public saveBonus: number;
 
@@ -58,7 +62,19 @@ export class ResEff extends Res {
 
     this.prob2 = this.file.readInt16LE(0x2e);
 
-    this.saveType = this.file.readInt32LE(0x40);
+    const save = this.file.readInt32LE(0x40);
+
+    _.each(EffsaveKeys, (key: EffsaveKey): boolean => {
+      if (save & key) {
+        this.save = effsaveTab[key];
+
+        return false;
+      }
+
+      return true;
+    });
+
+    this.bypassMirrorImage = !!(save & 0x8000000);
 
     this.saveBonus = this.file.readInt32LE(0x44);
 
