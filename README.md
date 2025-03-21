@@ -98,6 +98,8 @@ Next, move the mouse over some creature and use your `accelSheet` shortcut. You 
 
 TODO
 
+TODO: only update when game unpaused. tooltips only available when game is paused.
+
 ## Bugs and reports
 
 BGPartner is very much in development, specially when it comes to testing under different environments. So far, only the Steam version of the games under Ubuntu / Windows 11 are officially supported.

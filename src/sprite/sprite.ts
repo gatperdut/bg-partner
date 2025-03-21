@@ -2,6 +2,7 @@ import { handlers } from '@handlers';
 import { Basic } from '@sprite/basic';
 import { Derived } from '@sprite/derived';
 import { Effs } from '@sprite/effs/effs';
+import { Gear } from '@sprite/gear';
 import { Profile } from '@sprite/profile';
 
 export class Sprite {
@@ -15,6 +16,8 @@ export class Sprite {
 
   public effs: Effs;
 
+  public gear: Gear;
+
   constructor(public base: bigint) {
     this.derivedOffset = base + BigInt(0x1120);
 
@@ -23,6 +26,8 @@ export class Sprite {
     this.profile = new Profile(base, this.derivedOffset);
 
     this.derived = new Derived(this.derivedOffset);
+
+    this.gear = new Gear(base + BigInt(0xfc0));
 
     this.effs = new Effs(
       base + BigInt(0x4a00 - (handlers.linux ? 0x18 : 0)),
@@ -50,6 +55,8 @@ export class Sprite {
     this.derived.run();
 
     this.effs.run();
+
+    this.gear.run();
   }
 
   public screen(): Electron.Point {

@@ -57,6 +57,8 @@ export class Hit extends Component {
 
     result += this.duration(eff);
 
+    result += this.bypassMirrorImage(eff);
+
     return result;
   }
 
@@ -121,5 +123,9 @@ export class Hit extends Component {
       default:
         return eff.resEff.durtype + ' ❓.';
     }
+  }
+
+  private bypassMirrorImage(eff: EffHit): string {
+    return eff.resEff.bypassMirrorImage ? ' 👤' : '';
   }
 }
