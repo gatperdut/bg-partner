@@ -38,7 +38,7 @@ export class Effs {
   public static effsSqueezes: number[][] = [
     [3, 101],
     [20],
-    [248, 249],
+    // [248, 249],
     [197],
     [33, 34, 35, 36, 37],
     [101, 120, 206],
@@ -68,21 +68,21 @@ export class Effs {
     for (let i: number = 0; i < count; i++) {
       const effPtr: bigint = handlers.memread.memReadBigint(nodePtr + BigInt(0x10), 'ADDR');
 
-      const id: EffKey = handlers.memread.memReadNumber(
+      const effKey: EffKey = handlers.memread.memReadNumber(
         effPtr + BigInt(0x8 + 0x8),
         'UINT32',
       ) as EffKey;
 
       nodePtr = handlers.memread.memReadBigint(nodePtr, 'ADDR');
 
-      if (_.includes(Effs.effsIgnored, id)) {
+      if (_.includes(Effs.effsIgnored, effKey)) {
         continue;
       }
 
-      const eff: Eff = EffFactory.create(id, effPtr, source);
+      const eff: Eff = EffFactory.create(effKey, effPtr, source);
 
       if (!eff.loaded) {
-        return;
+        continue;
       }
 
       let added: boolean = false;
@@ -90,7 +90,7 @@ export class Effs {
       for (let j: number = 0; j < EffTypes.length; j++) {
         const effType: EffType = EffTypes[j];
 
-        if (_.includes(this.groups[effType], id)) {
+        if (_.includes(this.groups[effType], effKey)) {
           this.effs[effType].push(eff);
 
           added = true;

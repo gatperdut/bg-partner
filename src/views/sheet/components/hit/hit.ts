@@ -1,4 +1,3 @@
-import { ResEff } from '@chitin/res/impl/eff/res-eff';
 import { Eff } from '@sprite/effs/impl/eff';
 import { EffHit } from '@sprite/effs/impl/eff-hit';
 import { effTab } from '@tables/eff';
@@ -38,26 +37,38 @@ export class Hit extends Component {
         [248, 249].includes(eff.key),
       ),
       (eff: EffHit): void => {
-        result.push(this.hitFactory(eff.resEff));
+        result.push(this.hitFactory(eff));
       },
     );
 
     return result;
   }
 
-  private hitFactory(resEff: ResEff): string {
-    switch (resEff.key) {
+  private hitFactory(eff: EffHit): string {
+    const result: string[] = [];
+
+    switch (eff.resEff.key) {
       case 55:
-        return this.hit55(resEff);
+        return this.hit55(eff);
       default:
-        return effTab[resEff.key];
+        return this.name(eff) + eff.resEff.key;
     }
   }
 
-  private hit55(resEff: ResEff): string {
-    // @ts-ignore
-    const creatureType: string = idsTab[resEff.param2][resEff.param1];
+  private name(eff: EffHit): string {
+    return (
+      `(${eff.key === 248 ? 'Melee' : 'Ranged'}) ` +
+      (eff.ressrc.name ? `(${eff.ressrc.name}) ` : '') +
+      effTab[eff.resEff.key]
+    );
+  }
 
-    return `${effTab[resEff.key]}: ${creatureType.toLowerCase()} ${resEff.highest}HD or lesser.`;
+  private hit55(eff: EffHit): string {
+    // @ts-ignore
+    const creatureType: string = idsTab[eff.resEff.param2][eff.resEff.param1];
+
+    return `${this.name(eff)}: ${creatureType.toLowerCase()} ${
+      eff.resEff.highestLevel
+    }HD or lesser.`;
   }
 }

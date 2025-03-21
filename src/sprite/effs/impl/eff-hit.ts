@@ -13,7 +13,7 @@ export class EffHit extends Eff {
 
     this.resEff = handlers.chitin.ress.EFF[this.res] as ResEff;
 
-    if (_.includes(Effs.effsIgnored, this.resEff.key)) {
+    if (!this.resEff || _.includes(Effs.effsIgnored, this.resEff.key)) {
       this.loaded = false;
     }
   }

@@ -37,9 +37,9 @@ export class ResEff extends Res {
 
   public diceSides: number;
 
-  public lowest: number;
+  public lowestLevel: number;
 
-  public highest: number;
+  public highestLevel: number;
 
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('EFF', buffer, bifs);
@@ -72,8 +72,8 @@ export class ResEff extends Res {
 
     this.diceSides = this.file.readInt32LE(0x3c);
 
-    this.lowest = this.file.readInt32LE(0x54);
+    this.lowestLevel = this.file.readInt32LE(0x54);
 
-    this.highest = this.file.readInt32LE(0x58);
+    this.highestLevel = this.file.readInt32LE(0x58);
   }
 }
