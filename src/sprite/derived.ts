@@ -286,6 +286,8 @@ export class Derived {
       this.spellLevelImmunity = i;
     }
 
+    const hand = handlers;
+
     this.castingTimeMod = handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0xd0), 'INT16');
   }
 }

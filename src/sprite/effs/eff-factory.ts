@@ -6,6 +6,7 @@ import { Eff256 } from '@sprite/effs/impl/eff-256';
 import { Eff83 } from '@sprite/effs/impl/eff-83';
 import { EffStub } from '@sprite/effs/impl/eff-stub';
 import { EffKey } from '@tables/eff';
+import { EffHit } from './impl/eff-hit';
 
 export class EffFactory {
   public static create(id: EffKey, base: bigint, source: EffSource): Eff {
@@ -16,6 +17,10 @@ export class EffFactory {
         return new Eff206(base, source);
       case 232:
         return new Eff232(base, source);
+      case 248:
+        return new EffHit(248, base, source);
+      case 249:
+        return new EffHit(249, base, source);
       case 256:
         return new Eff256(base, source);
       default:

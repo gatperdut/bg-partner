@@ -7,7 +7,7 @@ import _ from 'lodash';
 export class Eff256 extends Eff {
   public resSpls: ResSpl[];
 
-  constructor(protected base: bigint, public source: EffSource) {
+  constructor(base: bigint, source: EffSource) {
     super(256, base, source);
 
     this.resSpls = _.compact([

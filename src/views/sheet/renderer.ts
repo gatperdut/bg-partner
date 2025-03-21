@@ -12,6 +12,7 @@ import '@views/sheet/sheet.scss';
 import { sheetdata } from '@views/sheet/sheetdata';
 import _ from 'lodash';
 import tippy, { Instance } from 'tippy.js';
+import { Hit } from './components/hit/hit';
 
 // sheet.setup
 export type SheetAPISetupParams = {
@@ -145,6 +146,8 @@ class SheetRenderer {
     document.getElementById('saves').innerHTML = new Saves().html;
 
     document.getElementById('imms').innerHTML = new Imms().html;
+
+    document.getElementById('hit').innerHTML = new Hit().html;
   }
 
   private updateRunning(running: boolean) {

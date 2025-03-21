@@ -8,11 +8,11 @@ import _ from 'lodash';
 export class Eff83 extends Eff {
   public proItms: ResItm[];
 
-  constructor(protected base: bigint, public source: EffSource) {
+  constructor(base: bigint, source: EffSource) {
     super(83, base, source);
 
     this.proItms = _.filter(
-      handlers.chitin.proValue2Itms[proTab[(this.param2 + 1) as ProKey]],
+      handlers.chitin.proValue2Itms[proTab[(this.param2 + 1) as ProKey]], // TODO +1 may be unnecessary in BG1
       (proItm: ResItm): boolean => {
         return !!proItm.resImage;
       },

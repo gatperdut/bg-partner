@@ -4,7 +4,7 @@ import { Eff } from '@sprite/effs/impl/eff';
 import { EffKey } from '@tables/eff';
 import _ from 'lodash';
 
-export const EffTypes = ['buffs', 'imms'] as const;
+export const EffTypes = ['buffs', 'imms', 'hit'] as const;
 
 export type EffType = (typeof EffTypes)[number];
 
@@ -16,11 +16,13 @@ export class Effs {
   public effs: Record<EffType, Eff[]> = {
     buffs: [],
     imms: [],
+    hit: [],
   };
 
   public groups: Record<EffType, EffKey[]> = {
     buffs: [0, 101, 102, 120, 206, 259],
     imms: [100, 101, 206, 293, 308, 310, 318, 324, 367, 208, 120],
+    hit: [248, 249],
     // statmods: [33, 34, 35, 36, 37, 189, 166, 173],
   };
 

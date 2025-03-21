@@ -7,7 +7,7 @@ export type EaKey = keyof EaTab;
 export type EaValue = EaTab[keyof EaTab];
 
 export const eaTab = {
-  0: 'None',
+  0: 'Anyone',
   1: 'Statue',
   2: 'Companion',
   3: 'Familiar',

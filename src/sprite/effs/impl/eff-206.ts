@@ -6,7 +6,7 @@ import { Eff } from '@sprite/effs/impl/eff';
 export class Eff206 extends Eff {
   public splName: string;
 
-  constructor(protected base: bigint, public source: EffSource) {
+  constructor(base: bigint, source: EffSource) {
     super(206, base, source);
 
     this.splName = (handlers.chitin.ress.SPL[this.res] as ResSpl).name;
