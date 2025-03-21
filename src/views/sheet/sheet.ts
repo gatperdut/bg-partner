@@ -101,6 +101,7 @@ export class Sheet {
       spriteView: spriteView(this.sprite),
     };
 
+    console.log(this.sprite.basic.name, this.sprite.base);
     this.window.webContents.send('sheet.update', params);
   }
 
