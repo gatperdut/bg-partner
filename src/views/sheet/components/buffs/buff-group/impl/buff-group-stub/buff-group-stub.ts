@@ -1,4 +1,5 @@
 import { Eff } from '@sprite/effs/impl/eff';
+import { effTab } from '@tables/eff';
 import { BuffGroup, BuffGroupData } from '@views/sheet/components/buffs/buff-group/buff-group';
 import { BuffGroupStubTooltip } from '@views/sheet/components/buffs/buff-group/impl/buff-group-stub/tooltip/buff-group-stub-tooltip';
 import { Image } from '@views/sheet/components/image/image';
@@ -28,7 +29,11 @@ export class BuffGroupStub extends BuffGroup {
 
     this.buffGroupStubData = {
       ...this.buffGroupData,
-      imageHtml: new Image(effs[0].resImage, effs[0].ressrc.name, tooltipHtml).html,
+      imageHtml: new Image(
+        effs[0].resImage,
+        effs[0].ressrc.name || effTab[effs[0].key],
+        tooltipHtml,
+      ).html,
     };
 
     this.html = compiled(this.buffGroupStubData);

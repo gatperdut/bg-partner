@@ -38,7 +38,6 @@ export class Effs {
   public static effsSqueezes: number[][] = [
     [3, 101],
     [20],
-    // [248, 249],
     [197],
     [33, 34, 35, 36, 37],
     [101, 120, 206],

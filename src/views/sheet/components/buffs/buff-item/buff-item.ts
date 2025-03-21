@@ -1,4 +1,5 @@
 import { Eff } from '@sprite/effs/impl/eff';
+import { effTab } from '@tables/eff';
 import { BuffItemTooltip } from '@views/sheet/components/buffs/buff-item/tooltip/buff-item-tooltip';
 import { Buff, BuffData } from '@views/sheet/components/buffs/buff/buff';
 import { Image } from '@views/sheet/components/image/image';
@@ -33,7 +34,11 @@ export class BuffItem extends Buff {
     this.buffItemData = {
       ...this.buffData,
       levelsHtml: effs[0].source === 'timed' ? this.buffData.levelsHtml : '',
-      imageHtml: new Image(effs[0].resImageParent, effs[0].ressrcParent.name, tooltipHtml).html,
+      imageHtml: new Image(
+        effs[0].resImageParent,
+        effs[0].ressrcParent.name || effTab[effs[0].key],
+        tooltipHtml,
+      ).html,
     };
 
     this.html = compiled(this.buffItemData);

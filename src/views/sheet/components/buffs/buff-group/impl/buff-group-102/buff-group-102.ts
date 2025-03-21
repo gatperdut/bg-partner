@@ -1,4 +1,5 @@
 import { Eff } from '@sprite/effs/impl/eff';
+import { effTab } from '@tables/eff';
 import { BuffGroup, BuffGroupData } from '@views/sheet/components/buffs/buff-group/buff-group';
 import { BuffRight } from '@views/sheet/components/buffs/parts/buff-right/buff-right';
 import { Image } from '@views/sheet/components/image/image';
@@ -31,7 +32,7 @@ export class BuffGroup102 extends BuffGroup {
 
     this.buffGroup102Data = {
       ...this.buffGroupData,
-      imageHtml: new Image(effs[0].resImage, effs[0].ressrc.name, null).html,
+      imageHtml: new Image(effs[0].resImage, effs[0].ressrc.name || effTab[effs[0].key], null).html,
       rightHtml: new BuffRight(max.toString(), 'Maximum spell level').html,
     };
 

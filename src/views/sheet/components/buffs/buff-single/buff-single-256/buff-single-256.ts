@@ -1,4 +1,5 @@
 import { Eff256 } from '@sprite/effs/impl/eff-256';
+import { effTab } from '@tables/eff';
 import { BuffSingle, BuffSingleData } from '@views/sheet/components/buffs/buff-single/buff-single';
 import { BuffSingle256Tooltip } from '@views/sheet/components/buffs/buff-single/buff-single-256/tooltip/buff-single-256-tooltip';
 import { Image } from '@views/sheet/components/image/image';
@@ -21,7 +22,7 @@ export class BuffSingle256 extends BuffSingle {
 
     this.buffSingle256Data = {
       ...this.buffSingleData,
-      imageHtml: new Image(eff.resImage, eff.ressrc.name, tooltipHtml).html,
+      imageHtml: new Image(eff.resImage, eff.ressrc.name || effTab[eff.key], tooltipHtml).html,
     };
 
     this.html = compiled(this.buffSingle256Data);

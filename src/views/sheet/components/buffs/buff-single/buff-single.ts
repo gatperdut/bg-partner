@@ -1,5 +1,5 @@
 import { Eff } from '@sprite/effs/impl/eff';
-import { EffKey } from '@tables/eff';
+import { EffKey, effTab } from '@tables/eff';
 import { Buff, BuffData } from '@views/sheet/components/buffs/buff/buff';
 import { Image } from '@views/sheet/components/image/image';
 import { sheetdata } from '@views/sheet/sheetdata';
@@ -12,6 +12,10 @@ export class BuffSingle extends Buff {
   protected buffSingleData: BuffSingleData;
 
   public static effsHidden: EffKey[] = [33, 34, 35, 36, 37, 133];
+
+  public static effsHiddenIfItm: EffKey[] = [101];
+
+  public static effsHiddenIfNotTimed: EffKey[] = [101];
 
   constructor(eff: Eff) {
     super(
@@ -29,11 +33,19 @@ export class BuffSingle extends Buff {
       return;
     }
 
+    if (_.includes(BuffSingle.effsHiddenIfItm, eff.key) && eff.ressrcType === 'ITM') {
+      return;
+    }
+
+    if (_.includes(BuffSingle.effsHiddenIfItm, eff.key) && eff.durtype !== 4096) {
+      return;
+    }
+
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.buffSingle);
 
     this.buffSingleData = {
       ...this.buffData,
-      imageHtml: new Image(eff.resImage, eff.ressrc.name, null).html,
+      imageHtml: new Image(eff.resImage, eff.ressrc.name || effTab[eff.key], null).html,
     };
 
     this.html = compiled(this.buffSingleData);

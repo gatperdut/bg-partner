@@ -1,4 +1,5 @@
 import { Eff232 } from '@sprite/effs/impl/eff-232';
+import { effTab } from '@tables/eff';
 import { Eff232CondKey, eff232CondTab } from '@tables/eff/eff232cond';
 import { Eff232TargetKey, eff232TargetTab } from '@tables/eff/eff232target';
 import { BuffSingle, BuffSingleData } from '@views/sheet/components/buffs/buff-single/buff-single';
@@ -31,7 +32,7 @@ export class BuffSingle232 extends BuffSingle {
 
     this.buffSingle232Data = {
       ...this.buffSingleData,
-      imageHtml: new Image(eff.resImage, eff.ressrc.name, tooltipHtml).html,
+      imageHtml: new Image(eff.resImage, eff.ressrc.name || effTab[eff.key], tooltipHtml).html,
       rightHtml: rightHtml,
     };
 
