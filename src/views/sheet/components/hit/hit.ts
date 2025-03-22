@@ -1,3 +1,7 @@
+import { HitBase } from '@chitin/res/impl/hit/hit-base';
+import { ResItm } from '@chitin/res/impl/itm/res-itm';
+import { ResItmHit } from '@chitin/res/impl/itm/res-itm-hit';
+import { handlers } from '@handlers';
 import { Eff } from '@sprite/effs/impl/eff';
 import { EffHit } from '@sprite/effs/impl/eff-hit';
 import { effTab } from '@tables/eff';
@@ -19,7 +23,7 @@ export class Hit extends Component {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.hit);
 
-    const hits: string[] = this.hits();
+    const hits: string[] = [...this.resEffHits(), ...this.resItmHits()];
 
     this.hitData = {
       ...this.componentData,
@@ -29,7 +33,7 @@ export class Hit extends Component {
     this.html = compiled(this.hitData);
   }
 
-  private hits(): string[] {
+  private resEffHits(): string[] {
     const result: string[] = [];
 
     _.each(
@@ -37,17 +41,28 @@ export class Hit extends Component {
         [248, 249].includes(eff.key),
       ),
       (eff: EffHit): void => {
-        result.push(this.hitFactory(eff));
+        result.push(this.resEffHitFactory(eff));
       },
     );
 
     return result;
   }
 
-  private hitFactory(eff: EffHit): string {
-    let result: string = this.name(eff) + '.';
+  // TODO drop
+  public hand = handlers;
 
-    result += this.school(eff);
+  private resItmHits(): string[] {
+    const result: string[] = [];
+
+    result.push(this.resItmHitFactory(sheetdata.spriteView.gear.weapon));
+
+    return result;
+  }
+
+  private resEffHitFactory(eff: EffHit): string {
+    let result: string = this.resEffHitName(eff) + '.';
+
+    result += this.school(eff.resEff.resEffHit);
 
     // @ts-ignore
     const f = this[`hit${eff.resEff.resEffHit.key}`];
@@ -55,16 +70,43 @@ export class Hit extends Component {
       result += f.bind(this)(eff);
     }
 
-    result += this.mitigation(eff);
+    result += this.mitigation(eff.resEff.resEffHit);
 
-    result += this.duration(eff);
+    result += this.duration(eff.resEff.resEffHit);
 
-    result += this.bypassMirrorImage(eff);
+    result += this.bypassMirrorImage(eff.resEff.resEffHit);
 
     return result;
   }
 
-  private name(eff: EffHit): string {
+  private resItmHitFactory(weapon: ResItm): string {
+    const result: string[] = [];
+
+    _.each(
+      [...weapon.resItmHitsMelee, ...weapon.resItmHitsRanged],
+      (resItmHit: ResItmHit): void => {
+        let result: string = this.resItmHitName(weapon, resItmHit) + '.';
+
+        result += this.school(resItmHit);
+
+        // @ts-ignore
+        const f = this[`hit${resItmHit.resEff.resEffHit.key}`];
+        if (f) {
+          result += f.bind(this)(resItmHit);
+        }
+
+        result += this.mitigation(resItmHit);
+
+        result += this.duration(resItmHit);
+
+        result += this.bypassMirrorImage(resItmHit);
+      },
+    );
+
+    return result.join('\n');
+  }
+
+  private resEffHitName(eff: EffHit): string {
     return (
       `(${eff.key === 248 ? 'Melee' : 'Ranged'}) ` +
       (eff.ressrc.name ? `(${eff.ressrc.name}).` : '') +
@@ -73,45 +115,45 @@ export class Hit extends Component {
     );
   }
 
-  private hit55(eff: EffHit): string {
+  private resItmHitName(weapon: ResItm, resItmHit: ResItmHit): string {
+    return weapon.name;
+  }
+
+  private hit55(hitBase: HitBase): string {
     // @ts-ignore
-    const creatureType: string = idsTab[eff.resEff.resEffHit.param2][eff.resEff.resEffHit.param1];
+    const creatureType: string = idsTab[hitBase.param2][hitBase.param1];
 
-    return ` ${creatureType} ${eff.resEff.resEffHit.highestLevel}HD or lesser.`;
+    return ` ${creatureType} ${hitBase.highestLevel}HD or lesser.`;
   }
 
-  private hit60(eff: EffHit): string {
-    return ` ${eff.resEff.resEffHit.param1}%.`;
+  private hit60(hitBase: HitBase): string {
+    return ` ${hitBase.param1}%.`;
   }
 
-  private school(eff: EffHit): string {
-    return (eff.resEff.resEffHit.schoolShort ?? 'NONE') !== 'NONE'
-      ? ` (${eff.resEff.resEffHit.schoolShort})`
-      : '';
+  private school(hitBase: HitBase): string {
+    return (hitBase.schoolShort ?? 'NONE') !== 'NONE' ? ` (${hitBase.schoolShort})` : '';
   }
 
-  private mitigation(eff: EffHit): string {
-    const save: string = eff.resEff.resEffHit.save
-      ? `save vs ${eff.resEff.resEffHit.save}${
-          eff.resEff.resEffHit.saveBonus ? ' at ' + eff.resEff.resEffHit.saveBonus + '.' : ''
-        }`
+  private mitigation(hitBase: HitBase): string {
+    const save: string = hitBase.save
+      ? `save vs ${hitBase.save}${hitBase.saveBonus ? ' at ' + hitBase.saveBonus + '.' : ''}`
       : 'no save.';
 
-    return ` ${eff.resEff.resEffHit.prob1}% ${save}`;
+    return ` ${hitBase.prob1}% ${save}`;
   }
 
-  private duration(eff: EffHit): string {
-    switch (eff.resEff.resEffHit.durtype) {
+  private duration(hitBase: HitBase): string {
+    switch (hitBase.durtype) {
       case 0:
         const duration: string[] = [];
 
-        const roundsTotal: number = Math.floor(eff.resEff.resEffHit.duration / 6);
+        const roundsTotal: number = Math.floor(hitBase.duration / 6);
 
         const turns: number = Math.floor(roundsTotal / 10);
 
         const rounds: number = roundsTotal % 10;
 
-        const seconds: number = eff.resEff.resEffHit.duration % 6;
+        const seconds: number = hitBase.duration % 6;
 
         if (turns) {
           duration.push(turns + 'T');
@@ -129,11 +171,11 @@ export class Hit extends Component {
       case 1:
         return ` ♾️.`;
       default:
-        return eff.resEff.resEffHit.durtype + ' ❓.';
+        return hitBase.durtype + ' ❓.';
     }
   }
 
-  private bypassMirrorImage(eff: EffHit): string {
-    return eff.resEff.resEffHit.bypassMirrorImage ? ' 👤' : '';
+  private bypassMirrorImage(hitBase: HitBase): string {
+    return hitBase.bypassMirrorImage ? ' 👤' : '';
   }
 }

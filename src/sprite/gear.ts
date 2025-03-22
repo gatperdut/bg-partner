@@ -6,16 +6,13 @@ import _ from 'lodash';
 export class Gear {
   public slots: Record<SlotKey, ResItm> = {} as Record<SlotKey, ResItm>;
 
+  public weapon: ResItm;
+
   constructor(private base: bigint) {
     // Empty
   }
 
   public run(): void {
-    const selectedWeapon: number = handlers.memread.memReadNumber(
-      this.base + BigInt(0x0 + 0x138),
-      'UINT8',
-    );
-
     _.each(SlotKeys, (key: SlotKey, index: number): void => {
       const itmHelperPtr: bigint = handlers.memread.memReadBigint(
         this.base + BigInt(8 * index),
@@ -27,6 +24,11 @@ export class Gear {
       ] as ResItm;
     });
 
-    console.log(this.slots);
+    const selectedWeapon: SlotKey = handlers.memread.memReadNumber(
+      this.base + BigInt(0x0 + 0x138),
+      'UINT8',
+    ) as SlotKey;
+
+    this.weapon = this.slots[selectedWeapon];
   }
 }
