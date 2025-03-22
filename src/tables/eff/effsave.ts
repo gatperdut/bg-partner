@@ -8,10 +8,10 @@ export type EffsaveValue = Effsave[keyof Effsave];
 
 export const effsaveTab = {
   0b00001: 'Spells',
-  0b00010: 'Breath',
-  0b00100: 'Death',
-  0b01000: 'Wands',
-  0b10000: 'Polymorph',
+  0b00010: 'Breath weapon',
+  0b00100: 'Paralysis/Poison/Death',
+  0b01000: 'Rod/Staff/Wand',
+  0b10000: 'Petrification/Polymorph',
 } as const;
 
 export const EffsaveKeys = _.keys(effsaveTab);

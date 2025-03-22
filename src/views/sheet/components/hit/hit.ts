@@ -3,7 +3,7 @@ import { ResItm } from '@chitin/res/impl/itm/res-itm';
 import { ResItmHit } from '@chitin/res/impl/itm/res-itm-hit';
 import { Eff } from '@sprite/effs/impl/eff';
 import { EffHit } from '@sprite/effs/impl/eff-hit';
-import { effTab } from '@tables/eff';
+import { EffKey, effTab } from '@tables/eff';
 import { idsTab } from '@tables/ids/ids';
 import { Component, ComponentData } from '@views/shared/component';
 import { sheetdata } from '@views/sheet/sheetdata';
@@ -16,6 +16,8 @@ export type HitData = ComponentData & {
 
 export class Hit extends Component {
   protected hitData: HitData;
+
+  public static effsHidden: EffKey[] = [324];
 
   constructor() {
     super();
@@ -75,7 +77,10 @@ export class Hit extends Component {
     const result: string[] = [];
 
     _.each(
-      [...weapon.resItmHitsMelee, ...weapon.resItmHitsRanged],
+      _.filter(
+        [...weapon.resItmHitsMelee, ...weapon.resItmHitsRanged],
+        (resItmHit: ResItmHit): boolean => !_.includes(Hit.effsHidden, resItmHit.key),
+      ),
       (resItmHit: ResItmHit): void => {
         let subresult: string = this.resItmHitName(weapon, resItmHit) + '.';
 
@@ -113,11 +118,29 @@ export class Hit extends Component {
     return `(${weapon.name}) ${effTab[resItmHit.key]}`;
   }
 
+  private hit25(hitBase: HitBase): string {
+    switch (hitBase.param2) {
+      case 0:
+        return ' 1HP/s';
+      case 1:
+        return ' 1HP/s';
+      case 2:
+        return ` ${hitBase.param1}HP/s`;
+      case 3:
+        return ` 1HP/${hitBase.param1 > 1 ? hitBase.param1 : ''}s`;
+      case 4:
+        ' ❓';
+        return;
+    }
+  }
+
   private hit55(hitBase: HitBase): string {
     // @ts-ignore
     const creatureType: string = idsTab[hitBase.param2][hitBase.param1];
 
-    return ` ${creatureType} ${hitBase.highestLevel}HD or lesser.`;
+    return (
+      ` ${creatureType}` + (hitBase.highestLevel ? ` ${hitBase.highestLevel}HD or lesser.` : '.')
+    );
   }
 
   private hit60(hitBase: HitBase): string {
@@ -161,6 +184,9 @@ export class Hit extends Component {
           duration.push(seconds + 'S');
         }
 
+        if (!duration.length) {
+          return '';
+        }
         return ` ${duration.join(' ')}.`;
       case 1:
         return ` ♾️.`;
