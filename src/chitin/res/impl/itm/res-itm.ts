@@ -1,5 +1,6 @@
 import { Bif } from '@chitin/bif';
 import { ResImage } from '@chitin/res/image/res-image';
+import { ResItmHit } from '@chitin/res/impl/itm/res-itm-hit';
 import { Res } from '@chitin/res/impl/res';
 import { handlers } from '@handlers';
 import { ProKey, ProValue, proTab } from '@tables/pro';
@@ -17,6 +18,10 @@ export class ResItm extends Res {
   public proValues: ProValue[] = [];
 
   public enchantment: number;
+
+  public resItmHitsMelee: ResItmHit[] = [];
+
+  public resItmHitsRanged: ResItmHit[] = [];
 
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('ITM', buffer, bifs);
@@ -57,20 +62,34 @@ export class ResItm extends Res {
   private header(buf: Buffer): void {
     const attackType: number = buf.readUInt8(0x0);
 
-    const featsCount: number = buf.readUInt16LE(0x1e);
-
-    const featsOffset: number = buf.readUint16LE(0x20);
+    let target: ResItmHit[];
 
     switch (attackType) {
       case 1:
+        target = this.resItmHitsMelee;
+
         break;
       case 2:
+        target = this.resItmHitsRanged;
+
         if (this.enchantment === 0) {
           this.proValues.push(proTab[buf.readUInt16LE(0x2a) as ProKey]);
         }
 
         break;
       default:
+    }
+
+    if (!target) {
+      return;
+    }
+
+    const featsCount: number = buf.readUInt16LE(0x1e);
+
+    const featsOffset: number = buf.readUint16LE(0x20);
+
+    for (let i: number = 0; i < featsCount; i++) {
+      target.push(new ResItmHit(buf, buf.subarray(featsOffset + i * 48, buf.length)));
     }
   }
 }

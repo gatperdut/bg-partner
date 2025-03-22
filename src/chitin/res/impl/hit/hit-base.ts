@@ -1,11 +1,9 @@
-import { Bif } from '@chitin/bif';
-import { Res } from '@chitin/res/impl/res';
 import { EffKey } from '@tables/eff';
 import { DurtypeKey } from '@tables/eff/durtype';
 import { EffsaveValue } from '@tables/eff/effsave';
 import { SchoolShortValue, SchoolValue } from '@tables/school';
 
-export abstract class ResEffBase extends Res {
+export abstract class HitBase {
   public key: EffKey;
 
   public param1: number;
@@ -30,15 +28,7 @@ export abstract class ResEffBase extends Res {
 
   public schoolShort: SchoolShortValue;
 
-  public diceThrown: number;
-
-  public diceSides: number;
-
   public lowestLevel: number;
 
   public highestLevel: number;
-
-  constructor(buffer: Buffer, bifs: Bif[]) {
-    super('EFF', buffer, bifs);
-  }
 }

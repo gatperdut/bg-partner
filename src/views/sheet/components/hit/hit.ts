@@ -50,7 +50,7 @@ export class Hit extends Component {
     result += this.school(eff);
 
     // @ts-ignore
-    const f = this[`hit${eff.resEff.key}`];
+    const f = this[`hit${eff.resEff.resEffHit.key}`];
     if (f) {
       result += f.bind(this)(eff);
     }
@@ -69,47 +69,49 @@ export class Hit extends Component {
       `(${eff.key === 248 ? 'Melee' : 'Ranged'}) ` +
       (eff.ressrc.name ? `(${eff.ressrc.name}).` : '') +
       ' ' +
-      effTab[eff.resEff.key]
+      effTab[eff.resEff.resEffHit.key]
     );
   }
 
   private hit55(eff: EffHit): string {
     // @ts-ignore
-    const creatureType: string = idsTab[eff.resEff.param2][eff.resEff.param1];
+    const creatureType: string = idsTab[eff.resEff.resEffHit.param2][eff.resEff.resEffHit.param1];
 
-    return ` ${creatureType} ${eff.resEff.highestLevel}HD or lesser.`;
+    return ` ${creatureType} ${eff.resEff.resEffHit.highestLevel}HD or lesser.`;
   }
 
   private hit60(eff: EffHit): string {
-    return ` ${eff.resEff.param1}%.`;
+    return ` ${eff.resEff.resEffHit.param1}%.`;
   }
 
   private school(eff: EffHit): string {
-    return (eff.resEff.schoolShort ?? 'NONE') !== 'NONE' ? ` (${eff.resEff.schoolShort})` : '';
+    return (eff.resEff.resEffHit.schoolShort ?? 'NONE') !== 'NONE'
+      ? ` (${eff.resEff.resEffHit.schoolShort})`
+      : '';
   }
 
   private mitigation(eff: EffHit): string {
-    const save: string = eff.resEff.save
-      ? `save vs ${eff.resEff.save}${
-          eff.resEff.saveBonus ? ' at ' + eff.resEff.saveBonus + '.' : ''
+    const save: string = eff.resEff.resEffHit.save
+      ? `save vs ${eff.resEff.resEffHit.save}${
+          eff.resEff.resEffHit.saveBonus ? ' at ' + eff.resEff.resEffHit.saveBonus + '.' : ''
         }`
       : 'no save.';
 
-    return ` ${eff.resEff.prob1}% ${save}`;
+    return ` ${eff.resEff.resEffHit.prob1}% ${save}`;
   }
 
   private duration(eff: EffHit): string {
-    switch (eff.resEff.durtype) {
+    switch (eff.resEff.resEffHit.durtype) {
       case 0:
         const duration: string[] = [];
 
-        const roundsTotal: number = Math.floor(eff.resEff.duration / 6);
+        const roundsTotal: number = Math.floor(eff.resEff.resEffHit.duration / 6);
 
         const turns: number = Math.floor(roundsTotal / 10);
 
         const rounds: number = roundsTotal % 10;
 
-        const seconds: number = eff.resEff.duration % 6;
+        const seconds: number = eff.resEff.resEffHit.duration % 6;
 
         if (turns) {
           duration.push(turns + 'T');
@@ -127,11 +129,11 @@ export class Hit extends Component {
       case 1:
         return ` ♾️.`;
       default:
-        return eff.resEff.durtype + ' ❓.';
+        return eff.resEff.resEffHit.durtype + ' ❓.';
     }
   }
 
   private bypassMirrorImage(eff: EffHit): string {
-    return eff.resEff.bypassMirrorImage ? ' 👤' : '';
+    return eff.resEff.resEffHit.bypassMirrorImage ? ' 👤' : '';
   }
 }
