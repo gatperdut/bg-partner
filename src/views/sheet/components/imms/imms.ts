@@ -80,28 +80,28 @@ export class Imms extends Component {
     const result: string[] = [];
 
     if (sheetdata.spriteView.derived.seeInvisible) {
-      result.push('Sees through invisibility.');
+      result.push('Sees through invisibility');
     }
 
     if (sheetdata.spriteView.derived.backstabImmunity) {
-      result.push('Immune to backstab.');
+      result.push('Immune to backstab');
     }
 
     if (sheetdata.spriteView.derived.timestopImmunity) {
-      result.push('Immune to timestop.');
+      result.push('Immune to timestop');
     }
 
     if (sheetdata.spriteView.derived.turnUndeadImmunity) {
-      result.push('Immune to turn undead.');
+      result.push('Immune to turn undead');
     }
 
     if (sheetdata.spriteView.derived.hpMin) {
-      result.push('HP cannot be brought down to 0.');
+      result.push('HP cannot be brought down to 0');
     }
 
     if (sheetdata.spriteView.derived.spellLevelImmunity > 0) {
       result.push(
-        `Immune to spell levels ${sheetdata.spriteView.derived.spellLevelImmunity} and below.`,
+        `Immune to spell levels ${sheetdata.spriteView.derived.spellLevelImmunity} and below`,
       );
     }
 

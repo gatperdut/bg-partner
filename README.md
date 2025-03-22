@@ -169,3 +169,5 @@ gdb -p $(pgrep -n bash)
 - does the approach of a single timer (from the first loaded entity) do funky stuff with timestop?s
 
 - package.json: "type": "module" refactor.
+
+- duration string: implemented in 2 places. merge into a service.
