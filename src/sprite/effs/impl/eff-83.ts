@@ -1,4 +1,4 @@
-import { ResItm } from '@chitin/res/impl/res-itm';
+import { ResItm } from '@chitin/res/impl/itm/res-itm';
 import { handlers } from '@handlers';
 import { EffSource } from '@sprite/effs/effs';
 import { Eff } from '@sprite/effs/impl/eff';

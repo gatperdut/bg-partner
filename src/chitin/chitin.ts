@@ -1,7 +1,7 @@
 import { Bif } from '@chitin/bif';
 import { ResImageDefault } from '@chitin/res/image/res-image-default';
+import { ResItm } from '@chitin/res/impl/itm/res-itm';
 import { Res } from '@chitin/res/impl/res';
-import { ResItm } from '@chitin/res/impl/res-itm';
 import { ResSpl } from '@chitin/res/impl/res-spl';
 import { ResFactory } from '@chitin/res/res-factory';
 import { handlers } from '@handlers';

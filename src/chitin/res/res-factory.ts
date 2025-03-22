@@ -1,7 +1,7 @@
 import { Bif } from '@chitin/bif';
 import { ResBam } from '@chitin/res/impl/bam/res-bam';
+import { ResItm } from '@chitin/res/impl/itm/res-itm';
 import { Res } from '@chitin/res/impl/res';
-import { ResItm } from '@chitin/res/impl/res-itm';
 import { ResSpl } from '@chitin/res/impl/res-spl';
 import { ResextValue } from '@tables/resext';
 import { ResEff } from './impl/eff/res-eff';

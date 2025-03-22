@@ -1,4 +1,4 @@
-import { ResItm } from '@chitin/res/impl/res-itm';
+import { ResItm } from '@chitin/res/impl/itm/res-itm';
 import { Component, ComponentData } from '@views/shared/component';
 import { Item } from '@views/sheet/components/items/item/item';
 import { sheetdata } from '@views/sheet/sheetdata';

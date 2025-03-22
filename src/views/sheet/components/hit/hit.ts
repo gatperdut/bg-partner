@@ -47,6 +47,8 @@ export class Hit extends Component {
   private hitFactory(eff: EffHit): string {
     let result: string = this.name(eff) + '.';
 
+    result += this.school(eff);
+
     // @ts-ignore
     const f = this[`hit${eff.resEff.key}`];
     if (f) {
@@ -80,6 +82,10 @@ export class Hit extends Component {
 
   private hit60(eff: EffHit): string {
     return ` ${eff.resEff.param1}%.`;
+  }
+
+  private school(eff: EffHit): string {
+    return (eff.resEff.schoolShort ?? 'NONE') !== 'NONE' ? ` (${eff.resEff.schoolShort})` : '';
   }
 
   private mitigation(eff: EffHit): string {

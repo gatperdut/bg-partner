@@ -1,6 +1,6 @@
 import { ResImage } from '@chitin/res/image/res-image';
+import { ResItm } from '@chitin/res/impl/itm/res-itm';
 import { Res } from '@chitin/res/impl/res';
-import { ResItm } from '@chitin/res/impl/res-itm';
 import { ResSpl } from '@chitin/res/impl/res-spl';
 import { handlers } from '@handlers';
 import { EffSource, Effs } from '@sprite/effs/effs';

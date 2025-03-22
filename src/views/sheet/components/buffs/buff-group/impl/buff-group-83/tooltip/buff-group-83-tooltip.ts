@@ -1,4 +1,4 @@
-import { ResItm } from '@chitin/res/impl/res-itm';
+import { ResItm } from '@chitin/res/impl/itm/res-itm';
 import { Eff83 } from '@sprite/effs/impl/eff-83';
 import { Items } from '@views/sheet/components/items/items/items';
 import { Tooltip, TooltipData } from '@views/sheet/components/tooltips/tooltip';

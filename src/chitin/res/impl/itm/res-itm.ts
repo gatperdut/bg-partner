@@ -16,6 +16,8 @@ export class ResItm extends Res {
 
   public proValues: ProValue[] = [];
 
+  public enchantment: number;
+
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('ITM', buffer, bifs);
 
@@ -25,24 +27,14 @@ export class ResItm extends Res {
 
     this.bamCode = readBufferString(this.file, 0x3a, 8).toLowerCase();
 
-    const enchantment: number = this.file.readUint32LE(0x60);
-
-    if (enchantment > 0) {
-      return;
-    }
+    this.enchantment = this.file.readUint32LE(0x60);
 
     const extHeadersCount: number = this.file.readUint16LE(0x68);
 
-    const extHeadersOff: number = this.file.readUint32LE(0x64);
+    const extHeadersOffset: number = this.file.readUint32LE(0x64);
 
     for (let i: number = 0; i < extHeadersCount; i++) {
-      const attackType: number = this.file.readUInt8(extHeadersOff + 56 * i + 0x0);
-
-      if (attackType === 2) {
-        this.proValues.push(
-          proTab[this.file.readUInt16LE(extHeadersOff + 56 * i + 0x2a) as ProKey],
-        );
-      }
+      this.header(this.file.subarray(extHeadersOffset + 56 * i, this.file.length));
     }
   }
 
@@ -60,5 +52,25 @@ export class ResItm extends Res {
     }
 
     this.resImage = resImage;
+  }
+
+  private header(buf: Buffer): void {
+    const attackType: number = buf.readUInt8(0x0);
+
+    const featsCount: number = buf.readUInt16LE(0x1e);
+
+    const featsOffset: number = buf.readUint16LE(0x20);
+
+    switch (attackType) {
+      case 1:
+        break;
+      case 2:
+        if (this.enchantment === 0) {
+          this.proValues.push(proTab[buf.readUInt16LE(0x2a) as ProKey]);
+        }
+
+        break;
+      default:
+    }
   }
 }
