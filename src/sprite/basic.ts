@@ -40,7 +40,7 @@ export class Basic {
 
     this.canBeSeen = handlers.memread.memReadNumber(this.base + BigInt(0x4c), 'INT16');
 
-    this.resref = handlers.memread.memReadString(this.base + BigInt(0x540)).replace(/\*/g, '');
+    this.resref = handlers.memread.memReadString(this.base + BigInt(0x540), 8).replace(/\*/g, '');
 
     this.id = handlers.memread.memReadNumber(this.base + BigInt(0x48), 'UINT32');
 
@@ -59,7 +59,7 @@ export class Basic {
       'ADDR',
     );
 
-    this.name = handlers.memread.memReadString(BigInt(nameAddr));
+    this.name = handlers.memread.memReadString(BigInt(nameAddr), Infinity);
 
     this.viewport.width = handlers.memread.memReadNumber(
       this.gameAreaAddr + BigInt(0x5c8 + 0x78 + 0x8),

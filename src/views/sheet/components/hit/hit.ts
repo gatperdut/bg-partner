@@ -24,7 +24,11 @@ export class Hit extends Component {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.hit);
 
-    const hits: string[] = [...this.resEffHits(), ...this.resItmHits()];
+    const hits: string[] = _.compact([
+      this.enchantment(),
+      ...this.resEffHits(),
+      ...this.resItmHits(),
+    ]);
 
     this.hitData = {
       ...this.componentData,
@@ -32,6 +36,16 @@ export class Hit extends Component {
     };
 
     this.html = compiled(this.hitData);
+  }
+
+  private enchantment(): string {
+    const weapon: ResItm = sheetdata.spriteView.gear.weapon;
+
+    if (sheetdata.spriteView.gear.weapon.enchantment < 1) {
+      return `Weapon: ${weapon.name || 'Unnamed weapon'}.`;
+    }
+
+    return `Weapon: ${weapon.name || 'Unnamed weapon'}. Strikes at +${weapon.enchantment}.`;
   }
 
   private resEffHits(): string[] {
@@ -55,8 +69,6 @@ export class Hit extends Component {
 
   private resEffHitFactory(eff: EffHit): string {
     let result: string = this.resEffHitName(eff) + '.';
-
-    result += this.school(eff.resEff.resEffHit);
 
     // @ts-ignore
     const f = this[`hit${eff.resEff.resEffHit.key}`];
@@ -84,8 +96,6 @@ export class Hit extends Component {
       (resItmHit: ResItmHit): void => {
         let subresult: string = this.resItmHitName(weapon, resItmHit) + '.';
 
-        subresult += this.school(resItmHit);
-
         // @ts-ignore
         const f = this[`hit${resItmHit.key}`];
         if (f) {
@@ -108,6 +118,7 @@ export class Hit extends Component {
   private resEffHitName(eff: EffHit): string {
     return (
       `(${eff.key === 248 ? 'Melee' : 'Ranged'}) ` +
+      this.school(eff.resEff.resEffHit.schoolShort) +
       (eff.ressrc.name ? `(${eff.ressrc.name}).` : '') +
       ' ' +
       effTab[eff.resEff.resEffHit.key]
@@ -115,7 +126,20 @@ export class Hit extends Component {
   }
 
   private resItmHitName(weapon: ResItm, resItmHit: ResItmHit): string {
-    return `(${weapon.name}) ${effTab[resItmHit.key]}`;
+    return `(${weapon.name || 'Unnamed weapon'}) ${this.school(resItmHit.schoolShort)} ${
+      effTab[resItmHit.key]
+    }`;
+  }
+
+  private hit17(hitBase: HitBase): string {
+    switch (hitBase.param2) {
+      case 0:
+        return ` +${hitBase.param1}HP.`;
+      case 1:
+        return ` HP=${hitBase.param1}.`;
+      case 2:
+        return ` HPx${(hitBase.param1 / 100).toFixed(1)}.`;
+    }
   }
 
   private hit25(hitBase: HitBase): string {
@@ -135,25 +159,53 @@ export class Hit extends Component {
   }
 
   private hit55(hitBase: HitBase): string {
-    // @ts-ignore
-    const creatureType: string = idsTab[hitBase.param2][hitBase.param1];
-
     return (
-      ` ${creatureType}` + (hitBase.highestLevel ? ` ${hitBase.highestLevel}HD or lesser.` : '.')
+      ` ${this.creatureType(hitBase)}` +
+      (hitBase.highestLevel ? ` ${hitBase.highestLevel}HD or lesser.` : '.')
     );
+  }
+
+  private hit58(hitBase: HitBase): string {
+    const first: number = hitBase.param2 >> 16;
+
+    // TODO we could also deal with how it dispels magical weapons.
+    switch (first) {
+      case 0:
+        return ' Always.';
+      case 1:
+        return ' Caster level.';
+      case 2:
+        return ` Level ${hitBase.param1}.`;
+    }
   }
 
   private hit60(hitBase: HitBase): string {
     return ` ${hitBase.param1}%.`;
   }
 
-  private school(hitBase: HitBase): string {
-    return (hitBase.schoolShort ?? 'NONE') !== 'NONE' ? ` (${hitBase.schoolShort})` : '';
+  private hit109(hitBase: HitBase): string {
+    return ` ${this.creatureType(hitBase)}`;
+  }
+
+  private hit216(hitBase: HitBase): string {
+    return ` ${hitBase.param1} levels.`;
+  }
+
+  private hit238(hitBase: HitBase): string {
+    return ` ${this.creatureType(hitBase)}.`;
+  }
+
+  private school(schoolShort: string): string {
+    return (schoolShort ?? 'NONE') !== 'NONE' ? ` (${schoolShort})` : '';
   }
 
   private mitigation(hitBase: HitBase): string {
     const save: string = hitBase.save
-      ? `save vs ${hitBase.save}${hitBase.saveBonus ? ' at ' + hitBase.saveBonus + '.' : ''}`
+      ? `save vs ${hitBase.save}${
+          hitBase.saveBonus
+            ? ' at ' + (hitBase.saveBonus > 0 ? '+' : '') + hitBase.saveBonus + '.'
+            : ''
+        }`
       : 'no save.';
 
     return ` ${hitBase.prob1}% ${save}`;
@@ -189,13 +241,19 @@ export class Hit extends Component {
         }
         return ` ${duration.join(' ')}.`;
       case 1:
-        return ` ♾️.`;
+      case 9:
+        return ` ♾️`;
       default:
-        return hitBase.durtype + ' ❓.';
+        return hitBase.durtype + ' ❓';
     }
   }
 
   private bypassMirrorImage(hitBase: HitBase): string {
     return hitBase.bypassMirrorImage ? ' 👤' : '';
+  }
+
+  private creatureType(hitBase: HitBase): string {
+    // @ts-ignore
+    return idsTab[hitBase.param2][hitBase.param1];
   }
 }

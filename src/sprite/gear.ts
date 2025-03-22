@@ -19,9 +19,15 @@ export class Gear {
         'ADDR',
       );
 
-      this.slots[key] = handlers.chitin.ress.ITM[
-        handlers.memread.memReadString(itmHelperPtr + BigInt(0x8 + 0x8)).toLowerCase()
-      ] as ResItm;
+      const code = handlers.memread
+        .memReadString(itmHelperPtr + BigInt(0x8 + 0x8), 8)
+        .toLowerCase();
+
+      console.log(code);
+
+      const hand = handlers;
+
+      this.slots[key] = handlers.chitin.ress.ITM[code] as ResItm;
     });
 
     const selectedWeapon: SlotKey = handlers.memread.memReadNumber(

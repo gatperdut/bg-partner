@@ -11,14 +11,14 @@ export class MemreadWin32 {
     return syscallsWin32().helpers.memReadNumber(ptr, primitive) as bigint;
   }
 
-  public memReadString(ptr: bigint): string {
+  public memReadString(ptr: bigint, limit: number): string {
     const result: number[] = [];
 
     let character: number;
 
     let i: number = 0;
 
-    while ((character = this.memReadNumber(ptr + BigInt(i), 'UINT8'))) {
+    while (i < limit && (character = this.memReadNumber(ptr + BigInt(i), 'UINT8'))) {
       result.push(character);
 
       i++;

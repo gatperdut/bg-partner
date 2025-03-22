@@ -86,11 +86,11 @@ export abstract class Eff {
 
     this.secondaryType = handlers.memread.memReadNumber(base + BigInt(0x8 + 0xc8), 'INT32');
 
-    this.res = handlers.memread.memReadString(base + BigInt(0x8 + 0x28)).toLowerCase();
+    this.res = handlers.memread.memReadString(base + BigInt(0x8 + 0x28), 8).toLowerCase();
 
-    this.res2 = handlers.memread.memReadString(base + BigInt(0x8 + 0x68)).toLowerCase();
+    this.res2 = handlers.memread.memReadString(base + BigInt(0x8 + 0x68), 8).toLowerCase();
 
-    this.res3 = handlers.memread.memReadString(base + BigInt(0x8 + 0x70)).toLowerCase();
+    this.res3 = handlers.memread.memReadString(base + BigInt(0x8 + 0x70), 8).toLowerCase();
 
     this.param1 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x14), 'INT32');
 
@@ -110,7 +110,7 @@ export abstract class Eff {
 
     this.spellLevel = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x10), 'INT32');
 
-    this.ressrcSetup(handlers.memread.memReadString(base + BigInt(0x8 + 0x8c)).toLowerCase());
+    this.ressrcSetup(handlers.memread.memReadString(base + BigInt(0x8 + 0x8c), 8).toLowerCase());
 
     this.grouped = _.includes(Effs.effsGrouped, this.key);
 

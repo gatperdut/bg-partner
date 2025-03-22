@@ -65,7 +65,7 @@ export const effTab = {
   55: 'Kill creature type',
   56: 'Alignment invert',
   57: 'Alignment change',
-  58: 'Dispell effects',
+  58: 'Dispel effects',
   59: 'Stealth modifier',
   60: 'Miscast magic',
   61: 'Creature RGB color fade',
