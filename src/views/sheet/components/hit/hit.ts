@@ -1,7 +1,6 @@
 import { HitBase } from '@chitin/res/impl/hit/hit-base';
 import { ResItm } from '@chitin/res/impl/itm/res-itm';
 import { ResItmHit } from '@chitin/res/impl/itm/res-itm-hit';
-import { handlers } from '@handlers';
 import { Eff } from '@sprite/effs/impl/eff';
 import { EffHit } from '@sprite/effs/impl/eff-hit';
 import { effTab } from '@tables/eff';
@@ -48,15 +47,8 @@ export class Hit extends Component {
     return result;
   }
 
-  // TODO drop
-  public hand = handlers;
-
   private resItmHits(): string[] {
-    const result: string[] = [];
-
-    result.push(this.resItmHitFactory(sheetdata.spriteView.gear.weapon));
-
-    return result;
+    return this.resItmHitFactory(sheetdata.spriteView.gear.weapon);
   }
 
   private resEffHitFactory(eff: EffHit): string {
@@ -79,31 +71,33 @@ export class Hit extends Component {
     return result;
   }
 
-  private resItmHitFactory(weapon: ResItm): string {
+  private resItmHitFactory(weapon: ResItm): string[] {
     const result: string[] = [];
 
     _.each(
       [...weapon.resItmHitsMelee, ...weapon.resItmHitsRanged],
       (resItmHit: ResItmHit): void => {
-        let result: string = this.resItmHitName(weapon, resItmHit) + '.';
+        let subresult: string = this.resItmHitName(weapon, resItmHit) + '.';
 
-        result += this.school(resItmHit);
+        subresult += this.school(resItmHit);
 
         // @ts-ignore
-        const f = this[`hit${resItmHit.resEff.resEffHit.key}`];
+        const f = this[`hit${resItmHit.key}`];
         if (f) {
-          result += f.bind(this)(resItmHit);
+          subresult += f.bind(this)(resItmHit);
         }
 
-        result += this.mitigation(resItmHit);
+        subresult += this.mitigation(resItmHit);
 
-        result += this.duration(resItmHit);
+        subresult += this.duration(resItmHit);
 
-        result += this.bypassMirrorImage(resItmHit);
+        subresult += this.bypassMirrorImage(resItmHit);
+
+        result.push(subresult);
       },
     );
 
-    return result.join('\n');
+    return result;
   }
 
   private resEffHitName(eff: EffHit): string {
@@ -116,7 +110,7 @@ export class Hit extends Component {
   }
 
   private resItmHitName(weapon: ResItm, resItmHit: ResItmHit): string {
-    return weapon.name;
+    return `(${weapon.name}) ${effTab[resItmHit.key]}`;
   }
 
   private hit55(hitBase: HitBase): string {

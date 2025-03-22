@@ -3,8 +3,10 @@ import { ResImage } from '@chitin/res/image/res-image';
 import { ResItmHit } from '@chitin/res/impl/itm/res-itm-hit';
 import { Res } from '@chitin/res/impl/res';
 import { handlers } from '@handlers';
+import { Effs } from '@sprite/effs/effs';
 import { ProKey, ProValue, proTab } from '@tables/pro';
 import { readBufferString } from '@utils';
+import _ from 'lodash';
 
 export class ResItm extends Res {
   public name: string;
@@ -59,8 +61,8 @@ export class ResItm extends Res {
     this.resImage = resImage;
   }
 
-  private header(buf: Buffer): void {
-    const attackType: number = buf.readUInt8(0x0);
+  private header(extheaderBuf: Buffer): void {
+    const attackType: number = extheaderBuf.readUInt8(0x0);
 
     let target: ResItmHit[];
 
@@ -73,7 +75,7 @@ export class ResItm extends Res {
         target = this.resItmHitsRanged;
 
         if (this.enchantment === 0) {
-          this.proValues.push(proTab[buf.readUInt16LE(0x2a) as ProKey]);
+          this.proValues.push(proTab[extheaderBuf.readUInt16LE(0x2a) as ProKey]);
         }
 
         break;
@@ -84,12 +86,23 @@ export class ResItm extends Res {
       return;
     }
 
-    const featsCount: number = buf.readUInt16LE(0x1e);
+    const featsOffset: number = this.file.readUint32LE(0x6a);
 
-    const featsOffset: number = buf.readUint16LE(0x20);
+    const featsCount: number = extheaderBuf.readUInt16LE(0x1e);
+
+    const featsIndex: number = extheaderBuf.readUint16LE(0x20);
 
     for (let i: number = 0; i < featsCount; i++) {
-      target.push(new ResItmHit(buf, buf.subarray(featsOffset + i * 48, buf.length)));
+      const resItmHit: ResItmHit = new ResItmHit(
+        extheaderBuf,
+        this.file.subarray(featsOffset + (i + featsIndex) * 48, this.file.length),
+      );
+
+      if (_.includes(Effs.effsIgnored, resItmHit.key)) {
+        continue;
+      }
+
+      target.push(resItmHit);
     }
   }
 }
