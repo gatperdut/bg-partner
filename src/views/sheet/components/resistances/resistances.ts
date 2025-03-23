@@ -26,17 +26,17 @@ export class Resistances extends Component {
 
     this.resistancesData = {
       ...this.componentData,
-      resistFire: sheetdata.spriteView.derived.resistFire,
-      resistCold: sheetdata.spriteView.derived.resistCold,
-      resistElectricity: sheetdata.spriteView.derived.resistElectricity,
-      resistAcid: sheetdata.spriteView.derived.resistAcid,
-      resistMagic: sheetdata.spriteView.derived.resistMagic,
-      resistMagicDamage: sheetdata.spriteView.derived.resistMagicDamage,
-      resistPoison: sheetdata.spriteView.derived.resistPoison,
-      resistSlashing: sheetdata.spriteView.derived.resistSlashing,
-      resistCrushing: sheetdata.spriteView.derived.resistCrushing,
-      resistPiercing: sheetdata.spriteView.derived.resistPiercing,
-      resistMissile: sheetdata.spriteView.derived.resistMissile,
+      resistFire: sheetdata.sprite.derived.resistFire,
+      resistCold: sheetdata.sprite.derived.resistCold,
+      resistElectricity: sheetdata.sprite.derived.resistElectricity,
+      resistAcid: sheetdata.sprite.derived.resistAcid,
+      resistMagic: sheetdata.sprite.derived.resistMagic,
+      resistMagicDamage: sheetdata.sprite.derived.resistMagicDamage,
+      resistPoison: sheetdata.sprite.derived.resistPoison,
+      resistSlashing: sheetdata.sprite.derived.resistSlashing,
+      resistCrushing: sheetdata.sprite.derived.resistCrushing,
+      resistPiercing: sheetdata.sprite.derived.resistPiercing,
+      resistMissile: sheetdata.sprite.derived.resistMissile,
     };
 
     this.html = compiled(this.resistancesData);

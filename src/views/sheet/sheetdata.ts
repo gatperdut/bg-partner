@@ -8,7 +8,7 @@ export type Sheetdata = {
 
   resImageDefault: ResImageDefault;
 
-  spriteView: SpriteView;
+  sprite: SpriteView;
 
   timetracker: SheetAPIUpdateParamsTimetracker;
 };
@@ -16,6 +16,6 @@ export type Sheetdata = {
 export const sheetdata: Sheetdata = {
   hbs: null,
   resImageDefault: null,
-  spriteView: null,
+  sprite: null,
   timetracker: null,
 };

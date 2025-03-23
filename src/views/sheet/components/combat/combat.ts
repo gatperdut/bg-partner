@@ -30,13 +30,13 @@ export class Combat extends Component {
 
     this.combatData = {
       ...this.componentData,
-      ac: sheetdata.spriteView.derived.ac,
-      thac0: sheetdata.spriteView.derived.thac0 - sheetdata.spriteView.derived.thac0BonusRight,
-      thac0Left: sheetdata.spriteView.derived.thac0 - sheetdata.spriteView.derived.thac0BonusLeft,
-      thac0BonusLeft: sheetdata.spriteView.derived.thac0BonusLeft,
+      ac: sheetdata.sprite.derived.ac,
+      thac0: sheetdata.sprite.derived.thac0 - sheetdata.sprite.derived.thac0BonusRight,
+      thac0Left: sheetdata.sprite.derived.thac0 - sheetdata.sprite.derived.thac0BonusLeft,
+      thac0BonusLeft: sheetdata.sprite.derived.thac0BonusLeft,
       apr: Number.isInteger(aprView) ? aprView.toString() : `${aprView * 2}/2`,
-      xp: sheetdata.spriteView.derived.xp,
-      luck: sheetdata.spriteView.derived.luck,
+      xp: sheetdata.sprite.derived.xp,
+      luck: sheetdata.sprite.derived.luck,
       weapprofs: weapprofs,
     };
 
@@ -44,13 +44,13 @@ export class Combat extends Component {
   }
 
   private aprView(): number {
-    let apr: number = sheetdata.spriteView.derived.apr;
+    let apr: number = sheetdata.sprite.derived.apr;
 
     if (apr > 5) {
       apr = 0.5 + (apr - 6);
     }
 
-    const haste: boolean = !!(sheetdata.spriteView.derived.state & 0x8000);
+    const haste: boolean = !!(sheetdata.sprite.derived.state & 0x8000);
 
     if (haste) {
       apr *= 2;
@@ -63,8 +63,8 @@ export class Combat extends Component {
     const result: string[] = [];
 
     _.each(WeapprofKeys, (key: WeapprofKey): void => {
-      if (sheetdata.spriteView.derived.profs[key] > 0) {
-        result.push(`${weapprofTab[key]}: ${'+'.repeat(sheetdata.spriteView.derived.profs[key])}`);
+      if (sheetdata.sprite.derived.profs[key] > 0) {
+        result.push(`${weapprofTab[key]}: ${'+'.repeat(sheetdata.sprite.derived.profs[key])}`);
       }
     });
 

@@ -41,7 +41,7 @@ export class Hit extends Component {
   }
 
   private enchantment(): string {
-    const weapon: ResItm = sheetdata.spriteView.gear.mainhand;
+    const weapon: ResItm = sheetdata.sprite.gear.mainhand;
 
     return `Weapon: ${weapon.name || 'Unnamed weapon'}. Strikes as +${weapon.enchantment}.`;
   }
@@ -50,9 +50,7 @@ export class Hit extends Component {
     const result: string[] = [];
 
     _.each(
-      _.filter(sheetdata.spriteView.effs.effs.hit, (eff: Eff): boolean =>
-        [248, 249].includes(eff.key),
-      ),
+      _.filter(sheetdata.sprite.effs.effs.hit, (eff: Eff): boolean => [248, 249].includes(eff.key)),
       (eff: EffHit): void => {
         result.push(this.resEffHitFactory(eff));
       },
@@ -62,7 +60,7 @@ export class Hit extends Component {
   }
 
   private resItmHits(): string[] {
-    return this.resItmHitFactory(sheetdata.spriteView.gear.mainhand);
+    return this.resItmHitFactory(sheetdata.sprite.gear.mainhand);
   }
 
   private resEffHitFactory(eff: EffHit): string {

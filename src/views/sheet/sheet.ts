@@ -98,7 +98,7 @@ export class Sheet {
         time: handlers.timetracker.time,
         running: handlers.timetracker.running,
       },
-      spriteView: spriteView(this.sprite),
+      sprite: spriteView(this.sprite),
     };
 
     this.window.webContents.send('sheet.update', params);

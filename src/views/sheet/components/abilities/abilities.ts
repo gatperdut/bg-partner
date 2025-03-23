@@ -25,17 +25,17 @@ export class Abilities extends Component {
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.abilities);
 
     const strStr: string =
-      sheetdata.spriteView.derived.str +
-      (sheetdata.spriteView.derived.strExc ? `/${sheetdata.spriteView.derived.strExc}` : '');
+      sheetdata.sprite.derived.str +
+      (sheetdata.sprite.derived.strExc ? `/${sheetdata.sprite.derived.strExc}` : '');
 
     this.abilitiesData = {
       ...this.componentData,
       str: strStr,
-      dex: sheetdata.spriteView.derived.dex,
-      con: sheetdata.spriteView.derived.con,
-      int: sheetdata.spriteView.derived.int,
-      wis: sheetdata.spriteView.derived.wis,
-      cha: sheetdata.spriteView.derived.cha,
+      dex: sheetdata.sprite.derived.dex,
+      con: sheetdata.sprite.derived.con,
+      int: sheetdata.sprite.derived.int,
+      wis: sheetdata.sprite.derived.wis,
+      cha: sheetdata.sprite.derived.cha,
     };
 
     this.html = compiled(this.abilitiesData);

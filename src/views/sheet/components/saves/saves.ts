@@ -20,11 +20,11 @@ export class Saves extends Component {
 
     this.savesData = {
       ...this.componentData,
-      saveVsDeath: sheetdata.spriteView.derived.saveVsDeath,
-      saveVsWands: sheetdata.spriteView.derived.saveVsWands,
-      saveVsPoly: sheetdata.spriteView.derived.saveVsPoly,
-      saveVsBreath: sheetdata.spriteView.derived.saveVsBreath,
-      saveVsSpell: sheetdata.spriteView.derived.saveVsSpell,
+      saveVsDeath: sheetdata.sprite.derived.saveVsDeath,
+      saveVsWands: sheetdata.sprite.derived.saveVsWands,
+      saveVsPoly: sheetdata.sprite.derived.saveVsPoly,
+      saveVsBreath: sheetdata.sprite.derived.saveVsBreath,
+      saveVsSpell: sheetdata.sprite.derived.saveVsSpell,
     };
 
     this.html = compiled(this.savesData);

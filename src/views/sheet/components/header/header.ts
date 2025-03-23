@@ -34,21 +34,21 @@ export class Header extends Component {
 
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.header);
 
-    const levelsView: string = sheetdata.spriteView.profile.levels.join('/');
+    const levelsView: string = sheetdata.sprite.profile.levels.join('/');
 
     const classView: string = this.classView();
 
     this.headerData = {
       ...this.componentData,
-      enemyAlly: sheetdata.spriteView.profile.enemyAlly,
-      gender: sheetdata.spriteView.profile.gender,
-      name: sheetdata.spriteView.basic.name,
-      hp: sheetdata.spriteView.basic.hp,
-      hpMax: sheetdata.spriteView.derived.hpMax,
-      race: sheetdata.spriteView.profile.race,
+      enemyAlly: sheetdata.sprite.profile.enemyAlly,
+      gender: sheetdata.sprite.profile.gender,
+      name: sheetdata.sprite.basic.name,
+      hp: sheetdata.sprite.basic.hp,
+      hpMax: sheetdata.sprite.derived.hpMax,
+      race: sheetdata.sprite.profile.race,
       klass: classView,
       levels: levelsView,
-      alignment: sheetdata.spriteView.profile.alignment,
+      alignment: sheetdata.sprite.profile.alignment,
     };
 
     this.html = compiled(this.headerData);
@@ -57,13 +57,13 @@ export class Header extends Component {
   private classView(): string {
     const sd = sheetdata;
 
-    if (!sheetdata.spriteView.profile.kit || sheetdata.spriteView.profile.kit === 'Generalist') {
-      return sheetdata.spriteView.profile.klass;
+    if (!sheetdata.sprite.profile.kit || sheetdata.sprite.profile.kit === 'Generalist') {
+      return sheetdata.sprite.profile.klass;
     }
 
-    const split: string[] = sheetdata.spriteView.profile.klass.split('/');
+    const split: string[] = sheetdata.sprite.profile.klass.split('/');
 
-    split[0] = sheetdata.spriteView.profile.kit;
+    split[0] = sheetdata.sprite.profile.kit;
 
     return split.join('/');
   }

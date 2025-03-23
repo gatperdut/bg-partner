@@ -41,7 +41,7 @@ export type SheetAPIUpdateParamsTimetracker = {
 export type SheetAPIUpdateParams = {
   timetracker: SheetAPIUpdateParamsTimetracker;
 
-  spriteView: SpriteView;
+  sprite: SpriteView;
 };
 
 export type SheetAPIUpdateMethod = (params: SheetAPIUpdateParams) => void;
@@ -83,7 +83,7 @@ class SheetRenderer {
       this.update(params);
 
       window.sheetAPI.updated(
-        sheetdata.spriteView.basic.id,
+        sheetdata.sprite.basic.id,
         document.getElementById('wrapper').clientHeight,
       );
     });
@@ -92,7 +92,7 @@ class SheetRenderer {
   }
 
   private update(params: SheetAPIUpdateParams): void {
-    sheetdata.spriteView = params.spriteView;
+    sheetdata.sprite = params.sprite;
 
     sheetdata.timetracker = params.timetracker;
 
@@ -130,7 +130,7 @@ class SheetRenderer {
 
   private updateView(): void {
     document.getElementById('buffs').innerHTML = new Buffs(
-      sheetdata.spriteView.effs.effs.buffs,
+      sheetdata.sprite.effs.effs.buffs,
       false,
       true,
     ).html;
@@ -180,7 +180,7 @@ class SheetRenderer {
     document.body.addEventListener(
       'contextmenu',
       (): void => {
-        window.sheetAPI.close(sheetdata.spriteView.basic.id);
+        window.sheetAPI.close(sheetdata.sprite.basic.id);
       },
       true,
     );
@@ -203,7 +203,7 @@ class SheetRenderer {
         y: event.movementY,
       };
 
-      window.sheetAPI.move(sheetdata.spriteView.basic.id, movement);
+      window.sheetAPI.move(sheetdata.sprite.basic.id, movement);
     });
   }
 }

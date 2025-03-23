@@ -57,7 +57,7 @@ export class Imms extends Component {
     let enchantment: number = 0;
 
     _.each(
-      _.filter(sheetdata.spriteView.effs.effs.imms, (eff: Eff): boolean => eff.key === 120),
+      _.filter(sheetdata.sprite.effs.effs.imms, (eff: Eff): boolean => eff.key === 120),
       (eff120: Eff): void => {
         if (eff120.param2 === 0) {
           if (eff120.param1 > enchantment) {
@@ -79,34 +79,34 @@ export class Imms extends Component {
   private misc(): string {
     const result: string[] = [];
 
-    if (sheetdata.spriteView.derived.seeInvisible) {
+    if (sheetdata.sprite.derived.seeInvisible) {
       result.push('Sees through invisibility');
     }
 
-    if (sheetdata.spriteView.derived.backstabImmunity) {
+    if (sheetdata.sprite.derived.backstabImmunity) {
       result.push('Immune to backstab');
     }
 
-    if (sheetdata.spriteView.derived.timestopImmunity) {
+    if (sheetdata.sprite.derived.timestopImmunity) {
       result.push('Immune to timestop');
     }
 
-    if (sheetdata.spriteView.derived.turnUndeadImmunity) {
+    if (sheetdata.sprite.derived.turnUndeadImmunity) {
       result.push('Immune to turn undead');
     }
 
-    if (sheetdata.spriteView.derived.hpMin) {
+    if (sheetdata.sprite.derived.hpMin) {
       result.push('HP cannot be brought down to 0');
     }
 
-    if (sheetdata.spriteView.derived.spellLevelImmunity > 0) {
+    if (sheetdata.sprite.derived.spellLevelImmunity > 0) {
       result.push(
-        `Immune to spell levels ${sheetdata.spriteView.derived.spellLevelImmunity} and below`,
+        `Immune to spell levels ${sheetdata.sprite.derived.spellLevelImmunity} and below`,
       );
     }
 
-    if (sheetdata.spriteView.derived.castingTimeMod > 0) {
-      result.push(`Casting time is modified by ${sheetdata.spriteView.derived.castingTimeMod}`);
+    if (sheetdata.sprite.derived.castingTimeMod > 0) {
+      result.push(`Casting time is modified by ${sheetdata.sprite.derived.castingTimeMod}`);
     }
 
     return result.join('. ');
@@ -115,7 +115,7 @@ export class Imms extends Component {
   private creatures(): string {
     const result: string[] = [];
     _.each(
-      _.filter(sheetdata.spriteView.effs.effs.imms, (eff: Eff): boolean => eff.key === 100),
+      _.filter(sheetdata.sprite.effs.effs.imms, (eff: Eff): boolean => eff.key === 100),
       (eff100: Eff): void => {
         //@ts-ignore
         result.push(idsTab[eff100.param2][eff100.param1]);
@@ -129,7 +129,7 @@ export class Imms extends Component {
     const result: string[] = [];
 
     _.each(
-      _.filter(sheetdata.spriteView.effs.effs.imms, (eff: Eff): boolean => eff.key === 101),
+      _.filter(sheetdata.sprite.effs.effs.imms, (eff: Eff): boolean => eff.key === 101),
       (eff101: Eff): void => {
         if (!_.includes(Effs.effsIgnored, eff101.param2)) {
           result.push(effTab[eff101.param2 as EffKey]);
@@ -144,7 +144,7 @@ export class Imms extends Component {
     const result: string[] = [];
 
     _.each(
-      _.filter(sheetdata.spriteView.effs.effs.imms, (eff: Eff): boolean => eff.key === 206),
+      _.filter(sheetdata.sprite.effs.effs.imms, (eff: Eff): boolean => eff.key === 206),
       (eff206: Eff206): void => {
         result.push(eff206.splName);
       },
