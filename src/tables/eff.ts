@@ -44,7 +44,7 @@ export const effTab = {
   34: 'Save vs Wands modifier',
   35: 'Save vs Petrification or Polymorph modifier',
   36: 'Save vs breath weapons modifier',
-  37: 'Save vs spells modifier',
+  37: 'Save vs spell modifier',
   38: 'Silence',
   39: 'Unconsciousness',
   40: 'Slow',
