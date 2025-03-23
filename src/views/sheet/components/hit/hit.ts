@@ -19,7 +19,7 @@ export type HitData = ComponentData & {
 export class Hit extends Component {
   protected hitData: HitData;
 
-  public static effsHidden: EffKey[] = [139, 240, 324];
+  public static effsHidden: EffKey[] = [82, 123, 139, 240, 324];
 
   constructor() {
     super();
@@ -27,7 +27,8 @@ export class Hit extends Component {
     const compiled: HandlebarsTemplateDelegate = Handlebars.compile(sheetdata.hbs.hit);
 
     const hits: string[] = _.compact([
-      this.enchantment(),
+      this.enchantment(true, sheetdata.sprite.gear.mainhand),
+      sheetdata.sprite.gear.offhand ? this.enchantment(false, sheetdata.sprite.gear.offhand) : null,
       ...this.resEffHits(),
       ...this.resItmHits(),
     ]);
@@ -40,10 +41,14 @@ export class Hit extends Component {
     this.html = compiled(this.hitData);
   }
 
-  private enchantment(): string {
-    const weapon: ResItm = sheetdata.sprite.gear.mainhand;
-
-    return `Weapon: ${weapon.name || 'Unnamed weapon'}. Strikes as +${weapon.enchantment}.`;
+  private enchantment(mainhand: boolean, weapon: ResItm): string {
+    return `${mainhand ? 'Mainhand' : 'Offhand'} wapon: ${
+      weapon.name || 'Unnamed weapon'
+    }. Strikes as +${weapon.enchantment}.${weapon.magical ? ' Magical.' : ''}${
+      weapon.silver ? ' Silver.' : ''
+    }${weapon.coldiron ? ' Cold iron.' : ''}${weapon.twohanded ? ' Two-handed.' : ''}${
+      weapon.ranged ? ' Ranged.' : ''
+    }`;
   }
 
   private resEffHits(): string[] {
@@ -60,7 +65,10 @@ export class Hit extends Component {
   }
 
   private resItmHits(): string[] {
-    return this.resItmHitFactory(sheetdata.sprite.gear.mainhand);
+    return _.compact([
+      ...this.resItmHitFactory(sheetdata.sprite.gear.mainhand),
+      ...this.resItmHitFactory(sheetdata.sprite.gear.offhand),
+    ]);
   }
 
   private resEffHitFactory(eff: EffHit): string {
@@ -69,7 +77,13 @@ export class Hit extends Component {
     // @ts-ignore
     const f = this[`hit${eff.resEff.resEffHit.key}`];
     if (f) {
-      result += f.bind(this)(eff);
+      const fresult: string = f.bind(this)(eff);
+
+      if (!fresult) {
+        return;
+      }
+
+      result += fresult;
     }
 
     result += this.mitigation(eff.resEff.resEffHit);
@@ -84,6 +98,10 @@ export class Hit extends Component {
   private resItmHitFactory(weapon: ResItm): string[] {
     const result: string[] = [];
 
+    if (!weapon) {
+      return result;
+    }
+
     _.each(
       _.filter(
         [...weapon.resItmHitsMelee, ...weapon.resItmHitsRanged],
@@ -95,7 +113,13 @@ export class Hit extends Component {
         // @ts-ignore
         const f = this[`hit${resItmHit.key}`];
         if (f) {
-          subresult += f.bind(this)(resItmHit);
+          const fresult: string = f.bind(this)(resItmHit);
+
+          if (!fresult) {
+            return;
+          }
+
+          subresult += fresult;
         }
 
         subresult += this.mitigation(resItmHit);
@@ -254,7 +278,13 @@ export class Hit extends Component {
   }
 
   private hit177(hitBase: HitBase): string {
-    return ` ${effTab[(hitBase.res as ResEff).key]}: ${this.creatureType(hitBase)}`;
+    const key: EffKey = (hitBase.res as ResEff).key;
+
+    if (_.includes(Hit.effsHidden, key)) {
+      return null;
+    }
+
+    return ` ${effTab[key]}: ${this.creatureType(hitBase)}`;
   }
 
   private hit216(hitBase: HitBase): string {

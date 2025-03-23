@@ -21,6 +21,22 @@ export class ResItm extends Res {
 
   public enchantment: number;
 
+  public melee: boolean;
+
+  public ranged: boolean;
+
+  public twohanded: boolean;
+
+  public preventsDualwield: boolean;
+
+  public magical: boolean;
+
+  public cursed: boolean;
+
+  public silver: boolean;
+
+  public coldiron: boolean;
+
   public resItmHitsMelee: ResItmHit[] = [];
 
   public resItmHitsRanged: ResItmHit[] = [];
@@ -38,6 +54,20 @@ export class ResItm extends Res {
 
     this.enchantment = this.file.readUint32LE(0x60);
 
+    const header1: number = this.file.readUint8(0x18);
+
+    const header2: number = this.file.readUint8(0x19);
+
+    this.twohanded = !!(header1 & 0b00000010);
+
+    this.magical = !!(header1 & 0b01000000);
+
+    this.cursed = !!(header1 & 0b00010000);
+
+    this.silver = !!(header2 & 0b00000001);
+
+    this.coldiron = !!(header2 & 0b00000010);
+
     const extHeadersCount: number = this.file.readUint16LE(0x68);
 
     const extHeadersOffset: number = this.file.readUint32LE(0x64);
@@ -45,6 +75,8 @@ export class ResItm extends Res {
     for (let i: number = 0; i < extHeadersCount; i++) {
       this.header(this.file.subarray(extHeadersOffset + 56 * i, this.file.length));
     }
+
+    this.preventsDualwield = this.twohanded || this.ranged;
   }
 
   public resImageSet(): void {
@@ -72,9 +104,13 @@ export class ResItm extends Res {
       case 1:
         target = this.resItmHitsMelee;
 
+        this.melee = true;
+
         break;
       case 2:
         target = this.resItmHitsRanged;
+
+        this.ranged = true;
 
         if (this.enchantment === 0) {
           this.proValues.push(proTab[extheaderBuf.readUInt16LE(0x2a) as ProKey]);

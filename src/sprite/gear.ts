@@ -35,6 +35,8 @@ export class Gear {
 
     this.mainhand = this.slots[selectedWeapon];
 
-    this.offhand = this.slots[9];
+    if (!this.mainhand.preventsDualwield && this.slots[9]?.melee) {
+      this.offhand = this.slots[9];
+    }
   }
 }
