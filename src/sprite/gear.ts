@@ -6,7 +6,9 @@ import _ from 'lodash';
 export class Gear {
   public slots: Record<SlotKey, ResItm> = {} as Record<SlotKey, ResItm>;
 
-  public weapon: ResItm;
+  public mainhand: ResItm;
+
+  public offhand: ResItm;
 
   constructor(private base: bigint) {
     // Empty
@@ -31,6 +33,8 @@ export class Gear {
       'UINT8',
     ) as SlotKey;
 
-    this.weapon = this.slots[selectedWeapon];
+    this.mainhand = this.slots[selectedWeapon];
+
+    this.offhand = this.slots[9];
   }
 }

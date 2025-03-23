@@ -41,13 +41,9 @@ export class Hit extends Component {
   }
 
   private enchantment(): string {
-    const weapon: ResItm = sheetdata.spriteView.gear.weapon;
+    const weapon: ResItm = sheetdata.spriteView.gear.mainhand;
 
-    if (sheetdata.spriteView.gear.weapon.enchantment < 1) {
-      return `Weapon: ${weapon.name || 'Unnamed weapon'}.`;
-    }
-
-    return `Weapon: ${weapon.name || 'Unnamed weapon'}. Strikes at +${weapon.enchantment}.`;
+    return `Weapon: ${weapon.name || 'Unnamed weapon'}. Strikes as +${weapon.enchantment}.`;
   }
 
   private resEffHits(): string[] {
@@ -66,7 +62,7 @@ export class Hit extends Component {
   }
 
   private resItmHits(): string[] {
-    return this.resItmHitFactory(sheetdata.spriteView.gear.weapon);
+    return this.resItmHitFactory(sheetdata.spriteView.gear.mainhand);
   }
 
   private resEffHitFactory(eff: EffHit): string {
@@ -214,6 +210,10 @@ export class Hit extends Component {
     }
   }
 
+  private hit44(hitBase: HitBase): string {
+    return ` ${hitBase.param1 > 0 ? '+' : ''}${hitBase.param1}.`;
+  }
+
   private hit55(hitBase: HitBase): string {
     return (
       ` ${this.creatureType(hitBase)}` +
@@ -256,7 +256,7 @@ export class Hit extends Component {
   }
 
   private hit177(hitBase: HitBase): string {
-    return ` ${effTab[(hitBase.res as ResEff).key]} on ${this.creatureType(hitBase)}`;
+    return ` ${effTab[(hitBase.res as ResEff).key]}: ${this.creatureType(hitBase)}`;
   }
 
   private hit216(hitBase: HitBase): string {
