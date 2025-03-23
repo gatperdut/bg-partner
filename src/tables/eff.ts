@@ -142,7 +142,7 @@ export const effTab = {
   136: 'Force visible',
   137: 'Negative chant',
   138: 'Character animation change',
-  139: 'display string',
+  139: 'Display string',
   140: 'Casting glow',
   141: 'Lighting effects',
   142: 'Display special effect icon',

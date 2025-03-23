@@ -1,6 +1,8 @@
+import { ResEff } from '@chitin/res/impl/eff/res-eff';
 import { HitBase } from '@chitin/res/impl/hit/hit-base';
 import { ResItm } from '@chitin/res/impl/itm/res-itm';
 import { ResItmHit } from '@chitin/res/impl/itm/res-itm-hit';
+import { ResSpl } from '@chitin/res/impl/res-spl';
 import { Eff } from '@sprite/effs/impl/eff';
 import { EffHit } from '@sprite/effs/impl/eff-hit';
 import { EffKey, effTab } from '@tables/eff';
@@ -17,7 +19,7 @@ export type HitData = ComponentData & {
 export class Hit extends Component {
   protected hitData: HitData;
 
-  public static effsHidden: EffKey[] = [324];
+  public static effsHidden: EffKey[] = [139, 240, 324];
 
   constructor() {
     super();
@@ -131,6 +133,60 @@ export class Hit extends Component {
     }`;
   }
 
+  private hit12(hitBase: HitBase): string {
+    let type: string;
+
+    switch (hitBase.param2 & 0xfffffff0) {
+      case 0x00000000:
+        type = 'crushing';
+        break;
+      case 0x00010000:
+        type = 'acid';
+        break;
+      case 0x00020000:
+        type = 'cold';
+        break;
+      case 0x00040000:
+        type = 'electricity';
+        break;
+      case 0x00080000:
+        type = 'fire';
+        break;
+      case 0x00100000:
+        type = 'piercing';
+        break;
+      case 0x00200000:
+        type = 'poison';
+        break;
+      case 0x00400000:
+        type = 'magic';
+        break;
+      case 0x00800000:
+        type = 'missile';
+        break;
+      case 0x01000000:
+        type = 'slashing';
+        break;
+      case 0x08000000:
+        type = 'non-lethal';
+        break;
+      default:
+        type = 'unknown';
+    }
+
+    let damage: string = '';
+
+    if (hitBase.lowestLevel && hitBase.highestLevel) {
+      damage += `${hitBase.lowestLevel}d${hitBase.highestLevel}`;
+    }
+
+    if (hitBase.param1) {
+      damage += `+${hitBase.param1}`;
+    }
+
+    return ` ${damage} ${type}`;
+  }
+
   private hit17(hitBase: HitBase): string {
     switch (hitBase.param2) {
       case 0:
@@ -187,6 +243,22 @@ export class Hit extends Component {
     return ` ${this.creatureType(hitBase)}`;
   }
 
+  private hit146(hitBase: HitBase): string {
+    let level: string = hitBase.param1 ? `level ${hitBase.param1}` : 'caster level';
+
+    if (hitBase.param2 === 1 || hitBase.param1 === 0) {
+      level = 'caster level';
+    } else {
+      level = `level ${hitBase.param1}`;
+    }
+
+    return ` ${(hitBase.res as ResSpl).name} at ${level}`;
+  }
+
+  private hit177(hitBase: HitBase): string {
+    return ` ${effTab[(hitBase.res as ResEff).key]} on ${this.creatureType(hitBase)}`;
+  }
+
   private hit216(hitBase: HitBase): string {
     return ` ${hitBase.param1} levels.`;
   }
@@ -208,7 +280,7 @@ export class Hit extends Component {
         }`
       : 'no save.';
 
-    return ` ${hitBase.prob1}% ${save}`;
+    return ` ${hitBase.prob1 - hitBase.prob2}% ${save}`;
   }
 
   private duration(hitBase: HitBase): string {

@@ -23,10 +23,6 @@ export class Gear {
         .memReadString(itmHelperPtr + BigInt(0x8 + 0x8), 8)
         .toLowerCase();
 
-      console.log(code);
-
-      const hand = handlers;
-
       this.slots[key] = handlers.chitin.ress.ITM[code] as ResItm;
     });
 

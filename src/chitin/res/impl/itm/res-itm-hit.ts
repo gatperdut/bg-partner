@@ -3,6 +3,7 @@ import { EffKey } from '@tables/eff';
 import { DurtypeKey } from '@tables/eff/durtype';
 import { EffsaveKey, EffsaveKeys, effsaveTab } from '@tables/eff/effsave';
 import { SchoolKey, schoolShortTab, schoolTab } from '@tables/school';
+import { readBufferString } from '@utils';
 import _ from 'lodash';
 
 export class ResItmHit extends HitBase {
@@ -14,6 +15,8 @@ export class ResItmHit extends HitBase {
     this.param1 = featBuf.readInt32LE(0x4);
 
     this.param2 = featBuf.readInt32LE(0x8);
+
+    this.resource = readBufferString(featBuf, 0x14, 8).toLowerCase();
 
     this.duration = featBuf.readInt32LE(0xe);
 
@@ -48,5 +51,9 @@ export class ResItmHit extends HitBase {
     this.lowestLevel = featBuf.readInt32LE(0x1c);
 
     this.highestLevel = featBuf.readInt32LE(0x20);
+
+    this.diceThrown = extheaderBuf.readInt8(0x18);
+
+    this.diceSides = extheaderBuf.readInt8(0x16);
   }
 }

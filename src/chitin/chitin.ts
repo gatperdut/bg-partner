@@ -1,6 +1,8 @@
 import { Bif } from '@chitin/bif';
 import { ResImageDefault } from '@chitin/res/image/res-image-default';
+import { ResEff } from '@chitin/res/impl/eff/res-eff';
 import { ResItm } from '@chitin/res/impl/itm/res-itm';
+import { ResItmHit } from '@chitin/res/impl/itm/res-itm-hit';
 import { Res } from '@chitin/res/impl/res';
 import { ResSpl } from '@chitin/res/impl/res-spl';
 import { ResFactory } from '@chitin/res/res-factory';
@@ -68,6 +70,10 @@ export class Chitin {
     this.splsImage();
 
     this.proValue2ItmSetup();
+
+    this.itmHitSetup();
+
+    this.effHitSetup();
   }
 
   private itmsImage(): void {
@@ -93,6 +99,23 @@ export class Chitin {
           }
         }
       });
+    });
+  }
+
+  private itmHitSetup(): void {
+    _.each(_.values(this.ress.ITM), (resItm: ResItm): void => {
+      _.each(
+        [...resItm.resItmHitsMelee, ...resItm.resItmHitsRanged],
+        (resItmHit: ResItmHit): void => {
+          resItmHit.resSet();
+        },
+      );
+    });
+  }
+
+  private effHitSetup(): void {
+    _.each(_.values(this.ress.EFF), (resEff: ResEff): void => {
+      resEff.resEffHit.resSet();
     });
   }
 }

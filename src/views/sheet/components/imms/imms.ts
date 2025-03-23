@@ -106,7 +106,7 @@ export class Imms extends Component {
     }
 
     if (sheetdata.spriteView.derived.castingTimeMod > 0) {
-      result.push(`Casting time is modified by ${sheetdata.spriteView.derived.castingTimeMod}.`);
+      result.push(`Casting time is modified by ${sheetdata.spriteView.derived.castingTimeMod}`);
     }
 
     return result.join('. ');

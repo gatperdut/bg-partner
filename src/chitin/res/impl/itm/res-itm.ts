@@ -3,7 +3,7 @@ import { ResImage } from '@chitin/res/image/res-image';
 import { ResItmHit } from '@chitin/res/impl/itm/res-itm-hit';
 import { Res } from '@chitin/res/impl/res';
 import { handlers } from '@handlers';
-import { Effs } from '@sprite/effs/effs';
+import { EffKey } from '@tables/eff';
 import { ProKey, ProValue, proTab } from '@tables/pro';
 import { readBufferString } from '@utils';
 import _ from 'lodash';
@@ -24,6 +24,8 @@ export class ResItm extends Res {
   public resItmHitsMelee: ResItmHit[] = [];
 
   public resItmHitsRanged: ResItmHit[] = [];
+
+  public static effsIgnored: EffKey[] = [61, 141, 142, 174, 215];
 
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('ITM', buffer, bifs);
@@ -98,7 +100,7 @@ export class ResItm extends Res {
         this.file.subarray(featsOffset + (i + featsIndex) * 48, this.file.length),
       );
 
-      if (_.includes(Effs.effsIgnored, resItmHit.key)) {
+      if (_.includes(ResItm.effsIgnored, resItmHit.key)) {
         continue;
       }
 
