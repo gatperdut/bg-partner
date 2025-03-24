@@ -4,11 +4,14 @@ import { ResItmHit } from '@chitin/res/impl/itm/res-itm-hit';
 import { Res } from '@chitin/res/impl/res';
 import { handlers } from '@handlers';
 import { EffKey } from '@tables/eff';
+import { ItemcatKey } from '@tables/ids/itemcat';
 import { ProKey, ProValue, proTab } from '@tables/pro';
 import { readBufferString } from '@utils';
 import _ from 'lodash';
 
 export class ResItm extends Res {
+  public type: ItemcatKey;
+
   public name: string;
 
   public desc: string;
@@ -45,6 +48,8 @@ export class ResItm extends Res {
 
   constructor(buffer: Buffer, bifs: Bif[]) {
     super('ITM', buffer, bifs);
+
+    this.type = this.file.readInt16LE(0x1c) as ItemcatKey;
 
     this.name = handlers.tlk.tlks[this.file.readUint32LE(0xc)];
 

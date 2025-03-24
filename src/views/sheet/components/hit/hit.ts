@@ -67,6 +67,7 @@ export class Hit extends Component {
   private resItmHits(): string[] {
     return _.compact([
       ...this.resItmHitFactory(sheetdata.sprite.gear.mainhand),
+      ...this.resItmHitFactory(sheetdata.sprite.gear.launcher),
       ...this.resItmHitFactory(sheetdata.sprite.gear.offhand),
     ]);
   }
