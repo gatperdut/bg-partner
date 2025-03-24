@@ -55,11 +55,13 @@ export class Gear {
         launcherType = 0x1b;
     }
 
-    for (let i: number = 35; i <= 38; i++) {
-      const launcher: ResItm = this.slots[i as SlotKey];
+    if (launcherType) {
+      for (let i: number = 35; i <= 38; i++) {
+        const launcher: ResItm = this.slots[i as SlotKey];
 
-      if (launcher?.type === launcherType) {
-        this.launcher = launcher;
+        if (launcher?.type === launcherType) {
+          this.launcher = launcher;
+        }
       }
     }
   }
