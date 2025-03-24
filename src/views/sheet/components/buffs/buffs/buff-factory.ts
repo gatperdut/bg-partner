@@ -21,6 +21,7 @@ import { BuffSingle219 } from '@views/sheet/components/buffs/buff-single/buff-si
 import { BuffSingle232 } from '@views/sheet/components/buffs/buff-single/buff-single-232/buff-single-232';
 import { BuffSingle256 } from '@views/sheet/components/buffs/buff-single/buff-single-256/buff-single-256';
 import { BuffSingle30 } from '@views/sheet/components/buffs/buff-single/buff-single-30/buff-single-30';
+import { BuffSingle344 } from '@views/sheet/components/buffs/buff-single/buff-single-344/buff-single-344';
 import { BuffSingle86 } from '@views/sheet/components/buffs/buff-single/buff-single-86/buff-single-86';
 import { BuffSingle98 } from '@views/sheet/components/buffs/buff-single/buff-single-98/buff-single-98';
 import { BuffGroup0 } from '../buff-group/impl/buff-group-0/buff-group-0';
@@ -55,6 +56,8 @@ export class BuffFactory {
         return new BuffSingle232(eff as Eff232);
       case 256:
         return new BuffSingle256(eff as Eff256);
+      case 344:
+        return new BuffSingle344(eff);
       default:
         return new BuffSingle(eff);
     }

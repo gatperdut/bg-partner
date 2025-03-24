@@ -45,6 +45,8 @@ export abstract class Eff {
 
   public param5: number;
 
+  public special: number;
+
   public duration: number;
 
   public durtype: DurtypeKey;
@@ -101,6 +103,8 @@ export abstract class Eff {
     this.param4 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x4c), 'INT32'); // EEEx says + 0x60?
 
     this.param5 = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x64), 'INT32');
+
+    this.special = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x40), 'UINT32');
 
     this.duration = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x20), 'INT32');
 
