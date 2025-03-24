@@ -81,7 +81,7 @@ export class ResItm extends Res {
       this.header(this.file.subarray(extHeadersOffset + 56 * i, this.file.length));
     }
 
-    this.preventsDualwield = this.twohanded || this.ranged;
+    this.preventsDualwield = this.twohanded || (!this.melee && this.ranged);
   }
 
   public resImageSet(): void {

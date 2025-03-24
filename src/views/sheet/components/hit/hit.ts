@@ -42,13 +42,19 @@ export class Hit extends Component {
   }
 
   private enchantment(mainhand: boolean, weapon: ResItm): string {
-    return `${mainhand ? 'Mainhand' : 'Offhand'} wapon: ${
-      weapon.name || 'Unnamed weapon'
-    }. Strikes as +${weapon.enchantment}.${weapon.magical ? ' Magical.' : ''}${
-      weapon.silver ? ' Silver.' : ''
-    }${weapon.coldiron ? ' Cold iron.' : ''}${weapon.twohanded ? ' Two-handed.' : ''}${
-      weapon.ranged ? ' Ranged.' : ''
-    }`;
+    let result: string = mainhand ? 'Mainhand weapon:' : 'Offhand weapon:';
+
+    result += ` ${weapon.name || ' unnamed weapon'}.`;
+
+    result += ` Strikes as +${weapon.enchantment}.`;
+
+    result += weapon.magical ? ' Magical.' : '';
+
+    result += weapon.silver ? ' Silver.' : '';
+
+    result += weapon.coldiron ? ' Cold iron.' : '';
+
+    return result;
   }
 
   private resEffHits(): string[] {
@@ -103,13 +109,26 @@ export class Hit extends Component {
       return result;
     }
 
+    const resItmHitsMelee: ResItmHit[] = _.filter(
+      weapon.resItmHitsMelee,
+      (resItmHit: ResItmHit): boolean => !_.includes(Hit.effsHidden, resItmHit.key),
+    );
+
+    const resItmHitsRanged: ResItmHit[] = _.filter(
+      weapon.resItmHitsRanged,
+      (resItmHit: ResItmHit): boolean => !_.includes(Hit.effsHidden, resItmHit.key),
+    );
+
     _.each(
-      _.filter(
-        [...weapon.resItmHitsMelee, ...weapon.resItmHitsRanged],
-        (resItmHit: ResItmHit): boolean => !_.includes(Hit.effsHidden, resItmHit.key),
-      ),
-      (resItmHit: ResItmHit): void => {
-        let subresult: string = this.resItmHitName(weapon, resItmHit) + '.';
+      [...resItmHitsMelee, ...resItmHitsRanged],
+      (resItmHit: ResItmHit, index: number): void => {
+        const type: string = _.includes([0xf, 0x12, 0x1b], weapon.type)
+          ? 'Launcher'
+          : !resItmHitsMelee.length || index >= resItmHitsMelee.length
+          ? 'Ranged'
+          : 'Melee';
+
+        let subresult: string = this.resItmHitName(type, weapon, resItmHit) + '.';
 
         // @ts-ignore
         const f = this[`hit${resItmHit.key}`];
@@ -146,8 +165,8 @@ export class Hit extends Component {
     );
   }
 
-  private resItmHitName(weapon: ResItm, resItmHit: ResItmHit): string {
-    return `(${weapon.name || 'Unnamed weapon'}) ${this.school(resItmHit.schoolShort)} ${
+  private resItmHitName(type: string, weapon: ResItm, resItmHit: ResItmHit): string {
+    return `(${type}) (${weapon.name || 'Unnamed weapon'}) ${this.school(resItmHit.schoolShort)} ${
       effTab[resItmHit.key]
     }`;
   }
@@ -245,17 +264,37 @@ export class Hit extends Component {
   }
 
   private hit58(hitBase: HitBase): string {
-    const first: number = hitBase.param2 >> 16;
+    let result: string = '';
 
-    // TODO we could also deal with how it dispels magical weapons.
+    const first: number = hitBase.param2 & 0x0000ffff;
+
     switch (first) {
       case 0:
-        return ' Always.';
+        result += ' General: always.';
+        break;
       case 1:
-        return ' Caster level.';
+        result += ' General: caster level.';
+        break;
       case 2:
-        return ` Level ${hitBase.param1}.`;
+        result += ` General: level ${hitBase.param1}.`;
+        break;
     }
+
+    const second: number = hitBase.param2 >> 16;
+
+    switch (second) {
+      case 0:
+        result += ' Magical weapon: always.';
+        break;
+      case 1:
+        result += ' Magical weapon: never.';
+        break;
+      case 2:
+        result += ` Magical weapon: caster level.`;
+        break;
+    }
+
+    return result;
   }
 
   private hit60(hitBase: HitBase): string {

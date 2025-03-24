@@ -9,13 +9,13 @@ export type CombatData = ComponentData & {
   thac0: number;
   thac0Left: number;
   thac0BonusLeft: number;
+  offhand: boolean;
   apr: string;
   xp: number;
   luck: number;
   weapprofs: string;
 };
 
-// TODO If thac0BonusLeft happens to be exactly 0, the offhand thac0 won't be displayed.
 export class Combat extends Component {
   protected combatData: CombatData;
 
@@ -34,6 +34,7 @@ export class Combat extends Component {
       thac0: sheetdata.sprite.derived.thac0 - sheetdata.sprite.derived.thac0BonusRight,
       thac0Left: sheetdata.sprite.derived.thac0 - sheetdata.sprite.derived.thac0BonusLeft,
       thac0BonusLeft: sheetdata.sprite.derived.thac0BonusLeft,
+      offhand: !!sheetdata.sprite.gear.offhand && !!sheetdata.sprite.derived.thac0BonusLeft,
       apr: Number.isInteger(aprView) ? aprView.toString() : `${aprView * 2}/2`,
       xp: sheetdata.sprite.derived.xp,
       luck: sheetdata.sprite.derived.luck,
