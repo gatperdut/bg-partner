@@ -15,6 +15,7 @@ import { BuffSingle131 } from '@views/sheet/components/buffs/buff-single/buff-si
 import { BuffSingle137 } from '@views/sheet/components/buffs/buff-single/buff-single-137/buff-single-137';
 import { BuffSingle159 } from '@views/sheet/components/buffs/buff-single/buff-single-159/buff-single-159';
 import { BuffSingle166 } from '@views/sheet/components/buffs/buff-single/buff-single-166/buff-single-166';
+import { BuffSingle204 } from '@views/sheet/components/buffs/buff-single/buff-single-204/buff-single-204';
 import { BuffSingle218 } from '@views/sheet/components/buffs/buff-single/buff-single-218/buff-single-218';
 import { BuffSingle219 } from '@views/sheet/components/buffs/buff-single/buff-single-219/buff-single-219';
 import { BuffSingle232 } from '@views/sheet/components/buffs/buff-single/buff-single-232/buff-single-232';
@@ -44,6 +45,8 @@ export class BuffFactory {
         return new BuffSingle159(eff);
       case 166:
         return new BuffSingle166(eff);
+      case 204:
+        return new BuffSingle204(eff);
       case 218:
         return new BuffSingle218(eff);
       case 219:
