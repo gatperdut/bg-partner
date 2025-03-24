@@ -48,3 +48,5 @@ export type IdsValueAll =
   | GenderValue
   | AlignValue
   | KitValue;
+
+export type IdsTabAll = Record<IdsKeyAll, IdsValue>;

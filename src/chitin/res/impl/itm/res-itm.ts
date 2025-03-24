@@ -1,11 +1,13 @@
 import { Bif } from '@chitin/bif';
 import { ResImage } from '@chitin/res/image/res-image';
+import { ResEff } from '@chitin/res/impl/eff/res-eff';
 import { ResItmHit } from '@chitin/res/impl/itm/res-itm-hit';
 import { Res } from '@chitin/res/impl/res';
 import { handlers } from '@handlers';
 import { EffKey } from '@tables/eff';
+import { idsTab, IdsValueAll } from '@tables/ids/ids';
 import { ItemcatKey } from '@tables/ids/itemcat';
-import { ProKey, ProValue, proTab } from '@tables/pro';
+import { ProKey, proTab, ProValue } from '@tables/pro';
 import { readBufferString } from '@utils';
 import _ from 'lodash';
 
@@ -43,6 +45,10 @@ export class ResItm extends Res {
   public resItmHitsMelee: ResItmHit[] = [];
 
   public resItmHitsRanged: ResItmHit[] = [];
+
+  private resItmHitsMeleeDelayed: ResItmHit[] = [];
+
+  private resItmHitsRangedDelayed: ResItmHit[] = [];
 
   public static effsIgnored: EffKey[] = [61, 141, 142, 174, 215];
 
@@ -105,15 +111,21 @@ export class ResItm extends Res {
 
     let target: ResItmHit[];
 
+    let targetDelayed: ResItmHit[];
+
     switch (attackType) {
       case 1:
         target = this.resItmHitsMelee;
+
+        targetDelayed = this.resItmHitsMeleeDelayed;
 
         this.melee = true;
 
         break;
       case 2:
         target = this.resItmHitsRanged;
+
+        targetDelayed = this.resItmHitsRangedDelayed;
 
         this.ranged = true;
 
@@ -145,7 +157,52 @@ export class ResItm extends Res {
         continue;
       }
 
-      target.push(resItmHit);
+      if (resItmHit.key === 177) {
+        targetDelayed.push(resItmHit);
+      } else {
+        target.push(resItmHit);
+      }
     }
+  }
+
+  public resItmHitsDelayed(): void {
+    _.each(this.resItmHitsMeleeDelayed, (resItmHit: ResItmHit): void => {
+      let pointer: ResItmHit = resItmHit;
+
+      let resEff: ResEff;
+
+      // @ts-ignore
+      const list: IdsValueAll[] = [idsTab[resItmHit.param2][resItmHit.param1]];
+
+      while ((resEff = handlers.chitin.ress.EFF[pointer.resource] as ResEff)) {
+        if (resEff.key !== 177) {
+          pointer = resEff.resEffHit;
+
+          break;
+        }
+
+        if (resEff.resEffHit) {
+          // @ts-ignore
+          list.push(idsTab[resEff.resEffHit.param2][resEff.resEffHit.param1]);
+        }
+
+        pointer = resEff.resEffHit;
+      }
+
+      pointer.eff177Target = list;
+
+      this.resItmHitsMelee.push(pointer);
+    });
+
+    _.each(this.resItmHitsRangedDelayed, (resItmHit: ResItmHit): void => {
+      const resEff: ResEff = handlers.chitin.ress.EFF[resItmHit.resource] as ResEff;
+
+      if (resEff?.resEffHit) {
+        // @ts-ignore
+        resEff.resEffHit.eff177Target = idsTab[resItmHit.param2][resItmHit.param1];
+
+        this.resItmHitsRanged.push(resEff.resEffHit);
+      }
+    });
   }
 }

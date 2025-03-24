@@ -130,6 +130,10 @@ export class Hit extends Component {
 
         let subresult: string = this.resItmHitName(type, weapon, resItmHit) + '.';
 
+        subresult += resItmHit.eff177Target.length
+          ? ` Against ${resItmHit.eff177Target.join(' and ')}.`
+          : '';
+
         // @ts-ignore
         const f = this[`hit${resItmHit.key}`];
         if (f) {
@@ -214,8 +218,8 @@ export class Hit extends Component {
 
     let damage: string = '';
 
-    if (hitBase.lowestLevel && hitBase.highestLevel) {
-      damage += `${hitBase.lowestLevel}d${hitBase.highestLevel}`;
+    if (hitBase.diceThrown && hitBase.diceSides) {
+      damage += `${hitBase.diceThrown}d${hitBase.diceSides}`;
     }
 
     if (hitBase.param1) {

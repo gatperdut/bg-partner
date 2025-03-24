@@ -3,6 +3,7 @@ import { handlers } from '@handlers';
 import { EffKey } from '@tables/eff';
 import { DurtypeKey } from '@tables/eff/durtype';
 import { EffsaveValue } from '@tables/eff/effsave';
+import { IdsValueAll } from '@tables/ids/ids';
 import { SchoolShortValue, SchoolValue } from '@tables/school';
 
 export abstract class HitBase {
@@ -43,6 +44,8 @@ export abstract class HitBase {
 
   // Custom fields
   public res: Res;
+
+  public eff177Target: IdsValueAll[] = [];
 
   public resSet(): void {
     switch (this.key) {

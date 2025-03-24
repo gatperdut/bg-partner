@@ -145,9 +145,9 @@ class SheetRenderer {
 
     document.getElementById('saves').innerHTML = new Saves().html;
 
-    document.getElementById('imms').innerHTML = new Imms().html;
+    document.getElementById('imms').innerHTML = new Imms().html.trim();
 
-    document.getElementById('hit').innerHTML = new Hit().html;
+    document.getElementById('hit').innerHTML = new Hit().html.trim();
   }
 
   private updateRunning(running: boolean) {

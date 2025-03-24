@@ -1,3 +1,8 @@
 @use '../shared/css';
 
 @use 'components';
+
+#imms:empty,
+#hit:empty {
+  display: none;
+}

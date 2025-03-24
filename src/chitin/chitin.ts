@@ -104,6 +104,8 @@ export class Chitin {
 
   private itmHitSetup(): void {
     _.each(_.values(this.ress.ITM), (resItm: ResItm): void => {
+      resItm.resItmHitsDelayed();
+
       _.each(
         [...resItm.resItmHitsMelee, ...resItm.resItmHitsRanged],
         (resItmHit: ResItmHit): void => {
