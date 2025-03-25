@@ -1,6 +1,6 @@
 <div class="fx-layout-row fx-align--space-between-x fx-align--x-center">
   <div class="fx-layout-row fx-align--start-x fx-align--x-center fs-1">
-    <div title="Allegiance: {{enemyAlly}}">🏳️</div>
+    <div title="{{ids}}">🏳️</div>
 
     <div class="ml-5">{{name}}</div>
 
@@ -17,5 +17,10 @@
 <div class="fx-layout-row fx-align--space-between-x fx-align--x-center">
   <span title="Race and gender">{{race}} ({{gender}})</span>
 
-  <span title="Class">{{klass}} ({{levels}})</span>
+  <div class="fx-layout-row fx-align--end-x fx-align--x-center">
+    {{#if hatedRace}}
+      <span class="mr-2" title="Racial enemy: {{hatedRace}}">👤</span>
+    {{/if}}
+    <span title="Class">{{klass}} ({{levels}})</span>
+  </div>
 </div>

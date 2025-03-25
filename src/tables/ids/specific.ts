@@ -14,7 +14,7 @@ export const specificTab = {
   64: 'Shou monk',
   65: 'Shou flayer',
   66: 'Quadim spider',
-  10: 'Cutlist',
+  10: 'Cultist',
   67: 'Culak spider',
   250: 'Spirit',
 } as const;

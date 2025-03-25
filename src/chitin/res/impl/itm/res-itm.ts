@@ -165,8 +165,8 @@ export class ResItm extends Res {
     }
   }
 
-  public resItmHitsDelayed(): void {
-    _.each(this.resItmHitsMeleeDelayed, (resItmHit: ResItmHit): void => {
+  private resItmHitsDelayedInternal(resItmHitsDelayed: ResItmHit[], resItmHits: ResItmHit[]): void {
+    _.each(resItmHitsDelayed, (resItmHit: ResItmHit): void => {
       let pointer: ResItmHit = resItmHit;
 
       let resEff: ResEff;
@@ -175,9 +175,9 @@ export class ResItm extends Res {
       const list: IdsValueAll[] = [idsTab[resItmHit.param2][resItmHit.param1]];
 
       while ((resEff = handlers.chitin.ress.EFF[pointer.resource] as ResEff)) {
-        if (resEff.key !== 177) {
-          pointer = resEff.resEffHit;
+        pointer = resEff.resEffHit;
 
+        if (resEff.key !== 177) {
           break;
         }
 
@@ -185,24 +185,17 @@ export class ResItm extends Res {
           // @ts-ignore
           list.push(idsTab[resEff.resEffHit.param2][resEff.resEffHit.param1]);
         }
-
-        pointer = resEff.resEffHit;
       }
 
-      pointer.eff177Target = list;
+      pointer.eff177Target = list.slice();
 
-      this.resItmHitsMelee.push(pointer);
+      resItmHits.push(pointer);
     });
+  }
 
-    _.each(this.resItmHitsRangedDelayed, (resItmHit: ResItmHit): void => {
-      const resEff: ResEff = handlers.chitin.ress.EFF[resItmHit.resource] as ResEff;
+  public resItmHitsDelayed(): void {
+    this.resItmHitsDelayedInternal(this.resItmHitsMeleeDelayed, this.resItmHitsMelee);
 
-      if (resEff?.resEffHit) {
-        // @ts-ignore
-        resEff.resEffHit.eff177Target = idsTab[resItmHit.param2][resItmHit.param1];
-
-        this.resItmHitsRanged.push(resEff.resEffHit);
-      }
-    });
+    this.resItmHitsDelayedInternal(this.resItmHitsRangedDelayed, this.resItmHitsRanged);
   }
 }
