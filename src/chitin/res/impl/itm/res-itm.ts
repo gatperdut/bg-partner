@@ -187,9 +187,9 @@ export class ResItm extends Res {
         }
       }
 
-      pointer.eff177Target = list.slice();
+      pointer.eff177Target = list;
 
-      resItmHits.push(pointer);
+      resItmHits.push(_.cloneDeep(pointer));
     });
   }
 
@@ -197,5 +197,9 @@ export class ResItm extends Res {
     this.resItmHitsDelayedInternal(this.resItmHitsMeleeDelayed, this.resItmHitsMelee);
 
     this.resItmHitsDelayedInternal(this.resItmHitsRangedDelayed, this.resItmHitsRanged);
+
+    this.resItmHitsMeleeDelayed = null;
+
+    this.resItmHitsRangedDelayed = null;
   }
 }
