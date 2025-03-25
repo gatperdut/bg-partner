@@ -49,8 +49,6 @@ export class Effs {
     // Empty
   }
 
-  private printed: boolean = false;
-
   public run(): void {
     _.each(EffTypes, (effType: EffType): void => {
       this.effs[effType].length = 0;
@@ -101,17 +99,6 @@ export class Effs {
       if (!added) {
         this.effs.buffs.push(eff);
       }
-    }
-
-    if (!this.printed) {
-      _.each(EffTypes, (effType: EffType): void => {
-        console.log('***', effType);
-        _.each(this.effs[effType], (eff: Eff): void => {
-          eff.summary();
-        });
-      });
-
-      this.printed = true;
     }
   }
 }

@@ -58,7 +58,7 @@ export const handlers: Handlers = {
   timetracker: null,
 };
 
-// TODO add the missing ones? and maybe use them?
+// TODO add the missing ones and use them instead of always reaching through handlers.?
 
 export const reqsLinux = (): ReqsLinux => {
   return handlers.reqs as ReqsLinux;

@@ -52,8 +52,6 @@ export abstract class WindowOs {
   }
 
   protected focusChanged(focused: boolean): void {
-    // TODO remove return;
-    return;
     handlers.entities.focusChanged(focused);
 
     handlers.shortcuts.focusChanged(focused);

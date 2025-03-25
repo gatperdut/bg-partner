@@ -142,7 +142,7 @@ $env:Path += ";C:\ProgramData\chocolatey\bin"
 
 In a newly opened regular shell do `(Get-Process Baldur).Id` and then, with the produced pid, do `gdb -p <pid>`.
 
-But it will suck. TODO.
+But it will suck. Really it will. I didn't manage to even type a command.
 
 ### gdb for files
 
@@ -155,19 +155,3 @@ gdb -p $(pgrep -n bash)
 (gdb) restore Spells.bif binary $1
 (gdb) x/4cb $1
 ```
-
-## Development TODOs
-
-- readme: how to close sheets. sheets hide when game loses focus.
-
-- sheets in windows become gradually bigger when draging them?!
-
-- consider LE/BE in resread?
-
-- do the callbacks need `${id}`?
-
-- does the approach of a single timer (from the first loaded entity) do funky stuff with timestop?s
-
-- package.json: "type": "module" refactor.
-
-- duration string: implemented in 2 places. merge into a service.
