@@ -16,6 +16,7 @@ export type HitData = ComponentData & {
   hits: string[];
 };
 
+// TODO this whole file is shit and needs to be split into subclasses for the different hit opcodes.
 export class Hit extends Component {
   protected hitData: HitData;
 
