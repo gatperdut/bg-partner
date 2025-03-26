@@ -1,4 +1,3 @@
-import { Bif } from '@chitin/bif';
 import { ResImage } from '@chitin/res/image/res-image';
 import { ResEff } from '@chitin/res/impl/eff/res-eff';
 import { ResItmHit } from '@chitin/res/impl/itm/res-itm-hit';
@@ -52,9 +51,11 @@ export class ResItm extends Res {
 
   public static effsIgnored: EffKey[] = [61, 141, 142, 174, 215];
 
-  constructor(buffer: Buffer, bifs: Bif[]) {
-    super('ITM', buffer, bifs);
+  constructor() {
+    super('ITM');
+  }
 
+  protected run(): void {
     this.type = this.file.readInt16LE(0x1c) as ItemcatKey;
 
     this.name = handlers.tlk.tlks[this.file.readUint32LE(0xc)];

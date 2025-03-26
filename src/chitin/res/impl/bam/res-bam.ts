@@ -1,4 +1,3 @@
-import { Bif } from '@chitin/bif';
 import { Palette } from '@chitin/res/impl/bam/palette';
 import { Res } from '@chitin/res/impl/res';
 import { readBufferString } from '@utils';
@@ -19,8 +18,8 @@ export class ResBam extends Res {
     height: null,
   };
 
-  constructor(buffer: Buffer, bifs: Bif[]) {
-    super('BAM', buffer, bifs);
+  constructor() {
+    super('BAM');
   }
 
   public get base64(): string {

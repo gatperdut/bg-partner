@@ -1,4 +1,3 @@
-import { Bif } from '@chitin/bif';
 import { ResImage } from '@chitin/res/image/res-image';
 import { Res } from '@chitin/res/impl/res';
 import { handlers } from '@handlers';
@@ -13,9 +12,11 @@ export class ResSpl extends Res {
 
   public resImage: ResImage;
 
-  constructor(buffer: Buffer, bifs: Bif[]) {
-    super('SPL', buffer, bifs);
+  constructor() {
+    super('SPL');
+  }
 
+  protected run(): void {
     this.name = handlers.tlk.tlks[this.file.readUint32LE(0x8)];
 
     this.desc = handlers.tlk.tlks[this.file.readUint32LE(0x50)];

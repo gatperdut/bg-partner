@@ -6,17 +6,33 @@ import { ResSpl } from '@chitin/res/impl/res-spl';
 import { ResextValue } from '@tables/resext';
 import { ResEff } from './impl/eff/res-eff';
 
-export class ResFactory {
+export class ResBifFactory {
   public create(ext: ResextValue, buffer: Buffer, bifs: Bif[]): Res {
     switch (ext) {
       case 'BAM':
-        return new ResBam(buffer, bifs);
+        const resBam = new ResBam();
+
+        resBam.fromBif(buffer, bifs);
+
+        return resBam;
       case 'EFF':
-        return new ResEff(buffer, bifs);
+        const resEff = new ResEff();
+
+        resEff.fromBif(buffer, bifs);
+
+        return resEff;
       case 'ITM':
-        return new ResItm(buffer, bifs);
+        const resItm = new ResItm();
+
+        resItm.fromBif(buffer, bifs);
+
+        return resItm;
       case 'SPL':
-        return new ResSpl(buffer, bifs);
+        const resSpl = new ResSpl();
+
+        resSpl.fromBif(buffer, bifs);
+
+        return resSpl;
       default:
         return null;
     }
