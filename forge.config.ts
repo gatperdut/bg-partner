@@ -17,6 +17,10 @@ const config: ForgeConfig = {
       os.platform() === 'linux'
         ? undefined
         : path.join(__dirname, 'src', 'assets', 'icons', '256x256'),
+    extraResource: [
+      path.join(__dirname, 'scripts', 'linux_on.sh'),
+      path.join(__dirname, 'scripts', 'linux_off.sh'),
+    ],
   },
   makers: [new MakerZIP({}, ['linux', 'win32'])],
   hooks: {

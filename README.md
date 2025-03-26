@@ -28,9 +28,11 @@ First off, both `ASLR` (address space layout randomization), `ptrace_scope` and 
 - `echo 0 > /proc/sys/kernel/yama/ptrace_scope`
 - `echo 0 > /proc/sys/kernel/apparmor_restrict_unprivileged_userns`
 
-There are ways to make the changes permanent, but that is not recommended. Re-run the commands next time you boot up the computer and want to use BGPartner. Alternatively, check [linux_on.sh](scripts/linux_on.sh) that automatizes it.
+There are ways to make the changes permanent, but that is not recommended. Re-run the commands next time you boot up the computer and want to use BGPartner.
 
-When you are done with BGPartner, exchange the `0` with a `1` in the commands and run them again (or simply restart, or run [linux_off.sh](scripts/linux_off.sh)).
+When you are done with BGPartner, exchange the `0` with a `1` in the commands and run them again, or simply restart.
+
+As an automated alternative, check [linux_on.sh](scripts/linux_on.sh) and [linux_off.sh](scripts/linux_off.sh). They are both included in the release under `resources`. Run them with `sudo`.
 
 Additionally, make sure the following tools are available:
 
@@ -86,7 +88,7 @@ Once BGPartner launches successfully, you will see this window:
 
 The upper line will display "❌ Process not found." if no running instance of a game could be found.
 
-The next 2 lines are Linux-only and will indicate if the configuration steps from above were successful. If they were not, they will display "❌ ASLR is enabled." and "❌ ptrace_scope is enabled." respectively.
+The next 2 lines are Linux-only and will indicate if the configuration steps from above were successful. If they were not, they will display "❌ ASLR is enabled.", "❌ ptrace_scope is enabled.", and "❌ apparmor restriction is enabled." respectively.
 
 Next up is the configuration in use. This will closely resemble your `bg-partner.json`, though individual keys may have reverted to the defaults if the provided value was invalid. The JSON object might have been replaced in its entirety, too, if, for example, you provided an invalid JSON. So make sure to double-check.
 

@@ -109,8 +109,6 @@ export class Chitin {
 
         const res: Res = this.resOverrideFactory.create(ext, path.parse(file).name, buffer);
 
-        console.log('added', file, path.parse(file).name, ext);
-
         this.resAdd(ext, res);
       }
     });
