@@ -1,5 +1,6 @@
 import { AlignValue } from '@tables/ids/align';
 import { GenderValue } from '@tables/ids/gender';
+import { kitParentTab } from '@tables/ids/kit';
 import { RaceValue } from '@tables/ids/race';
 import { Component, ComponentData } from '@views/shared/component';
 import { sheetdata } from '@views/sheet/sheetdata';
@@ -49,7 +50,10 @@ export class Header extends Component {
       hp: sheetdata.sprite.basic.hp,
       hpMax: sheetdata.sprite.derived.hpMax,
       race: sheetdata.sprite.profile.race,
-      hatedRace: sheetdata.sprite.profile.hatedRace,
+      hatedRace:
+        !sheetdata.sprite.profile.hatedRace || sheetdata.sprite.profile.hatedRace === 'No race'
+          ? null
+          : sheetdata.sprite.profile.hatedRace,
       klass: klass,
       levels: levels,
       alignment: sheetdata.sprite.profile.alignment,
@@ -71,15 +75,23 @@ export class Header extends Component {
   }
 
   private klass(): string {
-    const sd = sheetdata;
-
     if (!sheetdata.sprite.profile.kit || sheetdata.sprite.profile.kit === 'Generalist') {
       return sheetdata.sprite.profile.klass;
     }
 
     const split: string[] = sheetdata.sprite.profile.klass.split('/');
 
-    split[0] = sheetdata.sprite.profile.kit;
+    let i: number;
+
+    for (i = 0; i < split.length; i++) {
+      if (split[i] === kitParentTab[sheetdata.sprite.profile.kit]) {
+        break;
+      }
+    }
+
+    if (i !== split.length) {
+      split[i] = sheetdata.sprite.profile.kit;
+    }
 
     return split.join('/');
   }

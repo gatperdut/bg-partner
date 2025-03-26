@@ -62,6 +62,12 @@ export class Chitin {
 
       this.ress[ext][res.code] = res;
     }
+
+    this.override();
+  }
+
+  private override(): void {
+    // TODO
   }
 
   public setup(): void {

@@ -1,3 +1,4 @@
+import { ClassValue } from '@tables/ids/class';
 import _ from 'lodash';
 
 export type KitTab = typeof kitTab;
@@ -19,7 +20,7 @@ export const kitTab = {
   0x0100: 'Diviner',
   0x0200: 'Enchanter',
   0x0400: 'Illusionist',
-  0x0800: 'Invoket',
+  0x0800: 'Invoker',
   0x1000: 'Necromancer',
   0x2000: 'Transmuter',
   0x4000: 'Generalist',
@@ -53,3 +54,47 @@ export const kitTab = {
 export const KitKeys = _.keys(kitTab);
 
 export const KitValues = _.values(kitTab);
+
+export const kitParentTab: Record<KitValue, ClassValue> = {
+  // 'True class': 'True class',
+  Berserker: 'Fighter',
+  'Wizard slayer': 'Fighter',
+  Kensai: 'Fighter',
+  Cavalier: 'Paladin',
+  Inquisitor: 'Paladin',
+  'Undead hunter': 'Paladin',
+  Abjurer: 'Mage',
+  Conjurer: 'Mage',
+  Diviner: 'Mage',
+  Enchanter: 'Mage',
+  Illusionist: 'Mage',
+  Invoker: 'Mage',
+  Necromancer: 'Mage',
+  Transmuter: 'Mage',
+  Generalist: 'Mage',
+  Feralan: 'Ranger',
+  Stalker: 'Ranger',
+  Beastmaster: 'Ranger',
+  Assassin: 'Thief',
+  'Bounty hunter': 'Thief',
+  Swashbuckler: 'Thief',
+  Blade: 'Bard',
+  Jester: 'Bard',
+  Skald: 'Bard',
+  'Priest of Talos': 'Cleric',
+  'Priest of Helm': 'Cleric',
+  'Priest of Lathander': 'Cleric',
+  'Totemic druid': 'Druid',
+  Shapeshifter: 'Druid',
+  'Beast friend': 'Ranger',
+  Barbarian: 'Fighter',
+  'Wild mage': 'Sorcerer',
+  Blackguard: 'Paladin',
+  'Shadow dancer': 'Thief',
+  'Dwarven defender': 'Fighter',
+  'Dragon disciple': 'Sorcerer',
+  'Dark Moon monk': 'Monk',
+  'Sun Soul monk': 'Monk',
+  'Grizzly bear': 'Fighter', // ??
+  Ohtyr: 'Fighter', // ??
+};

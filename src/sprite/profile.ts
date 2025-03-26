@@ -67,8 +67,6 @@ export class Profile {
 
     this.klass = classTab[classKey];
 
-    const hand = handlers;
-
     this.kit =
       kitTab[
         handlers.memread.memReadNumber(
