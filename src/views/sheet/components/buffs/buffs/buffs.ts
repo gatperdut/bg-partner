@@ -51,11 +51,11 @@ export class Buffs extends Component {
       for (let i: number = 0; i < effsSqueezed.length; i++) {
         if (
           _.includes(effsSqueeze, effsSqueezed[i].key) &&
-          !_.includes(base64s, effsSqueezed[i].resImage.base64)
+          !_.includes(base64s, (effsSqueezed[i].resImage || sheetdata.resImageDefault).base64)
         ) {
           buffSingles.push(BuffFactory.single(effsSqueezed[i]));
 
-          base64s.push(effsSqueezed[i].resImage.base64);
+          base64s.push((effsSqueezed[i].resImage || sheetdata.resImageDefault).base64);
         }
       }
     });

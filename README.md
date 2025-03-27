@@ -50,12 +50,13 @@ On its first execution BGPartner will create a [JSON](https://www.shapediver.com
 ```
   {
     "exe": "BaldursGateII" (Linux) / "Baldur.exe" (Windows),
-    "path": "/home/<user>" (Linux) / "TODO" (Windows),
+    "path": "/home/<user>" (Linux) / "C:\\Users\\<user>" (Windows),
     "locale": "en_US",
     "display": null,
     "ms": 300,
     "accelBorderless": "CommandOrControl+Q",
     "accelSheet": "CommandOrControl+A",
+    "accelCloseAll": "CommandOrControl+X"
   };
 
 ```
@@ -73,6 +74,8 @@ On its first execution BGPartner will create a [JSON](https://www.shapediver.com
 - `accelBorderless`: accelerator to make the game's window borderless and fullscreen.
 
 - `accelSheet`: accelerator to open the overlay when the mouse is over the selection circle of a creature.
+
+- `accelCloseAll`: accelerator to close all the overlays.
 
 Accelerators will only be active while the game is focused, so those key combinations will remain available to be used elsewhere while BGPartner is running.
 
@@ -96,11 +99,15 @@ As the bottom line indicates, BGPartner will shut down as soon as this window is
 
 Now go to your game and use your `accelBorderless` shortcut to make the game window borderless. It will also take the full display.
 
-Next, move the mouse over some creature and use your `accelSheet` shortcut. You will see something like this:
+Next, move the mouse over some creature and use your `accelSheet` shortcut. You will see an overlay like this:
 
-TODO
+![Control window](src/assets/readme/sheet.png)
 
-TODO: only update when game unpaused. tooltips only available when game is paused.
+The overlay can be dragged freely. To close it, either use your `accelSheet` accelerator on the creature again, right-click on the overlay, or use your `accelCloseAll` accelerator to close it and any others that might open.
+
+The overlay is updated only while the game is unpaused, so equipment changes and the like may need a brief interval after unpausing to be shown.
+
+Many of the pieces of information present have simple tooltips that can be brought up by hovering over them, while some others have more involved tooltips that are only available when the game is paused and are indicated with a beating heart animation. These must be brought up with a click.
 
 ## Bugs and reports
 
