@@ -95,6 +95,10 @@ export class Imms extends Component {
       result.push('Immune to turn undead');
     }
 
+    if (sheetdata.sprite.derived.drainImmunity) {
+      result.push('Immune to death by draining');
+    }
+
     if (sheetdata.sprite.derived.hpMin) {
       result.push('HP cannot be brought down to 0');
     }

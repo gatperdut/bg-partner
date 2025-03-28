@@ -2,12 +2,12 @@ import { ResImageDefault } from '@chitin/res/image/res-image-default';
 import { Hbs } from '@views/shared/hbsreg';
 import { SpriteView } from '@views/shared/stripped';
 import { Abilities } from '@views/sheet/components/abilities/abilities';
-import { Buffs } from '@views/sheet/components/buffs/buffs/buffs';
 import { Combat } from '@views/sheet/components/combat/combat';
 import { Header } from '@views/sheet/components/header/header';
 import { Imms } from '@views/sheet/components/imms/imms';
 import { Resistances } from '@views/sheet/components/resistances/resistances';
 import { Saves } from '@views/sheet/components/saves/saves';
+import { Sources } from '@views/sheet/components/sources/sources';
 import '@views/sheet/sheet.scss';
 import { sheetdata } from '@views/sheet/sheetdata';
 import _ from 'lodash';
@@ -129,10 +129,14 @@ class SheetRenderer {
   }
 
   private updateView(): void {
-    document.getElementById('buffs').innerHTML = new Buffs(
-      sheetdata.sprite.effs.effs.buffs,
-      false,
-      true,
+    // document.getElementById('buffs').innerHTML = new Buffs(
+    //   sheetdata.sprite.effs.effs.buffs,
+    //   false,
+    //   true,
+    // ).html;
+
+    document.getElementById('sources').innerHTML = new Sources(
+      sheetdata.sprite.effs.sources
     ).html;
 
     document.getElementById('header').innerHTML = new Header().html;

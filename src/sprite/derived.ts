@@ -74,6 +74,8 @@ export class Derived {
 
   public timestopImmunity: boolean;
 
+  public drainImmunity: boolean;
+
   public turnUndeadImmunity: boolean;
 
   public spellLevelImmunity: number = 0;
@@ -195,6 +197,8 @@ export class Derived {
       this.base + BigInt(0x0 + 0x2d8),
       'INT32',
     );
+
+    this.drainImmunity = !!handlers.memread.memReadNumber(this.base + BigInt(0x0 + 0x2ec), 'INT32');
 
     this.turnUndeadImmunity = !!handlers.memread.memReadNumber(
       this.base + BigInt(0x0 + 0x2b4),

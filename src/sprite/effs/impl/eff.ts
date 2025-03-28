@@ -62,6 +62,8 @@ export abstract class Eff {
 
   public ressrcType: RessrcType;
 
+  public ressrcCode: string;
+
   public ressrc: ResItm | ResSpl;
 
   public ressrcParent: ResItm;
@@ -114,7 +116,9 @@ export abstract class Eff {
 
     this.spellLevel = handlers.memread.memReadNumber(base + BigInt(0x8 + 0x10), 'INT32');
 
-    this.ressrcSetup(handlers.memread.memReadString(base + BigInt(0x8 + 0x8c), 8).toLowerCase());
+    this.ressrcCode = handlers.memread.memReadString(base + BigInt(0x8 + 0x8c), 8).toLowerCase()
+
+    this.ressrcSetup(this.ressrcCode);
 
     this.grouped = _.includes(Effs.effsGrouped, this.key);
 
